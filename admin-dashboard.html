@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
+    <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
+    <style>
+        /* Optional styles for better visibility */
+        .hidden { display: none; }
+        .openbtn, .closebtn {
+            cursor: pointer;
+        }
+        .tabcontent {
+            display: none;
+        }
+        .tablinks {
+            cursor: pointer;
+        }
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: #111;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .header-icons button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar hidden">
+        <button id="closeSidebar" class="closebtn">&times;</button>
+        <a href="#" id="dashboardLink">Home (Dashboard)</a>
+        <a href="#" id="requestLink">Request</a>
+        <a href="#" id="manageUsersLink">Manage Users</a>
+        <div id="manageUsersSection">
+            <button class="tablinks" onclick="openTab(event, 'clients')">Clients</button>
+            <button class="tablinks" onclick="openTab(event, 'staff')">Laboratory Staff</button>
+            <button class="tablinks" onclick="openTab(event, 'newRequests')">New User Requests</button>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="main">
+        <!-- Header -->
+        <header class="header">
+            <button id="openSidebar" class="openbtn">&#9776;</button>
+            <h1>Admin Dashboard</h1>
+            <div class="header-icons">
+                <button id="helpBtn">Help</button>
+                <button id="notificationsBtn">Notifications</button>
+                <button id="settingsBtn">Settings</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div id="content" class="content">
+            <!-- Admin Content -->
+            <div id="admin-content" class="hidden">
+                <!-- Add admin-specific content here -->
+            </div>
+            
+            <!-- Error Message -->
+            <div id="admin-error-message" class="hidden">
+                <p>You are not authorized to view this content.</p>
+            </div>
+
+            <!-- Tabs -->
+            <!-- Clients Tab -->
+            <div id="clients" class="tabcontent">
+                <h2>Clients</h2>
+                <table id="clientsTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Client Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Clients will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Laboratory Staff Tab -->
+            <div id="staff" class="tabcontent">
+                <h2>Laboratory Staff</h2>
+                <table id="staffTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Laboratory staff will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- New User Requests Tab -->
+            <div id="newRequests" class="tabcontent">
+                <h2>New User Requests</h2>
+                <table id="newRequestsTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Approve Action</th>
+                            <th>Reject Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- New user requests will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/sidebar.js" defer></script> <!-- Ensure the path is correct -->
+    
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById("sidebar");
+        const openSidebarBtn = document.getElementById("openSidebar");
+        const closeSidebarBtn = document.getElementById("closeSidebar");
+
+        openSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.remove("hidden");
+        });
+
+        closeSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.add("hidden");
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontents = document.querySelectorAll(".tabcontent");
+            const tablinks = document.querySelectorAll(".tablinks");
+
+            tabcontents.forEach(tab => tab.style.display = "none");
+            tablinks.forEach(link => link.classList.remove("active"));
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Show the first tab by default
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".tablinks").click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
+    <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
+    <style>
+        /* Optional styles for better visibility */
+        .hidden { display: none; }
+        .openbtn, .closebtn {
+            cursor: pointer;
+        }
+        .tabcontent {
+            display: none;
+        }
+        .tablinks {
+            cursor: pointer;
+        }
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: #111;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .header-icons button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="mySidebar" class="client-sidebar hidden">
+        <button id="closeSidebar" class="closebtn">&times;</button>
+        <a href="#" id="homeLink">Home (Dashboard)</a>
+        <a href="#" id="createRequestLink">Create Request</a>
+        <a href="#" id="requestListLink">Request List</a>
+        <a href="#" id="myAccountLink">My Account</a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main">
+        <!-- Header -->
+        <header class="client-header">
+            <button id="openSidebar" class="openbtn">&#9776;</button>
+            <h1>Client Dashboard</h1>
+            <div class="header-icons">
+                <button id="helpButton">Help</button>
+                <button id="notificationButton">Notifications</button>
+                <button id="settingsButton">Settings</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div id="content" class="client-main">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Here you can manage your requests and account details.</p>
+        </div>
+    </div>
+
+    <script src="js/sidebar.js" defer></script> <!-- Ensure the path is correct -->
+    
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById("mySidebar");
+        const openSidebarBtn = document.getElementById("openSidebar");
+        const closeSidebarBtn = document.getElementById("closeSidebar");
+
+        openSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.remove("hidden");
+        });
+
+        closeSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.add("hidden");
+        });
+    </script>
+</body>
+</html>

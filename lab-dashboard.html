@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory Staff Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/firebase.js"></script> <!-- Firebase initialization -->
+    <script type="module" src="js/auth.js"></script>    <!-- Authentication logic -->
+</head>
+<body>
+    <h1>Laboratory Staff Dashboard</h1>
+    <div id="lab-content" style="display: none;">
+        <p>Welcome, Laboratory Staff!</p>
+        <!-- Staff dashboard content goes here -->
+        <button id="logoutBtn">Logout</button>
+    </div>
+    <div id="lab-error-message" style="display: none;">
+        <p>You are not authorized to view this page or an error occurred. Redirecting to login...</p>
+    </div>
+</body>
+</html>

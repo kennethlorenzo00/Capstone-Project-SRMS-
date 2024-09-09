@@ -1,0 +1,205 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: calc(100% - 250px); /* Adjust for sidebar width */
+    left: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure header is above other content */
+}
+
+.header-icons button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.openbtn, .closebtn {
+    background-color: #333;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.openbtn:hover, .closebtn:hover {
+    background-color: #555;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    color: white;
+    z-index: 999; /* Ensure sidebar is below header */
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #555;
+}
+
+/* Main Content Styles */
+#main {
+    margin-left: 250px; /* Space for the sidebar */
+    padding: 20px;
+    padding-top: calc(15px + 75px); /* Increased space for the header */
+    transition: margin-left 0.5s;
+}
+
+/* Tabs Styles */
+.tabcontent {
+    display: none;
+}
+
+.tablinks {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tablinks.active {
+    background-color: #555;
+}
+
+/* Table Styles */
+#newRequestsTable, #staffTable, #clientsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#newRequestsTable th, #newRequestsTable td,
+#staffTable th, #staffTable td, 
+#clientsTable th, #clientsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#newRequestsTable th, #staffTable th, #clientsTable th {
+    background-color: #f4f4f4;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0277bd;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+/* Error Messages */
+#error-message {
+    display: none; /* Hide error messages by default */
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+input {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+/* Client Dashboard Specific Styles */
+.client-header {
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    width: calc(100% - 250px); /* Adjust for sidebar width */
+    left: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.client-header .header-icons button {
+    margin: 0;
+}
+
+.client-sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    color: white;
+    z-index: 999;
+}
+
+.client-sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.client-sidebar a:hover {
+    background-color: #555;
+}
+
+.client-main {
+    margin-left: 250px; /* Space for the sidebar */
+    padding: 20px;
+    padding-top: calc(15px + 75px); /* Increased space for the header */
+    transition: margin-left 0.5s;
+}
