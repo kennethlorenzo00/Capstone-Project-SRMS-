@@ -36,6 +36,12 @@ document.getElementById("adminRegisterForm")?.addEventListener("submit", functio
 document.getElementById("labRegisterForm")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
+    const firstName = document.getElementById("firstName").value;
+    const middleName = document.getElementById("middleName").value;
+    const lastName = document.getElementById("lastName").value;
+    const username = document.getElementById("username").value;
+    const contactNumber = document.getElementById("contactNumber").value;
+    const address = document.getElementById("address").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -45,6 +51,12 @@ document.getElementById("labRegisterForm")?.addEventListener("submit", function(
             console.log("Registration successful");
 
             set(ref(database, 'new_user_requests/' + user.uid), {
+                firstName: firstName,
+                middleName: middleName,
+                lastName: lastName,
+                username: username,
+                contactNumber: contactNumber,
+                address: address,
                 email: email,
                 role: 'staff',
                 status: 'pending' // New requests are initially pending
@@ -64,10 +76,19 @@ document.getElementById("labRegisterForm")?.addEventListener("submit", function(
         });
 });
 
+
 // Handle External Client Registration
 document.getElementById("externalClientRegisterForm")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
+    const firstName = document.getElementById("firstName").value;
+    const middleName = document.getElementById("middleName").value || ''; // optional
+    const lastName = document.getElementById("lastName").value;
+    const username = document.getElementById("username").value;
+    const address = document.getElementById("address").value;
+    const contactNumber = document.getElementById("contactNumber").value;
+    const school = document.getElementById("school").value;
+    const department = document.getElementById("department").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -77,6 +98,14 @@ document.getElementById("externalClientRegisterForm")?.addEventListener("submit"
             console.log("Registration successful");
 
             set(ref(database, 'new_user_requests/' + user.uid), {
+                firstName: firstName,
+                middleName: middleName,
+                lastName: lastName,
+                username: username,
+                address: address,
+                contactNumber: contactNumber,
+                school: school,
+                department: department,
                 email: email,
                 role: 'client',
                 clientType: 'external',  // Automatically assigned as external
@@ -97,12 +126,20 @@ document.getElementById("externalClientRegisterForm")?.addEventListener("submit"
         });
 });
 
+
 // Handle Internal Client Registration
 document.getElementById("internalClientRegisterForm")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
+    const firstName = document.getElementById("firstName").value;
+    const middleName = document.getElementById("middleName").value;
+    const lastName = document.getElementById("lastName").value;
+    const username = document.getElementById("username").value;
+    const address = document.getElementById("address").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const contactNumber = document.getElementById("contactNumber").value;
+    const department = document.getElementById("department").value;
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -110,7 +147,14 @@ document.getElementById("internalClientRegisterForm")?.addEventListener("submit"
             console.log("Registration successful");
 
             set(ref(database, 'new_user_requests/' + user.uid), {
+                firstName: firstName,
+                middleName: middleName,
+                lastName: lastName,
+                username: username,
                 email: email,
+                address: address,
+                contactNumber: contactNumber,
+                department: department,
                 role: 'client',
                 clientType: 'internal',  // Automatically assigned as internal
                 status: 'pending'
@@ -129,6 +173,7 @@ document.getElementById("internalClientRegisterForm")?.addEventListener("submit"
             alert("Registration failed: " + errorMessage);
         });
 });
+
 
 // Handle Admin Login
 document.getElementById("adminLoginForm")?.addEventListener("submit", function(event) {
@@ -420,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         adminContent.style.display = "block";
                         adminErrorMessage.style.display = "none";
 
-                        fetchNewUserRequests();
+                        loadNewUserRequests();
                         displayLaboratoryStaff();
                         displayClients();
                     } else {
@@ -441,45 +486,110 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function fetchNewUserRequests() {
-        const requestsRef = ref(database, 'new_user_requests/');
-        onValue(requestsRef, (snapshot) => {
-            newRequestsTable.innerHTML = "";
+    function loadNewUserRequests() {
+        const newRequestsTable = document.getElementById("newRequestsTable").getElementsByTagName("tbody")[0];
+        newRequestsTable.innerHTML = ''; // Clear existing table content
+    
+        const newUserRequestsRef = ref(database, 'new_user_requests/');
+        onValue(newUserRequestsRef, (snapshot) => {
+            newRequestsTable.innerHTML = ''; // Ensure the table is cleared at the start of each update
             snapshot.forEach((childSnapshot) => {
-                const request = childSnapshot.val();
+                const user = childSnapshot.val();
+                const userId = childSnapshot.key;
+    
+                // Create a new table row
                 const row = newRequestsTable.insertRow();
-                
-                // Display the email
-                row.insertCell(0).textContent = request.email;
-                
-                // Display client type and role
-                let clientTypeRole = '';
-                if (request.role === 'client') {
-                    clientTypeRole = `${request.clientType} Client`;
-                } else {
-                    clientTypeRole = request.role;
+                row.setAttribute('data-user-id', userId); // Add this line
+    
+                // Handle Staff, Internal Client, and External Client differently
+                let name, clientTypeOrDept;
+    
+                if (user.role === 'staff') {
+                    name = `${user.firstName} ${user.middleName} ${user.lastName}`;
+                    clientTypeOrDept = user.department; // Department for staff
+                } else if (user.role === 'client' && user.clientType === 'internal') {
+                    name = `${user.firstName} ${user.middleName} ${user.lastName}`;
+                    clientTypeOrDept = 'Internal Client'; // Label for internal clients
+                } else if (user.role === 'client' && user.clientType === 'external') {
+                    name = `${user.firstName} ${user.middleName} ${user.lastName}`;
+                    clientTypeOrDept = `External Client - ${user.department}`; 
                 }
-                row.insertCell(1).textContent = clientTypeRole;
-                
-                // Display status
-                row.insertCell(2).textContent = request.status;
-                
-                // Create and append Approve button
-                const approveBtn = document.createElement("button");
-                approveBtn.textContent = "Approve";
-                approveBtn.onclick = () => handleApprove(childSnapshot.key, request.role);
-                row.insertCell(3).appendChild(approveBtn);
-                
-                // Create and append Deny button
-                const denyBtn = document.createElement("button");
-                denyBtn.textContent = "Deny";
-                denyBtn.onclick = () => handleDeny(childSnapshot.key);
-                row.insertCell(4).appendChild(denyBtn);
+    
+                // Insert cells and data
+                row.insertCell(0).textContent = name || 'N/A'; 
+                row.insertCell(1).textContent = user.email || 'N/A'; 
+                row.insertCell(2).textContent = user.role || 'N/A'; 
+                row.insertCell(3).textContent = clientTypeOrDept || 'N/A'; 
+    
+                // Add action buttons
+                const actionCell = row.insertCell(4);
+    
+                // Create and append the "View" button
+                const viewButton = document.createElement("button");
+                viewButton.textContent = "View";
+                viewButton.addEventListener("click", function() {
+                    viewUserDetails(userId, user);  // View details on click
+                });
+                actionCell.appendChild(viewButton);
+    
+                // Create and append the "Approve" button
+                const approveButton = document.createElement("button");
+                approveButton.textContent = "Approve";
+                approveButton.addEventListener("click", function() {
+                    handleApprove(userId, user.role); // Approve the user
+                });
+                actionCell.appendChild(approveButton);
+    
+                // Create and append the "Deny" button
+                const denyButton = document.createElement("button");
+                denyButton.textContent = "Deny";
+                denyButton.addEventListener("click", function() {
+                    handleDeny(userId); // Deny the user
+                });
+                actionCell.appendChild(denyButton);
             });
         });
     }
     
-
+    // Ensure that this function is only called once
+    loadNewUserRequests();
+    
+    
+    // Function to handle viewing user details
+    function viewUserDetails(userId) {
+        const requestRef = ref(database, 'new_user_requests/' + userId);
+        get(requestRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const user = snapshot.val();
+                const userRequest = {
+                    email: user.email,
+                    role: user.role,
+                    clientType: user.clientType || 'N/A',
+                    firstName: user.firstName,
+                    middleName: user.middleName,
+                    lastName: user.lastName,
+                    contactNumber: user.contactNumber || 'N/A',
+                    address: user.address || 'N/A',
+                    username: user.username || 'N/A'
+                };
+    
+                // Fetch additional data based on user's role and client type
+                if (user.role === 'client' && user.clientType === 'internal') {
+                    userRequest.department = user.department || 'N/A';
+                } else if (user.role === 'client' && user.clientType === 'external') {
+                    userRequest.department = user.department || 'N/A';
+                    userRequest.school = user.school || 'N/A';
+                }
+    
+                showModal(userRequest); // Pass the updated userRequest object to showModal
+            } else {
+                console.error("User not found");
+            }
+        }).catch((error) => {
+            console.error("Error fetching user details:", error);
+        });
+    }
+    
     function handleApprove(userId, role) {
         const requestRef = ref(database, 'new_user_requests/' + userId);
         get(requestRef).then((snapshot) => {
@@ -497,6 +607,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log("Request removed.");
                             fetchNewUserRequests(); // Refresh the table
                             displayClients(); // Refresh the clients table
+                            // Remove the row from the table
+                            const row = document.querySelector(`tr[data-user-id="${userId}"]`);
+                            if (row) {
+                                row.remove();
+                            }
                         }).catch((error) => {
                             console.error("Error removing request:", error);
                         });
@@ -514,6 +629,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log("Request removed.");
                             fetchNewUserRequests(); // Refresh the table
                             displayLaboratoryStaff(); // Refresh the staff table
+                            // Remove the row from the table
+                            const row = document.querySelector(`tr[data-user-id="${userId}"]`);
+                            if (row) {
+                                row.remove();
+                            }
                         }).catch((error) => {
                             console.error("Error removing request:", error);
                         });
@@ -527,11 +647,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-
     function handleDeny(userId) {
         remove(ref(database, 'new_user_requests/' + userId)).then(() => {
             console.log("Request denied and removed");
             fetchNewUserRequests(); // Refresh the table
+            // Remove the row from the table
+            const row = document.querySelector(`tr[data-user-id="${userId}"]`);
+            if (row) {
+                row.remove();
+            }
         }).catch((error) => {
             console.error("Error denying request:", error);
         });
@@ -588,3 +712,51 @@ document.getElementById("logoutButton")?.addEventListener("click", function() {
         alert("Error during sign-out: " + error.message);
     });
 });
+
+// Function to display user details in the modal
+function showModal(request) {
+    // Create a modal container element
+    const modalContainer = document.createElement("div");
+    modalContainer.className = "modal-container";
+
+    // Create the modal content element
+    const modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+
+    // Debugging logs
+    console.log("Request Data:", request);
+
+    // Set the modal content
+    modalContent.innerHTML = `
+      <h2>User Details</h2>
+      <p>Email: ${request['email'] || 'N/A'}</p>
+      <p>Role: ${request['role'] || 'N/A'}</p>
+      ${request['role'] === 'client' ? `<p>Client Type: ${request['clientType'] || 'N/A'}</p>` : ''}
+      ${request['role'] === 'client' && request['department'] ? `<p>Department: ${request['department'] || 'N/A'}</p>` : ''}
+      ${request['role'] === 'client' && request['clientType'] === 'external' && request['school'] ? `<p>School: ${request['school'] || 'N/A'}</p>` : ''}
+      <p>Full Name: ${request['firstName'] || 'N/A'} ${request['middleName'] ? request['middleName'] + ' ' : ''}${request['lastName'] || 'N/A'}</p>
+      <p>Contact Number: ${request['contactNumber'] || 'N/A'}</p>
+      <p>Address: ${request['address'] || 'N/A'}</p>
+      ${request['username'] ? `<p>Username: ${request['username'] || 'N/A'}</p>` : ''}
+      <button id="closeModal">Close</button>
+    `;
+
+    // Add the modal content to the modal container
+    modalContainer.appendChild(modalContent);
+
+    // Add the modal container to the body
+    document.body.appendChild(modalContainer);
+
+    // Add an event listener to the close button
+    document.getElementById("closeModal").addEventListener("click", () => {
+      modalContainer.remove();
+    });
+
+    // Add an event listener to the modal container to close it when clicked outside
+    modalContainer.addEventListener("click", (event) => {
+      if (event.target === modalContainer) {
+        modalContainer.remove();
+      }
+    });
+}
+
