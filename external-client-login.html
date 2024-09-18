@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>External Client Login</title>
     <link rel="stylesheet" href="css/styles.css">
     <script type="module" src="js/auth.js" defer></script>
- 
 </head>
 <body>
-    <form id="externalClientLoginForm">
-        <h2>External Client Login</h2>
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-        <button type="submit">Login</button>
+    <div class="image-section">
+        <img src="log-in-bg.jpg"  class="LogInBg-image">
+    </div>
+    <div class="logo">
+        <img src="logo.webp">
+        <h1>External Client</h1>
+        <p>(Researchers, faculty members, and students from other universities with existing MOUs with PUP RIST)</p><br>
+    </div>
+    <div class = "sign-in">
+        <p>Sign in to your session</p>
+        </div>
+    <div class = "ExternalClientLoginForm">
+    <form id="internalClientLoginForm">
+        <input class="user-icon" type="email" id="email" placeholder ="Username"required>
+        <input class="key-icon" type="password" id="password" placeholder="Password" required>
+        <button id = "sign-inbtn" type="submit">Sign In</button>
     </form>
-    <p><a href="external-client-register.html">Register as External Client</a></p>
-    <p><a href="password-reset.html">Forgot Password?</a></p> <!-- Added forgot password link -->
-</body>
+    </div>
+    <div class=" low-label">
+    <p><a href="password-reset.html">Forgot Password?</a> | <a href="external-client-login.html">Create New Account</a></p>
+    </div>
+    <div class = "lower-label">
+    <p>By using this service, you understood and agree to the PUP <br> Online Services <a href="external-client-login.html">Terms of Use</a> and <a href="external-client-login.html">Privacy Statement</a>.</p>
+    </div>
+</div>
+
+</body> 
 </html>
