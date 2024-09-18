@@ -156,7 +156,7 @@ input {
 /* Client Dashboard Specific Styles */
 .client-header {
     padding: 15px;
-    background-color: #333;
+    background-color: #7D1B1B;
     color: white;
     position: fixed;
     width: calc(100% - 250px); /* Adjust for sidebar width */
@@ -177,7 +177,7 @@ input {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #333;
+    background-color: #7D1B1B;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 20px;
@@ -194,7 +194,7 @@ input {
 }
 
 .client-sidebar a:hover {
-    background-color: #555;
+    background-color: #7D1B1B;
 }
 
 .client-main {
