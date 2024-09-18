@@ -140,18 +140,133 @@ button:hover {
     display: none; /* Hide error messages by default */
 }
 
-/* Forms */
+
+
+
+/* Log-In Forms */
 form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 350px;
     margin: 0 auto;
 }
 
 input {
-    margin: 10px 0;
+    margin: 10px;
     padding: 10px;
+    background-color: #D9D9D9;
+    color: #000000;
+    border: 0px;
+    font-size: 15px;
 }
+
+#sign-inbtn  {
+    padding: 10px;
+    margin: 10px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 130px;
+    -ms-transform: translate(5%);
+    transform: translateX(75%);
+}
+
+#admin-inbtn  {
+    padding: 10px;
+    margin: 10px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 130px;
+    -ms-transform: translate(5%);
+    transform: translateX(75%);
+}
+
+#lab-inbtn  {
+    padding: 10px;
+    margin: 10px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    -ms-transform: translate(5%);
+    transform: translateX(120%);
+}
+
+.adm-low-label p{
+    -ms-transform: translae(5%);
+    transform: translateX(4.8%);
+    color: black;
+}
+
+.low-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(4.3%);
+    color: black;
+}
+
+.lower-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(0.1%);
+    color: black;
+    font-size: 11px;
+    text-align: center;
+    padding-top:10px;
+}
+
+.pswrd-low-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(6.3%);
+    color: black;
+}
+
+.pswrd-lower-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(0.1%);
+    color: black;
+    font-size: 11px;
+    text-align: center;
+    padding-top:10px;
+}
+
+.lab-low-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(2.12%);
+    color: black;
+}
+
+
+#enter {
+        margin-top: -15px;
+        font-size: 0.9rem;
+        color: #000000;
+        font-weight: bold;
+        text-align: center;
+}
+
+#reset-btn  {
+    padding: 10px;
+    margin: 10px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 160px;
+    -ms-transform: translate(5%);
+    transform: translateX(55%);
+}
+
 
 /* Client Dashboard Specific Styles */
 .client-header {
@@ -210,10 +325,46 @@ input {
 }
 
 .LogInBg-image {
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 10%;
     object-fit: cover;
+    float: left;
 }
+
+
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    width: 150px;
+    height:150px;
+    margin-top: 40px;
+    margin-bottom: -10px;
+}
+
+.logo h1 {
+    margin-top: 1px;
+    font-size: 1.5rem;
+}
+
+.logo p {
+    margin-top: -15px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+
+.sign-in p {
+    margin-top: -15px;
+    font-size: 0.9rem;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+
 
 /* Modal styles */
 .modal-container {
@@ -318,3 +469,19 @@ input {
             cursor: pointer;
         }
 
+        .user-icon {
+            padding-left: 45px;
+            background: url("https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png") no-repeat left;
+            background-size: 22px;
+            background-color: #D9D9D9;
+            background-position-x: 10px;
+          }
+
+          
+        .key-icon {
+            padding-left: 45px;
+            background: url("https://images.vexels.com/content/131184/preview/key-flat-icon-e94865.png") no-repeat left;
+            background-size: 22px;
+            background-color: #D9D9D9;
+            background-position-x: 10px;
+          }
