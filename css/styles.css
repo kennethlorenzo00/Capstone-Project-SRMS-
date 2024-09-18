@@ -204,6 +204,16 @@ input {
     transition: margin-left 0.5s;
 }
 
+.image-section {
+    flex: 2;
+    background-color: #ffffff;
+}
+
+.LogInBg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 /* Modal styles */
 .modal-container {
