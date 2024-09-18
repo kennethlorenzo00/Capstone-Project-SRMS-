@@ -485,3 +485,30 @@ input {
             background-color: #D9D9D9;
             background-position-x: 10px;
           }
+
+          #helpBtn  {
+            border: none;
+            color: white;
+            padding: 12px 19px;
+            font-size: 45px;
+            cursor: pointer; 
+            color: white;
+          }
+
+          #notificationsBtn {
+            border: none;
+            color: white;
+            padding: 12px 19px;
+            font-size: 45px;
+            cursor: pointer; 
+            color: white;
+          }
+
+          #settingsBtn {
+            border: none;
+            color: white;
+            padding: 12px 19px;
+            font-size: 45px;
+            cursor: pointer; 
+            color: white;
+          }
