@@ -1,178 +1,227 @@
-import { auth, database } from './firebase.js'; // Adjust the path if necessary
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-import { ref, set, get, update, onValue, remove } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { auth, database } from './firebase.js';
+import { getAuth,createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { ref, set, get, update, onValue, remove} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-// Handle Admin Registration
-document.getElementById("adminRegisterForm")?.addEventListener("submit", function(event) {
-    event.preventDefault();
+// Variables to track email verification
+let isEmailVerified = false;
+let currentUser;
 
+// Common function to handle Send Verification Link
+function handleSendVerification() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
+    // Create user in Firebase Authentication
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("Registration successful");
+            currentUser = userCredential.user;
+            console.log("User created, sending verification email...");
 
-            set(ref(database, 'admins/' + user.uid), {
-                role: 'admin'
-            }).then(() => {
-                console.log("Admin role saved in database");
-                window.location.href = 'admin-login.html'; 
-            }).catch((error) => {
-                console.error("Error saving admin role:", error);
-                alert("Error saving admin role: " + error.message);
-            });
+            // Send verification email
+            sendEmailVerification(currentUser)
+                .then(() => {
+                    alert("Verification email sent. Please verify your email.");
+                })
+                .catch((error) => {
+                    console.error("Error sending verification email:", error.message);
+                });
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Error during registration:", errorCode, errorMessage);
-            alert("Registration failed: " + errorMessage);
+            console.error("Error during registration:", error.message);
+            alert("Error during registration: " + error.message);
         });
+}
+
+// Common function to continuously check email verification status
+function checkEmailVerification(registerBtnId) {
+    const intervalId = setInterval(() => {
+        currentUser.reload().then(() => {
+            if (currentUser.emailVerified) {
+                isEmailVerified = true;
+                document.getElementById(registerBtnId).disabled = false; // Enable register button
+                console.log("Email verified, register button enabled.");
+                clearInterval(intervalId); // Stop checking once verified
+            } else {
+                console.log("Email not verified yet.");
+            }
+        }).catch((error) => {
+            console.error("Error reloading user:", error.message);
+        });
+    }, 3000); // Check every 3 seconds
+}
+
+// Function to handle password reset
+document.getElementById('passwordResetForm')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.getElementById('resetEmail').value;
+
+    sendPasswordResetEmail(getAuth(), email)
+    .then(() => {
+        alert('Password reset link sent! Please check your email.');
+        window.history.back(); 
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(error);
+        alert('Error sending password reset link. Please try again.');
+    });
 });
 
 // Handle Laboratory Staff Registration
-document.getElementById("labRegisterForm")?.addEventListener("submit", function(event) {
-    event.preventDefault();
+if (document.getElementById("labRegisterForm")) {
+    const registerBtn = document.getElementById("registerBtn");
+    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
 
-    const firstName = document.getElementById("firstName").value;
-    const middleName = document.getElementById("middleName").value;
-    const lastName = document.getElementById("lastName").value;
-    const username = document.getElementById("username").value;
-    const contactNumber = document.getElementById("contactNumber").value;
-    const address = document.getElementById("address").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    sendVerificationBtn.addEventListener("click", () => {
+        handleSendVerification();
+        checkEmailVerification("registerBtn");
+    });
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("Registration successful");
+    document.getElementById("labRegisterForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-            set(ref(database, 'new_user_requests/' + user.uid), {
-                firstName: firstName,
-                middleName: middleName,
-                lastName: lastName,
-                username: username,
-                contactNumber: contactNumber,
-                address: address,
-                email: email,
-                role: 'staff',
-                status: 'pending' // New requests are initially pending
-            }).then(() => {
-                console.log("New user request saved in database");
-                window.location.href = 'lab-login.html'; 
-            }).catch((error) => {
-                console.error("Error saving new user request:", error);
-                alert("Error saving new user request: " + error.message);
-            });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Error during registration:", errorCode, errorMessage);
-            alert("Registration failed: " + errorMessage);
+        if (!isEmailVerified) {
+            alert("Please verify your email before registering.");
+            return;
+        }
+
+        const firstName = document.getElementById("firstName").value;
+        const middleName = document.getElementById("middleName").value || '';
+        const lastName = document.getElementById("lastName").value;
+        const username = document.getElementById("username").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const address = document.getElementById("address").value;
+        const email = document.getElementById("email").value;
+
+        // Save data to database
+        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+            firstName,
+            middleName,
+            lastName,
+            username,
+            contactNumber,
+            address,
+            email,
+            role: 'Staff',
+            status: 'Pending'
+        }).then(() => {
+            alert("Registration successful, waiting for admin approval.");
+            auth.signOut(); // Sign out the user after registration
+            window.location.href = 'lab-login.html';
+        }).catch((error) => {
+            console.error("Error saving registration:", error.message);
+            alert("Error saving registration: " + error.message);
         });
-});
-
+    });
+}
 
 // Handle External Client Registration
-document.getElementById("externalClientRegisterForm")?.addEventListener("submit", function(event) {
-    event.preventDefault();
+if (document.getElementById("externalClientRegisterForm")) {
+    const registerBtn = document.getElementById("registerBtn");
+    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
 
-    const firstName = document.getElementById("firstName").value;
-    const middleName = document.getElementById("middleName").value || ''; // optional
-    const lastName = document.getElementById("lastName").value;
-    const username = document.getElementById("username").value;
-    const address = document.getElementById("address").value;
-    const contactNumber = document.getElementById("contactNumber").value;
-    const school = document.getElementById("school").value;
-    const department = document.getElementById("department").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    sendVerificationBtn.addEventListener("click", () => {
+        handleSendVerification();
+        checkEmailVerification("registerBtn");
+    });
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("Registration successful");
+    document.getElementById("externalClientRegisterForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-            set(ref(database, 'new_user_requests/' + user.uid), {
-                firstName: firstName,
-                middleName: middleName,
-                lastName: lastName,
-                username: username,
-                address: address,
-                contactNumber: contactNumber,
-                school: school,
-                department: department,
-                email: email,
-                role: 'client',
-                clientType: 'external',  // Automatically assigned as external
-                status: 'pending'
-            }).then(() => {
-                console.log("External client request saved in database");
-                window.location.href = 'external-client-login.html'; 
-            }).catch((error) => {
-                console.error("Error saving client request:", error);
-                alert("Error saving client request: " + error.message);
-            });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Error during registration:", errorCode, errorMessage);
-            alert("Registration failed: " + errorMessage);
+        if (!isEmailVerified) {
+            alert("Please verify your email before registering.");
+            return;
+        }
+
+        const firstName = document.getElementById("firstName").value;
+        const middleName = document.getElementById("middleName").value || '';
+        const lastName = document.getElementById("lastName").value;
+        const username = document.getElementById("username").value;
+        const address = document.getElementById("address").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const school = document.getElementById("school").value;
+        const department = document.getElementById("department").value;
+        const email = document.getElementById("email").value;
+
+        // Save data to database
+        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+            firstName,
+            middleName,
+            lastName,
+            username,
+            address,
+            contactNumber,
+            school,
+            department,
+            email,
+            role: 'Client',
+            clientType: 'External',
+            status: 'Pending'
+        }).then(() => {
+            alert("Registration successful, waiting for admin approval.");
+            auth.signOut(); // Sign out the user after registration
+            window.location.href = 'external-client-login.html';
+        }).catch((error) => {
+            console.error("Error saving registration:", error.message);
+            alert("Error saving registration: " + error.message);
         });
-});
-
+    });
+}
 
 // Handle Internal Client Registration
-document.getElementById("internalClientRegisterForm")?.addEventListener("submit", function(event) {
-    event.preventDefault();
+if (document.getElementById("internalClientRegisterForm")) {
+    const registerBtn = document.getElementById("registerBtn");
+    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
 
-    const firstName = document.getElementById("firstName").value;
-    const middleName = document.getElementById("middleName").value;
-    const lastName = document.getElementById("lastName").value;
-    const username = document.getElementById("username").value;
-    const address = document.getElementById("address").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const contactNumber = document.getElementById("contactNumber").value;
-    const department = document.getElementById("department").value;
+    sendVerificationBtn.addEventListener("click", () => {
+        handleSendVerification();
+        checkEmailVerification("registerBtn");
+    });
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("Registration successful");
+    document.getElementById("internalClientRegisterForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-            set(ref(database, 'new_user_requests/' + user.uid), {
-                firstName: firstName,
-                middleName: middleName,
-                lastName: lastName,
-                username: username,
-                email: email,
-                address: address,
-                contactNumber: contactNumber,
-                department: department,
-                role: 'client',
-                clientType: 'internal',  // Automatically assigned as internal
-                status: 'pending'
-            }).then(() => {
-                console.log("Internal client request saved in database");
-                window.location.href = 'internal-client-login.html'; 
-            }).catch((error) => {
-                console.error("Error saving client request:", error);
-                alert("Error saving client request: " + error.message);
-            });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Error during registration:", errorCode, errorMessage);
-            alert("Registration failed: " + errorMessage);
+        if (!isEmailVerified) {
+            alert("Please verify your email before registering.");
+            return;
+        }
+
+        const firstName = document.getElementById("firstName").value;
+        const middleName = document.getElementById("middleName").value || '';
+        const lastName = document.getElementById("lastName").value;
+        const username = document.getElementById("username").value;
+        const address = document.getElementById("address").value;
+        const school = document.getElementById("school").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const department = document.getElementById("department").value;
+        const email = document.getElementById("email").value;
+
+        // Save data to database
+        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+            firstName,
+            middleName,
+            lastName,
+            username,
+            address,
+            contactNumber,
+            department,
+            school,
+            email,
+            role: 'Client',
+            clientType: 'Internal',
+            status: 'Pending'
+        }).then(() => {
+            alert("Registration successful, waiting for admin approval.");
+            auth.signOut(); // Sign out the user after registration
+            window.location.href = 'internal-client-login.html';
+        }).catch((error) => {
+            console.error("Error saving registration:", error.message);
+            alert("Error saving registration: " + error.message);
         });
-});
+    });
+}
+
 
 
 // Handle Admin Login
@@ -193,6 +242,11 @@ document.getElementById("adminLoginForm")?.addEventListener("submit", function(e
                     const userData = snapshot.val();
                     if (userData.role === 'admin') {
                         console.log("User is an admin. Redirecting to dashboard...");
+                        sessionStorage.setItem('adminEmail', email);
+                        sessionStorage.setItem('adminPassword', password);
+                        console.log('Stored Email:', sessionStorage.getItem('adminEmail'));
+                        console.log('Stored Password:', sessionStorage.getItem('adminPassword'));
+
                         window.location.href = 'admin-dashboard.html';
                     } else {
                         console.log("User is not an admin.");
@@ -455,16 +509,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    auth.onAuthStateChanged((user) => {
-        if (user) {
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = 'admin-login.html';
+        } else {
             const userRef = ref(database, 'admins/' + user.uid);
-            get(userRef).then((snapshot) => {
+            try {
+                const snapshot = await get(userRef);
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
                     if (userData.role === 'admin') {
                         adminContent.style.display = "block";
                         adminErrorMessage.style.display = "none";
-
                         loadNewUserRequests();
                         displayLaboratoryStaff();
                         displayClients();
@@ -476,13 +532,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     adminContent.style.display = "none";
                     adminErrorMessage.style.display = "block";
                 }
-            }).catch((error) => {
+            } catch (error) {
                 console.error("Error fetching user role:", error);
                 adminContent.style.display = "none";
                 adminErrorMessage.style.display = "block";
-            });
-        } else {
-            window.location.href = 'admin-login.html';
+            }
         }
     });
 
@@ -504,13 +558,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Handle Staff, Internal Client, and External Client differently
                 let name, clientTypeOrDept;
     
-                if (user.role === 'staff') {
+                if (user.role === 'Staff') {
                     name = `${user.firstName} ${user.middleName} ${user.lastName}`;
                     clientTypeOrDept = user.department; // Department for staff
-                } else if (user.role === 'client' && user.clientType === 'internal') {
+                } else if (user.role === 'Client' && user.clientType === 'Internal') {
                     name = `${user.firstName} ${user.middleName} ${user.lastName}`;
                     clientTypeOrDept = 'Internal Client'; // Label for internal clients
-                } else if (user.role === 'client' && user.clientType === 'external') {
+                } else if (user.role === 'Client' && user.clientType === 'External') {
                     name = `${user.firstName} ${user.middleName} ${user.lastName}`;
                     clientTypeOrDept = `External Client - ${user.department}`; 
                 }
@@ -595,17 +649,25 @@ document.addEventListener("DOMContentLoaded", () => {
         get(requestRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const requestData = snapshot.val();
-                if (role === 'client') {
+                if (role === 'Client') {
                     // Add client to the clients table
                     set(ref(database, 'clients/' + userId), {
                         email: requestData.email,
-                        role: 'client',
-                        clientType: requestData.clientType // Add client type if available
+                        role: 'Client',
+                        clientType: requestData.clientType, 
+                        firstName: requestData.firstName,
+                        middleName: requestData.middleName,
+                        lastName: requestData.lastName,
+                        address: requestData.address,
+                        username: requestData.username,
+                        contactNumber: requestData.contactNumber,
+                        school: requestData.school,
+                        department: requestData.department
                     }).then(() => {
                         console.log("Client added.");
                         remove(requestRef).then(() => {
                             console.log("Request removed.");
-                            fetchNewUserRequests(); // Refresh the table
+                            loadNewUserRequests()// Refresh the table
                             displayClients(); // Refresh the clients table
                             // Remove the row from the table
                             const row = document.querySelector(`tr[data-user-id="${userId}"]`);
@@ -618,16 +680,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     }).catch((error) => {
                         console.error("Error adding client:", error);
                     });
-                } else if (role === 'staff') {
+                } else if (role === 'Staff') {
                     // Add laboratory staff to the laboratory_staff table
                     set(ref(database, 'laboratory_staff/' + userId), {
                         email: requestData.email,
-                        role: 'staff'
+                        role: 'Staff',
+                        firstName: requestData.firstName,
+                        middleName: requestData.middleName,
+                        lastName: requestData.lastName,
+                        address: requestData.address,
+                        username: requestData.username,
+                        contactNumber: requestData.contactNumber,
                     }).then(() => {
                         console.log("Laboratory staff added.");
                         remove(requestRef).then(() => {
                             console.log("Request removed.");
-                            fetchNewUserRequests(); // Refresh the table
+                            loadNewUserRequests(); // Refresh the table
                             displayLaboratoryStaff(); // Refresh the staff table
                             // Remove the row from the table
                             const row = document.querySelector(`tr[data-user-id="${userId}"]`);

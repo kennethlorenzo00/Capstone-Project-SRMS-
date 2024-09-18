@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internal Client Registration</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/auth.js" defer></script>
 </head>
 <body>
     <h1>Internal Client Registration</h1>
@@ -15,11 +14,16 @@
         <input type="text" id="lastName" placeholder="Last Name" required>
         <input type="text" id="username" placeholder="Username" required>
         <input type="text" id="address" placeholder="Address" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
         <input type="text" id="contactNumber" placeholder="Contact Number" required>
         <input type="text" id="department" placeholder="Department" required>
-        <button type="submit">Register</button>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        
+        <!-- Send Verification Link Button -->
+        <button type="button" id="sendVerificationBtn">Send Verification Link</button>
+        
+        <!-- Register Button (Initially Disabled) -->
+        <button type="submit" id="registerBtn" disabled>Register</button>
     </form>
 </body>
 </html>

@@ -1,29 +1,30 @@
-// Toggle sidebar visibility
-document.getElementById("openSidebar").addEventListener("click", function() {
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-});
+        // Sidebar Toggle
+        const sidebar = document.getElementById("sidebar");
+        const openSidebarBtn = document.getElementById("openSidebar");
+        const closeSidebarBtn = document.getElementById("closeSidebar");
 
-document.getElementById("closeSidebar").addEventListener("click", function() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-});
+        openSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.remove("hidden");
+        });
 
-// Open tab content
-function openTab(evt, tabName) {
-    const tabcontents = document.getElementsByClassName("tabcontent");
-    for (let i = 0; i < tabcontents.length; i++) {
-        tabcontents[i].style.display = "none";
-    }
-    const tablinks = document.getElementsByClassName("tablinks");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
+        closeSidebarBtn.addEventListener("click", function() {
+            sidebar.classList.add("hidden");
+        });
 
-// Manage sidebar links visibility
-document.getElementById("manageUsersLink").addEventListener("click", function() {
-    document.getElementById("manageUsersSection").classList.toggle("hidden");
-});
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontents = document.querySelectorAll(".tabcontent");
+            const tablinks = document.querySelectorAll(".tablinks");
+
+            tabcontents.forEach(tab => tab.style.display = "none");
+            tablinks.forEach(link => link.classList.remove("active"));
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Show the first tab by default
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".tablinks").click();
+        });
+
