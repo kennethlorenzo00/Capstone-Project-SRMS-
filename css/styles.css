@@ -320,7 +320,7 @@ input {
     transition: margin-left 0.5s;
 }
 
-.image-section {
+.bg-image-section {
     flex: 2;
     background-color: #ffffff;
 }
@@ -342,6 +342,7 @@ input {
     height:150px;
     margin-top: 40px;
     margin-bottom: -10px;
+    float: right;
 }
 
 .logo h1 {
