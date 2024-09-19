@@ -90,7 +90,7 @@ async function addNewClient(event) {
             department: department
         });
 
-        // Close the modal and reset the form
+        alert(`New client added successfully. The temporary password is: ${temporaryPassword}`);
         closeAddClientModalHandler();
   
     } catch (error) {
@@ -154,6 +154,7 @@ async function addNewStaff(event) {
             contactNumber: contactNumber,
         });
 
+        alert(`New staff added successfully. The temporary password is: ${temporaryPassword}`);
         closeAddStaffModalHandler();
 
     } catch (error) {

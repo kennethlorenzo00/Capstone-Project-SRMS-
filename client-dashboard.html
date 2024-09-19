@@ -1,110 +1,387 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
-    <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
-</head>
-<body>
-    <!-- Sidebar -->
-    <div id="mySidebar" class="client-sidebar hidden">
-        <button id="closeSidebar" class="closebtn">&times;</button>
-        <a href="#" id="homeLink">Home (Dashboard)</a>
-        <a href="#" id="createRequestLink">Create Request</a>
-        <a href="#" id="requestListLink">Request List</a>
-        <a href="#" id="myAccountLink">My Account</a>
-    </div>
-
-    <!-- Main Content -->
-    <div id="main">
-        <!-- Header -->
-        <header class="client-header">
-            <button id="openSidebar" class="openbtn">&#9776;</button>
-            <h1>Client Dashboard</h1>
-            <div class="header-icons">
-                <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-                <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
-                <button id="settingsBtn"><i class= "fa-solid fa-gear"></i></button>
-            </div>
-        </header>
-
-        <!-- Dashboard Section -->
-        <div id="dashboardContent" class="client-main">
-            <h1>Welcome to Your Dashboard</h1>
-            <p>Here you can manage your requests and account details.</p>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Client Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
+        <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div id="mySidebar" class="client-sidebar hidden">
+            <button id="closeSidebar" class="closebtn">&times;</button>
+            <a href="#" id="homeLink">Home (Dashboard)</a>
+            <a href="#" id="createRequestLink">Create Request</a>
+            <a href="#" id="requestListLink">Request List</a>
+            <a href="#" id="myAccountLink">My Account</a>
         </div>
 
-        <!-- Create Request Section (Initially Hidden) -->
-        <div id="createRequestContent" class="hidden">
-            <h1>Create a New Request</h1>
-            <p>Select the type of request:</p>
+        <!-- Main Content -->
+        <div id="main">
+            <!-- Header -->
+            <header class="client-header">
+                <button id="openSidebar" class="openbtn">&#9776;</button>
+                <h1>Client Dashboard</h1>
+                <div class="header-icons">
+                    <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+                    <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
+                    <button id="settingsBtn"><i class= "fa-solid fa-gear"></i></button>
+                </div>
+            </header>
 
-            <!-- Buttons to Select Request Type -->
-            <button id="antimicrobialBtn" class="request-type-btn">Antimicrobial Request</button>
-            <button id="microbioAssayBtn" class="request-type-btn">Microbiological Assay Request</button>
-            <button id="labEquipmentBtn" class="request-type-btn">Lab Equipment Use</button>
-
-            <!-- Request Sections -->
-            <div id="antimicrobialSection" class="hidden">
-                <h2>Antimicrobial Request</h2>
-                <p>Details about antimicrobial request options go here.</p>
-                <button id="proceedAntimicrobial">Proceed Now!</button>
+            <!-- Dashboard Section -->
+            <div id="dashboardContent" class="client-main">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Here you can manage your requests and account details.</p>
             </div>
 
-            <div id="microbioAssaySection" class="hidden">
-                <h2>Microbiological Assay Request</h2>
-                <p>Details about microbiological assay request options go here.</p>
-                <button id="proceedMicrobioAssay">Proceed Now!</button>
+            <!-- Create Request Section (Initially Hidden) -->
+            <div id="createRequestContent" class="hidden">
+                <h1>Create a New Request</h1>
+                <p>Select the type of request:</p>
+
+                <!-- Buttons to Select Request Type -->
+                <button id="microbialTestingBtn" class="request-type-btn">Microbial Testing Methods</button>
+                <button id="microbialAnalysisBtn" class="request-type-btn">Microbial Analysis & Characterization</button>
+                <button id="labResearchProcessesBtn" class="request-type-btn">Laboratory & Research Processes</button>
+
+                <!-- Request Sections -->
+                <div id="microbialTestingSection" class="hidden">
+                    <h2>Microbial Testing Methods</h2>
+                    <p>Details about microbial testing methods go here.</p>
+                    <button id="proceedMicrobialTesting">Proceed Now!</button>
+                </div>
+
+                <div id="microbialAnalysisSection" class="hidden">
+                    <h2>Microbial Analysis & Characterization</h2>
+                    <p>Details about microbial analysis and characterization options go here.</p>
+                    <button id="proceedMicrobialAnalysis">Proceed Now!</button>
+                </div>
+
+                <div id="labResearchProcessesSection" class="hidden">
+                    <h2>Laboratory & Research Processes</h2>
+                    <p>Information regarding laboratory and research processes go here.</p>
+                    <button id="proceedLabResearchProcesses">Proceed Now!</button>
+                </div>
             </div>
 
-            <div id="labEquipmentSection" class="hidden">
-                <h2>Lab Equipment Use</h2>
-                <p>Information regarding the laboratory equipment usage.</p>
-                <button id="proceedLabEquipment">Proceed Now!</button>
+            <!-- Options Sections (Initially Hidden) -->
+            <div id="microbialTestingOptions" class="hidden">
+                <h2>Microbial Testing Methods Options</h2>
+                <button id="plateCountMethodBtn">Plate Count Method</button>
+                <button id="agarDiscDiffusionMethodBtn">Agar Disc Diffusion Method</button>
+                <button id="agarWellDiffusionMethodBtn">Agar Well Diffusion Method</button>
+                <button id="micTestingBtn">Minimum Inhibitory Concentration (MIC) Testing</button>
+                <button id="mbcTestingBtn">Minimum Bactericidal Concentration (MBC) Testing</button>
+                <button id="backToCreateRequestMicrobialTesting">Back</button>
+            </div>
+
+            <div id="microbialAnalysisOptions" class="hidden">
+                <h2>Microbial Analysis & Characterization Options</h2>
+                <button id="microbialWaterAnalysisBtn">Microbial Analysis of Water</button>
+                <button id="microbialCharBtn">Microbial Characterization</button>
+                <button id="microbialCultureCollectionsBtn">Microbial Culture Collections (PUPMCC)</button>
+                <button id="microscopyBtn">Microscopy</button>
+                <button id="backToCreateRequestMicrobialAnalysis">Back</button>
+            </div>
+
+            <div id="labResearchProcessesOptions" class="hidden">
+                <h2>Laboratory & Research Processes Options</h2>
+                <button id="plantSpeciesIdentificationBtn">Plant Species Identification and Herbarium Curation</button>
+                <button id="labUseAndEquipmentAccessBtn">Laboratory Use and Equipment Access</button>
+                <button id="researchCollaborationProcessBtn">Research Collaboration Process</button>
+                <button id="backToCreateRequestLabResearchProcesses">Back</button>
+            </div>
+
+            <!-- Forms (Initially Hidden) -->
+            <div id="plateCountForm" class="hidden">
+                <h2>Plate Count Method Form</h2>
+                <form id="plateCountFormContent" data-request-type="microbialTesting">
+                    <div id="sampleContainerPlateCount">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="agarType">Agar Type:</label>
+                            <input type="text" class="agarType" name="agarType[]"><br><br>
+                            <label for="sampleType">Sample Type:</label>
+                            <input type="text" class="sampleType" name="sampleType[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonPlateCount">Add Another Sample</button><br><br>
+                    <button type="button" id="backPlateCountForm" class="backButton">Back</button>
+                    <button id="submitPlateCountForm">Submit</button>
+                </form>
+            </div>
+
+            <div id="agarDiscForm" class="hidden">
+                <h2>Agar Disc Diffusion Method Form</h2>
+                <form id="agarDiscFormContent" data-request-type="microbialTesting">
+                    <div id="sampleContainerAgarDisc">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="microbeName">Microbe Name:</label>
+                            <input type="text" class="microbeName" name="microbeName[]"><br><br>
+                            <label for="sampleType">Sample Type:</label>
+                            <input type="text" class="sampleType" name="sampleType[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonAgarDisc">Add Another Sample</button><br><br>
+                    <button type="button" id="backAgarDiscForm" class="backButton">Back</button>
+                    <button id="submitAgarDiscForm">Submit</button>
+                </form>
+            </div>
+        
+            <div id="agarWellForm" class="hidden">
+                <h2>Agar Well Diffusion Method Form</h2>
+                <form id="agarWellFormContent" data-request-type="microbialTesting">
+                    <div id="sampleContainerAgarWell">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="microbeName">Microbe Name:</label>
+                            <input type="text" class="microbeName" name="microbeName[]"><br><br>
+                            <label for="sampleType">Sample Type:</label>
+                            <input type="text" class="sampleType" name="sampleType[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonAgarWell">Add Another Sample</button><br><br>
+                    <button type="button" id="backAgarWellForm" class="backButton">Back</button>
+                    <button id="submitAgarWellForm">Submit</button>
+                </form>
+            </div>
+            
+            <div id="micTestingForm" class="hidden">
+                <h2>Minimum Inhibitory Concentration (MIC) Testing Form</h2>
+                <form id="micTestingFormContent" data-request-type="microbialTesting">
+                    <div id="sampleContainerMicTesting">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="sampleIdentification">Sample Identification (if applicable):</label>
+                            <input type="text" class="sampleIdentification" name="sampleIdentification[]"><br><br>
+                            <label for="microbeName">Microbe Name:</label>
+                            <input type="text" class="microbeName" name="microbeName[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMicTesting">Add Another Sample</button><br><br>
+                    <button type="button" id="backMicTestingForm" class="backButton">Back</button>
+                    <button id="submitMicTestingForm">Submit</button>
+                </form>
+            </div>
+
+            <div id="mbcTestingForm" class="hidden">
+                <h2>Minimum Bactericidal Concentration (MBC) Testing Form</h2>
+                <form id="mbcTestingFormContent" data-request-type="microbialTesting">
+                    <div id="sampleContainerMbcTesting">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="sampleIdentification">Sample Identification (if applicable):</label>
+                            <input type="text" class="sampleIdentification" name="sampleIdentification[]"><br><br>
+                            <label for="microbeSource">Microbe Source:</label>
+                            <input type="text" class="microbeSource" name="microbeSource[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMbcTesting">Add Another Sample</button><br><br>
+                    <button type="button" id="backMbcTestingForm" class="backButton">Back</button>
+                    <button id="submitMbcTestingForm">Submit</button>
+                </form>
+            </div>
+            
+            <div id="microbialWaterAnalysisForm" class="hidden">
+                <h2>Microbial Analysis of Water Form</h2>
+                <form id="microbialWaterAnalysisFormContent" data-request-type="microbialAnalysis">
+                    <div id="sampleContainerMicrobialWaterAnalysis">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="waterSource">Water Source:</label>
+                            <input type="text" class="waterSource" name="waterSource[]"><br><br>
+                            <label for="microbeName">Microbe Name:</label>
+                            <input type="text" class="microbeName" name="microbeName[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMicrobialWaterAnalysis">Add Another Sample</button><br><br>
+                    <button type="button" id="backMicrobialWaterAnalysisForm" class="backButton">Back</button>
+                    <button id="submitMicrobialWaterAnalysisForm">Submit</button>
+                </form>
+            </div>
+            
+            <div id="microbialCharForm" class="hidden">
+                <h2>Microbial Characterization Form</h2>
+                <form id="microbialCharFormContent" data-request-type="microbialAnalysis">
+                    <div id="sampleContainerMicrobialChar">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="morphologicalCharacteristics">Morphological Characteristics:</label>
+                            <input type="text" class="morphologicalCharacteristics" name="morphologicalCharacteristics[]"><br><br>
+                            <label for="microbeSource">Microbe Source:</label>
+                            <input type="text" class="microbeSource" name="microbeSource[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMicrobialChar">Add Another Sample</button><br><br>
+                    <button type="button" id="backMicrobialCharForm" class="backButton">Back</button>
+                    <button id="submitMicrobialCharForm">Submit</button>
+                </form>
+            </div>
+                    
+            <div id="microbialCultureCollectionsForm" class="hidden">
+                <h2>Microbial Culture Collections (PUPMCC) Form</h2>
+                <form id="microbialCultureCollectionsFormContent" data-request-type="microbialAnalysis">
+                    <div id="sampleContainerMicrobialCultureCollections">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="microbeName">Microbe Name:</label>
+                            <input type="text" class="microbeName" name="microbeName[]"><br><br>
+                            <label for="sampleType">Sample Type:</label>
+                            <input type="text" class="sampleType" name="sampleType[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMicrobialCultureCollections">Add Another Sample</button><br><br>
+                    <button type="button" id="backMicrobialCultureCollectionsForm" class="backButton">Back</button>
+                    <button id="submitMicrobialCultureCollectionsForm">Submit</button>
+                </form>
+            </div>
+
+            <div id="microscopyForm" class="hidden">
+                <h2>Microscopy Form</h2>
+                <form id="microscopyFormContent" data-request-type="microbialAnalysis">
+                    <div id="sampleContainerMicroscopy">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="sampleName">Sample Name:</label>
+                            <input type="text" class="sampleName" name="sampleName[]"><br><br>
+                            <label for="specialHandling">Special Handling or Preparation Instructions:</label>
+                            <input type="text" class="specialHandling" name="specialHandling[]"><br><br>
+                            <label for="sampleType">Sample Type:</label>
+                            <input type="text" class="sampleType" name="sampleType[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonMicroscopy">Add Another Sample</button><br><br>
+                    <button type="button" id="backMicroscopyForm" class="backButton">Back</button>
+                    <button id="submitMicroscopyForm">Submit</button>
+                </form>
+            </div>
+
+            <div id="plantSpeciesIdentificationForm" class="hidden">
+                <h2>Plant Species Identification and Herbarium Curation Form</h2>
+                <form id="plantSpeciesFormContent" data-request-type="labResearchProcesses">
+                    <div id="sampleContainerPlantSpecies">
+                        <div class="sampleEntry">
+                            <h3 class="sampleLabel">Sample no.1</h3>
+                            <label for="sampleId">Sample ID:</label>
+                            <input type="text" class="sampleId" name="sampleId[]"><br><br>
+                            <label for="plantSpecimen">Plant Specimen:</label>
+                            <input type="text" class="plantSpecimen" name="plantSpecimen[]"><br><br>
+                            <label for="accessionNumber">Accession Number:</label>
+                            <input type="text" class="accessionNumber" name="accessionNumber[]"><br><br>
+                            <label for="sampleCondition">Sample Condition:</label>
+                            <input type="text" class="sampleCondition" name="sampleCondition[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonPlantSpecies">Add Another Sample</button><br><br>
+                    <button type="button" id="backPlantSpeciesIdentificationForm" class="backButton">Back</button>
+                    <button id="submitPlantSpeciesIdentificationForm">Submit</button>
+                </form>
+            </div>          
+      
+            <div id="labUseAndEquipmentAccessForm" class="hidden">
+                <h2>Laboratory Use and Equipment Access Form</h2>
+                <form id="labEquipmentFormContent" data-request-type="labResearchProcesses">
+                    <div id="sampleContainerLabEquipment">
+                        <div class="sampleEntry">
+                            <label for="equipmentId">Laboratory Equipment ID:</label>
+                            <input type="text" class="equipmentId" name="equipmentId[]"><br><br>
+                            <label for="scheduledDate">Scheduled Use Date:</label>
+                            <input type="date" class="scheduledDate" name="scheduledDate[]"><br><br>
+                            <label for="postUseCondition">Post Use Condition:</label>
+                            <input type="text" class="postUseCondition" name="postUseCondition[]"><br><br>
+                            <label for="equipmentRequesting">Equipment Requesting:</label>
+                            <input type="text" class="equipmentRequesting" name="equipmentRequesting[]"><br><br>
+                        </div>
+                    </div>
+                    <button type="button" id="addSampleButtonLabEquipment">Add Another Equipment Entry</button><br><br>
+                    <button type="button" id="backLabUseAndEquipmentAccessForm" class="backButton">Back</button>
+                    <button id="submitLabUseAndEquipmentAccessForm">Submit</button>
+                </form>
+            </div>
+            
+            <div id="researchCollaborationForm" class="hidden">
+                <h2>Research Collaboration Process Form</h2>
+                <form id="researchCollaborationFormContent" data-request-type="labResearchProcesses">
+                    <label for="projectTitle">Research Project Title:</label>
+                    <input type="text" id="projectTitle" name="projectTitle" required><br><br>  
+                    <label for="principalInvestigator">Principal Investigator:</label>
+                    <input type="text" id="principalInvestigator" name="principalInvestigator" required><br><br>
+                    <label for="collaboratingInstitutions">Collaborating Institutions:</label>
+                    <input type="text" id="collaboratingInstitutions" name="collaboratingInstitutions"><br><br>
+                    <label for="objectives">Objectives and Goals:</label>
+                    <textarea id="objectives" name="objectives" rows="4" required></textarea><br><br>
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate" required><br><br>
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate" required><br><br>
+                    <label for="funding">Funding Information:</label>
+                    <textarea id="funding" name="funding" rows="3"></textarea><br><br>
+                    <label for="rolesResponsibilities">Roles and Responsibilities:</label>
+                    <textarea id="rolesResponsibilities" name="rolesResponsibilities" rows="4"></textarea><br><br>
+                    <label for="deliverables">Expected Deliverables:</label>
+                    <textarea id="deliverables" name="deliverables" rows="3"></textarea><br><br>
+                    <label for="confidentiality">Confidentiality Agreements:</label>
+                    <textarea id="confidentiality" name="confidentiality" rows="3"></textarea><br><br>
+                    <label for="contactInformation">Contact Information:</label>
+                    <input type="text" id="contactInformation" name="contactInformation"><br><br>
+                    <button type="button" id="backResearchCollaborationForm" class="backButton">Back</button>
+                    <button id="submitResearchCollaborationForm">Submit</button>
+                </form>
+            </div>
+
+            <!-- Request List Section (Initially Hidden) -->
+            <div id="requestListContent" class="hidden">
+                <h1>Your Requests</h1>
+                <p>Placeholder for listing all the user's requests.</p>
+            </div>
+
+            <!-- My Account Section (Initially Hidden) -->
+            <div id="myAccountContent" class="hidden">
+                <h1>My Account</h1>
+                <p>Placeholder for account management functionality.</p>
             </div>
         </div>
 
-        <!-- Options Sections (Initially Hidden) -->
-        <div id="antimicrobialOptions" class="hidden">
-            <h2>Antimicrobial Options</h2>
-            <button>Option 1</button>
-            <button>Option 2</button>
-            <button>Option 3</button>
-            <button id="backToCreateRequestAntimicrobial">Back</button>
-        </div>
-
-        <div id="microbioAssayOptions" class="hidden">
-            <h2>Microbiological Assay Options</h2>
-            <button>Option 1</button>
-            <button>Option 2</button>
-            <button>Option 3</button>
-            <button id="backToCreateRequestMicrobioAssay">Back</button>
-        </div>
-
-        <div id="labEquipmentOptions" class="hidden">
-            <h2>Lab Equipment Options</h2>
-            <button>Option 1</button>
-            <button>Option 2</button>
-            <button>Option 3</button>
-            <button id="backToCreateRequestLabEquipment">Back</button>
-        </div>
-
-        <!-- Request List Section (Initially Hidden) -->
-        <div id="requestListContent" class="hidden">
-            <h1>Your Requests</h1>
-            <p>Placeholder for listing all the user's requests.</p>
-        </div>
-
-        <!-- My Account Section (Initially Hidden) -->
-        <div id="myAccountContent" class="hidden">
-            <h1>My Account</h1>
-            <p>Placeholder for account management functionality.</p>
-        </div>
-    </div>
-
-    <script src="js/sidebar.js" defer></script> <!-- Ensure the path is correct -->
-</body>
-</html>
+        <script src="js/sidebar.js" defer></script> 
+        <script src="js/form-navigation.js"></script>
+        <script src="js/form-submission.js" type="module"></script>
+    </body>
+    </html>

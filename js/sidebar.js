@@ -26,21 +26,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const myAccountContent = document.getElementById("myAccountContent");
 
     // Request Type Buttons and Sections
-    const antimicrobialBtn = document.getElementById("antimicrobialBtn");
-    const microbioAssayBtn = document.getElementById("microbioAssayBtn");
-    const labEquipmentBtn = document.getElementById("labEquipmentBtn");
+    const microbialTestingBtn = document.getElementById("microbialTestingBtn");
+    const microbialAnalysisBtn = document.getElementById("microbialAnalysisBtn");
+    const labResearchProcessesBtn = document.getElementById("labResearchProcessesBtn");
 
-    const antimicrobialSection = document.getElementById("antimicrobialSection");
-    const microbioAssaySection = document.getElementById("microbioAssaySection");
-    const labEquipmentSection = document.getElementById("labEquipmentSection");
+    const microbialTestingSection = document.getElementById("microbialTestingSection");
+    const microbialAnalysisSection = document.getElementById("microbialAnalysisSection");
+    const labResearchProcessesSection = document.getElementById("labResearchProcessesSection");
 
     // Options Sections
-    const antimicrobialOptions = document.getElementById("antimicrobialOptions");
-    const microbioAssayOptions = document.getElementById("microbioAssayOptions");
-    const labEquipmentOptions = document.getElementById("labEquipmentOptions");
-
-    // Back Button
-    const backToCreateRequest = document.getElementById("backToCreateRequest");
+    const microbialTestingOptions = document.getElementById("microbialTestingOptions");
+    const microbialAnalysisOptions = document.getElementById("microbialAnalysisOptions");
+    const labResearchProcessesOptions = document.getElementById("labResearchProcessesOptions");
 
     // Function to hide all sections
     function hideAllSections() {
@@ -48,12 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
         createRequestContent.classList.add("hidden");
         requestListContent.classList.add("hidden");
         myAccountContent.classList.add("hidden");
-        antimicrobialSection.classList.add("hidden");
-        microbioAssaySection.classList.add("hidden");
-        labEquipmentSection.classList.add("hidden");
-        antimicrobialOptions.classList.add("hidden");
-        microbioAssayOptions.classList.add("hidden");
-        labEquipmentOptions.classList.add("hidden");
+        microbialTestingSection.classList.add("hidden");
+        microbialAnalysisSection.classList.add("hidden");
+        labResearchProcessesSection.classList.add("hidden");
+        microbialTestingOptions.classList.add("hidden");
+        microbialAnalysisOptions.classList.add("hidden");
+        labResearchProcessesOptions.classList.add("hidden");
     }
 
     // Function to show a specific section
@@ -80,57 +77,118 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Event listeners for request type buttons in Create Request section
-    antimicrobialBtn.addEventListener("click", function() {
-        antimicrobialSection.classList.remove("hidden");
-        microbioAssaySection.classList.add("hidden");
-        labEquipmentSection.classList.add("hidden");
+    microbialTestingBtn.addEventListener("click", function() {
+        microbialTestingSection.classList.remove("hidden");
+        microbialAnalysisSection.classList.add("hidden");
+        labResearchProcessesSection.classList.add("hidden");
     });
 
-    microbioAssayBtn.addEventListener("click", function() {
-        antimicrobialSection.classList.add("hidden");
-        microbioAssaySection.classList.remove("hidden");
-        labEquipmentSection.classList.add("hidden");
+    microbialAnalysisBtn.addEventListener("click", function() {
+        microbialTestingSection.classList.add("hidden");
+        microbialAnalysisSection.classList.remove("hidden");
+        labResearchProcessesSection.classList.add("hidden");
     });
 
-    labEquipmentBtn.addEventListener("click", function() {
-        antimicrobialSection.classList.add("hidden");
-        microbioAssaySection.classList.add("hidden");
-        labEquipmentSection.classList.remove("hidden");
+    labResearchProcessesBtn.addEventListener("click", function() {
+        microbialTestingSection.classList.add("hidden");
+        microbialAnalysisSection.classList.add("hidden");
+        labResearchProcessesSection.classList.remove("hidden");
     });
 
     // Event listeners for "Back" buttons
-    document.getElementById("backToCreateRequestAntimicrobial").addEventListener("click", function() {
-        antimicrobialOptions.classList.add("hidden");
+    document.getElementById("backToCreateRequestMicrobialTesting").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
         createRequestContent.classList.remove("hidden");
     });
 
-    document.getElementById("backToCreateRequestMicrobioAssay").addEventListener("click", function() {
-        microbioAssayOptions.classList.add("hidden");
+    document.getElementById("backToCreateRequestMicrobialAnalysis").addEventListener("click", function() {
+        microbialAnalysisOptions.classList.add("hidden");
         createRequestContent.classList.remove("hidden");
     });
 
-    document.getElementById("backToCreateRequestLabEquipment").addEventListener("click", function() {
-        labEquipmentOptions.classList.add("hidden");
+    document.getElementById("backToCreateRequestLabResearchProcesses").addEventListener("click", function() {
+        labResearchProcessesOptions.classList.add("hidden");
         createRequestContent.classList.remove("hidden");
     });
 
     // Event listeners for "Proceed Now!" buttons
-    document.getElementById("proceedAntimicrobial").addEventListener("click", function() {
-        antimicrobialSection.classList.add("hidden");
+    document.getElementById("proceedMicrobialTesting").addEventListener("click", function() {
+        microbialTestingSection.classList.add("hidden");
         createRequestContent.classList.add("hidden");
-        antimicrobialOptions.classList.remove("hidden");
+        microbialTestingOptions.classList.remove("hidden");
     });
 
-    document.getElementById("proceedMicrobioAssay").addEventListener("click", function() {
-        microbioAssaySection.classList.add("hidden");
+    document.getElementById("proceedMicrobialAnalysis").addEventListener("click", function() {
+        microbialAnalysisSection.classList.add("hidden");
         createRequestContent.classList.add("hidden");
-        microbioAssayOptions.classList.remove("hidden");
+        microbialAnalysisOptions.classList.remove("hidden");
     });
 
-    document.getElementById("proceedLabEquipment").addEventListener("click", function() {
-        labEquipmentSection.classList.add("hidden");
+    document.getElementById("proceedLabResearchProcesses").addEventListener("click", function() {
+        labResearchProcessesSection.classList.add("hidden");
         createRequestContent.classList.add("hidden");
-        labEquipmentOptions.classList.remove("hidden");
+        labResearchProcessesOptions.classList.remove("hidden");
+    });
+
+    // Event listeners for options buttons
+    document.getElementById("plateCountMethodBtn").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
+        document.getElementById("plateCountForm").classList.remove("hidden");
+    });
+
+    document.getElementById("agarDiscDiffusionMethodBtn").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
+        document.getElementById("agarDiscForm").classList.remove("hidden");
+    });
+
+    document.getElementById("agarWellDiffusionMethodBtn").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
+        document.getElementById("agarWellForm").classList.remove("hidden");
+    });
+
+    document.getElementById("micTestingBtn").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
+        document.getElementById("micTestingForm").classList.remove("hidden");
+    });
+
+    document.getElementById("mbcTestingBtn").addEventListener("click", function() {
+        microbialTestingOptions.classList.add("hidden");
+        document.getElementById("mbcTestingForm").classList.remove("hidden");
+    });
+
+    document.getElementById("microbialWaterAnalysisBtn").addEventListener("click", function() {
+        microbialAnalysisOptions.classList.add("hidden");
+        document.getElementById("microbialWaterAnalysisForm").classList.remove("hidden");
+    });
+
+    document.getElementById("microbialCharBtn").addEventListener("click", function() {
+        microbialAnalysisOptions.classList.add("hidden");
+        document.getElementById("microbialCharForm").classList.remove("hidden");
+    });
+
+    document.getElementById("microbialCultureCollectionsBtn").addEventListener("click", function() {
+        microbialAnalysisOptions.classList.add("hidden");
+        document.getElementById("microbialCultureCollectionsForm").classList.remove("hidden");
+    });
+
+    document.getElementById("microscopyBtn").addEventListener("click", function() {
+        microbialAnalysisOptions.classList.add("hidden");
+        document.getElementById("microscopyForm").classList.remove("hidden");
+    });
+
+    document.getElementById("plantSpeciesIdentificationBtn").addEventListener("click", function() {
+        labResearchProcessesOptions.classList.add("hidden");
+        document.getElementById("plantSpeciesIdentificationForm").classList.remove("hidden");
+    });
+
+    document.getElementById("labUseAndEquipmentAccessBtn").addEventListener("click", function() {
+        labResearchProcessesOptions.classList.add("hidden");
+        document.getElementById("labUseAndEquipmentAccessForm").classList.remove("hidden");
+    });
+
+    document.getElementById("researchCollaborationProcessBtn").addEventListener("click", function() {
+        labResearchProcessesOptions.classList.add("hidden");
+        document.getElementById("researchCollaborationForm").classList.remove("hidden");
     });
 
     // By default, show the dashboard content
