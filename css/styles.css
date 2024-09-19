@@ -126,6 +126,32 @@ button {
     font-size: 16px;
 }
 
+.logInMenu-container button {
+    flex-direction: column;
+    width: 350px;
+    height: 48px;
+}
+
+#client-login-menu{
+    background-color: #4642FF;
+    text-align: center;
+}
+
+#lab-staff-login{
+    background-color: #00761A;
+    text-align: center;
+}
+
+#admin-login{
+    background-color: #B60000;
+    text-align: center;
+}
+
+
+
+
+
+
 button:hover {
     background-color: #0277bd;
 }
@@ -333,7 +359,7 @@ input {
 }
 
 
-.logo {
+.bg-logo {
     text-align: center;
 }
 
