@@ -734,23 +734,131 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Function to initialize search functionality
+    function initializeSearch() {
+        const clientSearchInput = document.getElementById('clientSearch');
+        const staffSearchInput = document.getElementById('staffSearch');
+
+        clientSearchInput.addEventListener('input', () => {
+            filterTable('clientsTable', clientSearchInput.value.toLowerCase());
+        });
+
+        staffSearchInput.addEventListener('input', () => {
+            filterTable('staffTable', staffSearchInput.value.toLowerCase());
+        });
+    }
+
+    // Function to filter table rows based on search input
+    function filterTable(tableId, searchTerm) {
+        const table = document.getElementById(tableId);
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        for (let row of rows) {
+            let found = false;
+            const cells = row.getElementsByTagName('td');
+            
+            for (let cell of cells) {
+                if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            row.style.display = found ? '' : 'none';
+        }
+    }
+
     function displayLaboratoryStaff() {
         const staffRef = ref(database, 'laboratory_staff/');
         onValue(staffRef, (snapshot) => {
             const staffTableBody = document.getElementById("staffTable").getElementsByTagName('tbody')[0];
-            staffTableBody.innerHTML = "";
+            if (!staffTableBody) {
+                console.error("staffTableBody not found.");
+                return;
+            }
+            staffTableBody.innerHTML = ""; // Clear existing rows
+    
             snapshot.forEach((childSnapshot) => {
                 const staff = childSnapshot.val();
+                const staffId = childSnapshot.key;
+    
                 const row = staffTableBody.insertRow();
-                
+    
+                // Display name
+                const name = `${staff.firstName || ''} ${staff.middleName || ''} ${staff.lastName || ''}`;
+                row.insertCell(0).textContent = name.trim() || "No name";
+    
                 // Display email
-                row.insertCell(0).textContent = staff.email || "No email";
-                
+                row.insertCell(1).textContent = staff.email || "No email";
+    
                 // Display role
-                row.insertCell(1).textContent = staff.role || "No role";
+                row.insertCell(2).textContent = staff.role || "No role";
+    
+                // Display action buttons
+                const actionCell = row.insertCell(3);
+                const viewDetailsBtn = document.createElement('button');
+                viewDetailsBtn.textContent = 'View Details';
+                viewDetailsBtn.classList.add('view-details-btn');
+                viewDetailsBtn.dataset.id = staffId;
+                const deactivateBtn = document.createElement('button');
+                deactivateBtn.textContent = 'Deactivate';
+                deactivateBtn.classList.add('deactivate-btn');
+                deactivateBtn.dataset.id = staffId;
+    
+                actionCell.appendChild(viewDetailsBtn);
+                actionCell.appendChild(deactivateBtn);
+    
+                viewDetailsBtn.addEventListener('click', () => showStaffDetails(staffId));
+                deactivateBtn.addEventListener('click', () => deactivateStaff(staffId));
             });
+    
+            initializeSearch(); // Initialize search functionality
         });
-    }    
+    }
+    
+    
+    function showStaffDetails(staffId) {
+        const staffRef = ref(database, `laboratory_staff/${staffId}`);
+        get(staffRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const staff = snapshot.val();
+                const staffDetails = {
+                    email: staff.email,
+                    role: staff.role,
+                    firstName: staff.firstName,
+                    middleName: staff.middleName,
+                    lastName: staff.lastName,
+                    address: staff.address,
+                    username: staff.username,
+                    contactNumber: staff.contactNumber
+                };
+                showModal(staffDetails); // Assuming you have a function to show a modal
+            } else {
+                console.error("Staff not found");
+            }
+        }).catch((error) => {
+            console.error("Error fetching staff details:", error);
+        });
+    }
+    
+    function deactivateStaff(staffId) {
+        if (confirm(`Are you sure you want to deactivate this staff member? This action cannot be undone.`)) {
+            const staffRef = ref(database, `laboratory_staff/${staffId}`);
+            remove(staffRef)
+                .then(() => {
+                    alert('Staff member has been deactivated successfully.');
+                    // Optionally, remove the row from the table
+                    const row = document.querySelector(`button[data-id="${staffId}"]`).closest('tr');
+                    if (row) {
+                        row.remove();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error deactivating staff member:', error);
+                    alert('Failed to deactivate staff member. Please try again.');
+                });
+        }
+    }       
 
     function displayClients() {
         const clientsRef = ref(database, 'clients/');
@@ -768,37 +876,41 @@ document.addEventListener("DOMContentLoaded", () => {
     
                 const row = clientsTableBody.insertRow();
     
+                // Display name
+                const name = `${client.firstName || ''} ${client.middleName || ''} ${client.lastName || ''}`;
+                row.insertCell(0).textContent = name.trim() || "No name";
+    
                 // Display email
-                row.insertCell(0).textContent = client.email || "No email";
+                row.insertCell(1).textContent = client.email || "No email";
     
                 // Display role
-                row.insertCell(1).textContent = client.role || "No role";
+                row.insertCell(2).textContent = client.role || "No role";
     
                 // Display client type
-                row.insertCell(2).textContent = client.clientType || "No type";
+                row.insertCell(3).textContent = client.clientType || "No type";
     
                 // Display action buttons
-                const actionCell = row.insertCell(3);
-    
+                const actionCell = row.insertCell(4);
                 const viewDetailsBtn = document.createElement('button');
                 viewDetailsBtn.textContent = 'View Details';
                 viewDetailsBtn.classList.add('view-details-btn');
-                viewDetailsBtn.dataset.id = clientId; // Store the clientId in data-id
-    
+                viewDetailsBtn.dataset.id = clientId;
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.classList.add('delete-btn');
-                deleteBtn.dataset.id = clientId; // Store the clientId in data-id
+                deleteBtn.dataset.id = clientId;
     
                 actionCell.appendChild(viewDetailsBtn);
                 actionCell.appendChild(deleteBtn);
     
-                // Add event listeners for the buttons
                 viewDetailsBtn.addEventListener('click', () => showClientDetails(clientId));
                 deleteBtn.addEventListener('click', () => deleteClient(clientId));
             });
+    
+            initializeSearch(); // Initialize search functionality
         });
-    }    
+    }
+    
 
     function showClientDetails(clientId) {
         const clientRef = ref(database, `clients/${clientId}`);
