@@ -814,8 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
             initializeSearch(); // Initialize search functionality
         });
-    }
-    
+    }    
     
     function showStaffDetails(staffId) {
         const staffRef = ref(database, `laboratory_staff/${staffId}`);
@@ -848,7 +847,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(() => {
                     alert('Staff member has been deactivated successfully.');
                     // Optionally, remove the row from the table
-                    const row = document.querySelector(`button[data-id="${staffId}"]`).closest('tr');
+                    const row = document.querySelector(`tr[data-id="${staffId}"]`);
                     if (row) {
                         row.remove();
                     }
@@ -910,7 +909,6 @@ document.addEventListener("DOMContentLoaded", () => {
             initializeSearch(); // Initialize search functionality
         });
     }
-    
 
     function showClientDetails(clientId) {
         const clientRef = ref(database, `clients/${clientId}`);
