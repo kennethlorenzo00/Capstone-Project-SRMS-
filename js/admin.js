@@ -115,12 +115,12 @@ async function addNewStaff(event) {
     event.preventDefault();
     const newStaffEmail = document.getElementById('newStaffEmail').value.trim();
     const newStaffRole = document.getElementById('newStaffRole').value;
-    const firstName = document.getElementById('firstName').value.trim();
-    const middleName = document.getElementById('middleName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const username = document.getElementById('username').value.trim();
-    const contactNumber = document.getElementById('contactNumber').value.trim();
+    const firstName = document.getElementById('staffFirstName').value.trim();
+    const middleName = document.getElementById('staffMiddleName').value.trim();
+    const lastName = document.getElementById('staffLastName').value.trim();
+    const address = document.getElementById('staffAddress').value.trim();
+    const username = document.getElementById('staffUsername').value.trim();
+    const contactNumber = document.getElementById('staffContactNumber').value.trim();
     
     try {
         if (!isValidEmail(newStaffEmail)) {
@@ -128,10 +128,10 @@ async function addNewStaff(event) {
             return;
         }
 
-        // Generate a temporary password for the new client
+        // Generate a temporary password for the new staff
         const temporaryPassword = generateRandomPassword();
 
-        // Create the new client account
+        // Create the new staff account
         const userCredential = await createUserWithEmailAndPassword(auth, newStaffEmail, temporaryPassword);
         const userId = userCredential.user.uid;
 
@@ -142,6 +142,7 @@ async function addNewStaff(event) {
         // Log in again with stored credentials
         await signInWithEmailAndPassword(auth, storedEmail, storedPassword);
 
+        // Save new staff data in the database
         await set(ref(database, `laboratory_staff/${userId}`), {
             email: newStaffEmail,
             role: 'Staff',

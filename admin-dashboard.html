@@ -70,6 +70,13 @@
                 <button id="addClientBtn">Add New Client</button>
             </div>
 
+            <div id="clientDetailsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <!-- Client details will be inserted here -->
+                </div>
+            </div>
+
             <!-- Modal for adding a new client -->
             <div id="addClientModal" class="modal">
                 <div class="modal-content">
@@ -146,36 +153,34 @@
                     <span id="closeAddStaffModal" class="close">&times;</span>
                     <h2>Add New Laboratory Staff</h2>
                     <form id="addStaffForm">
-                        <label for="newStaffEmail">Email:</label>
+                        <label for="staffEmail">Email:</label>
                         <input type="email" id="newStaffEmail" required><br><br>
                         
                         <label for="newStaffRole">Role:</label>
                         <input type="text" id="newStaffRole" value="Laboratory Staff" readonly><br><br>
                         
-                        <label for="firstName">First Name:</label>
-                        <input type="text" id="firstName" required><br><br>
+                        <label for="staffFirstName">First Name:</label>
+                        <input type="text" id="staffFirstName" required><br><br>
                         
-                        <label for="middleName">Middle Name:</label>
-                        <input type="text" id="middleName"><br><br>
+                        <label for="staffMiddleName">Middle Name:</label>
+                        <input type="text" id="staffMiddleName"><br><br>
                         
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" required><br><br>
+                        <label for="staffLastName">Last Name:</label>
+                        <input type="text" id="staffLastName" required><br><br>
                         
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" required><br><br>
+                        <label for="staffAddress">Address:</label>
+                        <input type="text" id="staffAddress" required><br><br>
                         
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" required><br><br>
+                        <label for="staffUsername">Username:</label>
+                        <input type="text" id="staffUsername" required><br><br>
                         
-                        <label for="contactNumber">Contact Number:</label>
-                        <input type="text" id="contactNumber" required><br><br>
+                        <label for="staffContactNumber">Contact Number:</label>
+                        <input type="text" id="staffContactNumber" required><br><br>
                         
-                        <button id="addStaffSubmit">Add Staff</button>
+                        <button type="submit" id="addStaffSubmit">Add Staff</button>
                     </form>
                 </div>
             </div>
-
-
 
             <!-- New User Requests Tab -->
             <div id="newRequests" class="tabcontent">
