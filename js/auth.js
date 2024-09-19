@@ -503,6 +503,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const adminErrorMessage = document.getElementById("admin-error-message");
     const newRequestsTable = document.getElementById("newRequestsTable");
     const staffTableBody = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
+    const clientsTableBody = document.getElementById("clientsTable").getElementsByTagName('tbody')[0];
+
+    if (!clientsTableBody) {
+        console.error("clientsTableBody not found.");
+        return;
+    }
 
     if (!adminContent || !adminErrorMessage || !newRequestsTable || !staffTableBody) {
         console.error("Required elements for admin dashboard not found.");
@@ -607,7 +613,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Ensure that this function is only called once
     loadNewUserRequests();
-    
     
     // Function to handle viewing user details
     function viewUserDetails(userId) {
@@ -751,23 +756,101 @@ document.addEventListener("DOMContentLoaded", () => {
         const clientsRef = ref(database, 'clients/');
         onValue(clientsRef, (snapshot) => {
             const clientsTableBody = document.getElementById("clientsTable").getElementsByTagName('tbody')[0];
-            clientsTableBody.innerHTML = "";
+            if (!clientsTableBody) {
+                console.error("clientsTableBody not found.");
+                return;
+            }
+            clientsTableBody.innerHTML = ""; // Clear existing rows
+    
             snapshot.forEach((childSnapshot) => {
                 const client = childSnapshot.val();
+                const clientId = childSnapshot.key; // Use the key as a unique identifier
+    
                 const row = clientsTableBody.insertRow();
-                
+    
                 // Display email
                 row.insertCell(0).textContent = client.email || "No email";
-                
-                // Display client type
-                row.insertCell(1).textContent = client.role || "No Role";
-
+    
+                // Display role
+                row.insertCell(1).textContent = client.role || "No role";
+    
                 // Display client type
                 row.insertCell(2).textContent = client.clientType || "No type";
+    
+                // Display action buttons
+                const actionCell = row.insertCell(3);
+    
+                const viewDetailsBtn = document.createElement('button');
+                viewDetailsBtn.textContent = 'View Details';
+                viewDetailsBtn.classList.add('view-details-btn');
+                viewDetailsBtn.dataset.id = clientId; // Store the clientId in data-id
+    
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.dataset.id = clientId; // Store the clientId in data-id
+    
+                actionCell.appendChild(viewDetailsBtn);
+                actionCell.appendChild(deleteBtn);
+    
+                // Add event listeners for the buttons
+                viewDetailsBtn.addEventListener('click', () => showClientDetails(clientId));
+                deleteBtn.addEventListener('click', () => deleteClient(clientId));
             });
         });
+    }    
+
+    function showClientDetails(clientId) {
+        const clientRef = ref(database, `clients/${clientId}`);
+        get(clientRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const client = snapshot.val();
+                const clientDetails = {
+                    email: client.email,
+                    role: client.role,
+                    clientType: client.clientType,
+                    firstName: client.firstName,
+                    middleName: client.middleName,
+                    lastName: client.lastName,
+                    address: client.address,
+                    username: client.username,
+                    contactNumber: client.contactNumber,
+                    school: client.school, 
+                    department: client.department 
+                };
+                showModal(clientDetails); // Assuming you have a function to show a modal
+            } else {
+                console.error("Client not found");
+            }
+        }).catch((error) => {
+            console.error("Error fetching client details:", error);
+        });
+    }    
+
+    // Store a reference to the row when creating it
+    const row = clientsTableBody.insertRow();
+    row.setAttribute('data-client-id', clientId);
+
+    // When deleting, use this reference
+    function deleteClient(clientId) {
+        if (confirm(`Are you sure you want to delete this client? This action cannot be undone.`)) {
+            const clientRef = ref(database, `clients/${clientId}`);
+            remove(clientRef)
+                .then(() => {
+                    alert('Client has been deleted successfully.');
+                    // Optionally, remove the row from the table
+                    const row = document.querySelector(`tr[data-client-id="${clientId}"]`);
+                    if (row) {
+                        row.remove();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error deleting client:', error);
+                    alert('Failed to delete client. Please try again.');
+                });
+        }
     }
-    
+
 });
 
 // Handle Logout
@@ -799,9 +882,9 @@ function showModal(request) {
       <h2>User Details</h2>
       <p>Email: ${request['email'] || 'N/A'}</p>
       <p>Role: ${request['role'] || 'N/A'}</p>
-      ${request['role'] === 'client' ? `<p>Client Type: ${request['clientType'] || 'N/A'}</p>` : ''}
-      ${request['role'] === 'client' && request['department'] ? `<p>Department: ${request['department'] || 'N/A'}</p>` : ''}
-      ${request['role'] === 'client' && request['clientType'] === 'external' && request['school'] ? `<p>School: ${request['school'] || 'N/A'}</p>` : ''}
+      ${request['role'] === 'Client' ? `<p>Client Type: ${request['clientType'] || 'N/A'}</p>` : ''}
+      ${request['role'] === 'Client' && request['department'] ? `<p>Department: ${request['department'] || 'N/A'}</p>` : ''}
+      ${request['role'] === 'Client' && request['clientType'] === 'External' && request['school'] ? `<p>School: ${request['school'] || 'N/A'}</p>` : ''}
       <p>Full Name: ${request['firstName'] || 'N/A'} ${request['middleName'] ? request['middleName'] + ' ' : ''}${request['lastName'] || 'N/A'}</p>
       <p>Contact Number: ${request['contactNumber'] || 'N/A'}</p>
       <p>Address: ${request['address'] || 'N/A'}</p>
@@ -827,4 +910,5 @@ function showModal(request) {
       }
     });
 }
+
 
