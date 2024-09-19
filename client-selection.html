@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Type Selection</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
-    <h1>Select Client Type</h1>
-    <div class="button-container">
-        <button onclick="location.href='internal-client-login.html'">Internal Client</button>
-        <button onclick="location.href='external-client-login.html'">External Client</button>
+    <!--sample comment commit-->
+    <div class="bg-image-section"></div>
+        <img src="log-in-bg.jpg"  class="LogInBg-image">
+    </div>
+    <div class="logo">
+        <img src="logo.webp">
+       <br><br> <h1> Welcome!</h1>
+    </div>
+    <div class = "options">
+        <i id = "arrow"class="fa-solid fa-arrow-down-long"></i><p>Please click or tap your destination.</p>
+    </div>
+    <div class="clientLogInMenu-container">
+        <button id = "IclientLogIn-btn" onclick="location.href='internal-client-login.html'">Internal Client</button><br><br><p>(PUP faculty members, researchers, and students)</p>
+        <button id = "EclientLogIn-btn"onclick="location.href='external-client-login.html'">External Client</button><br><br><p>(Researchers, faculty members, and students from <br> other universities  with existing MOUs with PUP RIST)</p>
+    </div>
+    <div class = "index-lower-label">
+        <p>By using this service, you understood and agree to  the PUP  <br>  Online Services <a href="external-client-login.html">Terms of Use</a> and <a href="external-client-login.html">Privacy Statement</a>.</p>
     </div>
 </body>
 </html>
