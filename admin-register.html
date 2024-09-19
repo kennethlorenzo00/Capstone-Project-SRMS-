@@ -9,12 +9,21 @@
     <script type="module" src="js/auth.js"></script>    <!-- Authentication logic -->
 </head>
 <body>
-    <h1>Admin Registration</h1>
-    <form id="adminRegisterForm">
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-    </form>
-    <p><a href="admin-login.html">Already registered? Login here</a></p>
+    <div class="wrapper" style="background-image: url('images/registrationBG.jpg') !important; background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
+        <div class="admin-register-body">
+            <div class="register-form">
+                <img src="images/Logo.webp" class="logo" alt="Logo">
+                <div class="lower-reg-form">
+                <h1 class="register-h1">Admin Registration</h1>
+                <form id="adminRegisterForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p><a href="admin-login.html">Already registered? Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
