@@ -130,6 +130,9 @@ button {
     flex-direction: column;
     width: 350px;
     height: 48px;
+    padding: 10px 40px;
+    transform: translateX(5%);
+
 }
 
 #client-login-menu{
@@ -144,6 +147,35 @@ button {
 
 #admin-login{
     background-color: #B60000;
+    text-align: center;
+}
+
+.clientLogInMenu-container button {
+    flex-direction: column;
+    width: 350px;
+    height: 48px;
+    padding: 10px 40px;
+    transform: translateX(5%);
+}
+
+.clientLogInMenu-container p {
+    margin-top: -15px;
+    font-size: 13.5px;
+    color: #666;
+    font-style: italic;
+   
+    text-align: center;
+
+
+}
+
+#IclientLogIn-btn{
+    background-color: #4642FF;
+    text-align: center;
+}
+
+#EclientLogIn-btn{
+    background-color: #00761A;
     text-align: center;
 }
 
@@ -264,6 +296,15 @@ input {
     padding-top:10px;
 }
 
+.index-lower-label p{
+    -ms-transform: translate(5%);
+    transform: translateX(0.1%);
+    color: black;
+    font-size: 11px;
+    text-align: center;
+    padding-top:10px;
+}
+
 .lab-low-label p{
     -ms-transform: translate(5%);
     transform: translateX(2.12%);
@@ -278,6 +319,8 @@ input {
         font-weight: bold;
         text-align: center;
 }
+
+
 
 #reset-btn  {
     padding: 10px;
@@ -359,7 +402,7 @@ input {
 }
 
 
-.bg-logo {
+.logo {
     text-align: center;
 }
 
@@ -368,7 +411,7 @@ input {
     height:150px;
     margin-top: 40px;
     margin-bottom: -10px;
-    float: right;
+   
 }
 
 .logo h1 {
@@ -390,6 +433,19 @@ input {
     color: #000000;
     font-weight: bold;
     text-align: center;
+}
+
+.options p {
+    margin-top: -15px;
+    font-size: 0.9rem;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+#arrow {
+    transform: translateX(59px);
+   -ms-transform: translateY(12px);
 }
 
 
