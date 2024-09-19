@@ -6,7 +6,6 @@
     <title>Client Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
-
     <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
 </head>
 <body>
@@ -32,28 +31,80 @@
             </div>
         </header>
 
-        <!-- Main Content -->
-        <div id="content" class="client-main">
+        <!-- Dashboard Section -->
+        <div id="dashboardContent" class="client-main">
             <h1>Welcome to Your Dashboard</h1>
             <p>Here you can manage your requests and account details.</p>
+        </div>
+
+        <!-- Create Request Section (Initially Hidden) -->
+        <div id="createRequestContent" class="hidden">
+            <h1>Create a New Request</h1>
+            <p>Select the type of request:</p>
+
+            <!-- Buttons to Select Request Type -->
+            <button id="antimicrobialBtn" class="request-type-btn">Antimicrobial Request</button>
+            <button id="microbioAssayBtn" class="request-type-btn">Microbiological Assay Request</button>
+            <button id="labEquipmentBtn" class="request-type-btn">Lab Equipment Use</button>
+
+            <!-- Request Sections -->
+            <div id="antimicrobialSection" class="hidden">
+                <h2>Antimicrobial Request</h2>
+                <p>Details about antimicrobial request options go here.</p>
+                <button id="proceedAntimicrobial">Proceed Now!</button>
+            </div>
+
+            <div id="microbioAssaySection" class="hidden">
+                <h2>Microbiological Assay Request</h2>
+                <p>Details about microbiological assay request options go here.</p>
+                <button id="proceedMicrobioAssay">Proceed Now!</button>
+            </div>
+
+            <div id="labEquipmentSection" class="hidden">
+                <h2>Lab Equipment Use</h2>
+                <p>Information regarding the laboratory equipment usage.</p>
+                <button id="proceedLabEquipment">Proceed Now!</button>
+            </div>
+        </div>
+
+        <!-- Options Sections (Initially Hidden) -->
+        <div id="antimicrobialOptions" class="hidden">
+            <h2>Antimicrobial Options</h2>
+            <button>Option 1</button>
+            <button>Option 2</button>
+            <button>Option 3</button>
+            <button id="backToCreateRequestAntimicrobial">Back</button>
+        </div>
+
+        <div id="microbioAssayOptions" class="hidden">
+            <h2>Microbiological Assay Options</h2>
+            <button>Option 1</button>
+            <button>Option 2</button>
+            <button>Option 3</button>
+            <button id="backToCreateRequestMicrobioAssay">Back</button>
+        </div>
+
+        <div id="labEquipmentOptions" class="hidden">
+            <h2>Lab Equipment Options</h2>
+            <button>Option 1</button>
+            <button>Option 2</button>
+            <button>Option 3</button>
+            <button id="backToCreateRequestLabEquipment">Back</button>
+        </div>
+
+        <!-- Request List Section (Initially Hidden) -->
+        <div id="requestListContent" class="hidden">
+            <h1>Your Requests</h1>
+            <p>Placeholder for listing all the user's requests.</p>
+        </div>
+
+        <!-- My Account Section (Initially Hidden) -->
+        <div id="myAccountContent" class="hidden">
+            <h1>My Account</h1>
+            <p>Placeholder for account management functionality.</p>
         </div>
     </div>
 
     <script src="js/sidebar.js" defer></script> <!-- Ensure the path is correct -->
-    
-    <script>
-        // Sidebar Toggle
-        const sidebar = document.getElementById("mySidebar");
-        const openSidebarBtn = document.getElementById("openSidebar");
-        const closeSidebarBtn = document.getElementById("closeSidebar");
-
-        openSidebarBtn.addEventListener("click", function() {
-            sidebar.classList.remove("hidden");
-        });
-
-        closeSidebarBtn.addEventListener("click", function() {
-            sidebar.classList.add("hidden");
-        });
-    </script>
 </body>
 </html>

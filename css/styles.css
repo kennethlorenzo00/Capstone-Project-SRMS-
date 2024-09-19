@@ -273,6 +273,7 @@ input {
     padding: 15px;
     background-color: #7D1B1B;
     color: white;
+    top: 0;
     position: fixed;
     width: calc(100% - 250px); /* Adjust for sidebar width */
     left: 250px;
