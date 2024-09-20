@@ -98,7 +98,7 @@
             <!-- Forms (Initially Hidden) -->
             <div id="plateCountForm" class="hidden">
                 <h2>Plate Count Method Form</h2>
-                <form id="plateCountFormContent" data-request-type="microbialTesting">
+                <form id="plateCountFormContent" data-request-type="microbialTesting" data-request-option="plateCount">
                     <div id="sampleContainerPlateCount">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -120,7 +120,7 @@
 
             <div id="agarDiscForm" class="hidden">
                 <h2>Agar Disc Diffusion Method Form</h2>
-                <form id="agarDiscFormContent" data-request-type="microbialTesting">
+                <form id="agarDiscFormContent" data-request-type="microbialTesting" data-request-option="agarDiscDiffusion">
                     <div id="sampleContainerAgarDisc">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -142,7 +142,7 @@
         
             <div id="agarWellForm" class="hidden">
                 <h2>Agar Well Diffusion Method Form</h2>
-                <form id="agarWellFormContent" data-request-type="microbialTesting">
+                <form id="agarWellFormContent" data-request-type="microbialTesting" data-request-option="agarWellDiffusion">
                     <div id="sampleContainerAgarWell">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -164,7 +164,7 @@
             
             <div id="micTestingForm" class="hidden">
                 <h2>Minimum Inhibitory Concentration (MIC) Testing Form</h2>
-                <form id="micTestingFormContent" data-request-type="microbialTesting">
+                <form id="micTestingFormContent" data-request-type="microbialTesting" data-request-option="micTesting">
                     <div id="sampleContainerMicTesting">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -186,7 +186,7 @@
 
             <div id="mbcTestingForm" class="hidden">
                 <h2>Minimum Bactericidal Concentration (MBC) Testing Form</h2>
-                <form id="mbcTestingFormContent" data-request-type="microbialTesting">
+                <form id="mbcTestingFormContent" data-request-type="microbialTesting" data-request-option="mbcTesting">
                     <div id="sampleContainerMbcTesting">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -208,7 +208,7 @@
             
             <div id="microbialWaterAnalysisForm" class="hidden">
                 <h2>Microbial Analysis of Water Form</h2>
-                <form id="microbialWaterAnalysisFormContent" data-request-type="microbialAnalysis">
+                <form id="microbialWaterAnalysisFormContent" data-request-type="microbialAnalysis" data-request-option="microbialWaterAnalysis">
                     <div id="sampleContainerMicrobialWaterAnalysis">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -230,7 +230,7 @@
             
             <div id="microbialCharForm" class="hidden">
                 <h2>Microbial Characterization Form</h2>
-                <form id="microbialCharFormContent" data-request-type="microbialAnalysis">
+                <form id="microbialCharFormContent" data-request-type="microbialAnalysis" data-request-option="microbialCharacterization">
                     <div id="sampleContainerMicrobialChar">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -252,7 +252,7 @@
                     
             <div id="microbialCultureCollectionsForm" class="hidden">
                 <h2>Microbial Culture Collections (PUPMCC) Form</h2>
-                <form id="microbialCultureCollectionsFormContent" data-request-type="microbialAnalysis">
+                <form id="microbialCultureCollectionsFormContent" data-request-type="microbialAnalysis" data-request-option="microbialCultureCollections">
                     <div id="sampleContainerMicrobialCultureCollections">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -274,7 +274,7 @@
 
             <div id="microscopyForm" class="hidden">
                 <h2>Microscopy Form</h2>
-                <form id="microscopyFormContent" data-request-type="microbialAnalysis">
+                <form id="microscopyFormContent" data-request-type="microbialAnalysis" data-request-option="microscopy">
                     <div id="sampleContainerMicroscopy">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -296,7 +296,7 @@
 
             <div id="plantSpeciesIdentificationForm" class="hidden">
                 <h2>Plant Species Identification and Herbarium Curation Form</h2>
-                <form id="plantSpeciesFormContent" data-request-type="labResearchProcesses">
+                <form id="plantSpeciesFormContent" data-request-type="labResearchProcesses" data-request-option="plantSpeciesIdentification">
                     <div id="sampleContainerPlantSpecies">
                         <div class="sampleEntry">
                             <h3 class="sampleLabel">Sample no.1</h3>
@@ -318,20 +318,19 @@
       
             <div id="labUseAndEquipmentAccessForm" class="hidden">
                 <h2>Laboratory Use and Equipment Access Form</h2>
-                <form id="labEquipmentFormContent" data-request-type="labResearchProcesses">
+                <form id="labEquipmentFormContent" data-request-type="labResearchProcesses" data-request-option="labUseEquipmentAccess">
                     <div id="sampleContainerLabEquipment">
                         <div class="sampleEntry">
                             <label for="equipmentId">Laboratory Equipment ID:</label>
-                            <input type="text" class="equipmentId" name="equipmentId[]"><br><br>
+                            <input type="text" class="equipmentId" name="equipmentId"><br><br>
                             <label for="scheduledDate">Scheduled Use Date:</label>
-                            <input type="date" class="scheduledDate" name="scheduledDate[]"><br><br>
+                            <input type="date" class="scheduledDate" name="scheduledDate"><br><br>
                             <label for="postUseCondition">Post Use Condition:</label>
-                            <input type="text" class="postUseCondition" name="postUseCondition[]"><br><br>
+                            <input type="text" class="postUseCondition" name="postUseCondition"><br><br>
                             <label for="equipmentRequesting">Equipment Requesting:</label>
-                            <input type="text" class="equipmentRequesting" name="equipmentRequesting[]"><br><br>
+                            <input type="text" class="equipmentRequesting" name="equipmentRequesting"><br><br>
                         </div>
                     </div>
-                    <button type="button" id="addSampleButtonLabEquipment">Add Another Equipment Entry</button><br><br>
                     <button type="button" id="backLabUseAndEquipmentAccessForm" class="backButton">Back</button>
                     <button id="submitLabUseAndEquipmentAccessForm">Submit</button>
                 </form>
@@ -339,7 +338,7 @@
             
             <div id="researchCollaborationForm" class="hidden">
                 <h2>Research Collaboration Process Form</h2>
-                <form id="researchCollaborationFormContent" data-request-type="labResearchProcesses">
+                <form id="researchCollaborationFormContent" data-request-type="labResearchProcesses" data-request-option="researchCollaboration">
                     <label for="projectTitle">Research Project Title:</label>
                     <input type="text" id="projectTitle" name="projectTitle" required><br><br>  
                     <label for="principalInvestigator">Principal Investigator:</label>
@@ -365,6 +364,18 @@
                     <button type="button" id="backResearchCollaborationForm" class="backButton">Back</button>
                     <button id="submitResearchCollaborationForm">Submit</button>
                 </form>
+            </div>
+
+            <!-- Review Request Modal -->
+            <div id="reviewRequestModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Review Your Request</h2>
+                    <div id="reviewContent">
+                        <!-- Request data will be displayed here -->
+                    </div>
+                    <button id="confirmSubmit">Submit Request</button>
+                </div>
             </div>
 
             <!-- Request List Section (Initially Hidden) -->

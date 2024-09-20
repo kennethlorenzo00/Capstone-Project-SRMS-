@@ -12,17 +12,12 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar hidden">
         <button id="closeSidebar" class="closebtn">&times;</button>
-        <a href="#" id="dashboardLink">Home (Dashboard)</a>
-        <a href="#" id="requestLink">Request List</a>
-        <a href="#" id="analysisReportLink">Analysis Report</a>
-        <a href="#" id="manageUsersLink">Manage Users</a>
-        <a href="#" id="appointmentLink">Appointment</a>
-        <a href="#" id="eventsLink">Events</a>
-        <div id="manageUsersSection">
-            <button class="tablinks" onclick="openTab(event, 'clients')">Clients</button>
-            <button class="tablinks" onclick="openTab(event, 'staff')">Laboratory Staff</button>
-            <button class="tablinks" onclick="openTab(event, 'newRequests')">New User Requests</button>
-        </div>
+        <a href="#" id="dashboardLink" onclick="openTab(event, 'home')">Home (Dashboard)</a>
+        <a href="#" id="requestListLink" onclick="openTab(event, 'requestList')">Request List</a>
+        <a href="#" id="manageUsersLink" onclick="openTab(event, 'manageUsers')">Manage Users</a>
+        <a href="#" id="analysisReportLink" onclick="openTab(event, 'analysisReport')">Analysis Report</a>
+        <a href="#" id="appointmentLink" onclick="openTab(event, 'appointment')">Appointment</a>
+        <a href="#" id="eventsLink" onclick="openTab(event, 'events')">Events</a>
     </div>
 
     <!-- Page Content -->
@@ -50,28 +45,104 @@
                 <p>You are not authorized to view this content.</p>
             </div>
 
-            <!-- Tabs -->
-            <!-- Clients Tab -->
-            <div id="clients" class="tabcontent">
-                <h2>Clients</h2>
-                <input type="text" id="clientSearch" placeholder="Search clients...">
-                <table id="clientsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Client Type</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Clients will be inserted here -->
-                    </tbody>
-                </table>
-                <button id="addClientBtn">Add New Client</button>
+            <!-- Home Tab -->
+            <div id="home" class="tabcontent hidden">
+                <h2>Home</h2>
+                <p>Welcome to the Admin Dashboard! Here you can manage clients, laboratory staff, and user requests.</p>
+                <p>Select a section from the sidebar to get started.</p>
             </div>
 
+             <!-- Request List Tab -->
+             <div id="requestList" class="tabcontent hidden">
+                <h2>Request List</h2>
+                <p>No requests have been made yet.</p>
+            </div>
+
+            <!-- Analysis Report Tab -->
+            <div id="analysisReport" class="tabcontent hidden">
+                <h2>Analysis Report</h2>
+                <p>No reports available at the moment.</p>
+            </div>
+
+            <!-- Appointment Tab -->
+            <div id="appointment" class="tabcontent hidden">
+                <h2>Appointment</h2>
+                <p>No appointments scheduled.</p>
+            </div>
+
+            <!-- Events Tab -->
+            <div id="events" class="tabcontent hidden">
+                <h2>Events</h2>
+                <p>No events to display.</p>
+            </div>
+
+            <!-- Manage Users Tab -->
+            <div id="manageUsers" class="tabcontent hidden">
+                <h2>Manage Users</h2>
+                <div id="manageUsersButtons">
+                    <button id="clientsBtn" onclick="openTab(event, 'clients')">Clients</button>
+                    <button id="staffBtn" onclick="openTab(event, 'staff')">Laboratory Staff</button>
+                    <button id="newRequestsBtn" onclick="openTab(event, 'newRequests')">New User Requests</button>
+                </div>
+                <div id="table-container">
+                    <div id="clients-table-container">
+                        <h2>Clients</h2>
+                        <input type="text" id="clientSearch" placeholder="Search clients...">
+                        <table id="clientsTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Client Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Clients will be inserted here -->
+                            </tbody>
+                        </table>
+                        <button id="addClientBtn">Add New Client</button>
+                    </div>
+                    <div id="staff-table-container" style="display: none;">
+                        <h2>Laboratory Staff</h2>
+                        <input type="text" id="staffSearch" placeholder="Search staff...">
+                        <table id="staffTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Laboratory staff will be inserted here -->
+                            </tbody>
+                        </table>
+                        <button id="addStaffBtn">Add New Staff</button>
+                    </div>
+                    <div id="newRequests-table-container" style="display: none;">
+                        <h2>New User Requests</h2>
+                        <table id="newRequestsTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Client Type / Department</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Details Modal -->
             <div id="clientDetailsModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -130,26 +201,6 @@
                 </div>
             </div>
 
-            <!-- Laboratory Staff Tab -->
-            <div id="staff" class="tabcontent">
-                <h2>Laboratory Staff</h2>
-                <input type="text" id="staffSearch" placeholder="Search staff...">
-                <table id="staffTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Laboratory staff will be inserted here -->
-                    </tbody>
-                </table>
-                <button id="addStaffBtn">Add New Staff</button>
-            </div>
-
             <!-- Modal for adding a new laboratory staff -->
             <div id="addStaffModal" class="modal">
                 <div class="modal-content">
@@ -185,27 +236,6 @@
                 </div>
             </div>
 
-            <!-- New User Requests Tab -->
-            <div id="newRequests" class="tabcontent">
-                <h2>New User Requests</h2>
-                <table id="newRequestsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Client Type / Department</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamic content will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Structure -->
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -216,9 +246,6 @@
         </div>
     </div>
 
-
     <script src="js/admin-sidebar.js" defer></script> <!-- Ensure the path is correct -->
-    <script type="module" src="js/admin.js" defer></script>
-    
 </body>
 </html>
