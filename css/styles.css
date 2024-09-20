@@ -650,3 +650,81 @@ input {
             cursor: pointer; 
             color: white;
           }
+
+/* Admin Dashboard Specific Styles */
+.admin-header {
+    padding: 15px;
+    background-color: #A90000;
+    color: white;
+    top: 0;
+    position: fixed;
+    width: calc(100% - 250px); /* Adjust for sidebar width */
+    left: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.admin-header .header-icons button {
+    margin: 0;
+}
+
+.admin-sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #A90000;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    color: white;
+    z-index: 999;
+}
+
+.admin-sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.admin-sidebar a:hover {
+    background-color: #A90000;
+}
+
+.admin-main {
+    margin-left: 250px; /* Space for the sidebar */
+    padding: 20px;
+    padding-top: calc(15px + 75px); /* Increased space for the header */
+    transition: margin-left 0.5s;
+}
+
+
+.admin-logo {
+    display: flex;
+    align-items: center;            /* Center items vertically */
+    margin-right: 400px;           /* Adjust if needed */
+    height: 50px;                  /* Set a consistent height */
+}
+
+.side-logo {
+    display: flex;                  /* Use flexbox to arrange items in a row */
+    align-items: center;            /* Center logo and text vertically */
+}
+
+.side-logo img {
+    width: 95px;                    /* Set desired width for the logo */
+    object-fit: cover;              /* Maintain aspect ratio */
+    border-radius: 50%;             /* Make it circular */
+    margin-right: 10px;             /* Space between logo and text */
+}
+
+.logo-name {
+    margin: 0;                      /* Remove default margin */
+}
+
+
