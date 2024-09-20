@@ -164,80 +164,98 @@
                     <span id="closeAddClientModal" class="close">&times;</span>
                     <h2>Add New Client</h2>
                     <form id="addClientForm">
-                        <label for="newClientEmail">Email:</label>
-                        <input type="email" id="newClientEmail" required><br><br>
+                        <div style="display: flex; gap: 10px; ">
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="firstName">First Name:</label> 
+                                <input type="text" id="firstName" required>
+                            </div>
+                        
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="middleName">Middle Name:</label>
+                                <input type="text" id="middleName">
+                            </div>
+                            
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="lastName">Last Name:</label>
+                                <input type="text" id="lastName" required >
+                            </div>
+                        </div>
 
-                        <label for="newClientRole">Role:</label>
-                        <input type="text" id="newClientRole" value="Client" readonly><br><br>
+                        <!--<label for="newClientRole">Role:</label>
+                        <input type="text" id="newClientRole" value="Client" readonly><br><br> -->
+
+                        <br><label for="newClientEmail">Email:</label>
+                        <input type="email" id="newClientEmail" required><br>
 
                         <label>Client Type:</label><br>
+                        <div style="display: flex; gap: 10px; ">
                         <label>
                             <input type="radio" name="clientType" value="Internal" required>
-                            Internal
+                            Internal Client
                         </label><br>
                         <label>
                             <input type="radio" name="clientType" value="External">
-                            External
-                        </label><br><br>
-
-                        <label for="firstName">First Name:</label>
-                        <input type="text" id="firstName" required><br><br>
+                            External Client
+                        </label>
+                        </div>
                         
-                        <label for="middleName">Middle Name:</label>
-                        <input type="text" id="middleName"><br><br>
-                        
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" required><br><br>
-                        
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" required><br><br>
+                        <br><br><label for="address">Address:</label>
+                        <input type="text" id="address" required><br>
                         
                         <label for="username">Username:</label>
-                        <input type="text" id="username" required><br><br>
+                        <input type="text" id="username" required><br>
                         
                         <label for="contactNumber">Contact Number:</label>
-                        <input type="text" id="contactNumber" required><br><br>
-                        
+                        <input type="text" id="contactNumber" required><br>
                         <label for="school">School:</label>
-                        <input type="text" id="school" required><br><br>
+                        <input type="text" id="school" required><br>
                         
                         <label for="department">Department:</label>
-                        <input type="text" id="department" required><br><br>
-
-                        <button type="submit" id="addClientSubmit">Add Client</button>
+                        <input type="text" id="department" required><br>
                     </form>
+                        <button type="submit" id="addClientSubmit">Add Client</button>
+
                 </div>
             </div>
 
-            <!-- Modal for adding a new laboratory staff -->
+            <!-- Modal for adding a new laboratory staff --> 
             <div id="addStaffModal" class="modal">
                 <div class="modal-content">
                     <span id="closeAddStaffModal" class="close">&times;</span>
                     <h2>Add New Laboratory Staff</h2>
                     <form id="addStaffForm">
+
+                        <div style="display: flex; gap: 10px; ">
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="staffFirstName">First Name:</label>
+                                <input type="text" id="staffFirstName" required><br><br>
+                            </div>
+                        
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="staffMiddleName">Middle Name:</label>
+                                <input type="text" id="staffMiddleName"><br><br>
+                            </div>
+                            
+                            <div style="display: flex;gap:1px;flex-direction: column; width: 33%;">
+                                <label for="staffLastName">Last Name:</label>
+                                <input type="text" id="staffLastName" required><br>
+                            </div>
+                        </div>
+
                         <label for="staffEmail">Email:</label>
-                        <input type="email" id="newStaffEmail" required><br><br>
+                        <input type="email" id="newStaffEmail" required><br>
                         
-                        <label for="newStaffRole">Role:</label>
-                        <input type="text" id="newStaffRole" value="Laboratory Staff" readonly><br><br>
-                        
-                        <label for="staffFirstName">First Name:</label>
-                        <input type="text" id="staffFirstName" required><br><br>
-                        
-                        <label for="staffMiddleName">Middle Name:</label>
-                        <input type="text" id="staffMiddleName"><br><br>
-                        
-                        <label for="staffLastName">Last Name:</label>
-                        <input type="text" id="staffLastName" required><br><br>
+                        <!-- <label for="newStaffRole">Role:</label>
+                        <input type="text" id="newStaffRole" value="Laboratory Staff" readonly><br><br> -->
                         
                         <label for="staffAddress">Address:</label>
-                        <input type="text" id="staffAddress" required><br><br>
+                        <input type="text" id="staffAddress" required><br>
                         
                         <label for="staffUsername">Username:</label>
-                        <input type="text" id="staffUsername" required><br><br>
+                        <input type="text" id="staffUsername" required><br>
                         
                         <label for="staffContactNumber">Contact Number:</label>
-                        <input type="text" id="staffContactNumber" required><br><br>
+                        <input type="text" id="staffContactNumber" required><br>
                         
                         <button type="submit" id="addStaffSubmit">Add Staff</button>
                     </form>

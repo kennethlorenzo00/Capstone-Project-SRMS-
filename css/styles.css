@@ -210,7 +210,8 @@ form {
 }
 
 input {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     background-color: #D9D9D9;
     color: #000000;
@@ -473,9 +474,23 @@ input {
   }
   
   .modal-content h2 {
-    margin-top: 0;
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+
+  .modal-content button {
+    margin: 0 auto 20px auto;
+    display: block;
   }
   
+  .modal-content form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+
   #closeModal {
     background-color: #4CAF50;
     color: #fff;
@@ -538,7 +553,7 @@ input {
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 70%;
         }
         .close {
             color: #aaa;
@@ -726,5 +741,3 @@ input {
 .logo-name {
     margin: 0;                      /* Remove default margin */
 }
-
-
