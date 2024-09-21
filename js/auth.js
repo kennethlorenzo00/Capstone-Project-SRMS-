@@ -140,6 +140,7 @@ if (document.getElementById("externalClientRegisterForm")) {
         const username = document.getElementById("username").value;
         const address = document.getElementById("address").value;
         const contactNumber = document.getElementById("contactNumber").value;
+        const userType = document.getElementById("userType").value;
         const school = document.getElementById("school").value;
         const department = document.getElementById("department").value;
         const email = document.getElementById("email").value;
@@ -152,6 +153,7 @@ if (document.getElementById("externalClientRegisterForm")) {
             username,
             address,
             contactNumber,
+            userType,
             school,
             department,
             email,
@@ -194,6 +196,7 @@ if (document.getElementById("internalClientRegisterForm")) {
         const address = document.getElementById("address").value;
         const school = document.getElementById("school").value;
         const contactNumber = document.getElementById("contactNumber").value;
+        const userType = document.getElementById("userType").value;
         const department = document.getElementById("department").value;
         const email = document.getElementById("email").value;
 
@@ -205,6 +208,7 @@ if (document.getElementById("internalClientRegisterForm")) {
             username,
             address,
             contactNumber,
+            userType,
             department,
             school,
             email,
@@ -221,8 +225,6 @@ if (document.getElementById("internalClientRegisterForm")) {
         });
     });
 }
-
-
 
 // Handle Admin Login
 document.getElementById("adminLoginForm")?.addEventListener("submit", function(event) {
@@ -628,6 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     middleName: user.middleName,
                     lastName: user.lastName,
                     contactNumber: user.contactNumber || 'N/A',
+                    userType: user.userType,
                     address: user.address || 'N/A',
                     username: user.username || 'N/A'
                 };
@@ -666,6 +669,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         address: requestData.address,
                         username: requestData.username,
                         contactNumber: requestData.contactNumber,
+                        userType: requestData.userType,
                         school: requestData.school,
                         department: requestData.department
                     }).then(() => {
@@ -925,6 +929,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     address: client.address,
                     username: client.username,
                     contactNumber: client.contactNumber,
+                    userType: client.userType,
                     school: client.school, 
                     department: client.department 
                 };
@@ -997,6 +1002,7 @@ function showModal(request) {
       ${request['role'] === 'Client' && request['clientType'] === 'External' && request['school'] ? `<p>School: ${request['school'] || 'N/A'}</p>` : ''}
       <p>Full Name: ${request['firstName'] || 'N/A'} ${request['middleName'] ? request['middleName'] + ' ' : ''}${request['lastName'] || 'N/A'}</p>
       <p>Contact Number: ${request['contactNumber'] || 'N/A'}</p>
+      ${request['role'] === 'Client' ? `<p>User Type: ${request['userType'] || 'N/A'}</p>` : ''}
       <p>Address: ${request['address'] || 'N/A'}</p>
       ${request['username'] ? `<p>Username: ${request['username'] || 'N/A'}</p>` : ''}
       <button id="closeModal">Close</button>

@@ -51,6 +51,7 @@ async function addNewClient(event) {
     const address = document.getElementById('address').value.trim();
     const username = document.getElementById('username').value.trim();
     const contactNumber = document.getElementById('contactNumber').value.trim();
+    const userType = document.getElementById('userType').value; 
     const school = document.getElementById('school').value.trim();
     const department = document.getElementById('department').value.trim();
 
@@ -86,6 +87,7 @@ async function addNewClient(event) {
             address: address,
             username: username,
             contactNumber: contactNumber,
+            userType: userType,
             school: school,
             department: department
         });

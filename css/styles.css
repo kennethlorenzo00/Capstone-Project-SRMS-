@@ -924,3 +924,82 @@ input {
 .completed ~ .progress-step::after {
     background: #4caf50; /* Green for completed steps */
 }
+
+/* Styles for the Request List Tab */
+#requestList .requestList {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Container Styles */
+#requestList #table-container {
+    margin-top: 20px;
+}
+
+/* Table Styles */
+#requestList table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+/* Table Header Styles */
+#requestList thead {
+    background-color: #A90000; /* Unique header color */
+    color: white;
+}
+
+#requestList th, #requestList td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table Row Styles */
+#requestList tbody tr {
+    transition: background-color 0.3s;
+}
+
+#requestList tbody tr:hover {
+    background-color: #f1f1f1; /* Highlight on hover */
+}
+
+/* Specific Styles for Each Table */
+#requestList #allRequestsTable {
+    border: 2px solid #A90000; /* Border for All Requests table */
+}
+
+#requestList #serviceRequestsTable {
+    border: 2px solid #A90000; /* Border for Service Requests table */
+}
+
+#requestList #followUpRequestsTable {
+    border: 2px solid #A90000; /* Border for Follow-up Requests table */
+}
+
+/* Input Styles within Request List */
+#requestList input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px); /* Full width accounting for padding */
+}
+
+#requestList input[type="text"]:focus {
+    border-color: #A90000; /* Focus color for inputs */
+    outline: none;
+}
+
+/* Responsive Styles for Request List */
+@media (max-width: 600px) {
+    #requestList th, #requestList td {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+
+    #requestList input[type="text"] {
+        width: calc(100% - 20px); /* Adjust input width */
+    }
+}

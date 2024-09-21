@@ -51,6 +51,28 @@ function openTab(evt, tabName) {
             document.getElementById('newRequests-table-container').style.display = "block";
         };
     }
+
+    // Request List functionality
+    if (tabName === 'requestList') {
+        // Show All Requests table by default
+        document.getElementById('allRequests-table-container').style.display = "block";
+
+        // Add event listeners to buttons for switching tables
+        document.getElementById('allRequestsBtn').onclick = function() {
+            tableContainers.forEach(container => container.style.display = "none");
+            document.getElementById('allRequests-table-container').style.display = "block";
+        };
+
+        document.getElementById('serviceRequestsBtn').onclick = function() {
+            tableContainers.forEach(container => container.style.display = "none");
+            document.getElementById('serviceRequests-table-container').style.display = "block";
+        };
+
+        document.getElementById('followUpRequestsBtn').onclick = function() {
+            tableContainers.forEach(container => container.style.display = "none");
+            document.getElementById('followUpRequests-table-container').style.display = "block";
+        };
+    }
 }
 
 // Show the home tab by default on page load

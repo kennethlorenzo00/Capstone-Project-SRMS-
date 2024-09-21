@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
             userId: user.uid,
             userName,
             request_status: 'pending',
+            typeOfRequest: 'serviceRequest',
             timeStamp: new Date().toISOString()
         };
 
