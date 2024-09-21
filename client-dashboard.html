@@ -5,8 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Client Dashboard</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <link rel="stylesheet" href="css/styles.css"> <!-- Ensure the path is correct -->
-        <script type="module" src="js/auth.js" defer></script> <!-- Ensure the path is correct -->
+        <link rel="stylesheet" href="css/styles.css"> 
+        <script type="module" src="../js/firebase.js"></script>
+        <script type="module" src="js/auth.js" defer></script> 
+        
     </head>
     <body>
         <!-- Sidebar -->
@@ -378,11 +380,39 @@
                 </div>
             </div>
 
-            <!-- Request List Section (Initially Hidden) -->
             <div id="requestListContent" class="hidden">
-                <h1>Your Requests</h1>
-                <p>Placeholder for listing all the user's requests.</p>
-            </div>
+                <div id="requestListGroup">
+                    <h1>Request List</h1>
+                    <input type="text" id="searchInput" placeholder="Search requests..." />
+                    <table id="requestListTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Request Number</th>
+                                <th>Number of Samples</th>
+                                <th>Priority Level</th>
+                                <th>Assigned Laboratory Staff</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestListTableBody">
+                            <!-- Table data will be populated here -->
+                        </tbody>
+                    </table>
+                    <div id="paginationControls">
+                        <button id="prevPage" disabled>Previous</button>
+                        <span id="pageInfo"></span>
+                        <button id="nextPage">Next</button>
+                    </div>
+                    <button id="addRequestButton">Add Request</button>
+                </div>
+                <div id="requestDetailsSection" class="hidden">
+                    <h2 id="requestDetailsHeader">Request Information</h2>
+                    <button id="backButton">Back to Request List</button>
+                    <div id="requestDetailsContent"></div>
+                </div>
+            </div>            
 
             <!-- My Account Section (Initially Hidden) -->
             <div id="myAccountContent" class="hidden">
@@ -394,5 +424,6 @@
         <script src="js/sidebar.js" defer></script> 
         <script src="js/form-navigation.js"></script>
         <script src="js/form-submission.js" type="module"></script>
+        <script src="js/request-list.js" type="module"></script>
     </body>
     </html>

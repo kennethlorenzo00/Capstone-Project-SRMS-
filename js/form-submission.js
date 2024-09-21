@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
             userId: user.uid,
             userName,
             request_status: 'pending',
+            timeStamp: new Date().toISOString()
         };
 
         // Only add samples if they exist
@@ -175,8 +176,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 form.reset(); // Reset each form
 
-                // Remove the form from the DOM
-                form.parentNode.removeChild(form);
+                document.getElementById("plateCountForm").classList.add("hidden");
+                document.getElementById("agarDiscForm").classList.add("hidden");
+                document.getElementById("agarWellForm").classList.add("hidden");
+                document.getElementById("micTestingForm").classList.add("hidden");
+                document.getElementById("mbcTestingForm").classList.add("hidden");
+                document.getElementById("microbialWaterAnalysisForm").classList.add("hidden");
+                document.getElementById("microbialCharForm").classList.add("hidden");
+                document.getElementById("microbialCultureCollectionsForm").classList.add("hidden");
+                document.getElementById("microscopyForm").classList.add("hidden");
+                document.getElementById("plantSpeciesIdentificationForm").classList.add("hidden");
+                document.getElementById("labUseAndEquipmentAccessForm").classList.add("hidden");
+                document.getElementById("researchCollaborationForm").classList.add("hidden");
             });
 
             // Go back to the create request content section
@@ -186,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } catch (error) {
             console.error('Error adding document: ', error);
             alert('Failed to submit request. Please try again.');
-        }
+        }   
     });
 
 
