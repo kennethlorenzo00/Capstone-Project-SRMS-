@@ -99,7 +99,7 @@ body {
 #newRequestsTable, #staffTable, #clientsTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 #newRequestsTable th, #newRequestsTable td,
@@ -111,7 +111,9 @@ body {
 }
 
 #newRequestsTable th, #staffTable th, #clientsTable th {
-    background-color: #f4f4f4;
+    background-color: #7D1B1B;
+    color: white;
+    padding: 15px;
 }
 
 /* Buttons */
@@ -482,7 +484,7 @@ input {
     margin: 0 auto 20px auto;
     display: block;
   }
-  
+
   .modal-content form{
     display: flex;
     flex-direction: column;
@@ -550,7 +552,7 @@ input {
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 70%;
@@ -574,7 +576,46 @@ input {
             height: 100vh; /* Make the image section take up the full viewport height */
             overflow: hidden;
         }
+
+/*manage users*/
+
+    .manageusers h1 {
+        margin-top: 40px;
+        margin-bottom: 0px;
+    }
+
+    .manageuserbutton {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
         
+    }
+
+    #addClientBtn, #addStaffBtn {
+        background-color: #FFCC00 !important;
+        color: #000000;
+    }
+
+     #clientsBtn, #staffBtn, #newRequestsBtn {
+        background-color: #0288d1 !important;
+        color: #ffffff;
+    }
+
+    #clientsBtn:focus, #clientsBtn:active,
+    #staffBtn:focus, #staffBtn:active,
+    #newRequestsBtn:focus, #newRequestsBtn:active {
+        background-color: #005a8a !important;
+    }
+
+    .color-change {
+        margin:0px;
+        margin-right:10px;
+    }
+
+
+
 /* Registration */
         .register-body {
             background: rgb(255, 255, 255);

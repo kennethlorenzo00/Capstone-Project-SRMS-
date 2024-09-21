@@ -86,16 +86,24 @@
 
             <!-- Manage Users Tab -->
             <div id="manageUsers" class="tabcontent hidden">
-                <h2>Manage Users</h2>
-                <div id="manageUsersButtons">
-                    <button id="clientsBtn" onclick="openTab(event, 'clients')">Clients</button>
-                    <button id="staffBtn" onclick="openTab(event, 'staff')">Laboratory Staff</button>
-                    <button id="newRequestsBtn" onclick="openTab(event, 'newRequests')">New User Requests</button>
-                </div>
-                <div id="table-container">
-                    <div id="clients-table-container">
-                        <h2>Clients</h2>
-                        <input type="text" id="clientSearch" placeholder="Search clients...">
+                <div class="manageusers">
+                    <div style="border-bottom: 2px solid black;">
+                    <h1>Manage Users</h1>
+                            <div id="manageUsersButtons" class="manageuserbutton">
+                                <button class="color-change" id="clientsBtn" onclick="openTab(event, 'clients')">Clients</button>
+                                <button class="color-change" id="staffBtn" onclick="openTab(event, 'staff')">Laboratory Staff</button>
+                                <button class="color-change" id="newRequestsBtn" onclick="openTab(event, 'newRequests')">New User Requests</button>
+                            </div>
+                    </div>
+                    <div id="table-container">
+                        <div id="clients-table-container">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h2>Clients</h2>
+                                <div style="margin-top: auto;">
+                                    <input type="text" id="clientSearch" placeholder="Search clients...">
+                                    <button id="addClientBtn">Add New Client</button>
+                                </div>
+                            </div>
                         <table id="clientsTable">
                             <thead>
                                 <tr>
@@ -103,32 +111,35 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Client Type</th>
-                                    <th>Action</th>
+                                    <th style="width: 20%;text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Clients will be inserted here -->
                             </tbody>
                         </table>
-                        <button id="addClientBtn">Add New Client</button>
                     </div>
                     <div id="staff-table-container" style="display: none;">
-                        <h2>Laboratory Staff</h2>
-                        <input type="text" id="staffSearch" placeholder="Search staff...">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h2>Laboratory Staff</h2>
+                            <div style="margin-top: auto;">
+                                <input type="text" id="staffSearch" placeholder="Search staff...">
+                                <button id="addStaffBtn">Add New Staff</button>
+                            </div>
+                        </div>
                         <table id="staffTable">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Action</th>
+                                    <th style="width: 20%;text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Laboratory staff will be inserted here -->
                             </tbody>
                         </table>
-                        <button id="addStaffBtn">Add New Staff</button>
                     </div>
                     <div id="newRequests-table-container" style="display: none;">
                         <h2>New User Requests</h2>
@@ -139,7 +150,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Client Type / Department</th>
-                                    <th>Action</th>
+                                    <th style="width: 20%;text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,6 +159,7 @@
                         </table>
                     </div>
                 </div>
+            </div>
             </div>
 
             <!-- Client Details Modal -->
