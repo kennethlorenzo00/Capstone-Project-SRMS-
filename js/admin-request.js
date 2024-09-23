@@ -1,7 +1,7 @@
 // Import the necessary Firebase modules
 import { database, firestore } from './firebase.js'; // Adjust the path as needed
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp, doc, getDoc} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 // Function to format Firestore timestamps
 function formatTimestamp(timestamp) {
@@ -177,14 +177,29 @@ async function showAppointmentPage(requestId) {
   adminRequestDetailsSection.classList.add('hidden');
   requestList.classList.add('hidden');
 
-  // Add an event listener to the form for submission
-  const appointmentForm = document.getElementById('appointmentForm');
-  appointmentForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const priorityLevel = document.getElementById('priorityLevel').value;
-    const assignedStaff = document.getElementById('assignedStaff').value;
+ // Add an event listener to the form for submission
+// Add an event listener to the form for submission
+const appointmentForm = document.getElementById('appointmentForm');
+appointmentForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+  const priorityLevel = document.getElementById('priorityLevel').value;
+  const assignedStaffId = document.getElementById('assignedStaff').value;
+
+  try {
+    // Fetch staff name from the Realtime Database
+    const staffRef = ref(database, `laboratory_staff/${assignedStaffId}`);
+    const staffSnapshot = await get(staffRef);
+    
+    if (!staffSnapshot.exists()) {
+      alert("Selected staff not found.");
+      return;
+    }
+    
+    const staffData = staffSnapshot.val();
+    const assignedLaboratoryStaff = `${staffData.firstName || ''} ${staffData.middleName || ''} ${staffData.lastName || ''}`.trim();
 
     // Save appointment details to Firestore
     const appointmentsRef = collection(firestore, 'appointments');
@@ -196,15 +211,40 @@ async function showAppointmentPage(requestId) {
       startDate: startDate,
       endDate: endDate,
       priorityLevel: priorityLevel,
-      assignedStaff: assignedStaff,
+      assignedStaff: assignedLaboratoryStaff, // Store the staff name
       createdAt: serverTimestamp()
+    });
+
+    // Fetch the request document based on requestId
+    const requestsRef = collection(firestore, 'requests');
+    const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+    const requestSnapshot = await getDocs(requestQuery);
+    
+    if (requestSnapshot.empty) {
+      alert("Request not found for updating.");
+      return;
+    }
+
+    const requestDoc = requestSnapshot.docs[0]; // Assuming there's only one matching document
+    const requestDocId = requestDoc.id;
+
+    // Update the request document with priorityLevel and assignedLaboratoryStaff
+    const requestRef = doc(firestore, 'requests', requestDocId);
+    await updateDoc(requestRef, {
+      priorityLevel: priorityLevel,
+      assignedLaboratoryStaff: assignedLaboratoryStaff // Store the staff name
     });
 
     alert('Appointment scheduled successfully!');
     appointmentForm.reset();
     appointmentPage.classList.add('hidden');
     backToRequestList(); // Or any other function to navigate back
-  });
+
+  } catch (error) {
+    console.error("Error scheduling appointment:", error);
+    alert('Failed to schedule appointment. Please try again.');
+  }
+});
 
  // Initialize FullCalendar
  const calendarEl = document.getElementById('calendar');
