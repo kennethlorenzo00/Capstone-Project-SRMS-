@@ -61,102 +61,110 @@
                 <p>Select a section from the sidebar to get started.</p>
             </div>
 
-            <!-- Request List Tab -->
-            <div id="requestList" class="tabcontent hidden">
+          <!-- Request List Tab -->
+        <div id="requestListContainer">
+            <div id="requestList" class="tabcontent">
                 <div class="requestList">
-                <div style="border-bottom: 2px solid black;">
-                    <h1>Request List</h1>
-                    <div id="requestButtons" class="manageuserbutton">
-                    <button class="color-change" id="allRequestsBtn" onclick="openTab(event, 'allRequests')">All Requests</button>
-                    <button class="color-change" id="serviceRequestsBtn" onclick="openTab(event, 'serviceRequests')">Service Requests</button>
-                    <button class="color-change" id="followUpRequestsBtn" onclick="openTab(event, 'followUpRequests')">Follow-up Requests</button>
-                    </div>
-                </div>
-                <div id="table-container">
-                    <div id="allRequests-table-container">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h2>All Requests</h2>
-                        <div style="margin-top: auto;">
-                        <input type="text" id="allRequestsSearch" placeholder="Search all requests...">
-                        <!-- Add a button if needed -->
+                    <div style="border-bottom: 2px solid black;">
+                        <h1>Request List</h1>
+                        <div id="requestButtons" class="manageuserbutton">
+                            <button class="color-change" id="allRequestsBtn" onclick="openTab(event, 'allRequests')">All Requests</button>
+                            <button class="color-change" id="serviceRequestsBtn" onclick="openTab(event, 'serviceRequests')">Service Requests</button>
+                            <button class="color-change" id="followUpRequestsBtn" onclick="openTab(event, 'followUpRequests')">Follow-up Requests</button>
                         </div>
                     </div>
-                    <table id="allRequestsTable">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Request ID</th>
-                            <th>Client Type</th>
-                            <th>Client Name</th>
-                            <th>No. of Samples</th>
-                            <th>Request Type</th>
-                            <th style="width: 20%;text-align: center;">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- All requests will be inserted here -->
-                        </tbody>
-                    </table>
-                    </div>
-                    <div id="serviceRequests-table-container" style="display: none;">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h2>Service Requests</h2>
-                        <div style="margin-top: auto;">
-                        <input type="text" id="serviceRequestsSearch" placeholder="Search service requests...">
-                        <!-- Add a button if needed -->
+                    <div id="table-container">
+                        <div id="allRequests-table-container">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h2>All Requests</h2>
+                                <div style="margin-top: auto;">
+                                    <input type="text" id="allRequestsSearch" placeholder="Search all requests...">
+                                    <!-- Add a button if needed -->
+                                </div>
+                            </div>
+                            <table id="allRequestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Request ID</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Request Type</th>
+                                        <th style="width: 20%;text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- All requests will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="serviceRequests-table-container" style="display: none;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h2>Service Requests</h2>
+                                <div style="margin-top: auto;">
+                                    <input type="text" id="serviceRequestsSearch" placeholder="Search service requests...">
+                                    <!-- Add a button if needed -->
+                                </div>
+                            </div>
+                            <table id="serviceRequestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Request ID</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Request Type</th>
+                                        <th style="width: 20%;text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Service requests will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="followUpRequests-table-container" style="display: none;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h2>Follow-up Requests</h2>
+                                <div style="margin-top: auto;">
+                                    <input type="text" id="followUpRequestsSearch" placeholder="Search follow-up requests...">
+                                    <!-- Add a button if needed -->
+                                </div>
+                            </div>
+                            <table id="followUpRequestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Request ID</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Request Type</th>
+                                        <th style="width: 20%;text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Follow-up requests will be inserted here -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <table id="serviceRequestsTable">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Request ID</th>
-                            <th>Client Type</th>
-                            <th>Client Name</th>
-                            <th>No. of Samples</th>
-                            <th>Request Type</th>
-                            <th style="width: 20%;text-align: center;">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- Service requests will be inserted here -->
-                        </tbody>
-                    </table>
+                    <div id="paginationControls" style="display: flex; justify-content: center; margin-top: 20px;">
+                        <button id="prevPage" disabled>Previous</button>
+                        <span id="pageInfo">Page 1</span>
+                        <button id="nextPage">Next</button>
                     </div>
-                    <div id="followUpRequests-table-container" style="display: none;">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h2>Follow-up Requests</h2>
-                        <div style="margin-top: auto;">
-                        <input type="text" id="followUpRequestsSearch" placeholder="Search follow-up requests...">
-                        <!-- Add a button if needed -->
-                        </div>
-                    </div>
-                    <table id="followUpRequestsTable">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Request ID</th>
-                            <th>Client Type</th>
-                            <th>Client Name</th>
-                            <th>No. of Samples</th>
-                            <th>Request Type</th>
-                            <th style="width: 20%;text-align: center;">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- Follow-up requests will be inserted here -->
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-                <div id="paginationControls" style="display: flex; justify-content: center; margin-top: 20px;">
-                    <button id="prevPage" disabled>Previous</button>
-                    <span id="pageInfo">Page 1</span>
-                    <button id="nextPage">Next</button>
-                </div>
                 </div>
             </div>
+        </div>
 
+        <!-- Admin Request Details Section -->
+        <div id="adminRequestDetailsSection" class="hidden">
+            <h2 id="adminRequestDetailsHeader"></h2>
+            <button id="backButton" onclick="backToRequestList()">Back to Request List</button>
+            <div id="adminRequestDetailsContent" class="request-details"></div>
+        </div>
             <!-- Analysis Report Tab -->
             <div id="analysisReport" class="tabcontent hidden">
                 <h2>Analysis Report</h2>

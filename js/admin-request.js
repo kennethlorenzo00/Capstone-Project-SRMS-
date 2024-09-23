@@ -13,6 +13,39 @@ function formatTimestamp(timestamp) {
     return 'Invalid Date';
 }
 
+const sampleFieldMapping = {
+    microbialTesting: {
+        plateCount: ['sampleId', 'sampleName', 'agarType', 'sampleType'],
+        agarDiscDiffusion: ['sampleId', 'sampleName', 'microbeName', 'sampleType'],
+        agarWellDiffusion: ['sampleId', 'sampleName', 'microbeName', 'sampleType'],
+        micTesting: ['sampleId', 'sampleName', 'sampleIdentification', 'microbeName'],
+        mbcTesting: ['sampleId', 'sampleName', 'sampleIdentification', 'microbeSource'],
+    },
+    microbialAnalysis: {
+        microbialWaterAnalysis: ['sampleId', 'sampleName', 'waterSource', 'microbeName'],
+        microbialCharacterization: ['sampleId', 'sampleName', 'morphologicalCharacteristics', 'microbeSource'],
+        microbialCultureCollections: ['sampleId', 'sampleName', 'microbeName', 'sampleType'],
+        microscopy: ['sampleId', 'sampleName', 'specialHandling', 'sampleType'],
+    },
+    labResearchProcesses: {
+        plantSpeciesIdentification: ['sampleId', 'plantSpecimen', 'accessionNumber', 'sampleCondition'],
+    },
+};
+
+function createProgressBar(status, stages) {
+    // Generate progress steps
+    return `
+        <div class="progress-bar">
+            ${stages.map((stage, index) => `
+                <div class="progress-step ${index <= stages.indexOf(status) ? 'completed' : ''}">
+                    <div class="step-circle">${index + 1}</div>
+                    <div class="step-label">${stage}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
 // Get the pagination controls
 const prevPageButton = document.getElementById('prevPage');
 const nextPageButton = document.getElementById('nextPage');
@@ -45,6 +78,19 @@ nextPageButton.addEventListener('click', () => {
     populateRequestTables();
     updatePaginationControls(); // Ensure pagination controls are updated
 });
+
+function attachViewButtonListeners() {
+    const viewButtons = document.querySelectorAll('.view-button');
+    viewButtons.forEach(button => {
+        button.addEventListener('click', async (event) => {
+            const requestId = event.target.dataset.requestId;
+            await showRequestDetails(requestId);
+            adminRequestDetailsSection.classList.remove('hidden');
+            requestListContainer.classList.add('hidden'); // Add this line
+            requestList.classList.add('hidden');
+        });
+    });
+}
 
 const clientRefs = {}; 
 
@@ -120,6 +166,215 @@ async function calculateSamplesCount(userId) {
     return totalSamples;
 }
 
+const requestListContainer = document.getElementById('requestListContainer');
+const requestList = document.getElementById('requestList');
+const adminRequestDetailsSection = document.getElementById('adminRequestDetailsSection');
+const adminRequestDetailsContent = document.getElementById('adminRequestDetailsContent');
+const adminRequestDetailsHeader = document.getElementById('adminRequestDetailsHeader');
+
+// Function to show request details
+async function showRequestDetails(requestId) {
+  const requestsRef = collection(firestore, 'requests');
+  const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+  const requestSnapshot = await getDocs(requestQuery);
+
+  // Clear previous details
+  adminRequestDetailsHeader.innerHTML = ""; 
+  adminRequestDetailsContent.innerHTML = ""; 
+
+  if (!requestSnapshot.empty) {
+    const requestDoc = requestSnapshot.docs[0].data();
+
+    // Create request information header
+    adminRequestDetailsHeader.innerHTML = `<h2>Request Information</h2>`;
+    
+    // Display basic request information
+    const requestInfoDiv = document.createElement('div');
+    requestInfoDiv.style.cssText = 'text-align: right;';
+    requestInfoDiv.innerHTML = `
+      <p><strong>Timestamp:</strong> ${formatTimestamp(requestDoc.timeStamp)}</p>
+      <p><strong>Request ID:</strong> ${requestDoc.requestId}</p>
+    `;
+    adminRequestDetailsContent.appendChild(requestInfoDiv);
+
+    // Determine fields based on the request type and option
+    const fields = sampleFieldMapping[requestDoc.requestType][requestDoc.requestOption];
+
+    let tableHTML = '';
+
+    // Check if the request has samples
+    if (requestDoc.samples && requestDoc.samples.length > 0) {
+      // Define sample stages and get current stage
+      const sampleStages = [
+        { label: "Submit Request", value: "pending" }, // Default value
+        { label: "Reviewing Request", value: "reviewing" },
+        { label: "Send Samples", value: "sending" },
+        { label: "Validating Samples", value: "validating" },
+        { label: "Analysis in Progress", value: "analysing" },
+        { label: "Verifying Analysis Report", value: "verifying" },
+        { label: "Released Analysis Report", value: "releasing" }
+      ];
+      const currentStageIndex = sampleStages.findIndex(stage => stage.value === requestDoc.request_status);
+      const sampleStatus = sampleStages[currentStageIndex >= 0 ? currentStageIndex : 0].label;
+
+      // Generate progress bar
+      const sampleProgressBarHTML = createProgressBar(sampleStatus, sampleStages.map(stage => stage.label));
+      
+      // Generate table for samples
+      tableHTML = `
+        ${sampleProgressBarHTML}
+        <table class="requestDetailsTable">
+          <thead>
+            <tr>
+              ${fields.map(field => `<th>${field.replace(/([A-Z])/g, ' $1').toUpperCase()}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${requestDoc.samples.map(sample => `
+              <tr>
+                ${fields.map(field => `<td>${sample[field] || '--'}</td>`).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } else {
+      // Handle other cases when no samples are present
+      if (requestDoc.requestOption === 'researchCollaboration') {
+        // Define the stages and their corresponding database values
+        const researchStages = [
+          { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
+          { label: "Reviewing Request", value: "reviewing" },
+          { label: "Initiating Contact", value: "initiating" },
+          { label: "Drafting and Reviewing of MOU", value: "drafting" },
+          { label: "Legal Review and Approval of MOU", value: "approving" },
+          { label: "Formal Signing of MOU", value: "signing" },
+          { label: "Collaboration Management", value: "managing" }
+        ];
+    
+        // Find the current stage index based on request_status
+        const currentStageIndex = researchStages.findIndex(stage => stage.value === requestDoc.request_status);
+        const researchStatus = researchStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
+    
+        // Generate the progress bar based on the current stage
+        const progressBarHTML = createProgressBar(researchStatus, researchStages.map(stage => stage.label));
+        
+        tableHTML = `
+          ${progressBarHTML}
+          <table class="requestDetailsTable"> 
+            <thead>
+              <tr>
+                <th>Project Title</th>
+                <th>Principal Investigator</th >
+                <th>Collaborating Institutions</th>
+                <th>Objectives</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Funding</th>
+                <th>Roles & Responsibilities</th>
+                <th>Deliverables</th>
+                <th>Confidentiality</th>
+                <th>Contact Information</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${requestDoc.projectTitle || '--'}</td>
+                <td>${requestDoc.principalInvestigator || '--'}</td>
+                <td>${requestDoc.collaboratingInstitutions || '--'}</td>
+                <td>${requestDoc.objectives || '--'}</td>
+                <td>${formatTimestamp(requestDoc.startDate) || '--'}</td>
+                <td>${formatTimestamp(requestDoc.endDate) || '--'}</td>
+                <td>${requestDoc.funding || '--'}</td>
+                <td>${requestDoc.rolesResponsibilities || '--'}</td>
+                <td>${requestDoc.deliverables || '--'}</td>
+                <td>${requestDoc.confidentiality || '--'}</td>
+                <td>${requestDoc.contactInformation || '--'}</td>
+              </tr>
+            </tbody>
+          </table>
+        `;
+      } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
+        // Define the stages and their corresponding database values
+        const labAccessStages = [
+          { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
+          { label: "Reviewing Request", value: "reviewing" },
+          { label: "Scheduling of Lab Access", value: "scheduling" },
+          { label: "Preparing of Laboratory Equipment", value: "preparing" },
+          { label: "Post-Use Inspection and Documentation", value: "inspecting" },
+          { label: "Reporting of Laboratory Usage", value: "reporting" },
+          { label: "Release of Laboratory Equipment", value: "releasing" }
+        ];
+
+        // Find the current stage index based on request_status
+        const currentStageIndex = labAccessStages.findIndex(stage => stage.value === requestDoc.request_status);
+        const labAccessStatus = labAccessStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
+
+        // Generate the progress bar based on the current stage
+        const progressBarHTML = createProgressBar(labAccessStatus, labAccessStages.map(stage => stage.label));
+
+        tableHTML = `
+          ${progressBarHTML}
+          <table class="requestDetailsTable">
+            <thead>
+              <tr>
+                <th>Equipment ID</th>
+                <th>Scheduled Date</th>
+                <th>Post Use Condition</th>
+                <th>Equipment Requesting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${requestDoc.equipmentId || '--'}</td>
+                <td>${formatTimestamp(requestDoc.scheduledDate) || '--'}</td>
+                <td>${requestDoc.postUseCondition || '--'}</td>
+                <td>${requestDoc.equipmentRequesting || '--'}</td>
+              </tr>
+            </tbody>
+          </table>
+        `;
+      } else {
+        // Default message when no other conditions match
+        tableHTML = '<p>No additional details available for this request option.</p>';
+      }
+    }
+
+    // Insert the tableHTML content after the requestInfoDiv element
+    adminRequestDetailsContent.insertAdjacentHTML('beforeend', tableHTML);
+
+    // Add buttons for pending requests
+    if (requestDoc.request_status === "pending") {
+      const buttonsHTML = `
+        <div class="request-action-buttons">
+          <button class="reject-button">Reject</button>
+          <button class="approve-button">Approve</button>
+        </div>
+      `;
+      adminRequestDetailsContent.insertAdjacentHTML('beforeend', buttonsHTML);
+    }
+
+    // Show the details section and hide the request list
+    adminRequestDetailsSection.classList.remove('hidden');
+    requestList.classList.add('hidden');
+    requestListContainer.classList.add('hidden');
+  } else {
+    // If no matching request is found
+    adminRequestDetailsContent.innerHTML = '<p>No request details found for this request ID.</p>';
+    adminRequestDetailsSection.classList.remove('hidden');
+    requestList.classList.add('hidden');
+  }
+}
+const backButton = document.getElementById('backButton');
+backButton.addEventListener('click', backToRequestList);
+function backToRequestList() {
+    adminRequestDetailsSection.classList.add('hidden');
+    adminRequestDetailsContent.innerHTML = ""; // Clear the details content
+    requestList.classList.remove('hidden');
+    requestListContainer.classList.remove('hidden');
+  }
+
+
 // Function to append a row to a specific table
 function appendRowToTable(tableId, date, requestId, clientType, clientName, samplesCount, typeOfRequest) {
     const tableBody = document.querySelector(`#${tableId} tbody`);
@@ -131,11 +386,10 @@ function appendRowToTable(tableId, date, requestId, clientType, clientName, samp
         <td>${clientName}</td>
         <td>${samplesCount}</td>
         <td>${typeOfRequest}</td>
-        <td style="text-align: center;">
-            <button class="action-button">Action</button> <!-- Add action as needed -->
-        </td>
+        <td><button class="view-button" data-request-id="${requestId}">View</button></td>
     `;
     tableBody.appendChild(newRow);
+    attachViewButtonListeners();
 }
 
 // Search Functionality for All Requests
@@ -181,6 +435,7 @@ searchInput.addEventListener('input', async () => {
                 <td><button class="view-button" data-request-id="${requestId}">View</button></td>
             `;
             requestListTableBody.appendChild(tableRow);
+            attachViewButtonListeners();
         }
     }
 });
@@ -227,6 +482,7 @@ serviceSearchInput.addEventListener('input', async () => {
                 <td><button class="view-button" data-request-id="${requestId}">View</button></td>
             `;
             serviceRequestsTableBody.appendChild(tableRow);
+            attachViewButtonListeners();
         }
     }
 });
@@ -274,6 +530,7 @@ followUpSearchInput.addEventListener('input', async () => {
                 <td><button class="view-button" data-request-id="${requestId}">View</button></td>
             `;
             followUpRequestsTableBody.appendChild(tableRow);
+            attachViewButtonListeners();
         }
     }
 });
