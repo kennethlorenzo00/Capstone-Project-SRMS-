@@ -5,6 +5,7 @@ import { ref, set, get, update, onValue, remove} from "https://www.gstatic.com/f
 // Variables to track email verification
 let isEmailVerified = false;
 let currentUser;
+let intervalId;
 
 // Common function to handle Send Verification Link
 function handleSendVerification() {
@@ -33,14 +34,17 @@ function handleSendVerification() {
 }
 
 // Common function to continuously check email verification status
-function checkEmailVerification(registerBtnId) {
-    const intervalId = setInterval(() => {
+function checkEmailVerification(registerBtn) {
+    isEmailVerified = false; // Reset email verification status
+    document.getElementById(registerBtn).disabled = true; // Disable register button
+
+    intervalId = setInterval(() => {
         currentUser.reload().then(() => {
             if (currentUser.emailVerified) {
                 isEmailVerified = true;
-                document.getElementById(registerBtnId).disabled = false; // Enable register button
+                document.getElementById(registerBtn).disabled = false; // Enable register button
                 console.log("Email verified, register button enabled.");
-                clearInterval(intervalId); // Stop checking once verified
+                clearInterval(intervalId); // Clear interval
             } else {
                 console.log("Email not verified yet.");
             }
