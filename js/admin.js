@@ -116,7 +116,6 @@ function closeAddStaffModalHandler() {
 async function addNewStaff(event) {
     event.preventDefault();
     const newStaffEmail = document.getElementById('newStaffEmail').value.trim();
-    const newStaffRole = document.getElementById('newStaffRole').value;
     const firstName = document.getElementById('staffFirstName').value.trim();
     const middleName = document.getElementById('staffMiddleName').value.trim();
     const lastName = document.getElementById('staffLastName').value.trim();

@@ -1003,3 +1003,47 @@ input {
         width: calc(100% - 20px); /* Adjust input width */
     }
 }
+
+.appointment-form-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .appointment-form-fields {
+    flex: 1; /* Take up remaining space */
+    margin-right: 20px; /* Space between fields and calendar */
+  }
+  
+  .appointment-calendar {
+    flex: 1; /* Make calendar area responsive */
+    max-width: 600px; /* Adjust max width as needed */
+  }
+  
+  .appointment-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .appointment-label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .appointment-input, .appointment-select {
+    width: 100%; /* Make inputs full width */
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .appointment-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .appointment-button:hover {
+    background-color: #0056b3;
+  }
+  

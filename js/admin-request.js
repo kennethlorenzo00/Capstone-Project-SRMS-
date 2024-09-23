@@ -1,7 +1,7 @@
 // Import the necessary Firebase modules
 import { database, firestore } from './firebase.js'; // Adjust the path as needed
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-import { collection, getDocs, query, where, startAfter, limit, orderBy } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 // Function to format Firestore timestamps
 function formatTimestamp(timestamp) {
@@ -90,6 +90,193 @@ function attachViewButtonListeners() {
             requestList.classList.add('hidden');
         });
     });
+}
+
+async function showAppointmentPage(requestId) {
+  // Clear the appointment section
+  const appointmentPage = document.getElementById('appointmentPage');
+  appointmentPage.innerHTML = "";
+
+  // Fetch the request details from Firestore
+  const requestsRef = collection(firestore, 'requests');
+  const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+  const requestSnapshot = await getDocs(requestQuery);
+  const requestData = requestSnapshot.docs[0]?.data();
+
+  if (!requestData) {
+    alert("Request data not found.");
+    return;
+  }
+
+  // Fetch client details from Realtime Database
+  const userId = requestData.userId;
+  if (!clientRefs[userId]) {
+    const clientRef = ref(database, `clients/${userId}`);
+    const clientSnapshot = await get(clientRef);
+    clientRefs[userId] = clientSnapshot.val(); // Store client data in object
+  }
+
+  const clientName = `${clientRefs[userId]?.firstName || ''} ${clientRefs[userId]?.middleName || ''} ${clientRefs[userId]?.lastName || ''}`.trim() || "--";
+
+  // Get the number of samples
+  const samplesCount = requestData.samples ? requestData.samples.length : 0;
+
+  // Request Type
+  const requestType = requestData.requestType || "--";
+
+  // Fetch available laboratory staff from Realtime Database
+  const staffRef = ref(database, 'laboratory_staff'); // Assuming this is the correct path
+  const staffSnapshot = await get(staffRef);
+  const staffData = staffSnapshot.val() || {};
+
+  // Populate the laboratory staff options
+  let staffOptionsHTML = `<option value="" disabled selected>Select a staff member</option>`;
+  for (const staffId in staffData) {
+    const staffFullName = `${staffData[staffId].firstName || ''} ${staffData[staffId].middleName || ''} ${staffData[staffId].lastName || ''}`.trim();
+    staffOptionsHTML += `<option value="${staffId}">${staffFullName}</option>`;
+  }
+
+  // Populate appointment details in the page
+  appointmentPage.innerHTML = `
+    <h2 class="appointment-title">Appointment Page for Request ID: ${requestId}</h2>
+    <div class="appointment-form-container">
+      <div class="appointment-form-fields">
+        <p class="appointment-requester-name"><strong>Requester Name:</strong> ${clientName}</p>
+        <p class="appointment-samples-count"><strong>Number of Samples:</strong> ${samplesCount}</p>
+        <p class="appointment-request-type"><strong>Request Type:</strong> ${requestType}</p>
+        <form id="appointmentForm" class="appointment-form">
+          <label for="startDate" class="appointment-label">Starting Date:</label>
+          <input type="date" id="startDate" name="startDate" required class="appointment-input">
+          
+          <label for="endDate" class="appointment-label">End Date:</label>
+          <input type="date" id="endDate" name="endDate" required class="appointment-input">
+
+          <label for="priorityLevel" class="appointment-label">Priority Level:</label>
+          <select id="priorityLevel" name="priorityLevel" required class="appointment-select">
+            <option value="" disabled selected>Select Priority Level</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <label for="assignedStaff" class="appointment-label">Assign Laboratory Staff:</label>
+          <select id="assignedStaff" name="assignedStaff" required class="appointment-select">
+            ${staffOptionsHTML}
+          </select>
+
+          <button type="submit" class="appointment-button">Schedule Appointment</button>
+          <button type="button" class="appointment-clear-button">Clear</button> <!-- Clear button -->
+        </form>
+      </div>
+      <div id="calendar" class="appointment-calendar"></div>
+    </div>
+  `;
+
+  // Show the appointment page and hide others
+  appointmentPage.classList.remove('hidden');
+  adminRequestDetailsSection.classList.add('hidden');
+  requestList.classList.add('hidden');
+
+  // Add an event listener to the form for submission
+  const appointmentForm = document.getElementById('appointmentForm');
+  appointmentForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const priorityLevel = document.getElementById('priorityLevel').value;
+    const assignedStaff = document.getElementById('assignedStaff').value;
+
+    // Save appointment details to Firestore
+    const appointmentsRef = collection(firestore, 'appointments');
+    await addDoc(appointmentsRef, {
+      requestId: requestId,
+      requesterName: clientName,
+      samplesCount: samplesCount,
+      requestType: requestType,
+      startDate: startDate,
+      endDate: endDate,
+      priorityLevel: priorityLevel,
+      assignedStaff: assignedStaff,
+      createdAt: serverTimestamp()
+    });
+
+    alert('Appointment scheduled successfully!');
+    appointmentForm.reset();
+    appointmentPage.classList.add('hidden');
+    backToRequestList(); // Or any other function to navigate back
+  });
+
+ // Initialize FullCalendar
+ const calendarEl = document.getElementById('calendar');
+ const calendar = new FullCalendar.Calendar(calendarEl, {
+   initialView: 'dayGridMonth',
+   dateClick: function (info) {
+     // Prevent highlighting if the date is booked
+     if (!info.event && !isDateBooked(info.dateStr)) {
+       document.getElementById('startDate').value = info.dateStr;
+       highlightSelectedDate(info.dateStr);
+     }
+   },
+   events: await getAppointments(), // Fetch existing appointments
+   eventColor: 'red', // Default color for booked dates
+ });
+
+ calendar.render();
+
+ // Fetch existing appointments to highlight booked dates
+ async function getAppointments() {
+   const snapshot = await getDocs(collection(firestore, 'appointments'));
+   return snapshot.docs.map(doc => {
+     const data = doc.data();
+     return {
+       title: 'Booked',
+       start: data.startDate,
+       color: 'red',
+       extendedProps: { isBooked: true }
+     };
+   });
+ }
+
+ // Check if a date is booked
+ function isDateBooked(dateStr) {
+   return calendar.getEvents().some(event => event.startStr === dateStr && event.extendedProps.isBooked);
+ }
+
+ // Highlight selected date in blue
+ let highlightedDate = null; // Keep track of the currently highlighted date
+
+ function highlightSelectedDate(dateStr) {
+   // Reset previously highlighted date
+   if (highlightedDate) {
+     const previousEvent = calendar.getEvents().find(event => event.startStr === highlightedDate);
+     if (previousEvent) {
+       previousEvent.remove(); // Remove previous highlight
+     }
+   }
+
+   // Add a new event for the selected date
+   highlightedDate = dateStr; // Update highlighted date
+   calendar.addEvent({
+     title: 'Selected',
+     start: dateStr,
+     color: 'blue',
+     extendedProps: { isSelected: true }
+   });
+ }
+
+ const clearButton = document.querySelector('.appointment-clear-button');
+  clearButton.addEventListener('click', () => {
+    appointmentForm.reset();
+    document.getElementById('startDate').value = ''; // Reset start date
+    document.getElementById('endDate').value = ''; // Reset end date
+    highlightedDate = null; // Reset highlighted date
+    calendar.getEvents().forEach(event => {
+      if (event.extendedProps.isSelected) {
+        event.remove(); // Remove the highlighted event
+      }
+    });
+  });
+  
 }
 
 const clientRefs = {}; 
@@ -343,15 +530,57 @@ async function showRequestDetails(requestId) {
     // Insert the tableHTML content after the requestInfoDiv element
     adminRequestDetailsContent.insertAdjacentHTML('beforeend', tableHTML);
 
-    // Add buttons for pending requests
+   // Add buttons for pending requests
     if (requestDoc.request_status === "pending") {
       const buttonsHTML = `
-        <div class="request-action-buttons">
-          <button class="reject-button">Reject</button>
-          <button class="approve-button">Approve</button>
-        </div>
+          <div class="request-action-buttons">
+              <button class="reject-button">Reject</button>
+              <button class="approve-button">Approve</button>
+          </div>
       `;
       adminRequestDetailsContent.insertAdjacentHTML('beforeend', buttonsHTML);
+      
+      const rejectButton = adminRequestDetailsContent.querySelector('.reject-button');
+      const approveButton = adminRequestDetailsContent.querySelector('.approve-button');
+
+      // Add event listeners to the buttons
+      rejectButton.addEventListener('click', async () => {
+          // Update request status to "reviewing"
+          const requestsRef = collection(firestore, 'requests');
+          const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+          const requestSnapshot = await getDocs(requestQuery);
+          const requestDocRef = requestSnapshot.docs[0].ref;
+          await updateDoc(requestDocRef, { request_status: 'reviewing' });
+          alert('Request has been rejected.');
+          backToRequestList()
+      });
+
+      approveButton.addEventListener('click', async () => {
+          // Update request status to "sending"
+          const requestsRef = collection(firestore, 'requests');
+          const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+          const requestSnapshot = await getDocs(requestQuery);
+          const requestDocRef = requestSnapshot.docs[0].ref;
+          await updateDoc(requestDocRef, { request_status: 'sending' });
+          alert('Request has been approved.');
+          backToRequestList()
+      });
+    }
+
+    if (requestDoc.request_status === "validating") {
+      const appointmentButtonHTML = `
+          <div class="appointment-action-buttons">
+              <button class="proceed-to-appointment-button">Proceed to Appointment Page</button>
+          </div>
+      `;
+      adminRequestDetailsContent.insertAdjacentHTML('beforeend', appointmentButtonHTML);
+
+      const proceedToAppointmentButton = adminRequestDetailsContent.querySelector('.proceed-to-appointment-button');
+      
+      // Listener for proceeding to the appointment page
+      proceedToAppointmentButton.addEventListener('click', () => {
+          showAppointmentPage(requestId);
+      });
     }
 
     // Show the details section and hide the request list
