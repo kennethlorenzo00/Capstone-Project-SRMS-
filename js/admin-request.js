@@ -1,6 +1,6 @@
 // Import the necessary Firebase modules
 import { database, firestore } from './firebase.js'; // Adjust the path as needed
-import { ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { ref, get, } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp, doc, getDoc} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 // Function to format Firestore timestamps
@@ -410,6 +410,12 @@ async function showRequestDetails(requestId) {
 
   if (!requestSnapshot.empty) {
     const requestDoc = requestSnapshot.docs[0].data();
+    const userId = requestDoc.userId;
+
+    // Fetch the withMOU status from Realtime Database
+    const clientRef = ref(database, `clients/${userId}/withMOU`); 
+    const clientSnapshot = await get(clientRef);
+    const withMOU = clientSnapshot.exists() ? clientSnapshot.val() : false;
 
     // Create request information header
     adminRequestDetailsHeader.innerHTML = `<h2>Request Information</h2>`;
@@ -432,7 +438,7 @@ async function showRequestDetails(requestId) {
     if (requestDoc.samples && requestDoc.samples.length > 0) {
       // Define sample stages and get current stage
       const sampleStages = [
-        { label: "Submit Request", value: "pending" }, // Default value
+        { label: "Submit Request", value: "pending" }, 
         { label: "Reviewing Request", value: "reviewing" },
         { label: "Send Samples", value: "sending" },
         { label: "Validating Samples", value: "validating" },
@@ -467,24 +473,36 @@ async function showRequestDetails(requestId) {
     } else {
       // Handle other cases when no samples are present
       if (requestDoc.requestOption === 'researchCollaboration') {
-        // Define the stages and their corresponding database values
-        const researchStages = [
-          { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
-          { label: "Reviewing Request", value: "reviewing" },
-          { label: "Initiating Contact", value: "initiating" },
-          { label: "Drafting and Reviewing of MOU", value: "drafting" },
-          { label: "Legal Review and Approval of MOU", value: "approving" },
-          { label: "Formal Signing of MOU", value: "signing" },
-          { label: "Collaboration Management", value: "managing" }
-        ];
-    
+        let researchStages;
+
+        if (withMOU) {
+          // Define the simplified stages when MOU is already in place
+          researchStages = [
+            { label: "Submit Request", value: "pending" },
+            { label: "Reviewing Request", value: "reviewing" },
+            { label: "Collaboration Management", value: "managing" }
+          ];
+        } else {
+          // Define the full stages when MOU is not yet in place
+          researchStages = [
+            { label: "Submit Request", value: "pending" },
+            { label: "Reviewing Request", value: "reviewing" },
+            { label: "Initiating Contact", value: "initiating" },
+            { label: "Drafting and Reviewing of MOU", value: "drafting" },
+            { label: "Legal Review and Approval of MOU", value: "approving" },
+            { label: "Formal Signing of MOU", value: "signing" },
+            { label: "Collaboration Management", value: "managing" }
+          ];
+        }
+
         // Find the current stage index based on request_status
         const currentStageIndex = researchStages.findIndex(stage => stage.value === requestDoc.request_status);
         const researchStatus = researchStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
-    
+
         // Generate the progress bar based on the current stage
         const progressBarHTML = createProgressBar(researchStatus, researchStages.map(stage => stage.label));
         
+        // Generate the table for research collaboration details
         tableHTML = `
           ${progressBarHTML}
           <table class="requestDetailsTable"> 
@@ -523,7 +541,7 @@ async function showRequestDetails(requestId) {
       } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
         // Define the stages and their corresponding database values
         const labAccessStages = [
-          { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
+          { label: "Submit Request", value: "pending" }, 
           { label: "Reviewing Request", value: "reviewing" },
           { label: "Scheduling of Lab Access", value: "scheduling" },
           { label: "Preparing of Laboratory Equipment", value: "preparing" },
@@ -595,15 +613,36 @@ async function showRequestDetails(requestId) {
       });
 
       approveButton.addEventListener('click', async () => {
-          // Update request status to "sending"
-          const requestsRef = collection(firestore, 'requests');
-          const requestQuery = query(requestsRef, where('requestId', '==', requestId));
-          const requestSnapshot = await getDocs(requestQuery);
-          const requestDocRef = requestSnapshot.docs[0].ref;
-          await updateDoc(requestDocRef, { request_status: 'sending' });
-          alert('Request has been approved.');
-          backToRequestList()
+        const requestsRef = collection(firestore, 'requests');
+        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+        const requestSnapshot = await getDocs(requestQuery);
+        const requestDocRef = requestSnapshot.docs[0].ref;
+        
+        let updatedStatus = 'sending'; // Default status for approval
+        
+        // Conditional logic based on requestOption
+        if (requestDoc.requestOption === 'researchCollaboration') {
+          updatedStatus = 'initiating';
+        } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
+          updatedStatus = 'scheduling';
+        }
+        
+        // Update request status based on the requestOption
+        await updateDoc(requestDocRef, { request_status: updatedStatus });
+        alert(`Request has been approved and moved to ${updatedStatus}.`);
+        
+        backToRequestList();
       });
+      
+    }
+
+    if (requestDoc.request_status === "initiating") {
+      const initiatingMessageDiv = document.createElement('div');
+      initiatingMessageDiv.classList.add('initiating-message');
+      initiatingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> Waiting for the client to send their MOU.</p>
+      `;
+      adminRequestDetailsContent.appendChild(initiatingMessageDiv);
     }
 
     if (requestDoc.request_status === "validating") {

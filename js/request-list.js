@@ -1,5 +1,7 @@
-import { auth, firestore } from './firebase.js';
-import { collection, query, where, onSnapshot, getDocs, limit, startAfter } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { auth, database, firestore, storage } from './firebase.js';
+import { ref as dbRef, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js"; // For Realtime Database
+import { collection, query, where, onSnapshot, getDocs, limit, startAfter, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"; // For Storage
 
 // Get the request list table body and details section
 const requestListTableBody = document.getElementById('requestListTableBody');
@@ -180,12 +182,20 @@ async function showRequestDetails(requestId) {
     const requestQuery = query(requestsRef, where('requestId', '==', requestId));
     const requestSnapshot = await getDocs(requestQuery);
 
+    const clientRequestDetailsContent = document.getElementById('clientRequestDetailsContent');
+
     // Clear previous details
     requestDetailsContent.innerHTML = "";
     requestDetailsHeader.innerHTML = "";
     
     if (!requestSnapshot.empty) {
         const requestDoc = requestSnapshot.docs[0].data();
+        const userId = requestDoc.userId;
+
+        // Fetch the withMOU status from Realtime Database
+        const clientRef = dbRef(database, `clients/${userId}/withMOU`); 
+        const clientSnapshot = await get(clientRef);
+        const withMOU = clientSnapshot.exists() ? clientSnapshot.val() : false;
 
         const requestHeaderDiv = document.createElement('div');
         requestHeaderDiv.innerHTML = `<h2>Request Information</h2>`;
@@ -241,59 +251,71 @@ async function showRequestDetails(requestId) {
             `;
         }
         else if (requestDoc.requestOption === 'researchCollaboration') {
-            // Define the stages and their corresponding database values
-            const researchStages = [
-                { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
-                { label: "Reviewing Request", value: "reviewing" },
-                { label: "Initiating Contact", value: "initiating" },
-                { label: "Drafting and Reviewing of MOU", value: "drafting" },
-                { label: "Legal Review and Approval of MOU", value: "approving" },
-                { label: "Formal Signing of MOU", value: "signing" },
-                { label: "Collaboration Management", value: "managing" }
+          let researchStages;
+  
+          if (withMOU) {
+            // Define the simplified stages when MOU is already in place
+            researchStages = [
+              { label: "Submit Request", value: "pending" },
+              { label: "Reviewing Request", value: "reviewing" },
+              { label: "Collaboration Management", value: "managing" }
             ];
-        
-            // Find the current stage index based on request_status
-            const currentStageIndex = researchStages.findIndex(stage => stage.value === requestDoc.request_status);
-            const researchStatus = researchStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
-        
-            // Generate the progress bar based on the current stage
-            const progressBarHTML = createProgressBar(researchStatus, researchStages.map(stage => stage.label));
-            
-            tableHTML = `
-                ${progressBarHTML}
-                <table class="requestDetailsTable"> 
-                    <thead>
-                        <tr>
-                            <th>Project Title</th>
-                            <th>Principal Investigator</th>
-                            <th>Collaborating Institutions</th>
-                            <th>Objectives</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Funding</th>
-                            <th>Roles & Responsibilities</th>
-                            <th>Deliverables</th>
-                            <th>Confidentiality </th>
-                            <th>Contact Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>${requestDoc.projectTitle || '--'}</td>
-                            <td>${requestDoc.principalInvestigator || '--'}</td>
-                            <td>${requestDoc.collaboratingInstitutions || '--'}</td>
-                            <td>${requestDoc.objectives || '--'}</td>
-                            <td>${formatTimestamp(requestDoc.startDate) || '--'}</td>
-                            <td>${formatTimestamp(requestDoc.endDate) || '--'}</td>
-                            <td>${requestDoc.funding || '--'}</td>
-                            <td>${requestDoc.rolesResponsibilities || '--'}</td>
-                            <td>${requestDoc.deliverables || '--'}</td>
-                            <td>${requestDoc.confidentiality || '--'}</td>
-                            <td>${requestDoc.contactInformation || '--'}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
+          } else {
+            // Define the full stages when MOU is not yet in place
+            researchStages = [
+              { label: "Submit Request", value: "pending" },
+              { label: "Reviewing Request", value: "reviewing" },
+              { label: "Initiating Contact", value: "initiating" },
+              { label: "Drafting and Reviewing of MOU", value: "drafting" },
+              { label: "Legal Review and Approval of MOU", value: "approving" },
+              { label: "Formal Signing of MOU", value: "signing" },
+              { label: "Collaboration Management", value: "managing" }
+            ];
+          }
+  
+          // Find the current stage index based on request_status
+          const currentStageIndex = researchStages.findIndex(stage => stage.value === requestDoc.request_status);
+          const researchStatus = researchStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
+  
+          // Generate the progress bar based on the current stage
+          const progressBarHTML = createProgressBar(researchStatus, researchStages.map(stage => stage.label));
+          
+          // Generate the table for research collaboration details
+          tableHTML = `
+            ${progressBarHTML}
+            <table class="requestDetailsTable"> 
+              <thead>
+                <tr>
+                  <th>Project Title</th>
+                  <th>Principal Investigator</th >
+                  <th>Collaborating Institutions</th>
+                  <th>Objectives</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Funding</th>
+                  <th>Roles & Responsibilities</th>
+                  <th>Deliverables</th>
+                  <th>Confidentiality</th>
+                  <th>Contact Information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${requestDoc.projectTitle || '--'}</td>
+                  <td>${requestDoc.principalInvestigator || '--'}</td>
+                  <td>${requestDoc.collaboratingInstitutions || '--'}</td>
+                  <td>${requestDoc.objectives || '--'}</td>
+                  <td>${formatTimestamp(requestDoc.startDate) || '--'}</td>
+                  <td>${formatTimestamp(requestDoc.endDate) || '--'}</td>
+                  <td>${requestDoc.funding || '--'}</td>
+                  <td>${requestDoc.rolesResponsibilities || '--'}</td>
+                  <td>${requestDoc.deliverables || '--'}</td>
+                  <td>${requestDoc.confidentiality || '--'}</td>
+                  <td>${requestDoc.contactInformation || '--'}</td>
+                </tr>
+              </tbody>
+            </table>
+          `;
         } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
             // Define the stages and their corresponding database values
             const labAccessStages = [
@@ -338,6 +360,50 @@ async function showRequestDetails(requestId) {
 
         // Append the tableHTML to the requestDetailsContent element
         requestDetailsContent.innerHTML = tableHTML;
+
+        if (requestDoc.request_status === "initiating") {
+            const initiatingMessageDiv = document.createElement('div');
+            initiatingMessageDiv.classList.add('initiating-message');
+            initiatingMessageDiv.innerHTML = `
+                <p><strong>Note:</strong> You need to upload your MOU.</p>
+                <a href="/documents/CO-AUTHORSHIP-AGREEMENT.docx" download>Download MOU Template</a>
+                <div class="file-upload">
+                    <input type="file" id="mouUpload" accept=".pdf"/>
+                    <button id="uploadMOUButton">Upload MOU</button>
+                </div>
+            `;
+            requestDetailsContent.appendChild(initiatingMessageDiv);
+        
+            // Add event listener for the upload button
+            document.getElementById('uploadMOUButton').addEventListener('click', async () => {
+                const fileInput = document.getElementById('mouUpload');
+                const file = fileInput.files[0];
+                if (file) {
+                    const mouStorageRef = storageRef(storage, `mous/${userId}/${file.name}`);
+                    await uploadBytes(mouStorageRef, file);
+                    alert('MOU uploaded successfully!');
+
+                    // Update the request status in Firestore
+                    const requestsRef = collection(firestore, 'requests');
+                    const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+                    const requestSnapshot = await getDocs(requestQuery);
+
+                    if (!requestSnapshot.empty) {
+                        const requestDocRef = doc(firestore, requestSnapshot.docs[0].ref.path);
+                        // Update the request status
+                        let updatedStatus = 'drafting'; // Update this as needed
+                        await updateDoc(requestDocRef, { request_status: updatedStatus });
+                        alert(`Request status has been updated to ${updatedStatus}.`);
+                    }
+
+                    // Show the request list section and hide request details
+                    requestDetailsSection.classList.add('hidden');
+                    requestListGroup.classList.remove('hidden');
+                } else {
+                    alert('Please select a file to upload.');
+                }
+            });
+        }        
 
         // Show the request details content and hide the request list group
         requestDetailsSection.classList.remove('hidden');

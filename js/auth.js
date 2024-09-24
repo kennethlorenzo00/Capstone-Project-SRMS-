@@ -163,6 +163,7 @@ if (document.getElementById("externalClientRegisterForm")) {
             email,
             role: 'Client',
             clientType: 'External',
+            withMOU: 'false',
             status: 'Pending'
         }).then(() => {
             alert("Registration successful, waiting for admin approval.");
@@ -218,6 +219,7 @@ if (document.getElementById("internalClientRegisterForm")) {
             email,
             role: 'Client',
             clientType: 'Internal',
+            withMOU: 'true',
             status: 'Pending'
         }).then(() => {
             alert("Registration successful, waiting for admin approval.");
