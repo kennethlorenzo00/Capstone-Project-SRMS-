@@ -79,6 +79,40 @@ nextPageButton.addEventListener('click', () => {
     updatePaginationControls(); // Ensure pagination controls are updated
 });
 
+// Get the pagination controls for request history
+const prevHistoryPageButton = document.getElementById('prevHistoryPage');
+const nextHistoryPageButton = document.getElementById('nextHistoryPage');
+const historyPageInfoSpan = document.getElementById('historyPageInfo');
+
+// Initialize pagination variables for request history
+let currentHistoryPage = 1;
+let lastVisibleReleased = null; // Track the last visible document for released requests
+let lastVisibleRejected = null; // Track the last visible document for rejected requests
+const historyPageSize = 5; // Number of requests per page
+
+// Update pagination controls for request history
+function updateRequestHistoryPaginationControls() {
+    prevHistoryPageButton.disabled = currentHistoryPage === 1;
+    nextHistoryPageButton.disabled = !lastVisibleReleased && !lastVisibleRejected; // Disable if there's no last visible document
+    historyPageInfoSpan.textContent = `Page ${currentHistoryPage}`;
+}
+
+// Event listener for previous page button in request history
+prevHistoryPageButton.addEventListener('click', () => {
+    if (currentHistoryPage > 1) {
+        currentHistoryPage--;
+        populateRequestHistory();
+    }
+    updateRequestHistoryPaginationControls(); // Ensure pagination controls are updated
+});
+
+// Event listener for next page button in request history
+nextHistoryPageButton.addEventListener('click', () => {
+    currentHistoryPage++;
+    populateRequestHistory();
+    updateRequestHistoryPaginationControls(); // Ensure pagination controls are updated
+});
+
 function attachViewButtonListeners() {
     const viewButtons = document.querySelectorAll('.view-button');
     viewButtons.forEach(button => {
@@ -91,6 +125,120 @@ function attachViewButtonListeners() {
         });
     });
 }
+
+// Get the buttons
+const requestHistoryBtn = document.getElementById('requestHistoryBtn');
+const releasedRequestsBtn = document.getElementById('releasedRequestsBtn');
+const rejectedRequestsBtn = document.getElementById('rejectedRequestsBtn');
+
+// Attach event listeners to the buttons
+requestHistoryBtn.addEventListener('click', showRequestHistory);
+releasedRequestsBtn.addEventListener('click', showReleasedRequests);
+rejectedRequestsBtn.addEventListener('click', showRejectedRequests);
+
+function showReleasedRequests() {
+  document.getElementById('releasedRequests-table-container').style.display = 'block'; // Show released requests
+  document.getElementById('rejectedRequests-table-container').style.display = 'none'; // Hide rejected requests
+}
+
+function showRejectedRequests() {
+  document.getElementById('releasedRequests-table-container').style.display = 'none'; // Hide released requests
+  document.getElementById('rejectedRequests-table-container').style.display = 'block'; // Show rejected requests
+}
+
+const searchInputHistory = document.getElementById('releasedRequestsSearch');
+searchInputHistory.addEventListener('input', async () => {
+    const searchTerm = searchInputHistory.value.toLowerCase(); // Corrected input reference
+
+    // Fetch all "releasing" requests for the current user
+    const requestsRef = collection(firestore, 'requests');
+    const userRequestsQuery = query(requestsRef, where('request_status', '==', 'releasing')); // Filter by status
+    const requestsSnapshot = await getDocs(userRequestsQuery);
+
+    const requestListTableBody = document.querySelector('#releasedRequestsTable tbody');
+    requestListTableBody.innerHTML = ""; // Clear the table body
+
+    for (const doc of requestsSnapshot.docs) {
+        const requestData = doc.data();
+        const requestId = requestData.requestId;
+
+        // Fetch client details from Realtime Database if not already fetched
+        const userId = requestData.userId;
+        if (!clientRefs[userId]) {
+            const clientRef = ref(database, `clients/${userId}`);
+            const clientSnapshot = await get(clientRef);
+            clientRefs[userId] = clientSnapshot.val(); // Store client data in object
+        }
+        const clientType = clientRefs[userId].clientType || "--";
+        const clientName = `${clientRefs[userId].firstName || ''} ${clientRefs[userId].middleName || ''} ${clientRefs[userId].lastName || ''}`.trim() || "--";
+        const date = formatTimestamp(requestData.timeStamp);
+        const typeOfRequest = requestData.typeOfRequest;
+        const samplesCount = requestData.samples ? requestData.samples.length : 0;
+
+        // Check if the requestId or client name contains the search term
+        if (requestId.toLowerCase().includes(searchTerm) || clientName.toLowerCase().includes(searchTerm)) {
+            const tableRow = document.createElement('tr');
+            tableRow.innerHTML = `
+                <td>${date}</td>
+                <td>${requestId}</td>
+                <td>${clientType}</td>
+                <td>${clientName}</td>
+                <td>${samplesCount}</td>
+                <td>${typeOfRequest}</td>
+                <td><button class="view-button" data-request-id="${requestId}">View</button></td>
+            `;
+            requestListTableBody.appendChild(tableRow);
+            attachViewButtonListeners();
+        }
+    }
+});
+
+const searchInputHistoryRejected = document.getElementById('rejectedRequestsSearch');
+searchInputHistoryRejected.addEventListener('input', async () => {
+    const searchTerm = searchInputHistoryRejected.value.toLowerCase(); // Corrected input reference
+
+    // Fetch all "reviewing" requests for the current user
+    const requestsRef = collection(firestore, 'requests');
+    const userRequestsQuery = query(requestsRef, where('request_status', '==', 'reviewing')); // Filter by status
+    const requestsSnapshot = await getDocs(userRequestsQuery);
+
+    const requestListTableBody = document.querySelector('#rejectedRequestsTable tbody');
+    requestListTableBody.innerHTML = ""; // Clear the table body
+
+    for (const doc of requestsSnapshot.docs) {
+        const requestData = doc.data();
+        const requestId = requestData.requestId;
+
+        // Fetch client details from Realtime Database if not already fetched
+        const userId = requestData.userId;
+        if (!clientRefs[userId]) {
+            const clientRef = ref(database, `clients/${userId}`);
+            const clientSnapshot = await get(clientRef);
+            clientRefs[userId] = clientSnapshot.val(); // Store client data in object
+        }
+        const clientType = clientRefs[userId].clientType || "--";
+        const clientName = `${clientRefs[userId].firstName || ''} ${clientRefs[userId].middleName || ''} ${clientRefs[userId].lastName || ''}`.trim() || "--";
+        const date = formatTimestamp(requestData.timeStamp);
+        const typeOfRequest = requestData.typeOfRequest;
+        const samplesCount = requestData.samples ? requestData.samples.length : 0;
+
+        // Check if the requestId or client name contains the search term
+        if (requestId.toLowerCase().includes(searchTerm) || clientName.toLowerCase().includes(searchTerm)) {
+            const tableRow = document.createElement('tr');
+            tableRow.innerHTML = `
+                <td>${date}</td>
+                <td>${requestId}</td>
+                <td>${clientType}</td>
+                <td>${clientName}</td>
+                <td>${samplesCount}</td>
+                <td>${typeOfRequest}</td>
+                <td><button class="view-button" data-request-id="${requestId}">View</button></td>
+            `;
+            requestListTableBody.appendChild(tableRow);
+            attachViewButtonListeners();
+        }
+    }
+});
 
 async function showAppointmentPage(requestId) {
   // Clear the appointment section
@@ -317,6 +465,107 @@ appointmentForm.addEventListener('submit', async (event) => {
   });
   
 }
+
+// Function to show the request history and populate it
+async function showRequestHistory() {
+  document.getElementById('requestList').style.display = 'none'; // Hide the request list
+  document.getElementById('requestHistoryContainer').style.display = 'block'; // Show the request history
+
+  // Call the function to populate request history data
+  await populateRequestHistory(); // Wait for the request history data to be populated
+}
+
+async function populateRequestHistory() {
+  const requestsRef = collection(firestore, 'requests');
+  
+  // Query for requests with request_status 'releasing' and 'rejected'
+  let releasingQuery;
+  let rejectedQuery;
+  
+  if (currentHistoryPage === 1) {
+      // Initial page
+      releasingQuery = query(requestsRef, where('request_status', '==', 'releasing'), orderBy('timeStamp'), limit(historyPageSize));
+      rejectedQuery = query(requestsRef, where('request_status', '==', 'reviewing'), orderBy('timeStamp'), limit(historyPageSize));
+  } else {
+      // Subsequent pages, use startAfter to paginate
+      releasingQuery = query(requestsRef, where('request_status', '==', 'releasing'), orderBy('timeStamp'), startAfter(lastVisibleReleased), limit(historyPageSize));
+      rejectedQuery = query(requestsRef, where('request_status', '==', 'reviewing'), orderBy('timeStamp'), startAfter(lastVisibleRejected), limit(historyPageSize));
+  }
+
+  const releasingSnapshot = await getDocs(releasingQuery);
+  const rejectedSnapshot = await getDocs(rejectedQuery);
+
+  // Clear previous table data
+  document.querySelector('#releasedRequestsTable tbody').innerHTML = "";
+  document.querySelector('#rejectedRequestsTable tbody').innerHTML = "";
+
+  let hasReleasedRequests = false;
+  let hasRejectedRequests = false;
+
+  // Populate released requests table
+  for (const doc of releasingSnapshot.docs) {
+      const requestData = doc.data();
+      const userId = requestData.userId;
+      const requestId = requestData.requestId;
+      const timestamp = requestData.timeStamp; // Firestore timestamp
+      const date = formatTimestamp(timestamp); // Format date using your timestamp function
+
+      // Fetch client details
+      const clientType = await getClientType(userId); // Implement this function as needed
+      const clientName = await getClientName(userId); // Implement this function as needed
+
+      const samplesCount = requestData.samples ? requestData.samples.length : 0;
+
+      // Append data to the released requests table
+      appendRowToTable('releasedRequestsTable', date, requestId, clientType, clientName, samplesCount, requestData.typeOfRequest || '--');
+      hasReleasedRequests = true; // Mark that we have released requests
+  }
+
+  // Populate rejected requests table
+  for (const doc of rejectedSnapshot.docs) {
+      const requestData = doc.data();
+      const userId = requestData.userId;
+      const requestId = requestData.requestId;
+      const timestamp = requestData.timeStamp; // Firestore timestamp
+      const date = formatTimestamp(timestamp); // Format date using your timestamp function
+
+      // Fetch client details
+      const clientType = await getClientType(userId); // Implement this function as needed
+      const clientName = await getClientName(userId); // Implement this function as needed
+
+      const samplesCount = requestData.samples ? requestData.samples.length : 0;
+
+      // Append data to the rejected requests table
+      appendRowToTable('rejectedRequestsTable', date, requestId, clientType, clientName, samplesCount, requestData.typeOfRequest || '--');
+      hasRejectedRequests = true; // Mark that we have rejected requests
+  }
+
+  // Update lastVisible for both released and rejected requests
+  lastVisibleReleased = releasingSnapshot.docs.length > 0 ? releasingSnapshot.docs[releasingSnapshot.docs.length - 1] : null;
+  lastVisibleRejected = rejectedSnapshot.docs.length > 0 ? rejectedSnapshot.docs[rejectedSnapshot.docs.length - 1] : null;
+
+  // Show the appropriate request history tables and hide the original request tables
+  document.getElementById('releasedRequests-table-container').style.display = hasReleasedRequests ? 'block' : 'none';
+  document.getElementById('rejectedRequests-table-container').style.display = hasRejectedRequests ? 'block' : 'none';
+
+  // Update pagination controls if necessary
+  updateRequestHistoryPaginationControls();
+}
+
+// Helper functions to get client type and name
+async function getClientType(userId) {
+  const clientRef = ref(database, `clients/${userId}`);
+  const clientSnapshot = await get(clientRef);
+  return clientSnapshot.val().clientType || '--'; // Assuming this field exists
+}
+
+async function getClientName(userId) {
+  const clientRef = ref(database, `clients/${userId}`);
+  const clientSnapshot = await get(clientRef);
+  const clientData = clientSnapshot.val();
+  return `${clientData.firstName || ''} ${clientData.middleName || ''} ${clientData.lastName || ''}`.trim() || "--";
+}
+
 
 const clientRefs = {}; 
 
@@ -845,4 +1094,5 @@ followUpSearchInput.addEventListener('input', async () => {
 // Call the function to populate the tables when the document is ready
 document.addEventListener("DOMContentLoaded", function() {
     populateRequestTables();
+    populateRequestHistory();
 });

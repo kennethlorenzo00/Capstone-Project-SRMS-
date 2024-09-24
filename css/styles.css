@@ -1047,3 +1047,70 @@ input {
     background-color: #0056b3;
   }
   
+  /* Released Requests Table Styling */
+#releasedRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+#releasedRequestsTable th, 
+#releasedRequestsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#releasedRequestsTable th {
+    background-color: #4CAF50;
+    color: white;
+    text-transform: uppercase;
+}
+
+#releasedRequestsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#releasedRequestsTable tr:hover {
+    background-color: #ddd;
+}
+
+#releasedRequestsTable th:last-child,
+#releasedRequestsTable td:last-child {
+    text-align: center;
+}
+
+/* Rejected Requests Table Styling */
+#rejectedRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffefef;
+}
+
+#rejectedRequestsTable th, 
+#rejectedRequestsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#rejectedRequestsTable th {
+    background-color: #f44336;
+    color: white;
+    text-transform: uppercase;
+}
+
+#rejectedRequestsTable tr:nth-child(even) {
+    background-color: #ffecec;
+}
+
+#rejectedRequestsTable tr:hover {
+    background-color: #fddddd;
+}
+
+#rejectedRequestsTable th:last-child,
+#rejectedRequestsTable td:last-child {
+    text-align: center;
+}
