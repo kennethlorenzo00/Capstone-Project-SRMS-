@@ -273,7 +273,7 @@ async function showRequestDetails(requestId) {
                             <th>Funding</th>
                             <th>Roles & Responsibilities</th>
                             <th>Deliverables</th>
-                            <th>Confidentiality</th>
+                            <th>Confidentiality </th>
                             <th>Contact Information</th>
                         </tr>
                     </thead>
@@ -295,47 +295,54 @@ async function showRequestDetails(requestId) {
                 </table>
             `;
         } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
-    // Define the stages and their corresponding database values
-    const labAccessStages = [
-        { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
-        { label: "Reviewing Request", value: "reviewing" },
-        { label: "Scheduling of Lab Access", value: "scheduling" },
-        { label: "Preparing of Laboratory Equipment", value: "preparing" },
-        { label: "Post-Use Inspection and Documentation", value: "inspecting" },
-        { label: "Reporting of Laboratory Usage", value: "reporting" },
-        { label: "Release of Laboratory Equipment", value: "releasing" }
-    ];
+            // Define the stages and their corresponding database values
+            const labAccessStages = [
+                { label: "Submit Request", value: "pending" }, // Default value, should be shown by default
+                { label: "Reviewing Request", value: "reviewing" },
+                { label: "Scheduling of Lab Access", value: "scheduling" },
+                { label: "Preparing of Laboratory Equipment", value: "preparing" },
+                { label: "Post-Use Inspection and Documentation", value: "inspecting" },
+                { label: "Reporting of Laboratory Usage", value: "reporting" },
+                { label: "Release of Laboratory Equipment", value: "releasing" }
+            ];
 
-    // Find the current stage index based on request_status
-    const currentStageIndex = labAccessStages.findIndex(stage => stage.value === requestDoc.request_status);
-    const labAccessStatus = labAccessStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
+            // Find the current stage index based on request_status
+            const currentStageIndex = labAccessStages.findIndex(stage => stage.value === requestDoc.request_status);
+            const labAccessStatus = labAccessStages[currentStageIndex >= 0 ? currentStageIndex : 0].label; // Default to the first stage if not found
 
-    // Generate the progress bar based on the current stage
-    const progressBarHTML = createProgressBar(labAccessStatus, labAccessStages.map(stage => stage.label));
+            // Generate the progress bar based on the current stage
+            const progressBarHTML = createProgressBar(labAccessStatus, labAccessStages.map(stage => stage.label));
 
-    tableHTML = `
-        ${progressBarHTML}
-        <table class="requestDetailsTable">
-            <thead>
-                <tr>
-                    <th>Equipment ID</th>
-                    <th>Scheduled Date</th>
-                    <th>Post Use Condition</th>
-                    <th>Equipment Requesting</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>${requestDoc.equipmentId || '--'}</td>
-                    <td>${formatTimestamp(requestDoc.scheduledDate) || '--'}</td>
-                    <td>${requestDoc.postUseCondition || '--'}</td>
-                    <td>${requestDoc.equipmentRequesting || '--'}</td>
-                </tr>
-            </tbody>
-        </table>
-    `;
+            tableHTML = `
+                ${progressBarHTML}
+                <table class="requestDetailsTable">
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Scheduled Date</th>
+                            <th>Post Use Condition</th>
+                            <th>Equipment Requesting</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${requestDoc.equipmentId || '--'}</td>
+                            <td>${formatTimestamp(requestDoc.scheduledDate) || '--'}</td>
+                            <td>${requestDoc.postUseCondition || '--'}</td>
+                            <td>${requestDoc.equipmentRequesting || '--'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Append the tableHTML to the requestDetailsContent element
+        requestDetailsContent.innerHTML = tableHTML;
+
+        // Show the request details content and hide the request list group
+        requestDetailsSection.classList.remove('hidden');
+        requestListGroup.classList.add('hidden');
     }
-}
 }
 
 const backButton = document.getElementById('backButton');

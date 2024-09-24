@@ -43,7 +43,6 @@ async function addNewClient(event) {
     event.preventDefault();
 
     const newClientEmail = document.getElementById('newClientEmail').value.trim();
-    const newClientRole = document.getElementById('newClientRole').value;
     const newClientType = document.querySelector('input[name="clientType"]:checked').value;
     const firstName = document.getElementById('firstName').value.trim();
     const middleName = document.getElementById('middleName').value.trim();
@@ -79,7 +78,7 @@ async function addNewClient(event) {
         // Save new client data in the database
         await set(ref(database, `clients/${userId}`), {
             email: newClientEmail,
-            role: newClientRole ,
+            role: "Client" ,
             clientType: newClientType,
             firstName: firstName,
             middleName: middleName,

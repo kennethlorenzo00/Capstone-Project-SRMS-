@@ -177,7 +177,6 @@ async function showAppointmentPage(requestId) {
   adminRequestDetailsSection.classList.add('hidden');
   requestList.classList.add('hidden');
 
- // Add an event listener to the form for submission
 // Add an event listener to the form for submission
 const appointmentForm = document.getElementById('appointmentForm');
 appointmentForm.addEventListener('submit', async (event) => {
