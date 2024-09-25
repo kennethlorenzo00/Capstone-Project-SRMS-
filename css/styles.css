@@ -1201,3 +1201,68 @@ input {
     object-fit: cover;
     border-radius: 10px;
   }
+
+  /* General styles for the appointment tab */
+#appointment {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+#appointmentsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table header styles */
+#appointmentsTable thead {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+}
+
+#appointmentsTable th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Table body styles */
+#appointmentsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+}
+
+#appointmentsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#appointmentsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Border around cells */
+}
+
+/* Hover effect for rows */
+#appointmentsTable tbody tr:hover {
+    background-color: #d1e7dd; /* Light green on hover */
+}
+
+/* Edit button styles */
+.edit-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* No appointments message styles */
+#appointmentsTable tbody tr.no-appointments td {
+    text-align: center;
+    color: #999; /* Grey text */
+    font-style: italic;
+}
+

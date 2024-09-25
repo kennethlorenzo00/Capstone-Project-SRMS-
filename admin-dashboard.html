@@ -245,8 +245,39 @@
 
             <!-- Appointment Tab -->
             <div id="appointment" class="tabcontent hidden">
-                <h2>Appointment</h2>
-                <p>No appointments scheduled.</p>
+                <h2>Appointments</h2>
+                <table id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Request ID</th>
+                            <th>Client Name</th>
+                            <th>End Date</th>
+                            <th>Assigned Staff</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No appointments scheduled.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Edit Appointment Modal -->
+            <div id="editModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Appointment</h2>
+                    <label for="staffSelect">Assigned Laboratory Staff:</label>
+                    <select id="staffSelect"></select>
+                    
+                    <label for="endDate">Estimated End Date:</label>
+                    <input type="date" id="endDate" />
+                    
+                    <button id="saveButton">Save</button>
+                </div>
             </div>
 
             <!-- Events Tab -->
@@ -520,6 +551,7 @@
     </div>
 
     <script src="js/admin-sidebar.js" defer></script> 
+    <script type="module" src="js/appointment.js" defer></script> 
     <script type="module" src="js/events.js" defer></script> 
 </body>
 </html>
