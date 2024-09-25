@@ -251,8 +251,67 @@
 
             <!-- Events Tab -->
             <div id="events" class="tabcontent hidden">
-                <h2>Events</h2>
-                <p>No events to display.</p>
+                <div class="events-header">
+                <h2>Events and Activities</h2>
+                <input type="text" id="eventSearch" placeholder="Search Events..." style="margin-left: 20px;">
+                <button id="addEventBtn" style="margin-left: 20px;">Add Event</button>
+                </div>
+                
+                <div id="eventContainer" class="scroll-container">
+                <!-- Scrollable event list will be rendered here -->
+                </div>
+            </div>
+            
+            <!-- Add Event Form - Initially Hidden -->
+            <div id="addEventForm" style="display: none;">
+                <h3>Add New Event</h3>
+
+                <button id="closeAddEventForm" style="float: right;">Close</button>
+            
+                <!-- Image Upload Section -->
+                <label for="eventImage">Upload Image:</label>
+                <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
+                <input type="file" id="eventImage">
+                
+                <!-- Event Fields -->
+                <label for="eventTitle">Title:</label>
+                <input type="text" id="eventTitle" placeholder="Event Title">
+                
+                <label for="eventDescription">Description:</label>
+                <textarea id="eventDescription" placeholder="Event Description"></textarea>
+                
+                <label for="eventStartDate">Start Date:</label>
+                <input type="date" id="eventStartDate">
+                
+                <label for="eventEndDate">End Date:</label>
+                <input type="date" id="eventEndDate">
+                
+                <button id="uploadEventBtn">Upload Event</button>
+            </div>
+            
+            <!-- Event Details Modal -->
+            <div id="eventDetailsModal" style="display: none;">
+                <div class="modal-content">
+                <span class="close">&times;</span>
+                <img id="eventImageModal" src="" alt="Event Image" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 10px;">
+                <h3 id="eventTitleModal"></h3>
+                <p id="eventDescriptionModal"></p>
+                <button id="editEventBtn">Edit</button>
+                <button id="deleteEventBtn">Delete</button>
+                </div>
+            </div>
+            
+            <!-- Edit Event Modal -->
+            <div id="editEventModal" style="display: none;">
+                <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Edit Event</h3>
+                <label for="editEventTitle">Title:</label>
+                <input type="text" id="editEventTitle" placeholder="Event Title">
+                <label for="editEventDescription">Description:</label>
+                <textarea id="editEventDescription" placeholder="Event Description"></textarea>
+                <button id="saveEditEventBtn">Save</button>
+                </div>
             </div>
 
             <!-- Manage Users Tab -->
@@ -461,5 +520,6 @@
     </div>
 
     <script src="js/admin-sidebar.js" defer></script> 
+    <script type="module" src="js/events.js" defer></script> 
 </body>
 </html>
