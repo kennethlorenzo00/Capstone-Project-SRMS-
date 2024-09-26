@@ -894,7 +894,7 @@ async function showRequestDetails(requestId) {
       adminRequestDetailsContent.appendChild(initiatingMessageDiv);
     }
 
-    if (requestDoc.request_status === "validating") {
+    if (requestDoc.request_status === "validating" || requestDoc.request_status === "scheduling") {
       const appointmentButtonHTML = `
           <div class="appointment-action-buttons">
               <button class="proceed-to-appointment-button">Proceed to Appointment Page</button>

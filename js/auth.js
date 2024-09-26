@@ -1,6 +1,7 @@
-import { auth, database } from './firebase.js';
-import { getAuth,createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-import { ref, set, get, update, onValue, remove} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { auth, database, firestore } from './firebase.js';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { ref, set, get, update, onValue, remove } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"; // Import Firestore functions
 
 // Variables to track email verification
 let isEmailVerified = false;
@@ -778,53 +779,74 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function displayLaboratoryStaff() {
-        const staffRef = ref(database, 'laboratory_staff/');
-        onValue(staffRef, (snapshot) => {
-            const staffTableBody = document.getElementById("staffTable").getElementsByTagName('tbody')[0];
-            if (!staffTableBody) {
-                console.error("staffTableBody not found.");
-                return;
-            }
-            staffTableBody.innerHTML = ""; // Clear existing rows
     
-            snapshot.forEach((childSnapshot) => {
-                const staff = childSnapshot.val();
-                const staffId = childSnapshot.key;
-    
-                const row = staffTableBody.insertRow();
-    
-                // Display name
-                const name = `${staff.firstName || ''} ${staff.middleName || ''} ${staff.lastName || ''}`;
-                row.insertCell(0).textContent = name.trim() || "No name";
-    
-                // Display email
-                row.insertCell(1).textContent = staff.email || "No email";
-    
-                // Display role
-                row.insertCell(2).textContent = staff.role || "No role";
-    
-                // Display action buttons
-                const actionCell = row.insertCell(3);
-                const viewDetailsBtn = document.createElement('button');
-                viewDetailsBtn.textContent = 'View Details';
-                viewDetailsBtn.classList.add('view-details-btn');
-                viewDetailsBtn.dataset.id = staffId;
-                const deactivateBtn = document.createElement('button');
-                deactivateBtn.textContent = 'Deactivate';
-                deactivateBtn.classList.add('deactivate-btn');
-                deactivateBtn.dataset.id = staffId;
-    
-                actionCell.appendChild(viewDetailsBtn);
-                actionCell.appendChild(deactivateBtn);
-    
-                viewDetailsBtn.addEventListener('click', () => showStaffDetails(staffId));
-                deactivateBtn.addEventListener('click', () => deactivateStaff(staffId));
-            });
-    
-            initializeSearch(); // Initialize search functionality
+function displayLaboratoryStaff() {
+    const staffRef = ref(database, 'laboratory_staff/');
+    onValue(staffRef, async (snapshot) => {
+        const staffTableBody = document.getElementById("staffTable").getElementsByTagName('tbody')[0];
+        if (!staffTableBody) {
+            console.error("staffTableBody not found.");
+            return;
+        }
+        staffTableBody.innerHTML = ""; // Clear existing rows
+
+        const staffCountPromises = []; // Array to hold promises for counting appointments
+
+        snapshot.forEach((childSnapshot) => {
+            const staff = childSnapshot.val();
+            const staffId = childSnapshot.key;
+
+            // Create a new promise for counting appointments for this staff member
+            const staffFullName = `${staff.firstName || ''} ${staff.middleName || ''} ${staff.lastName || ''}`.trim();
+            const countAppointmentsPromise = (async () => {
+                const appointmentsQuery = query(collection(firestore, 'appointments'), where('assignedStaff', '==', staffFullName));
+                const appointmentsSnapshot = await getDocs(appointmentsQuery);
+                return { staffId, assignedTaskCount: appointmentsSnapshot.size }; // Return staffId and count
+            })();
+            staffCountPromises.push(countAppointmentsPromise);
+
+            const row = staffTableBody.insertRow();
+
+            // Display name
+            row.insertCell(0).textContent = staffFullName || "No name";
+
+            // Display email
+            row.insertCell(1).textContent = staff.email || "No email";
+
+            // Placeholder for assigned tasks count
+            row.insertCell(2).textContent = "Counting..."; // Temporarily show "Counting..."
+
+            // Display action buttons
+            const actionCell = row.insertCell(3);
+            const viewDetailsBtn = document.createElement('button');
+            viewDetailsBtn.textContent = 'View Details';
+            viewDetailsBtn.classList.add('view-details-btn');
+            viewDetailsBtn.dataset.id = staffId;
+            const deactivateBtn = document.createElement('button');
+            deactivateBtn.textContent = 'Deactivate';
+            deactivateBtn.classList.add('deactivate-btn');
+            deactivateBtn.dataset.id = staffId;
+
+            actionCell.appendChild(viewDetailsBtn);
+            actionCell.appendChild(deactivateBtn);
+
+            viewDetailsBtn.addEventListener('click', () => showStaffDetails(staffId));
+            deactivateBtn.addEventListener('click', () => deactivateStaff(staffId));
         });
-    }    
+
+        // Wait for all appointment counts to resolve and update the table
+        const staffCounts = await Promise.all(staffCountPromises);
+
+        staffCounts.forEach(({ staffId, assignedTaskCount }) => {
+            const rowToUpdate = Array.from(staffTableBody.rows).find(row => row.cells[3].querySelector('.deactivate-btn').dataset.id === staffId); // Find the correct row
+            if (rowToUpdate) {
+                rowToUpdate.cells[2].textContent = assignedTaskCount; // Update the assigned task count
+            }
+        });
+
+        initializeSearch(); // Initialize search functionality
+    });
+}   
     
     function showStaffDetails(staffId) {
         const staffRef = ref(database, `laboratory_staff/${staffId}`);
@@ -869,9 +891,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }       
 
+    async function getClientRequestsCount(clientId) {
+        const requestsQuery = query(collection(firestore, 'requests'), where('userId', '==', clientId));
+        const requestsSnapshot = await getDocs(requestsQuery);
+        return requestsSnapshot.size; // Return the number of requests
+    }
+    
     function displayClients() {
         const clientsRef = ref(database, 'clients/');
-        onValue(clientsRef, (snapshot) => {
+        onValue(clientsRef, async (snapshot) => {
             const clientsTableBody = document.getElementById("clientsTable").getElementsByTagName('tbody')[0];
             if (!clientsTableBody) {
                 console.error("clientsTableBody not found.");
@@ -879,42 +907,51 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             clientsTableBody.innerHTML = ""; // Clear existing rows
     
+            const clientPromises = []; // Array to hold promises
+    
             snapshot.forEach((childSnapshot) => {
                 const client = childSnapshot.val();
                 const clientId = childSnapshot.key; // Use the key as a unique identifier
+                
+                const clientRowPromise = getClientRequestsCount(clientId).then(requestCount => {
+                    const row = clientsTableBody.insertRow();
     
-                const row = clientsTableBody.insertRow();
+                    // Display name
+                    const name = `${client.firstName || ''} ${client.middleName || ''} ${client.lastName || ''}`;
+                    row.insertCell(0).textContent = name.trim() || "No name";
     
-                // Display name
-                const name = `${client.firstName || ''} ${client.middleName || ''} ${client.lastName || ''}`;
-                row.insertCell(0).textContent = name.trim() || "No name";
+                    // Display email
+                    row.insertCell(1).textContent = client.email || "No email";
     
-                // Display email
-                row.insertCell(1).textContent = client.email || "No email";
+                    // Display request count instead of role
+                    row.insertCell(2).textContent = requestCount || 0;
     
-                // Display role
-                row.insertCell(2).textContent = client.role || "No role";
+                    // Display client type
+                    row.insertCell(3).textContent = client.clientType || "No type";
     
-                // Display client type
-                row.insertCell(3).textContent = client.clientType || "No type";
+                    // Display action buttons
+                    const actionCell = row.insertCell(4);
+                    const viewDetailsBtn = document.createElement('button');
+                    viewDetailsBtn.textContent = 'View Details';
+                    viewDetailsBtn.classList.add('view-details-btn');
+                    viewDetailsBtn.dataset.id = clientId;
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.classList.add('delete-btn');
+                    deleteBtn.dataset.id = clientId;
     
-                // Display action buttons
-                const actionCell = row.insertCell(4);
-                const viewDetailsBtn = document.createElement('button');
-                viewDetailsBtn.textContent = 'View Details';
-                viewDetailsBtn.classList.add('view-details-btn');
-                viewDetailsBtn.dataset.id = clientId;
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = 'Delete';
-                deleteBtn.classList.add('delete-btn');
-                deleteBtn.dataset.id = clientId;
+                    actionCell.appendChild(viewDetailsBtn);
+                    actionCell.appendChild(deleteBtn);
     
-                actionCell.appendChild(viewDetailsBtn);
-                actionCell.appendChild(deleteBtn);
+                    viewDetailsBtn.addEventListener('click', () => showClientDetails(clientId));
+                    deleteBtn.addEventListener('click', () => deleteClient(clientId));
+                });
     
-                viewDetailsBtn.addEventListener('click', () => showClientDetails(clientId));
-                deleteBtn.addEventListener('click', () => deleteClient(clientId));
+                clientPromises.push(clientRowPromise); // Push the promise to the array
             });
+    
+            // Wait for all clients to be processed
+            await Promise.all(clientPromises);
     
             initializeSearch(); // Initialize search functionality
         });
