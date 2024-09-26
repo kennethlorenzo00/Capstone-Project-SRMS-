@@ -6,42 +6,243 @@
     <title>Laboratory Staff Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script type="module" src="js/firebase.js"></script> <!-- Firebase initialization -->
-    <script type="module" src="js/auth.js" defer></script> <!-- Authentication logic -->
+    <script type="module" src="js/firebase.js"></script> 
+    <script type="module" src="js/auth.js" defer></script> 
+    <script src="js/lab-sidebar.js" defer></script> 
+    <script type="module" src="js/task-list.js" defer></script>
+
 </head>
 <body>
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="lab-dashboard.html" id="homeLink">Home (Dashboard)</a>
-        <a href="tasks-list.html" id="tasksListLink">Tasks List</a>
-        <a href="analysis-reports.html" id="analysisReportsLink">Analysis Reports</a>
-        <a href="events.html" id="eventsLink">Events</a>
+        <a href="javascript:void(0)" class="closebtn">×</a>
+        <a href="#" onclick="openTab(event, 'home')">Home (Dashboard)</a>
+        <a href="#" onclick="openTab(event, 'taskList')">Tasks List</a>
+        <a href="#" onclick="openTab(event, 'analysisReport')">Analysis Reports</a>
+        <a href="#" onclick="openTab(event, 'events')">Events</a>
+        <a href="#" onclick="openTab(event, 'account')">Account</a>
     </div>
- 
+
     <!-- Header -->
     <div id="main">
         <header class="header">
-            <button class="openbtn" onclick="openNav()">☰</button>
+            <button class="openbtn">☰</button>
             <div class="admin-logo">
                 <div class="side-logo">
-                    <img src="Logo.webp" class="side-logo" alt=>
+                    <img src="Logo.webp" class="side-logo" alt="Lab Logo">
                 </div>
-
                 <span class="logo-name">Center for Natural Science and Resources Research</span>
             </div>
             <div class="header-icons">
                 <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
                 <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
-                <button id="settingsBtn"><i class= "fa-solid fa-gear"></i></button>
+                <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
             </div>
         </header>
 
         <!-- Main Content -->
         <div id="content">
-            <h1>Laboratory Staff Dashboard</h1>
-            <p>Welcome to your dashboard, where you can manage tasks, view reports, and track events.</p>
-            <button id="logoutButton">Logout</button>
+            
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tabContents">
+            <!-- Home Section -->
+            <div id="home" class="tabcontent">
+                <h2>Home (Dashboard)</h2>
+                <p>This is the home section. Overview of the dashboard goes here.</p>
+            </div>
+
+            <!-- Tasks List Section -->
+            <div id="taskList" class="tabcontent" style="display:none;">
+                <h2>Tasks List</h2>
+                <p>This is the tasks list section. List of all tasks assigned will appear here.</p>
+
+                <!-- Task Category Buttons -->
+                <div class="task-buttons">
+                    <button id="allAssignedBtn">All Assigned</button>
+                    <button id="ongoingTasksBtn">Ongoing Tasks</button>
+                    <button id="processedTasksBtn">Processed Tasks</button>
+                    <button id="rejectedTasksBtn">Rejected Tasks</button>
+                </div>
+
+                <script>
+                    // JavaScript code to toggle active button state
+                    const taskButtons = document.querySelectorAll('.task-buttons button');
+                    
+                    taskButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            taskButtons.forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active');
+                            // Additional logic to show/hide task content can be added here
+                        });
+                    });
+                </script>
+
+                <!-- Placeholder for Task Content -->
+                <div id="taskContent">
+                    <div id="taskListContainer">
+                        <div id="allAssigned" class="task-placeholder hidden">
+                            <table id="taskTable">
+                                <thead>
+                                    <tr>
+                                        <th>Deadline</th>
+                                        <th>Request ID</th>
+                                        <th>Service Type</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Priority Level</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="taskTableBody">
+                                    <!-- Task rows will be dynamically added here -->
+                                </tbody>
+                            </table>
+                            <button id="addToOngoingButton" class="hidden">Add to Ongoing</button>
+                        </div>
+
+                        <div id="ongoing" class="task-placeholder hidden">
+                            <div class="filter-buttons">
+                                <button id="filterHighPriority">Priority</button>
+                                <button id="filterMicrobialTesting">Microbial Testing</button>
+                                <button id="filterMicrobialAnalysis">Microbial Analysis</button>
+                                <button id="filterLabResearchProcesses">Laboratory & Research Processes</button>
+                            </div>
+
+                            <script>
+                                // JavaScript code to toggle active button state
+                                const filterButtons = document.querySelectorAll('.filter-buttons button');
+                                
+                                filterButtons.forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                                        this.classList.add('active');
+                                        // Additional logic for filtering can be added here
+                                    });
+                                });
+                            </script>
+
+                            <table id="ongoingTaskTable">
+                                <thead>
+                                    <tr>
+                                        <th>Deadline</th>
+                                        <th>Request ID</th>
+                                        <th>Service Type</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Priority Level</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ongoingTaskTableBody">
+                                    <!-- Ongoing task rows will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div id="processed" class="task-placeholder hidden">
+                            <div class="filter-buttons">
+                                <button id="filterHighPriorityProcessed">Priority</button>
+                                <button id="filterMicrobialTestingProcessed">Microbial Testing</button>
+                                <button id="filterMicrobialAnalysisProcessed">Microbial Analysis</button>
+                                <button id="filterLabResearchProcessesProcessed">Laboratory & Research Processes</button>
+                            </div>
+            
+                            <script>
+                                // JavaScript code to toggle active button state
+                                const filterButtonsP = document.querySelectorAll('.filter-buttons button');
+                                
+                                filterButtonsP.forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        filterButtonsP.forEach(btn => btn.classList.remove('active'));
+                                        this.classList.add('active');
+                                        // Additional logic for filtering can be added here
+                                    });
+                                });
+                            </script>
+
+                            <table id="processedTaskTable">
+                                <thead>
+                                    <tr>
+                                        <th>Deadline</th>
+                                        <th>Request ID</th>
+                                        <th>Service Type</th>
+                                        <th>Client Type</th>
+                                        <th>Client Name</th>
+                                        <th>No. of Samples</th>
+                                        <th>Priority Level</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="processedTaskTableBody">
+                                    <!-- Processed task rows will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="rejected" class="task-placeholder hidden">
+                        <div class="filter-buttons">
+                            <button id="filterHighPriorityRejected">Priority</button>
+                            <button id="filterMicrobialTestingRejected">Microbial Testing</button>
+                            <button id="filterMicrobialAnalysisRejected">Microbial Analysis</button>
+                            <button id="filterLabResearchProcessesRejected">Laboratory & Research Processes</button>
+                        </div>
+
+                        <script>
+                            // JavaScript code to toggle active button state
+                            const filterButtonsR = document.querySelectorAll('.filter-buttons button');
+                            
+                            filterButtonsR.forEach(button => {
+                                button.addEventListener('click', function() {
+                                    filterButtonsR.forEach(btn => btn.classList.remove('active'));
+                                    this.classList.add('active');
+                                    // Additional logic for filtering can be added here
+                                });
+                            });
+                        </script>
+
+                        <table id="rejectedTaskTable">
+                            <thead>
+                                <tr>
+                                    <th>Deadline</th>
+                                    <th>Request ID</th>
+                                    <th>Service Type</th>
+                                    <th>Client Type</th>
+                                    <th>Client Name</th>
+                                    <th>No. of Samples</th>
+                                    <th>Priority Level</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rejectedTaskTableBody">
+                                <!-- Rejected task rows will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Reports Section -->
+            <div id="analysisReport" class="tabcontent" style="display:none;">
+                <h2>Analysis Reports</h2>
+                <p>This is the analysis reports section. All analysis reports will be shown here.</p>
+            </div>
+
+            <!-- Events Section -->
+            <div id="events" class="tabcontent" style="display:none;">
+                <h2>Events</h2>
+                <p>This is the events section. Details of upcoming events will appear here.</p>
+            </div>
+
+            <!-- Account Section -->
+            <div id="account" class="tabcontent" style="display:none;">
+                <h2>Account</h2>
+                <p>This is the account section. Account management options go here.</p>
+            </div>
         </div>
     </div>
 
@@ -49,17 +250,5 @@
         <p>You are not authorized to view this page or an error occurred. Redirecting to login...</p>
     </div>
 
-    <script>
-        // Sidebar functions
-        function openNav() {
-            document.getElementById("mySidebar").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidebar").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-        }
-    </script>
 </body>
 </html>
