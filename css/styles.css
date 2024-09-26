@@ -386,131 +386,209 @@ input {
     transition: margin-left 0.5s;
 }
 
-/* Client Dashboard: Our Services */
+
+/* Our Services*/
+
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     background-color: #ffffff;
-    
 }
 
-.container {
+#mySidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #8a1c1c;
+    padding-top: 20px;
+    transition: 0.5s;
+}
+
+.client-sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.client-sidebar a:hover {
+    background-color: #b23030;
+}
+
+
+#main {
+    margin-left: 250px;
+    padding: 15px;
+    transition: margin-left 0.5s;
+}
+
+
+.client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8a1c1c;
+    color: white;
+    padding: 10px 20px;
+}
+
+.client-header h1 {
     margin: 0;
-    padding: 0;
 }
 
-/* Services Section */
-.services-section {
-    background-color: #D4D4D4;
-    margin: 0;
-    padding: 0;
-    display: -ms-inline-flexbox; 
-    
+.header-icons button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    margin-left: 15px;
+    cursor: pointer;
 }
 
-.services-section h2 {
-    color: #7a0b0b;
-    font-size: 32px;
+
+.tabs {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
-/* Tabs */
-.tabs {
-    justify-content: center;
-    margin-bottom: 25px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    margin: 0;
-   
-}
-
 .request-type-btn {
-    background-color: #c2c2c2;
+    background-color: #d4d4d4;
     color: black;
-    margin: 0;
+    margin: -5px;
+    margin-left: .5px;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s; 
     text-decoration:none;
     border-radius: 0px;
-    padding-right: 18px;
-    padding-left: 22px;
     padding-top: 15px;
     text-align: center;
-    border-right: 4px solid #f7f4f4;
+    border-right: 2px solid #b8b5b5;
+    width:fit-content;
+    display: inline-flex;
+    padding: 18px 67.5px;
     
+  
 }
 
-.request-type-btn:last-child {
-    border-right: none;
+.request-type-btn:last-of-type {
+    border-right: none; 
+}
+
+
+.request-type-btn:hover {
+    background-color: #8a1111;
+    color: white;
 }
 
 
 
-/* Tab Content */
-.tab-content {
-    display: none;
-}
 
-.tab-content.active {
+.service-type { 
+    background-color: #e2e1e1;
     display: flex;
-    padding-left: 0px;
-}
-
-.service-type {
-    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     align-items: center;
-    justify-content: center;
-    padding: 10px;
-    margin-bottom: 30px;
+  
 }
 
 .service-image {
-    max-width: 200px;
-    margin-right: 20px;
+    width: 350px; 
+    height: 80%vh;
+    margin-left: 20px; 
+    object-fit: cover;
+    padding-right: 30px;
 }
 
 .service-text {
-    text-align: left;
+    max-width: 600px; 
+    padding: 10px;
+    text-align: justify;
 }
 
-.service-text h3 {
-    color: #7a0b0b;
-    margin-bottom: 10px;
-    font-size: 24px;
+@font-face {
+    font-family: myFirstFont;
+    src: url(montessarat_bold.woff);
+    font-weight: bold;
+  }
+
+.service-text h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #550000;
+    font-weight: bolder;
+    text-align: left;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .service-text p {
-    color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 18px;
+    background-color: #8a1111;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+button:hover {
+    background-color: #550000;
 }
 
 
+.tabs button.active {
+    background-color: #550000;
+}
 
-
-.request-type-btn:hover, .active {
-    background-color: #b22323;
-    color: rgb(255, 255, 255);
-
+.hidden {
+    display: none;
 }
 
 
+.tabs {
+    display: flex;
+    justify-content: center;
+    background-color: #d4d4d4;
+    padding: 10px 0;
+  
+}
+
+.tabs button {
+    background-color: #d4d4d4;
+    border: none;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.tabs button:hover, .tabs button.active {
+   
+    color: white;
+}
+
+.tabs button + button {
+    border-left: 3px solid #d4d4d4;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
+/* -------------------------------*/
 
 
 
