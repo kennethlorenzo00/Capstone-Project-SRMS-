@@ -10,13 +10,13 @@ body {
 .header {
     background-color: #550000;
     color: white;
-    padding: 15px;
     position: fixed;
     top: 0;
     width: calc(100% - 250px); /* Adjust for sidebar width */
     left: 250px;
     display: flex;
     justify-content: space-between;
+    height: 100px;
     align-items: center;
     z-index: 1000; /* Ensure header is above other content */
 }
@@ -353,6 +353,7 @@ input {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    height: 50px;
 }
 
 .client-header .header-icons button {
@@ -387,10 +388,138 @@ input {
 
 .client-main {
     margin-left: 250px; /* Space for the sidebar */
-    padding: 20px;
+    padding: 10px;
     padding-top: calc(15px + 75px); /* Increased space for the header */
     transition: margin-left 0.5s;
 }
+
+/* Client Dashboard: Our Services */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+/* Services Section */
+.services-section {
+    background-color: #D4D4D4;
+    margin: 0;
+    padding: 0;
+    display: -ms-inline-flexbox; 
+    
+}
+
+.services-section h2 {
+    color: #7a0b0b;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Tabs */
+.tabs {
+    justify-content: center;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    margin: 0;
+   
+}
+
+.request-type-btn {
+    background-color: #c2c2c2;
+    color: black;
+    margin: 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s; 
+    text-decoration:none;
+    border-radius: 0px;
+    padding-right: 18px;
+    padding-left: 22px;
+    padding-top: 15px;
+    text-align: center;
+    border-right: 4px solid #f7f4f4;
+    
+}
+
+.request-type-btn:last-child {
+    border-right: none;
+}
+
+
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: flex;
+    padding-left: 0px;
+}
+
+.service-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+.service-image {
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.service-text {
+    text-align: left;
+}
+
+.service-text h3 {
+    color: #7a0b0b;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.service-text p {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+
+
+.request-type-btn:hover, .active {
+    background-color: #b22323;
+    color: rgb(255, 255, 255);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .bg-image-section {
     flex: 2;
@@ -534,9 +663,31 @@ input {
             display: block;
             transition: 0.3s;
         }
-        .header-icons button {
-            margin-left: 10px;
+
+        /* Dashboards */
+
+        /* Dashboards : Help,Notif, Settings Styles*/
+
+        
+
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+            margin-right: 30px;
         }
+
+        .header-icons button {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .header-icons i {
+        font-size: 30px;
+        }
+    
+        
         /* Modal styles */
         .modal {
             display: none; /* Hidden by default */
@@ -784,6 +935,25 @@ input {
 }
 
 
+
+/* Lab Staff Dashboard */
+
+.lab-dashboard-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
 /* Styles for the request list table */
 #requestListTable {
     width: 100%;
@@ -984,7 +1154,6 @@ input {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
     width: calc(100% - 22px); /* Full width accounting for padding */
 }
 

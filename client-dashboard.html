@@ -33,42 +33,68 @@
                 </div>
             </header>
 
+            
+
             <!-- Dashboard Section -->
+
             <div id="dashboardContent" class="client-main">
                 <h1>Welcome to Your Dashboard</h1>
                 <p>Here you can manage your requests and account details.</p>
             </div>
 
+   
             <!-- Create Request Section (Initially Hidden) -->
             <div id="createRequestContent" class="hidden">
-                <h1>Create a New Request</h1>
-                <p>Select the type of request:</p>
-
+                <h2>Our Services</h2>
+                <section class="services-section">
+                <div class="container">
+                <section class="services-section">
                 <!-- Buttons to Select Request Type -->
-                <button id="microbialTestingBtn" class="request-type-btn">Microbial Testing Methods</button>
-                <button id="microbialAnalysisBtn" class="request-type-btn">Microbial Analysis & Characterization</button>
-                <button id="labResearchProcessesBtn" class="request-type-btn">Laboratory & Research Processes</button>
-
+                <div class="tabs">
+                <button id="microbialTestingBtn" class="request-type-btn">MICROBIAL TESTING METHODS</button>
+                <button id="microbialAnalysisBtn" class="request-type-btn">MICROBIAL ANALYSIS & CHARACTERIZATION</button>
+                <button id="labResearchProcessesBtn" class="request-type-btn">LABORATORY & RESEARCH PROCESSES</button>
+                </div>
                 <!-- Request Sections -->
                 <div id="microbialTestingSection" class="hidden">
-                    <h2>Microbial Testing Methods</h2>
-                    <p>Details about microbial testing methods go here.</p>
-                    <button id="proceedMicrobialTesting">Proceed Now!</button>
+                    <div class="service-type">
+                    <img src="User.png" alt="Lab Image" class="service-image">
+                    <div class="service-text">
+                        <h3>MICROBIAL TESTING METHODS</h3>
+                        <p>This offers evaluating the efficacy of antimicrobial agents. It involves determining the minimum concentrations required to inhibit or kill microorganisms, helping to assess the effectiveness of antibiotics and other antimicrobial substances.</p>
+                        <button id="proceedMicrobialTesting">PROCEED NOW!</button>
                 </div>
+            </div>
+        </div>
+   
 
                 <div id="microbialAnalysisSection" class="hidden">
-                    <h2>Microbial Analysis & Characterization</h2>
+                    <div class="service-type">
+                    <img src="User.png" alt="Lab Image" class="service-image">
+                    <div class="service-text">
+                        
+                    <h2>MICROBIAL ANALYSIS & CHARACTERIZATION</h2>
                     <p>Details about microbial analysis and characterization options go here.</p>
                     <button id="proceedMicrobialAnalysis">Proceed Now!</button>
                 </div>
+            </div>
+        </div>
+   
 
                 <div id="labResearchProcessesSection" class="hidden">
-                    <h2>Laboratory & Research Processes</h2>
+                    <div class="service-type">
+                        <img src="lab-image.jpg" alt="Lab Image" class="service-image">
+                        <div class="service-text">
+                    <h2>LABORATORY & RESEARCH PROCESSES</h2>
                     <p>Information regarding laboratory and research processes go here.</p>
                     <button id="proceedLabResearchProcesses">Proceed Now!</button>
                 </div>
             </div>
 
+        </div>
+    </section>
+</div>
+<d
             <!-- Options Sections (Initially Hidden) -->
             <div id="microbialTestingOptions" class="hidden">
                 <h2>Microbial Testing Methods Options</h2>
