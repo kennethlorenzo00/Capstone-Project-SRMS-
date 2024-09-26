@@ -102,13 +102,6 @@ body {
     margin-top: 10px;
 }
 
-#newRequestsTable th, #newRequestsTable td,
-#staffTable th, #staffTable td, 
-#clientsTable th, #clientsTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
 
 #newRequestsTable th, #staffTable th, #clientsTable th {
     background-color: #7D1B1B;
@@ -955,6 +948,17 @@ input {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+}
+
+#newRequestsTable th, #newRequestsTable td, #staffTable th, #staffTable td, #clientsTable th, #clientsTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#newRequestsTable, #staffTable, #clientsTable {
+    border:  2px solid #7D1B1B
+
 }
 
 /* Table Row Styles */
