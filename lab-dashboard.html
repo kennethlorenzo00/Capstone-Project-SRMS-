@@ -15,20 +15,12 @@
 <body>
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar">
-<<<<<<< HEAD
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
-        <a href="lab-dashboard.html" id="homeLink">Home (Dashboard)</a>
-        <a href="tasks-list.html" id="tasksListLink">Tasks List</a>
-        <a href="analysis-reports.html" id="analysisReportsLink">Analysis Reports</a>
-        <a href="events.html" id="eventsLink">Events</a>
-=======
         <a href="javascript:void(0)" class="closebtn">×</a>
         <a href="#" onclick="openTab(event, 'home')">Home (Dashboard)</a>
         <a href="#" onclick="openTab(event, 'taskList')">Tasks List</a>
         <a href="#" onclick="openTab(event, 'analysisReport')">Analysis Reports</a>
         <a href="#" onclick="openTab(event, 'events')">Events</a>
         <a href="#" onclick="openTab(event, 'account')">Account</a>
->>>>>>> 79c7b838ffe1aa58d126c13b2fd31a5cbd5e7bf6
     </div>
 
     <!-- Header -->
@@ -43,15 +35,9 @@
                 
             </div>
             <div class="header-icons">
-<<<<<<< HEAD
-                <button id="helpBtn"><i class="fa fa-question"></i></button>
-                <button id="notificationsBtn"><i class="fa fa-bell"></i></button>
-                <button id="settingsBtn"><i class= "fa fa-gear"></i></button>
-=======
                 <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
                 <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
                 <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
->>>>>>> 79c7b838ffe1aa58d126c13b2fd31a5cbd5e7bf6
             </div>
         </header>
 
@@ -248,9 +234,25 @@
             </div>
 
             <!-- Events Section -->
-            <div id="events" class="tabcontent" style="display:none;">
-                <h2>Events</h2>
-                <p>This is the events section. Details of upcoming events will appear here.</p>
+            <div id="events" class="tabcontent hidden">
+                <div class="events-header">
+                    <h2>Events and Activities</h2>
+                    <input type="text" id="eventSearch" placeholder="Search Events..." style="margin-left: 20px;">
+                </div>
+
+                <div id="eventContainer" class="scroll-container">
+                    <!-- Scrollable event list will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Event Details Modal -->
+            <div id="eventDetailsModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <img id="eventImageModal" src="" alt="Event Image" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 10px;">
+                    <h3 id="eventTitleModal"></h3>
+                    <p id="eventDescriptionModal"></p>
+                </div>
             </div>
 
             <!-- Account Section -->
@@ -265,5 +267,6 @@
         <p>You are not authorized to view this page or an error occurred. Redirecting to login...</p>
     </div>
 
+    <script type="module" src="js/lab-events.js" defer></script> 
 </body>
 </html>
