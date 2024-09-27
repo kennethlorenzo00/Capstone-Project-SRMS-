@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     myAccountLink.addEventListener("click", function() {
         showSection(myAccountContent);
+        myAccountContent.style.display = "block"; // Add this line to show the myAccountContent
     });
 
     // Event listeners for request type buttons in Create Request section
@@ -119,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("proceedMicrobialAnalysis").addEventListener("click", function() {
-        microbialAnalysisSection.classList.add("hidden");
+        microbialAnalysisSection .classList.add("hidden");
         createRequestContent.classList.add("hidden");
         microbialAnalysisOptions.classList.remove("hidden");
     });

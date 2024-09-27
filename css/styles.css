@@ -1755,3 +1755,100 @@ button:hover {
     }
 }
 
+/* Unique class for account section */
+#account {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Full Name Styling (Header) */
+.full-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Account Number Styling */
+.account-number {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-picture-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #f0f0f0; /* Placeholder background color */
+}
+
+/* Laboratory Staff Role Bubble */
+.role-bubble {
+    background-color: #FFFACD; /* Light yellow color */
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 30px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Account Details Bubbles */
+.account-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.detail-bubble {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.detail-bubble span {
+    font-weight: bold;
+    color: #444;
+}
+
+/* Edit Button Styling */
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+}
