@@ -10,25 +10,18 @@
     <script type="module" src="js/auth.js" defer></script> 
     <script src="js/lab-sidebar.js" defer></script> 
     <script type="module" src="js/task-list.js" defer></script>
+    <script type="module" src="js/lab-account.js" defer></script> 
 
 </head>
 <body>
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar">
-<<<<<<< HEAD
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
-        <a href="lab-dashboard.html" id="homeLink">Home (Dashboard)</a>
-        <a href="tasks-list.html" id="tasksListLink">Tasks List</a>
-        <a href="analysis-reports.html" id="analysisReportsLink">Analysis Reports</a>
-        <a href="events.html" id="eventsLink">Events</a>
-=======
         <a href="javascript:void(0)" class="closebtn">×</a>
         <a href="#" onclick="openTab(event, 'home')">Home (Dashboard)</a>
         <a href="#" onclick="openTab(event, 'taskList')">Tasks List</a>
         <a href="#" onclick="openTab(event, 'analysisReport')">Analysis Reports</a>
         <a href="#" onclick="openTab(event, 'events')">Events</a>
         <a href="#" onclick="openTab(event, 'account')">Account</a>
->>>>>>> 79c7b838ffe1aa58d126c13b2fd31a5cbd5e7bf6
     </div>
 
     <!-- Header -->
@@ -43,15 +36,9 @@
                 
             </div>
             <div class="header-icons">
-<<<<<<< HEAD
-                <button id="helpBtn"><i class="fa fa-question"></i></button>
-                <button id="notificationsBtn"><i class="fa fa-bell"></i></button>
-                <button id="settingsBtn"><i class= "fa fa-gear"></i></button>
-=======
                 <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
                 <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
                 <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
->>>>>>> 79c7b838ffe1aa58d126c13b2fd31a5cbd5e7bf6
             </div>
         </header>
 
@@ -248,16 +235,91 @@
             </div>
 
             <!-- Events Section -->
-            <div id="events" class="tabcontent" style="display:none;">
-                <h2>Events</h2>
-                <p>This is the events section. Details of upcoming events will appear here.</p>
+            <div id="events" class="tabcontent hidden">
+                <div class="events-header">
+                    <h2>Events and Activities</h2>
+                    <input type="text" id="eventSearch" placeholder="Search Events..." style="margin-left: 20px;">
+                </div>
+
+                <div id="eventContainer" class="scroll-container">
+                    <!-- Scrollable event list will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Event Details Modal -->
+            <div id="eventDetailsModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <img id="eventImageModal" src="" alt="Event Image" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 10px;">
+                    <h3 id="eventTitleModal"></h3>
+                    <p id="eventDescriptionModal"></p>
+                </div>
             </div>
 
             <!-- Account Section -->
             <div id="account" class="tabcontent" style="display:none;">
-                <h2>Account</h2>
-                <p>This is the account section. Account management options go here.</p>
+                <h1>Account Profile</h1>
+                <h2>Profile Information</h2>
+            
+                <!-- Full Name and Account Number (Header) -->
+                <div class="account-header">
+                    <!-- Profile picture placeholder -->
+                    <div class="profile-picture-container">
+                        <img id="profilePicture" class="profile-picture" src="default-avatar.png" alt="Profile Picture">
+                        <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
+                    </div>
+                
+                    <!-- Account Details -->
+                    <div class="account-details">
+                        <span id="fullName" class="full-name"></span>
+                        <p class="account-number" id="accountNumber"></p>
+                    </div>
+                </div>
+            
+                <!-- Laboratory Staff Role Bubble -->
+                <div class="role-bubble">
+                    Laboratory Staff
+                </div>
+            
+                <!-- Account Details Bubbles -->
+                <div class="account-details">
+                    <div class="detail-bubble">Full Name: <span id="fullNameDetail"></span></div>
+                    <div class="detail-bubble">Address: <span id="address"></span></div>
+                    <div class="detail-bubble">Contact Number: <span id="contactNumber"></span></div>
+                    <div class="detail-bubble">Username: <span id="username"></span></div>
+                </div>
+            
+                <!-- Edit Button -->
+                <button id="editAccountBtn" class="edit-btn">Edit</button>
+            </div>            
+
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Account Details</h2>
+                    
+                    <label for="editFirstName">First Name:</label>
+                    <input type="text" id="editFirstName" placeholder="First Name">
+                    
+                    <label for="editMiddleName">Middle Name:</label>
+                    <input type="text" id="editMiddleName" placeholder="Middle Name">
+                    
+                    <label for="editLastName">Last Name:</label>
+                    <input type="text" id="editLastName" placeholder="Last Name">
+                    
+                    <label for="editAddress">Address:</label>
+                    <input type="text" id="editAddress" placeholder="Address">
+                    
+                    <label for="editContactNumber">Contact Number:</label>
+                    <input type="text" id="editContactNumber" placeholder="Contact Number">
+                    
+                    <label for="editUsername">Username:</label>
+                    <input type="text" id="editUsername" placeholder="Username">
+                    
+                    <button id="saveChangesBtn">Save Changes</button>
+                </div>
             </div>
+            
         </div>
     </div>
 
@@ -265,5 +327,6 @@
         <p>You are not authorized to view this page or an error occurred. Redirecting to login...</p>
     </div>
 
+    <script type="module" src="js/lab-events.js" defer></script> 
 </body>
 </html>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="css/styles.css"> 
         <script type="module" src="../js/firebase.js"></script>
         <script type="module" src="js/auth.js" defer></script> 
+        <script type="module" src="js/client-account.js" defer></script> 
         
     </head>
     <body>
@@ -444,11 +445,71 @@
 
             </div>            
 
-            <!-- My Account Section (Initially Hidden) -->
-            <div id="myAccountContent" class="hidden">
+            <!-- My Account Section -->
+            <div id="myAccountContent" class="tabcontent">
                 <h1>My Account</h1>
-                <p>Placeholder for account management functionality.</p>
+                <h2>Profile Information</h2>
+
+                <!-- Full Name and Account Number (Header) -->
+                <div class="account-header">
+                    <!-- Profile picture placeholder -->
+                    <div class="profile-picture-container">
+                        <img id="clientProfilePicture" class="profile-picture" src="default-avatar.png" alt="Profile Picture">
+                        <input type="file" id="clientProfilePictureInput" accept="image/*" style="display: none;">
+                    </div>
+                
+                    <!-- Account Details -->
+                    <div class="account-details">
+                        <span id="clientFullName" class="full-name"></span>
+                        <p class="account-number" id="clientAccountNumber"></p>
+                    </div>
+                </div>
+
+                <!-- Role Bubble -->
+                <div class="role-bubble" style="background-color: rgb(0, 255, 110); color: white;">
+                    Client
+                </div>
+
+                <!-- Account Details Bubbles -->
+                <div class="account-details">
+                    <div class="detail-bubble">Full Name: <span id="clientFullNameDetail"></span></div>
+                    <div class="detail-bubble">Address: <span id="clientAddress"></span></div>
+                    <div class="detail-bubble">Contact Number: <span id="clientContactNumber"></span></div>
+                    <div class="detail-bubble">Username: <span id="clientUsername"></span></div>
+                </div>
+
+                <!-- Edit Button -->
+                <button id="editClientAccountBtn" class="edit-btn">Edit</button>
             </div>
+
+            <!-- Edit Modal -->
+            <div id="editClientModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Account Details</h2>
+                    
+                    <label for="editClientFirstName">First Name:</label>
+                    <input type="text" id="editClientFirstName" placeholder="First Name">
+                    
+                    <label for="editClientMiddleName">Middle Name:</label>
+                    <input type="text" id="editClientMiddleName" placeholder="Middle Name">
+                    
+                    <label for="editClientLastName">Last Name:</label>
+                    <input type="text" id="editClientLastName" placeholder="Last Name">
+                    
+                    <label for="editClientAddress">Address:</label>
+                    <input type="text" id="editClientAddress" placeholder="Address">
+                    
+                    <label for="editClientContactNumber">Contact Number:</label>
+                    <input type="text" id="editClientContactNumber" placeholder="Contact Number">
+                    
+                    <label for="editClientUsername">Username:</label>
+                    <input type="text" id="editClientUsername" placeholder="Username">
+                    
+                    <button id="saveClientChangesBtn">Save Changes</button>
+                </div>
+            </div>
+
         </div>
 
         <script src="js/sidebar.js" defer></script> 

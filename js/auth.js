@@ -73,6 +73,54 @@ document.getElementById('passwordResetForm')?.addEventListener('submit', async (
     });
 });
 
+//Handle Admin Registration
+if (document.getElementById("adminRegisterForm")) {
+    const registerBtn = document.getElementById("registerBtn");
+    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
+
+    sendVerificationBtn.addEventListener("click", () => {
+        handleSendVerification();
+        checkEmailVerification("registerBtn");
+    });
+
+    document.getElementById("adminRegisterForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (!isEmailVerified) {
+            alert("Please verify your email before registering.");
+            return;
+        }
+
+        const firstName = document.getElementById("firstName").value;
+        const middleName = document.getElementById("middleName").value || '';
+        const lastName = document.getElementById("lastName").value;
+        const username = document.getElementById("username").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const address = document.getElementById("address").value;
+        const email = document.getElementById("email").value;
+
+        // Save data to database
+        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+            firstName,
+            middleName,
+            lastName,
+            username,
+            contactNumber,
+            address,
+            email,
+            role: 'admin',
+            status: 'Pending'
+        }).then(() => {
+            alert("Registration successful, waiting for admin approval.");
+            auth.signOut(); // Sign out the user after registration
+            window.location.href = 'admin-login.html';
+        }).catch((error) => {
+            console.error("Error saving registration:", error.message);
+            alert("Error saving registration: " + error.message);
+        });
+    });
+}
+
 // Handle Laboratory Staff Registration
 if (document.getElementById("labRegisterForm")) {
     const registerBtn = document.getElementById("registerBtn");
@@ -723,6 +771,34 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                     }).catch((error) => {
                         console.error("Error adding laboratory staff:", error);
+                    });
+                }else if (role === 'admin') {
+                    // Add laboratory staff to the laboratory_staff table
+                    set(ref(database, 'admins/' + userId), {
+                        email: requestData.email,
+                        role: 'admin',
+                        firstName: requestData.firstName,
+                        middleName: requestData.middleName,
+                        lastName: requestData.lastName,
+                        address: requestData.address,
+                        username: requestData.username,
+                        contactNumber: requestData.contactNumber,
+                    }).then(() => {
+                        console.log("Admin added.");
+                        remove(requestRef).then(() => {
+                            console.log("Request removed.");
+                            loadNewUserRequests(); // Refresh the table
+                            displayLaboratoryStaff(); // Refresh the staff table
+                            // Remove the row from the table
+                            const row = document.querySelector(`tr[data-user-id="${userId}"]`);
+                            if (row) {
+                                row.remove();
+                            }
+                        }).catch((error) => {
+                            console.error("Error removing request:", error);
+                        });
+                    }).catch((error) => {
+                        console.error("Error Admin:", error);
                     });
                 }
             }
