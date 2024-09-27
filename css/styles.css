@@ -475,8 +475,6 @@ body {
     width:fit-content;
     display: inline-flex;
     padding: 18px 67.5px;
-    
-  
 }
 
 .request-type-btn:last-of-type {
@@ -484,12 +482,15 @@ body {
 }
 
 
-.request-type-btn:hover {
+.request-type-btn:hover, .request-type-btn.active {
     background-color: #8a1111;
     color: white;
 }
 
-
+.request-type-btn.active {
+    background-color: #8a1111;
+    color: white;
+}
 
 
 .service-type { 
@@ -588,7 +589,268 @@ button:hover {
 }
 
 
-/* -------------------------------*/
+/* Request List*/
+
+#requestListGroup {
+    margin: 0 auto;
+    padding: 30px;
+    max-width: 1200px;
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 32px;
+    color: #4B0000;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#searchInput {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    float: right;
+}
+
+#requestListTable {
+    width: 80%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+
+#requestListTable thead {
+    background-color: #7D1A1A;
+    color: white;
+}
+
+#requestListTable th, #requestListTable td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#requestListTable th {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#requestListTable td {
+    color: #333;
+    white-space: nowrap;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#requestListTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.status-pending {
+    background-color: #b0b0b0;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.status-in-progress {
+    background-color: #D4AF37;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.status-released {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.status-rejected {
+    background-color: #B22222;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.view-button {
+    background-color: #4B0000;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.view-button:hover {
+    background-color: #333;
+}
+
+#paginationControls {
+    display: flex;
+    justify-content: flex-end; 
+    margin: 20px 0;
+    align-items: center;
+}
+
+#paginationControls button {
+    background-color: #7D1A1A;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#paginationControls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#paginationControls span {
+    margin: 0 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+#paginationControls .page-numbers {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#paginationControls .page-numbers.active {
+    background-color: #7D1A1A;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #7D1A1A;
+}
+
+
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    align-items: center;
+}
+
+#addRequestButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+
+}
+
+#addRequestButton:hover {
+    background-color: #0056b3;
+}
+
+
+#requestDetailsSection {
+    margin-top: 20px;
+}
+
+#requestDetailsHeader {
+    font-size: 24px;
+    color: #4B0000;
+    margin-bottom: 20px;
+}
+
+#backButton {
+    background-color: #555;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#requestDetailsContent {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+h1 {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#searchInput {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+#requestListTable th:nth-child(1),
+#requestListTable td:nth-child(1) {
+    width: 15%;
+}
+
+#requestListTable th:nth-child(2),
+#requestListTable td:nth-child(2) {
+    width: 25%;
+}
+
+#requestListTable th:nth-child(3),
+#requestListTable td:nth-child(3) {
+    width: 10%;
+}
+
+#requestListTable th:nth-child(4),
+#requestListTable td:nth-child(4) {
+    width: 10%;
+}
+
+#requestListTable th:nth-child(5),
+#requestListTable td:nth-child(5) {
+    width: 20%;
+}
+
+#requestListTable th:nth-child(6),
+#requestListTable td:nth-child(6) {
+    width: 10%;
+}
+
+#requestListTable th:nth-child(7),
+#requestListTable td:nth-child(7) {
+    width: 10%;
+}
+
 
 
 

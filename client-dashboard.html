@@ -51,7 +51,7 @@
             
                 <!-- Buttons to Select Request Type -->
                 
-                <button id="microbialTestingBtn" class="request-type-btn">ANTI-MICROBIAL TESTING</button>
+                <button id="microbialTestingBtn" class="request-type-btn" active>ANTI-MICROBIAL TESTING</button>
                 <button id="microbialAnalysisBtn" class="request-type-btn">MICROBIOLOGICAL ASSAYS</button>
                 <button id="labResearchProcessesBtn" class="request-type-btn">LABORATORY EQUIPMENT USE</button>
              
@@ -403,7 +403,7 @@
                 </div>
             </div>
 
-            <div id="requestListContent" class="hidden">
+            <div id="requestListContent" class="hidden"><br><br>
                 <div id="requestListGroup">
                     <h1>Request List</h1>
                     <input type="text" id="searchInput" placeholder="Search requests..." />
@@ -411,7 +411,7 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Request Number</th>
+                                <th>Request No.</th>
                                 <th>Number of Samples</th>
                                 <th>Priority Level</th>
                                 <th>Assigned Laboratory Staff</th>
@@ -423,9 +423,13 @@
                             <!-- Table data will be populated here -->
                         </tbody>
                     </table>
-                    <div id="paginationControls">
+                    <div id="paginationControls" class="pagination-container">
                         <button id="prevPage" disabled>Previous</button>
-                        <span id="pageInfo"></span>
+                        <span class="page-numbers active">1,</span>
+                        <span class="page-numbers">2,</span>
+                        <span class="page-numbers">3,</span>
+                        <span class="page-numbers">...</span>
+                        <span class="page-numbers">10</span>
                         <button id="nextPage">Next</button>
                     </div>
                     <button id="addRequestButton">Add Request</button>
