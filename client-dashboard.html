@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Client Dashboard</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
         <link rel="stylesheet" href="css/styles.css"> 
         <script type="module" src="../js/firebase.js"></script>
         <script type="module" src="js/auth.js" defer></script> 
@@ -47,20 +48,20 @@
             <!-- Create Request Section (Initially Hidden) -->
            
             <div id="createRequestContent" class="hidden"><br><br><br><br>
-                <h1>Our Services</h1><br>
+                <h1>Our Services</h1><br><br>
                 <div class="container">
             
                 <!-- Buttons to Select Request Type -->
                 
-                <button id="microbialTestingBtn" class="request-type-btn" active>ANTI-MICROBIAL TESTING</button>
-                <button id="microbialAnalysisBtn" class="request-type-btn">MICROBIOLOGICAL ASSAYS</button>
-                <button id="labResearchProcessesBtn" class="request-type-btn">LABORATORY EQUIPMENT USE</button>
+                <button id="microbialTestingBtn" class="request-type-btn" active>MICROBIAL TESTING METHODS</button>
+                <button id="microbialAnalysisBtn" class="request-type-btn">MICROBIAL ANALYSIS & CHARTERIZATION</button>
+                <button id="labResearchProcessesBtn" class="request-type-btn">LABORATORY & RESEARCH PROCESSES</button>
              
                 <!-- Request Sections -->
-                <div id="microbialTestingSection" class="hidden">
+                <div id="microbialTestingSection" >
                     <div class="service-type">
                     <div class="service-text">
-                        <h2>ANTI-MICROBIAL TESTING</h2>
+                        <h2>MICROBIAL TESTING METHODS</h2>
                         <p>This offers evaluating the efficacy of antimicrobial agents. It involves determining the minimum concentrations required to inhibit or kill microorganisms, helping to assess the effectiveness of antibiotics and other antimicrobial substances.</p>
                         <button id="proceedMicrobialTesting">PROCEED NOW!</button>
                 </div>
@@ -71,7 +72,7 @@
                 <div id="microbialAnalysisSection" class="hidden">
                     <div class="service-type">
                     <div class="service-text">
-                    <h2>MICROBIOLOGICAL ASSAYS</h2>
+                    <h2>MICROBIAL ANALYSIS & CHARTERIZATION</h2>
                     <p>This category offers techniques for examining and analysing microorganisms. This includes methods for counting microbial populations, identifying microbial species, and assessing their characteristics using various laboratory techniques.</p>
                     <button id="proceedMicrobialAnalysis">PROCEED NOW!</button>
                 </div>
@@ -82,7 +83,7 @@
                 <div id="labResearchProcessesSection" class="hidden">
                     <div class="service-type">
                     <div class="service-text">
-                    <h2>LABORATORY EQUIPMENT USE</h2>
+                    <h2>LABORATORY & RESEARCH PROCESSES</h2>
                     <p>We also offer access to specialized laboratory facilities and equipment necessary for performing a range of scientific tests and analyses. This includes providing the tools and resources needed for microbiological assays and antimicrobial testing.</p>
                     <button id="proceedLabResearchProcesses">PROCEED NOW!</button>
                 </div>
@@ -94,30 +95,141 @@
 </div>
 
             <!-- Options Sections (Initially Hidden) -->
-            <div id="microbialTestingOptions" class="hidden"><br><br><br><br>
-                <h2>Microbial Testing Methods Options</h2>
-                <button id="plateCountMethodBtn">Plate Count Method</button>
-                <button id="agarDiscDiffusionMethodBtn">Agar Disc Diffusion Method</button>
-                <button id="agarWellDiffusionMethodBtn">Agar Well Diffusion Method</button>
-                <button id="micTestingBtn">Minimum Inhibitory Concentration (MIC) Testing</button>
-                <button id="mbcTestingBtn">Minimum Bactericidal Concentration (MBC) Testing</button>
-                <button id="backToCreateRequestMicrobialTesting">Back</button>
+    
+            <div id="microbialTestingOptions" class="hidden">
+                <br><br><br><h2 class = "title-page">Our Services</h2>
+                <h2 class= "sub-title">MICROBIAL TESTING METHODS</h2>
+                <button id="plateCountMethodBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Plate Count Method</span>
+                            <span class="description">Counts the number of viable microorganisms in a sample by growing them on agar plates and counting colony-forming units (CFUs) after incubation.</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-angle-right"></i>
+                </button>
+                <button id="agarDiscDiffusionMethodBtn">
+                    <div class="left-content">
+                       <img src="services.jpg" class="icon">
+                       <div class="button-text-container">
+                           <span class="button-text">Agar Disc Diffusion Method</span>
+                           <span class="description">Tests antimicrobial agents using discs on agar plates and measuring inhibition zones.</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+                <button id="agarWellDiffusionMethodBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Agar Well Diffusion Method</span>
+                            <span class="description"> Similar to disc diffusion, but uses wells filled with agents to observe inhibition.</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-angle-right"></i>
+                </button>
+    
+                <button id="micTestingBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Minimum Inhibitory Concentration (MIC) Testing</span>
+                            <span class="description">Determines the lowest concentration of an antimicrobial agent required to inhibit visible growth of a microorganism in a liquid culture.</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+
+                <button id="mbcTestingBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Minimum Bactericidal Concentration (MBC) Testing</span>
+                            <span class="description">Identifies the lowest concentration of an antimicrobial agent needed to kill a microorganism, typically determined by subculturing and examining growth.</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </button> <br>
+                <button id="backToCreateRequestMicrobialTesting">  Back</button>
             </div>
 
             <div id="microbialAnalysisOptions" class="hidden">
-                <h2>Microbial Analysis & Characterization Options</h2>
-                <button id="microbialWaterAnalysisBtn">Microbial Analysis of Water</button>
-                <button id="microbialCharBtn">Microbial Characterization</button>
-                <button id="microbialCultureCollectionsBtn">Microbial Culture Collections (PUPMCC)</button>
-                <button id="microscopyBtn">Microscopy</button>
+                <br><br><br><h2 class = "title-page">Our Services</h2>
+                <h2 class= "sub-title">Microbial Analysis & Characterization Options</h2>
+                <button id="microbialWaterAnalysisBtn"><div class="left-content">
+                    <img src="services.jpg" class="icon">
+                    <div class="button-text-container">
+                        <span class="button-text">Microscopy</span>
+                        <span class="description">Provides access to a diverse range of microbial strains maintained by the PUP Microbial Culture Collection for research and application purposes.</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+                <button id="microbialCharBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                            <div class="button-text-container">
+                                <span class="button-text">Microbial Analysis of Water</span>
+                                <span class="description">Assesses water samples for microbial contaminants, including pathogens and indicator organisms, to ensure safety and compliance with health standards.</span>
+                            </div>
+                    </div>
+                <i class="fa-solid fa-angle-right"></i>
+        </button>
+                <button id="microbialCultureCollectionsBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                            <div class="button-text-container">
+                                <span class="button-text">Microbial Characterization</span>
+                                <span class="description">Involves identifying and describing microorganisms based on their morphology, biochemical activities, and genetic makeup.</span>
+                            </div>
+                    </div>
+                <i class="fa-solid fa-angle-right"></i>
+        </button>
+                <button id="microscopyBtn">
+                    <div class="left-content">
+                        <img src="services.jpg" class="icon">
+                            <div class="button-text-container">
+                                <span class="button-text">Microbial Culture Collections (PUPMCC)</span>
+                                <span class="description">Provides access to a diverse range of microbial strains maintained by the PUP Microbial Culture Collection for research and application purposes.</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
                 <button id="backToCreateRequestMicrobialAnalysis">Back</button>
             </div>
 
             <div id="labResearchProcessesOptions" class="hidden">
-                <h2>Laboratory & Research Processes Options</h2>
-                <button id="plantSpeciesIdentificationBtn">Plant Species Identification and Herbarium Curation</button>
-                <button id="labUseAndEquipmentAccessBtn">Laboratory Use and Equipment Access</button>
-                <button id="researchCollaborationProcessBtn">Research Collaboration Process</button>
+                <br><br><br><h2 class = "title-page">Our Services</h2>
+                <h2 class= "sub-title">Laboratory & Research Processes Options</h2>
+                <button id="plantSpeciesIdentificationBtn"><div class="left-content">
+                    <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Plant Species Identification and Herbarium Curation
+                            </span>
+                            <span class="description">Identifies plant species and maintains herbarium specimens for taxonomic reference, research, and conservation.</span>
+                        </div>
+                </div>
+            <i class="fa-solid fa-angle-right"></i>
+    </button>
+                <button id="labUseAndEquipmentAccessBtn"><div class="left-content">
+                    <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Laboratory Use and Equipment Access</span>
+                            <span class="description">Provision of access to laboratory facilities and equipment for conducting various scientific tests.</span>
+                        </div>
+                </div>
+            <i class="fa-solid fa-angle-right"></i>
+    </button>
+                <button id="researchCollaborationProcessBtn"><div class="left-content">
+                    <img src="services.jpg" class="icon">
+                        <div class="button-text-container">
+                            <span class="button-text">Research Collaboration Process</span>
+                            <span class="description">Streamlines coordination and integration of expertise, fostering seamless partnerships for impactful scientific research.</span>
+                        </div>
+                </div>
+            <i class="fa-solid fa-angle-right"></i>
+    </button>
                 <button id="backToCreateRequestLabResearchProcesses">Back</button>
             </div>
 
@@ -404,46 +516,62 @@
                 </div>
             </div>
 
-            <div id="requestListContent" class="hidden"><br><br>
-                <div id="requestListGroup">
-                    <h1>Request List</h1>
-                    <input type="text" id="searchInput" placeholder="Search requests..." />
-                    <table id="requestListTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Request No.</th>
-                                <th>Number of Samples</th>
-                                <th>Priority Level</th>
-                                <th>Assigned Laboratory Staff</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="requestListTableBody">
-                            <!-- Table data will be populated here -->
-                        </tbody>
-                    </table>
-                    <div id="paginationControls" class="pagination-container">
-                        <button id="prevPage" disabled>Previous</button>
-                        <span class="page-numbers active">1,</span>
-                        <span class="page-numbers">2,</span>
-                        <span class="page-numbers">3,</span>
-                        <span class="page-numbers">...</span>
-                        <span class="page-numbers">10</span>
-                        <button id="nextPage">Next</button>
-                    </div>
-                    <button id="addRequestButton">Add Request</button>
+            <div id="requestListContent">
+                <br><br><br><br><h1>Request List</h1>
+                <input type="text" id="searchInput" placeholder="Search requests..." />
+                <i class="fas fa-search search-icon"></i>
+                <table id="requestListTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Request No.</th>
+                            <th>No. of Samples</th>
+                            <th>Priority Level</th>
+                            <th>Laboratory Staff</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestListTableBody">
+                        <tr>
+                            <td>September 2, 2024</td>
+                            <td>798448577484</td>
+                            <td>3</td>
+                            <td>LOW</td>
+                            <td>Coleen Garcia</td>
+                            <td><button class ="status-button" id ="pending-button">Pending</button></td>
+                            <td><span class="view-button">View &nbsp;&nbsp;<i class="fas fa-eye"></i></span></td>
+                        </tr>
+                        <tr>
+                            <td>August 25, 2024</td>
+                            <td>798448577484</td>
+                            <td>3</td>
+                            <td>HIGH</td>
+                            <td>Jeremy Wang</td>
+                            <td><button class ="status-button" id="progress-button">In Progress</button></td>
+                            <td><span class="view-button">View &nbsp;&nbsp;<i class="fas fa-eye"></i></span></td>
+                        </tr>
+                        <!-- More rows go here -->
+                    </tbody>
+                </table>
+               <div id="paginationControls" class="pagination-container">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span class="page-numbers active">1</span>
+                    <span class="page-numbers">2</span>
+                    <span class="page-numbers">3</span>
+                    <span class="page-numbers">...</span>
+                    <span class="page-numbers">10</span>
+                    <button id="nextPage">Next</button>
                 </div>
-                <div id="requestDetailsSection" class="hidden">
-                    <h2 id="requestDetailsHeader">Request Information</h2>
-                    <button id="backButton">Back to Request List</button>
-                    <div id="requestDetailsContent"></div>
-                </div>
-
-                <div id="clientRequestDetailsContent"></div>
-
-            </div>            
+                <button id="addRequestButton">Add Request</button>
+            </div>
+            
+            <div id="requestDetailsSection" class="hidden">
+                <h2 id="requestDetailsHeader">Request Information</h2>
+                <button id="backButton">Back to Request List</button>
+                <div id="requestDetailsContent"></div>
+            </div>
+             
 
             <!-- My Account Section -->
             <div id="myAccountContent" class="tabcontent">
