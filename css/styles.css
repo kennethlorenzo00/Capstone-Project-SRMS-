@@ -452,6 +452,9 @@ body {
     cursor: pointer;
 }
 
+.request-type-btn.clicked {
+    background-color: #4abb4a;
+}
 
 .tabs {
     display: flex;
@@ -474,7 +477,7 @@ body {
     border-right: 2px solid #b8b5b5;
     width:fit-content;
     display: inline-flex;
-    padding: 18px 67.5px;
+    padding: 18px 28.8px;
 }
 
 .request-type-btn:last-of-type {
@@ -588,39 +591,213 @@ button:hover {
     border-left: 3px solid #d4d4d4;
 }
 
+/* Services Options */
 
-/* Request List*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Montserrat';
+}
+
+.sub-title {
+    color: #7b1f2d;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+
+#microbialTestingOptions button, 
+#microbialAnalysisOptions button, 
+#labResearchProcessesOptions button {
+    font-size: 16px;
+    font-weight: 900;
+    padding: 20px;
+    background-color: white;
+    color: #333;
+    border: 1px solid #ffffff;
+    width: 90%;
+    text-align: left;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 0px;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat';
+}
+
+
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+.left-content img.icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+
+.button-text {
+    font-size: 16px;
+    color: #1d1d1d;
+}
+
+button .fa-angle-right {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #7b1f2d;
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.description {
+    font-size: 10px;
+    color: #3a3a3a;
+    margin-top: 3px;
+    font-family: 'Montserrat';
+}
+.title-page {
+    color: black;
+    padding-left: 20px;
+    font-weight: bolder;
+}
+
+.button-text-container span {
+    display: block; 
+}
+
+#microbialTestingOptions button:hover, 
+#microbialAnalysisOptions button:hover, 
+#labResearchProcessesOptions button:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+button#backToCreateRequestMicrobialTesting, 
+button#backToCreateRequestMicrobialAnalysis, 
+button#backToCreateRequestLabResearchProcesses {
+    background-color: #b32b2b;
+    color: white;
+    border: none;
+    width: 55px; 
+    padding: 7px 13px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    transform: translateY(-60%); 
+    left: 910px;
+}
+
+button#backToCreateRequestMicrobialAnalysis {
+    background-color: #b32b2b;
+    color: white;
+    border: none;
+    width: 55px;
+    padding: 7px 13px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    transform: translateY(-1%); 
+    left: 920px;
+}
+
+button#backToCreateRequestLabResearchProcesses {
+    background-color: #b32b2b;
+    color: white;
+    border: none;
+    width: 55px; 
+    padding: 7px 13px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    transform: translateY(-1%); 
+    left: 920px;
+}
+
+button#backToCreateRequestMicrobialTesting:hover, 
+button#backToCreateRequestMicrobialAnalysis:hover, 
+button#backToCreateRequestLabResearchProcesses:hover {
+    background-color: #7b1f2d;
+}
+
+button:focus {
+    outline: none;
+}
+
+button + button {
+    margin-top: 10px;
+}
+
+/*Request List*/
 
 #requestListGroup {
     margin: 0 auto;
     padding: 30px;
     max-width: 1200px;
     font-family: 'Arial', sans-serif;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
+
 
 h1 {
     font-size: 32px;
     color: #4B0000;
     margin-bottom: 20px;
     text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+   
 }
 
 #searchInput {
     width: 300px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
+    padding: 10px 15px;
+    padding-right: 35px; 
+    margin-top: 2.4%;
+    border: 1px solid #fcfcfc;
     border-radius: 5px;
     font-size: 16px;
     float: right;
+
+}
+
+.search-icon {
+    position: absolute;
+    bottom: 79%;
+    right: 40px;
+    transform: translateY(0%);
+    color: #636060;
+    font-size: 16px;
 }
 
 #requestListTable {
-    width: 80%;
-    border-collapse: collapse;
+    width: 100%; 
+    border-collapse: separate;
+    border-spacing: 0;
     margin-bottom: 20px;
     table-layout: fixed;
 }
@@ -628,19 +805,21 @@ h1 {
 #requestListTable thead {
     background-color: #7D1A1A;
     color: white;
+    border-radius: 10px 10px 0 0; 
 }
 
 #requestListTable th, #requestListTable td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /
 }
 
 #requestListTable th {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 14px;
-    white-space: nowrap;
+    font-size: 13px;
+    border-bottom: none; 
+    text-align: center;
 }
 
 #requestListTable td {
@@ -655,60 +834,81 @@ h1 {
     background-color: #f9f9f9;
 }
 
-.status-pending {
-    background-color: #b0b0b0;
+#progress-button {
+    background-color: #38487e;
     color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.status-in-progress {
-    background-color: #D4AF37;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.status-released {
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.status-rejected {
-    background-color: #B22222;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.view-button {
-    background-color: #4B0000;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 14px;
     cursor: pointer;
+    border: none;
 }
 
-.view-button:hover {
-    background-color: #333;
+#pending-button {
+    background-color: #bebebe;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.progress-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.action-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-button i {
+    font-size: 16px;
+}
+
+#requestListTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#requestListTable th:last-child {
+    border-radius: 0 15px 15px 0; 
+}
+
+#paginationContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+}
+
+#addRequestButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 100%;
+}
+
+#addRequestButton:hover {
+    background-color: #0056b3;
 }
 
 #paginationControls {
     display: flex;
-    justify-content: flex-end; 
-    margin: 20px 0;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -752,107 +952,7 @@ h1 {
     border: 1px solid #7D1A1A;
 }
 
-
-.pagination-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-    align-items: center;
-}
-
-#addRequestButton {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: block;
-
-}
-
-#addRequestButton:hover {
-    background-color: #0056b3;
-}
-
-
-#requestDetailsSection {
-    margin-top: 20px;
-}
-
-#requestDetailsHeader {
-    font-size: 24px;
-    color: #4B0000;
-    margin-bottom: 20px;
-}
-
-#backButton {
-    background-color: #555;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-#requestDetailsContent {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-
-h1 {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-#searchInput {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-
-#requestListTable th:nth-child(1),
-#requestListTable td:nth-child(1) {
-    width: 15%;
-}
-
-#requestListTable th:nth-child(2),
-#requestListTable td:nth-child(2) {
-    width: 25%;
-}
-
-#requestListTable th:nth-child(3),
-#requestListTable td:nth-child(3) {
-    width: 10%;
-}
-
-#requestListTable th:nth-child(4),
-#requestListTable td:nth-child(4) {
-    width: 10%;
-}
-
-#requestListTable th:nth-child(5),
-#requestListTable td:nth-child(5) {
-    width: 20%;
-}
-
-#requestListTable th:nth-child(6),
-#requestListTable td:nth-child(6) {
-    width: 10%;
-}
-
-#requestListTable th:nth-child(7),
-#requestListTable td:nth-child(7) {
-    width: 10%;
-}
-
-
-
+/*---------*/
 
 .bg-image-section {
     flex: 2;
