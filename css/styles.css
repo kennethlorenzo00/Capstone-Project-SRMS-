@@ -1598,27 +1598,116 @@ h1 {
 
 }
 
-/* Table Row Styles */
-#requestList tbody tr {
-    transition: background-color 0.3s;
-}
-
-#requestList tbody tr:hover {
-    background-color: #f1f1f1; /* Highlight on hover */
-}
 
 /* Specific Styles for Each Table */
-#requestList #allRequestsTable {
-    border: 2px solid #A90000; /* Border for All Requests table */
+  /* all Requests Table Styling */
+  #allRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border: 2px solid #A90000;
 }
 
-#requestList #serviceRequestsTable {
-    border: 2px solid #A90000; /* Border for Service Requests table */
+#allRequestsTable th, 
+#allRequestsTable td {
+    border: none;
+    padding: 8px;
+    text-align: left;
 }
 
-#requestList #followUpRequestsTable {
-    border: 2px solid #A90000; /* Border for Follow-up Requests table */
+#allRequestsTable th {
+    background-color: #A90000;
+    color: white;
+    text-transform: uppercase;
+    border: none;
 }
+
+#allRequestsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#allRequestsTable tr:hover {
+    background-color: #ddd;
+}
+
+#allRequestsTable th:last-child,
+#allRequestsTable td:last-child {
+    text-align: center;
+}
+
+
+  /* Service Requests Table Styling */
+#serviceRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border: 2px solid #A90000;
+}
+
+#serviceRequestsTable th, 
+#serviceRequestsTable td {
+    border: none;
+    padding: 8px;
+    text-align: left;
+}
+
+#serviceRequestsTable th {
+    background-color: #A90000;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+}
+
+#serviceRequestsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#serviceRequestsTable tr:hover {
+    background-color: #ddd;
+}
+
+#serviceRequestsTable th:last-child,
+#serviceRequestsTable td:last-child {
+    text-align: center;
+}
+  /* Follow up Requests Table Styling */
+  #followUpRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border: 2px solid #A90000;
+}
+
+#followUpRequestsTable th, 
+#followUpRequestsTable td {
+    border: none;
+    padding: 8px;
+    text-align: left;
+}
+
+#followUpRequestsTable th {
+    background-color: #A90000;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+}
+
+#followUpRequestsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#followUpRequestsTable tr:hover {
+    background-color: #ddd;
+}
+
+#followUpRequestsTable th:last-child,
+#followUpRequestsTable td:last-child {
+    text-align: center;
+}
+
 
 /* Input Styles within Request List */
 #requestList input[type="text"] {
