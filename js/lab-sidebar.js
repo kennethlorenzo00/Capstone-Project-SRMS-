@@ -64,6 +64,30 @@ function showTasks(taskType) {
     }
 }
 
+// Function to handle task count clicks
+function handleTaskCountClick(taskType) {
+    openTab(event, 'taskList'); // Open the taskList tab
+    showTasks(taskType); // Show tasks based on the task type
+}
+
+// Add event listeners to task count elements
+document.getElementById('assignedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('allAssigned');
+});
+
+document.getElementById('ongoingTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('ongoing');
+});
+
+document.getElementById('processedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('processed');
+});
+
+document.getElementById('rejectedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('rejected');
+});
+
+
 // Add event listeners to task buttons
 document.getElementById('allAssignedBtn').addEventListener('click', function() {
     showTasks('allAssigned');

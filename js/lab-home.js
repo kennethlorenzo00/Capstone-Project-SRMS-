@@ -117,6 +117,14 @@ async function fetchRecentTasks(userFullName) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
+        // Determine the display status
+        let displayStatus;
+        if (requestData.request_status === 'rejected' || requestData.request_status === 'releasing') {
+            displayStatus = requestData.request_status; // Keep as is
+        } else {
+            displayStatus = 'preparing'; // Set to 'preparing' for all other statuses
+        }
+
         const row = `
             <tr>
                 <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
@@ -126,7 +134,7 @@ async function fetchRecentTasks(userFullName) {
                 <td>${appointmentData.requesterName || 'N/A'}</td>
                 <td>${requestData.samples ? requestData.samples.length : 0}</td>
                 <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                <td>${requestData.request_status || 'N/A'}</td>
+                <td>${displayStatus}</td> <!-- Use the determined display status -->
             </tr>
         `;
         recentTaskTableBody.innerHTML += row;
