@@ -311,7 +311,7 @@
             </div>
 
             <!-- Appointment Tab -->
-            <div id="appointment" class="tabcontent hidden">
+            <div id="appointment" class="tabcontent hidden" style="margin-top: 75px;">
                 <h2>Appointments</h2>
                 <table id="appointmentsTable">
                     <thead>
@@ -334,7 +334,7 @@
 
             <!-- Edit Appointment Modal -->
             <div id="editModal" class="modal hidden">
-                <div class="modal-content">
+                <div class="editmodal-content">
                     <span class="close">&times;</span>
                     <h2>Edit Appointment</h2>
                     <label for="staffSelect">Assigned Laboratory Staff:</label>
@@ -360,41 +360,49 @@
                 </div>
             </div>
             
-            <!-- Add Event Form - Initially Hidden -->
-            <div id="addEventForm" style="display: none;">
-                <h3>Add New Event</h3>
-
-                <button id="closeAddEventForm" style="float: right;">Close</button>
+<!-- Add Event Form - Initially Hidden -->
+<div id="addEventForm" style="display: none;">
+    <h3>Add New Event</h3>
+    
+    <div class="form-container">
+        <!-- Container for the image upload section -->
+        <div class="photo-container">
+            <label for="eventImage">Upload Image:</label>
+            <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
+            <input type="file" id="eventImage"><br>
             
-                <!-- Image Upload Section -->
-                <label for="eventImage">Upload Image:</label>
-                <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
-                <input type="file" id="eventImage">
-                
-                <!-- Event Fields -->
-                <label for="eventTitle">Title:</label>
-                <input type="text" id="eventTitle" placeholder="Event Title">
-                
-                <label for="eventDescription">Description:</label>
-                <textarea id="eventDescription" placeholder="Event Description"></textarea>
-                
-                <label for="eventStartDate">Start Date:</label>
-                <input type="date" id="eventStartDate">
-                
-                <label for="eventEndDate">End Date:</label>
-                <input type="date" id="eventEndDate">
-                
-                <button id="uploadEventBtn">Upload Event</button>
-            </div>
+            <label for="eventStartDate">Start Date:</label>
+            <input type="date" id="eventStartDate"><br>
+            
+            <label for="eventEndDate">End Date:</label>
+            <input type="date" id="eventEndDate">
+        </div>
+        
+        <!-- Container for the event title and description -->
+        <div class="event-details-container">
+            <label for="eventTitle">Title:</label>
+            <input type="text" id="eventTitle" placeholder="Event Title"><br>
+            
+            <label for="eventDescription">Description:</label>
+            <textarea id="eventDescription" placeholder="Event Description"></textarea>
+            <br><br>
+            <button id="uploadEventBtn">Upload Event</button>
+            <button id="closeAddEventForm" style="float: right;">Close</button>
+        </div>
+    </div>
+</div>
+
             
             <!-- Event Details Modal -->
             <div id="eventDetailsModal" style="display: none;">
-                <div class="modal-content">
+                <div class="eventdetails-modal">
                 <span class="close">&times;</span>
                 <img id="eventImageModal" src="" alt="Event Image" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 10px;">
                 <h3 id="eventTitleModal"></h3>
                 <p id="eventDescriptionModal"></p>
                 <button id="editEventBtn">Edit</button>
+
+                
                 <button id="deleteEventBtn">Delete</button>
                 </div>
             </div>
@@ -406,8 +414,10 @@
                 <h3>Edit Event</h3>
                 <label for="editEventTitle">Title:</label>
                 <input type="text" id="editEventTitle" placeholder="Event Title">
+                <br><br>
                 <label for="editEventDescription">Description:</label>
                 <textarea id="editEventDescription" placeholder="Event Description"></textarea>
+                <br>
                 <button id="saveEditEventBtn">Save</button>
                 </div>
             </div>
