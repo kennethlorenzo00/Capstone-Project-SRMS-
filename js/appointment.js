@@ -99,12 +99,13 @@ async function openEditModal(appointmentId) {
         endDateInput.value = appointmentData.endDate; // Assuming this is a string representation of the date
 
         // Show modal
-        modal.style.display = 'block';
+        document.getElementById('editAppointmentModal').style.display = 'block';
     } else {
         console.error(`No appointment found for ID: ${appointmentId}`);
     }
 }
 
+// Save updated appointment details
 // Save updated appointment details
 async function saveAppointment() {
     if (!currentAppointmentId) return;
@@ -119,7 +120,7 @@ async function saveAppointment() {
     }, { merge: true });
 
     // Close modal and refresh the appointments table
-    modal.style.display = 'none';
+    document.getElementById('editAppointmentModal').style.display = 'none';
     renderAppointments();
 }
 
@@ -134,7 +135,7 @@ document.addEventListener('click', (e) => {
 // Add event listeners for modal buttons
 saveButton.addEventListener('click', saveAppointment);
 closeButton.addEventListener('click', () => {
-    modal.style.display = 'none';
+    document.getElementById('editAppointmentModal').style.display = 'none';
 });
 
 // Initial rendering of the appointments and fetching staff
