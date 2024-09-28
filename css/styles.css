@@ -1051,10 +1051,18 @@ h1 {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    width: 50%;
+    width: 25%;
     margin: 40px auto;
     margin-left: 150;
+    margin-top: 225px;
+    padding-top: 0;
   }
+
+  .editmodal-content label{
+    content: 300px;
+  }
+
+  
   
   .modal-content h2 {
     margin-top: 10px;
