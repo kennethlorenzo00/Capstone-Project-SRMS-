@@ -497,7 +497,7 @@
                 </form>
             </div>
 
-            <div id="plantSpeciesIdentificationForm" class="hidden">
+            <div id="plantSpeciesIdentificationForm" class="hidden" style="margin-top: 75px;">
                 <h2>Plant Species Identification and Herbarium Curation Form</h2>
                 <form id="plantSpeciesFormContent" data-request-type="labResearchProcesses" data-request-option="plantSpeciesIdentification">
                     <div id="sampleContainerPlantSpecies">
@@ -513,9 +513,18 @@
                             <input type="text" class="sampleCondition" name="sampleCondition[]"><br><br>
                         </div>
                     </div>
-                    <button type="button" id="addSampleButtonPlantSpecies">Add Another Sample</button><br><br>
-                    <button type="button" id="backPlantSpeciesIdentificationForm" class="backButton">Back</button>
-                    <button id="submitPlantSpeciesIdentificationForm">Submit</button>
+                    
+                    <div class="button-container">
+                        <div class="left-buttons" style="flex: 1;">
+                            <button type="button" id="addSampleButtonPlantSpecies">Add Another Sample</button>
+                        </div>
+                        <div class="right-buttons" style="display: flex; gap: 10px;">
+                            <button type="button" id="backPlantSpeciesIdentificationForm" class="back-button">Back</button>
+                            <button id="submitPlantSpeciesIdentificationForm" class="submit-button">Submit</button>
+                        </div>
+                    </div>
+                    
+                    
                 </form>
             </div>          
       

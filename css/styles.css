@@ -2524,28 +2524,47 @@ label {
     font-size: 16px; /* Optional: Adjust text size */
 }
 
-
-.eventConfirmationModal {
-    /* Add your styles here */
+#plantSpeciesFormContent {
+    border: 2px solid #ccc; /* Border color and thickness */
+    padding: 20px;          /* Space inside the border */
+    border-radius: 10px;   /* Optional: rounded corners */
+    background-color: white; /* Optional: background color */
+    width: 50%;             /* Optional: width of the form */
+    margin: 20px auto;     /* Center the form horizontally */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
 }
 
-.modalContentEvent {
-    /* Add your styles here */
+#plantSpeciesFormContent input[type="text"] {
+    width: 80%;         /* Make the input fields take the full width of their container */
+    padding: 10px;      /* Add some padding for better appearance */
+    margin-bottom: 10px; /* Add space below each input for separation */
+    border: 1px solid #ccc; /* Optional: border style */
+    border-radius: 5px;  /* Optional: rounded corners */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.modalCloseEvent {
-    /* Add your styles here */
+.button-container {
+    display: flex;                /* Use flexbox */
+    align-items: center;         /* Align items vertically center */
 }
 
-.modalConfirmMessage {
-    /* Add your styles here */
+.left-buttons {
+    flex: 1;                     /* Take up remaining space on the left */
 }
 
-.modalConfirmBtn {
-    /* Add your styles here */
+.right-buttons {
+    display: flex;               /* Keep the buttons in a row */
+    gap: 10px;                  /* Space between buttons */
 }
 
-.modalCancelBtn {
-    /* Add your styles here */
+.back-button, .submit-button {
+    cursor: pointer;             /* Change cursor on hover */
 }
+
+#addSampleButtonPlantSpecies {
+    cursor: pointer;             /* Change cursor on hover */
+}
+
+
+
 
