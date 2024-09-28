@@ -2573,6 +2573,41 @@ label {
     cursor: pointer;             /* Change cursor on hover */
 }
 
+#labUseAndEquipmentAccessForm{
+    border: 2px;
+    margin-top: 75px;
+}
 
+#labEquipmentFormContent {
+    border: 2px solid #ccc; /* Add a border */
+    border-radius: 10px; /* Rounded corners (optional) */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add some margin on top of the form */
+    background-color: #f9f9f9; /* Optional background color */
+    width: 50%; /* Ensure form width fits the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+}
 
+.button-container {
+    display: flex;                  /* Use flexbox to arrange buttons */
+    justify-content: center;        /* Center buttons horizontally */
+    margin-top: 20px;              /* Add some space above the buttons */
+}
+
+#backLabUseAndEquipmentAccessForm, 
+#submitLabUseAndEquipmentAccessForm {
+    width: fit-content;             /* Keep button width to fit content */
+    padding: 8px 16px;              /* Normal padding for balance */
+    font-size: 1rem;                /* Normal font size */
+    cursor: pointer;                /* Pointer on hover */
+    margin-right: 10px;             /* Space between buttons */
+}
+
+input[type="text"] {
+    width: 450px; /* Adjust this value as needed for your design */
+    padding: 10px; /* Add padding for a better look */
+    font-size: 1rem; /* Normal font size */
+    border: 1px solid #ccc; /* Add a border to match your design */
+    border-radius: 4px; /* Optional: add rounded corners */
+}
 
