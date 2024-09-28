@@ -2601,7 +2601,7 @@ label {
     font-size: 1rem;                /* Normal font size */
     cursor: pointer;                /* Pointer on hover */
     margin-right: 10px;             /* Space between buttons */
-}
+}   
 
 input[type="text"] {
     width: 450px; /* Adjust this value as needed for your design */
@@ -2611,3 +2611,44 @@ input[type="text"] {
     border-radius: 4px; /* Optional: add rounded corners */
 }
 
+#researchCollaborationForm{
+    border: 2px;
+    margin-top: 75px;
+}
+
+#researchCollaborationFormContent {
+    border: 2px solid #ccc; /* Add a border */
+    border-radius: 10px; /* Rounded corners (optional) */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add some margin on top of the form */
+    background-color: #f9f9f9; /* Optional background color */
+    width: 70%; /* Ensure form width fits the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+}
+
+.button-container {
+    display: flex;                   /* Use flexbox for layout */
+    justify-content: space-between;  /* Space out buttons */
+    margin-top: 20px;               /* Add space above the buttons */
+}
+
+.backButton, #submitResearchCollaborationForm {
+    padding: 8px 12px;              /* Adjust padding */
+    font-size: 1rem;                /* Font size */
+}
+
+#researchCollaborationFormContent input{
+    width: 95%;
+}
+
+#researchCollaborationFormContent label{
+    width: 300px;
+}
+
+#researchCollaborationFormContent textarea{
+    width: 97%;
+}
+
+#startDate{
+    width: 30%;
+}

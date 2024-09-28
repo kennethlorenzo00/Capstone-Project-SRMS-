@@ -555,31 +555,35 @@
                 <h2>Research Collaboration Process Form</h2>
                 <form id="researchCollaborationFormContent" data-request-type="labResearchProcesses" data-request-option="researchCollaboration">
                     <label for="projectTitle">Research Project Title:</label>
-                    <input type="text" id="projectTitle" name="projectTitle" required><br><br>  
+                    <input type="text" id="projectTitle" name="projectTitle" required><br> 
                     <label for="principalInvestigator">Principal Investigator:</label>
-                    <input type="text" id="principalInvestigator" name="principalInvestigator" required><br><br>
+                    <input type="text" id="principalInvestigator" name="principalInvestigator" required><br>
                     <label for="collaboratingInstitutions">Collaborating Institutions:</label>
-                    <input type="text" id="collaboratingInstitutions" name="collaboratingInstitutions"><br><br>
+                    <input type="text" id="collaboratingInstitutions" name="collaboratingInstitutions"><br>
                     <label for="objectives">Objectives and Goals:</label>
-                    <textarea id="objectives" name="objectives" rows="4" required></textarea><br><br>
+                    <textarea id="objectives" name="objectives" rows="4" required></textarea><br>
                     <label for="startDate">Start Date:</label>
-                    <input type="date" id="startDate" name="startDate" required><br><br>
+                    <input type="date" id="startDate" name="startDate" style="width: 20%;" required><br>
                     <label for="endDate">End Date:</label>
-                    <input type="date" id="endDate" name="endDate" required><br><br>
+                    <input type="date" id="endDate" name="endDate" style="width: 20%; required><br>
                     <label for="funding">Funding Information:</label>
-                    <textarea id="funding" name="funding" rows="3"></textarea><br><br>
+                    <textarea id="funding" name="funding" rows="3"></textarea><br>
                     <label for="rolesResponsibilities">Roles and Responsibilities:</label>
-                    <textarea id="rolesResponsibilities" name="rolesResponsibilities" rows="4"></textarea><br><br>
+                    <textarea id="rolesResponsibilities" name="rolesResponsibilities" rows="4"></textarea><br>
                     <label for="deliverables">Expected Deliverables:</label>
-                    <textarea id="deliverables" name="deliverables" rows="3"></textarea><br><br>
+                    <textarea id="deliverables" name="deliverables" rows="3"></textarea><br>
                     <label for="confidentiality">Confidentiality Agreements:</label>
                     <textarea id="confidentiality" name="confidentiality" rows="3"></textarea><br><br>
                     <label for="contactInformation">Contact Information:</label>
-                    <input type="text" id="contactInformation" name="contactInformation"><br><br>
-                    <button type="button" id="backResearchCollaborationForm" class="backButton">Back</button>
-                    <button id="submitResearchCollaborationForm">Submit</button>
+                    <input type="text" id="contactInformation" name="contactInformation">
+                    
+                    <div class="button-container">  <!-- Button container for centering -->
+                        <button type="button" id="backResearchCollaborationForm" class="backButton">Back</button>
+                        <button id="submitResearchCollaborationForm">Submit</button>
+                    </div>
                 </form>
             </div>
+            
 
             <!-- Review Request Modal -->
             <div id="reviewRequestModal" class="modal">
