@@ -2214,3 +2214,221 @@ h1 {
 .edit-btn:hover {
     background-color: #45a049;
 }
+
+/* Process container styling */
+.process-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.step-box {
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    width: 150px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.step-box h4 {
+    font-size: 1.2em;
+}
+
+/* Button styling */
+#requestNowButton {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Requests Overview */
+.requests-overview table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.requests-overview th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+/* Events Section */
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+}
+
+.event-item {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.event-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.task-count {
+    display: flex;
+    justify-content: space-between; /* Distribute the boxes evenly */
+    gap: 20px; /* Space between the boxes */
+    margin: 0 auto; /* Center the task count section */
+    max-width: 100%; /* Ensure the width stretches across the container */
+}
+
+.task-count p {
+    background-color: #f1f1f1; /* Light background for the rectangle */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    flex: 1; /* Ensure each box takes equal space */
+    display: flex;
+    flex-direction: column; /* Stack the number and text vertically */
+    align-items: center; /* Center content horizontally */
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center align text inside */
+}
+
+.task-count p span {
+    font-size: 2.5rem; /* Larger font size for numbers */
+    color: #007BFF; /* Blue color for the numbers */
+    margin-bottom: 10px; /* Space between number and label */
+}
+
+.task-count p strong {
+    font-size: 1rem; /* Normal font size for the label */
+    color: #555; /* Different color for label */
+}
+
+#approachingDeadlines {
+    margin: 20px;
+}
+
+#approachingDeadlines h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.approaching-deadline {
+    display: flex;
+    align-items: center;
+    background-color: red;
+    padding: 15px;
+    color: white;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.approaching-deadline .date {
+    font-size: 1.5rem;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.approaching-deadline .details {
+    flex: 1;
+    text-align: right;
+}
+
+.approaching-deadline .details span {
+    display: block;
+    font-size: 1rem;
+}
+
+#upcomingEvents {
+    margin: 20px;
+}
+
+#upcomingEvents h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#upcomingEventsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#upcomingEventsTable th, #upcomingEventsTable td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+#upcomingEventsTable th {
+    background-color: #f4f4f4;
+}
+
+#upcomingEventsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#upcomingEventsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#progressBarSection {
+    text-align: center;
+}
+
+.progress-circle {
+    position: relative;
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+}
+
+svg {
+    transform: rotate(-90deg);
+}
+
+circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.progress-background {
+    stroke: #e6e6e6; /* Background circle color */
+}
+
+.progress-foreground {
+    stroke: #4caf50; /* Progress circle color */
+    stroke-linecap: round; /* Rounded ends of the stroke */
+    transition: stroke-dasharray 0.5s ease; /* Transition for animation */
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px; /* Adjust font size as needed */
+    font-weight: bold;
+}
+

@@ -11,6 +11,7 @@
     <script src="js/lab-sidebar.js" defer></script> 
     <script type="module" src="js/task-list.js" defer></script>
     <script type="module" src="js/lab-account.js" defer></script> 
+    <script type="module" src="js/lab-home.js" defer></script> 
 
 </head>
 <body>
@@ -52,8 +53,92 @@
             <!-- Home Section -->
             <div id="home" class="tabcontent">
                 <h2>Home (Dashboard)</h2>
-                <p>This is the home section. Overview of the dashboard goes here.</p>
-            </div>
+                
+                <!-- Welcome message and current date -->
+                <p id="welcomeMessage"></p>
+                <p id="currentDate"></p>
+            
+                <!-- Task Overview Section -->
+                <div id="taskOverview">
+                    <h3>Task Overview</h3>
+                    <div class="task-count">
+                        <p><strong>Assigned Tasks:</strong> <span id="assignedTasksCount">0</span></p>
+                        <p><strong>Ongoing Tasks:</strong> <span id="ongoingTasksCount">0</span></p>
+                        <p><strong>Processed Tasks:</strong> <span id="processedTasksCount">0</span></p>
+                        <p><strong>Rejected Tasks:</strong> <span id="rejectedTasksCount">0</span></p>
+                    </div>
+                </div>
+            
+                <!-- Recent Tasks Section -->
+                <div id="recentTasks">
+                    <h3>Recent Tasks</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>End Date</th>
+                                <th>Request ID</th>
+                                <th>Service Type</th>
+                                <th>Client Type</th>
+                                <th>Client Name</th>
+                                <th>No. of Samples</th>
+                                <th>Priority Level</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentTaskTableBody">
+                            <!-- Recent tasks will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            
+                <!-- Approaching Deadlines Section -->
+                <div id="approachingDeadlines">
+                    <h3>Approaching Deadlines</h3>
+                    <table class="approaching-deadlines-table">
+                        <thead>
+                            <tr>
+                                <th>Due Date</th>
+                                <th>Requester Name</th>
+                                <th>Request ID</th>
+                                <th>Days Left</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approachingDeadlinesTableBody">
+                            <!-- Approaching deadlines will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Upcoming Events Section -->
+                <div id="upcomingEvents">
+                    <h3>Upcoming Events</h3>
+                    <table id="upcomingEventsTable">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>Title</th>
+                                <th>Days Left</th>
+                            </tr>
+                        </thead>
+                        <tbody id="upcomingEventsTableBody">
+                            <!-- Upcoming events will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Circular Progress Bar Section -->
+                <div id="progressBarSection">
+                    <h3>Task Progress</h3>
+                    <div class="progress-circle">
+                        <svg>
+                            <circle class="progress-background" cx="50" cy="50" r="45"></circle>
+                            <circle class="progress-foreground" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text" id="progressText">0% Total Finished</div>
+                    </div>
+                </div>                
+
+            </div>            
 
             <!-- Tasks List Section -->
             <div id="taskList" class="tabcontent" style="display:none;">

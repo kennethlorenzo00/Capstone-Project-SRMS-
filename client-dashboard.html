@@ -10,7 +10,8 @@
         <script type="module" src="../js/firebase.js"></script>
         <script type="module" src="js/auth.js" defer></script> 
         <script type="module" src="js/client-account.js" defer></script> 
-        
+        <script type="module" src="js/client-home.js" defer></script> 
+
     </head>
     <body>
         <!-- Sidebar -->
@@ -40,11 +41,75 @@
             <!-- Dashboard Section -->
 
             <div id="dashboardContent" class="client-main">
-                <h1>Welcome to Your Dashboard</h1>
-                <p>Here you can manage your requests and account details.</p>
-            </div>
 
-   
+                <!-- Request Process Container -->
+                <div class="process-container">
+                    <h2>Request Analysis with Ease</h2>
+                    <h3 class="subtitle">5 EASY STEPS FOR AN ANALYSIS</h3>
+                    <div class="steps">
+                        <div class="step-box">
+                            <h4 style="color: #ff5733;">Step #1</h4>
+                            <p>Click the "Request now" and submit your request</p>
+                        </div>
+                        <div class="step-box">
+                            <h4 style="color: #ff5733;">Step #2</h4>
+                            <p>Your request will be reviewed and approved</p>
+                        </div>
+                        <div class="step-box">
+                            <h4 style="color: #ff5733;">Step #3</h4>
+                            <p>After approval, send the required samples as instructed</p>
+                        </div>
+                        <div class="step-box">
+                            <h4 style="color: #ff5733;">Step #4</h4>
+                            <p>The samples will be validated and analyzed</p>
+                        </div>
+                        <div class="step-box">
+                            <h4 style="color: #ff5733;">Step #5</h4>
+                            <p>Once the analysis is complete, the final report will be released</p>
+                        </div>
+                    </div>
+                    <button id="requestNowButton">Request now</button>
+                </div>
+
+                <!-- Requests Overview Section -->
+                <div class="requests-overview">
+                    <h2>Requests Overview</h2>
+                    <table id="recentRequestsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Request ID</th>
+                                <th>No. of Samples</th>
+                                <th>Priority</th>
+                                <th>Assigned Staff</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentRequestsTableBody">
+                            <!-- Recent requests will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Events Section -->
+                <div id="eventsSection" class="events-container">
+                    <h2>Events and Activities</h2>
+                    <div id="eventContainer" class="scroll-container">
+                        <!-- Events will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Event Details Modal -->
+                <div id="eventDetailsModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <img id="eventImageModal" src="" alt="Event Image">
+                        <h3 id="eventTitleModal"></h3>
+                        <p id="eventDescriptionModal"></p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Create Request Section (Initially Hidden) -->
            
             <div id="createRequestContent" class="hidden"><br><br><br><br>

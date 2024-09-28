@@ -7,7 +7,7 @@ import { ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebase
 const requestListTableBody = document.getElementById('requestListTableBody');
 const requestDetailsContent = document.getElementById('requestDetailsContent');
 const requestDetailsHeader = document.getElementById('requestDetailsHeader');
-const requestListGroup = document.getElementById('requestListGroup');
+const requestListGroup = document.getElementById('requestListContent');
 const requestDetailsSection = document.getElementById('requestDetailsSection'); 
 
 const sampleFieldMapping = {
@@ -42,7 +42,7 @@ const searchInput = document.getElementById('searchInput');
 // Get the pagination controls
 const prevPageButton = document.getElementById('prevPage');
 const nextPageButton = document.getElementById('nextPage');
-const pageInfoSpan = document.getElementById('pageInfo');
+const pageInfoSpan = document.querySelector('.page-numbers.active');
 
 // Initialize pagination variables
 let currentPage = 1;
@@ -182,7 +182,7 @@ async function showRequestDetails(requestId) {
     const requestQuery = query(requestsRef, where('requestId', '==', requestId));
     const requestSnapshot = await getDocs(requestQuery);
 
-    const clientRequestDetailsContent = document.getElementById('clientRequestDetailsContent');
+    const requestDetailsContent = document.getElementById('requestDetailsContent');
 
     // Clear previous details
     requestDetailsContent.innerHTML = "";

@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
         createRequestContent.classList.add("hidden");
         requestListContent.classList.add("hidden");
         myAccountContent.classList.add("hidden");
+        myAccountContent.style.display = "none";
         microbialTestingSection.classList.add("hidden");
         microbialAnalysisSection.classList.add("hidden");
         labResearchProcessesSection.classList.add("hidden");
