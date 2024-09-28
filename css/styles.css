@@ -1666,19 +1666,21 @@ h1 {
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
+    border: 2px solid #A90000;
 }
 
 #releasedRequestsTable th, 
 #releasedRequestsTable td {
-    border: 1px solid #ddd;
+    border: none;
     padding: 8px;
     text-align: left;
 }
 
 #releasedRequestsTable th {
-    background-color: #4CAF50;
+    background-color: #A90000;
     color: white;
     text-transform: uppercase;
+    border: none;
 }
 
 #releasedRequestsTable tr:nth-child(even) {
@@ -1700,19 +1702,21 @@ h1 {
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffefef;
+    border: 2px solid #A90000;
 }
 
 #rejectedRequestsTable th, 
 #rejectedRequestsTable td {
-    border: 1px solid #ddd;
+    border: none;
     padding: 8px;
     text-align: left;
 }
 
 #rejectedRequestsTable th {
-    background-color: #f44336;
+    background-color: #A90000;
     color: white;
     text-transform: uppercase;
+    border: none;
 }
 
 #rejectedRequestsTable tr:nth-child(even) {
