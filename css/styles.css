@@ -2741,3 +2741,120 @@ input[type="text"] {
 #startDate{
     width: 30%;
 }
+
+.notification-count {
+    background-color: red;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+}
+
+.notifications-btn {
+    position: relative;
+}
+
+/* Popup Notification Tab */
+.notification-popup {
+    position: fixed;
+    right: 20px;
+    top: 60px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* Visible when clicked */
+.notification-popup.visible {
+    display: flex;
+}
+
+/* Popup Header */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f7f7f7;
+    border-radius: 10px 10px 0 0;
+}
+
+.popup-header h3 {
+    margin: 0;
+}
+
+.close-popup-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Popup Body for Notifications */
+.popup-body {
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-item p {
+    margin: 5px 0;
+}
+
+.notification-menu {
+    display: none; /* Hide the menu by default */
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.notification-item:hover .notification-menu {
+    display: inline-block; /* Show menu on hover */
+}
+
+.notification-options {
+    display: none; /* Hide the options by default */
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.notification-item:hover .notification-options {
+    display: block; /* Show options on hover */
+}
+
+.notification-options li {
+    padding: 10px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.notification-options li:hover {
+    background-color: #f0f0f0;
+}
+
+.notification-item.read {
+    background-color: #f0f0f0; /* Change background color for read notifications */
+    text-decoration: line-through; /* Optional: add strikethrough for read notifications */
+}

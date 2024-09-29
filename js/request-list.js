@@ -405,6 +405,60 @@ async function showRequestDetails(requestId) {
             });
         }        
 
+        if (requestDoc.request_status === "validating") {
+            const validatingMessageDiv = document.createElement('div');
+            validatingMessageDiv.classList.add('validating-message');
+            validatingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is under validation.</p>
+            `;
+            requestDetailsContent.appendChild(validatingMessageDiv);
+          }
+
+        if (requestDoc.request_status === "analysing") {
+            const analysingMessageDiv = document.createElement('div');
+            analysingMessageDiv.classList.add('analysing-message');
+            analysingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is under analysis.</p>
+            `;
+            requestDetailsContent.appendChild(analysingMessageDiv);
+          }
+        
+          if (requestDoc.request_status === "scheduling") {
+            const schedulingMessageDiv = document.createElement('div');
+            schedulingMessageDiv.classList.add('scheduling-message');
+            schedulingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is under analysis.</p>
+            `;
+            requestDetailsContent.appendChild(schedulingMessageDiv);
+          }
+
+          if (requestDoc.request_status === "preparing") {
+            const preparingMessageDiv = document.createElement('div');
+            preparingMessageDiv.classList.add('preparing-message');
+            preparingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is under analysis.</p>
+            `;
+            requestDetailsContent.appendChild(preparingMessageDiv);
+          }
+
+          if (requestDoc.request_status === "drafting") {
+            const draftingMessageDiv = document.createElement('div');
+            draftingMessageDiv.classList.add('drafting-message');
+            draftingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is being drafted.</p>
+            `;
+            requestDetailsContent.appendChild(draftingMessageDiv);
+          }
+
+          if (requestDoc.request_status === "inspecting") {
+            const inspectingMessageDiv = document.createElement('div');
+            inspectingMessageDiv.classList.add('inspecting-message');
+            inspectingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is under analysis.</p>
+            `;
+            requestDetailsContent.appendChild(inspectingMessageDiv);
+          }
+
         // Show the request details content and hide the request list group
         requestDetailsSection.classList.remove('hidden');
         requestListGroup.classList.add('hidden');

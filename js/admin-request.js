@@ -885,6 +885,42 @@ async function showRequestDetails(requestId) {
       
     }
 
+    if (requestDoc.request_status === "sending") {
+      const sendingMessageDiv = document.createElement('div');
+      sendingMessageDiv.classList.add('sending-message');
+      sendingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> Waiting for the client to send their samples.</p>
+      `;
+      adminRequestDetailsContent.appendChild(sendingMessageDiv);
+    }
+
+    if (requestDoc.request_status === "analysing") {
+      const analysingMessageDiv = document.createElement('div');
+      analysingMessageDiv.classList.add('analysing-message');
+      analysingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> Request is being done by the Staff.</p>
+      `;
+      adminRequestDetailsContent.appendChild(analysingMessageDiv);
+    }
+
+    if (requestDoc.request_status === "preparing") {
+      const preparingMessageDiv = document.createElement('div');
+      preparingMessageDiv.classList.add('preparing-message');
+      preparingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> Request is being prepared by the Staff.</p>
+      `;
+      adminRequestDetailsContent.appendChild(preparingMessageDiv);
+    }
+
+    if (requestDoc.request_status === "inspecting") {
+      const inspectingMessageDiv = document.createElement('div');
+      inspectingMessageDiv.classList.add('inspecting-message');
+      inspectingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> Request is being prepared by the Staff.</p>
+      `;
+      adminRequestDetailsContent.appendChild(inspectingMessageDiv);
+    }
+
     if (requestDoc.request_status === "initiating") {
       const initiatingMessageDiv = document.createElement('div');
       initiatingMessageDiv.classList.add('initiating-message');

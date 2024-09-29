@@ -160,47 +160,68 @@ document.addEventListener("DOMContentLoaded", function() {
     }
         
     // Confirm submit action
-    confirmSubmitButton.addEventListener('click', async () => {
-        try {
-            await addDoc(collection(firestore, 'requests'), pendingData);
-            alert('Request submitted successfully!');
-            reviewModal.style.display = "none"; // Hide the modal
+confirmSubmitButton.addEventListener('click', async () => {
+    try {
+        // Save the request data to Firestore
+        await addDoc(collection(firestore, 'requests'), pendingData);
+        
+        // Log notification to Firestore
+        await logNotificationToFirestore({
+            userId: pendingData.userId,
+            role: 'Client',
+            message: `New ${pendingData.requestType} request submitted with ID: ${pendingData.requestId}.`,
+            timestamp: new Date().toISOString()
+        });
 
-            // Reset all forms with data-request-type attribute
-            const forms = document.querySelectorAll('form[data-request-type]');
-            forms.forEach(form => {
-                // Clear the form header
-                const formHeader = form.previousElementSibling; // Get the h2 element
-                if (formHeader) {
-                    formHeader.parentNode.removeChild(formHeader); // Remove the form header
-                }
+        alert('Request submitted successfully!');
+        reviewModal.style.display = "none"; // Hide the modal
 
-                form.reset(); // Reset each form
+        // Reset all forms with data-request-type attribute
+        const forms = document.querySelectorAll('form[data-request-type]');
+        forms.forEach(form => {
+            // Clear the form header
+            const formHeader = form.previousElementSibling; // Get the h2 element
+            if (formHeader) {
+                formHeader.parentNode.removeChild(formHeader); // Remove the form header
+            }
 
-                document.getElementById("plateCountForm").classList.add("hidden");
-                document.getElementById("agarDiscForm").classList.add("hidden");
-                document.getElementById("agarWellForm").classList.add("hidden");
-                document.getElementById("micTestingForm").classList.add("hidden");
-                document.getElementById("mbcTestingForm").classList.add("hidden");
-                document.getElementById("microbialWaterAnalysisForm").classList.add("hidden");
-                document.getElementById("microbialCharForm").classList.add("hidden");
-                document.getElementById("microbialCultureCollectionsForm").classList.add("hidden");
-                document.getElementById("microscopyForm").classList.add("hidden");
-                document.getElementById("plantSpeciesIdentificationForm").classList.add("hidden");
-                document.getElementById("labUseAndEquipmentAccessForm").classList.add("hidden");
-                document.getElementById("researchCollaborationForm").classList.add("hidden");
-            });
+            form.reset(); // Reset each form
 
-            // Go back to the create request content section
-            document.querySelectorAll('.hidden:not(#createRequestContent)').forEach(el => el.classList.add('hidden'));
-            document.getElementById('createRequestContent').classList.remove('hidden');
-            
-        } catch (error) {
-            console.error('Error adding document: ', error);
-            alert('Failed to submit request. Please try again.');
-        }   
-    });
+            // Hide relevant forms
+            document.getElementById("plateCountForm").classList.add("hidden");
+            document.getElementById("agarDiscForm").classList.add("hidden");
+            document.getElementById("agarWellForm").classList.add("hidden");
+            document.getElementById("micTestingForm").classList.add("hidden");
+            document.getElementById("mbcTestingForm").classList.add("hidden");
+            document.getElementById("microbialWaterAnalysisForm").classList.add("hidden");
+            document.getElementById("microbialCharForm").classList.add("hidden");
+            document.getElementById("microbialCultureCollectionsForm").classList.add("hidden");
+            document.getElementById("microscopyForm").classList.add("hidden");
+            document.getElementById("plantSpeciesIdentificationForm").classList.add("hidden");
+            document.getElementById("labUseAndEquipmentAccessForm").classList.add("hidden");
+            document.getElementById("researchCollaborationForm").classList.add("hidden");
+        });
 
+        // Go back to the create request content section
+        document.querySelectorAll('.hidden:not(#createRequestContent)').forEach(el => el.classList.add('hidden'));
+        document.getElementById('createRequestContent').classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Error adding document: ', error);
+        alert('Failed to submit request. Please try again.');
+    }   
+});
+
+// Function to log notifications to Firestore
+async function logNotificationToFirestore(notificationData) {
+    try {
+        const notificationsRef = collection(firestore, 'notifications');
+        await addDoc(notificationsRef, notificationData);
+        console.log("Notification logged to Firestore.");
+    } catch (error) {
+        console.error("Error logging notification:", error.message);
+    }
+}
 
     // Close modal
     document.querySelector('.close').onclick = function() {
