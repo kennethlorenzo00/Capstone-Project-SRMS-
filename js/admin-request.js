@@ -930,6 +930,72 @@ async function showRequestDetails(requestId) {
       adminRequestDetailsContent.appendChild(initiatingMessageDiv);
     }
 
+    if (requestDoc.request_status === "drafting") {
+      const draftingMessageDiv = document.createElement('div');
+      draftingMessageDiv.classList.add('drafting-message');
+      draftingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong>The MOU is being reviewed.</p>
+        <button class="finish-button">Finish Drafting</button>
+      `;
+      adminRequestDetailsContent.appendChild(draftingMessageDiv);
+
+      const finishButton = adminRequestDetailsContent.querySelector('.finish-button');
+
+      finishButton.addEventListener('click', async () => {
+        const requestsRef = collection(firestore, 'requests');
+        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+        const requestSnapshot = await getDocs(requestQuery);
+        const requestDocRef = requestSnapshot.docs[0].ref;
+        await updateDoc(requestDocRef, { request_status: 'approving' });
+        alert('MOU has finished reviewing.');
+        backToRequestList()
+    });
+    }
+
+    if (requestDoc.request_status === "approving") {
+      const approvingMessageDiv = document.createElement('div');
+      approvingMessageDiv.classList.add('approving-message');
+      approvingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong>The MOU is in Legal Review.</p>
+        <button class="next-button">Finish</button>
+      `;
+      adminRequestDetailsContent.appendChild(approvingMessageDiv);
+
+      const nextButton = adminRequestDetailsContent.querySelector('.next-button');
+
+      nextButton.addEventListener('click', async () => {
+        const requestsRef = collection(firestore, 'requests');
+        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+        const requestSnapshot = await getDocs(requestQuery);
+        const requestDocRef = requestSnapshot.docs[0].ref;
+        await updateDoc(requestDocRef, { request_status: 'signing' });
+        alert('MOU has finished Legal reviewing.');
+        backToRequestList()
+    });
+    }
+
+    if (requestDoc.request_status === "signing") {
+      const signingMessageDiv = document.createElement('div');
+      signingMessageDiv.classList.add('signing-message');
+      signingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong>The MOU is in for signing.</p>
+        <button class="sign-button">Finish</button>
+      `;
+      adminRequestDetailsContent.appendChild(signingMessageDiv);
+
+      const signButton = adminRequestDetailsContent.querySelector('.sign-button');
+
+      signButton.addEventListener('click', async () => {
+        const requestsRef = collection(firestore, 'requests');
+        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+        const requestSnapshot = await getDocs(requestQuery);
+        const requestDocRef = requestSnapshot.docs[0].ref;
+        await updateDoc(requestDocRef, { request_status: 'managing' });
+        alert('MOU has finished signing.');
+        backToRequestList()
+    });
+    }
+
     if (requestDoc.request_status === "validating" || requestDoc.request_status === "scheduling") {
       const appointmentButtonHTML = `
           <div class="appointment-action-buttons">

@@ -414,6 +414,20 @@ async function showRequestDetails(requestId) {
             requestDetailsContent.appendChild(validatingMessageDiv);
           }
 
+        if (requestDoc.request_status === "sending") {
+            const sendingMessageDiv = document.createElement('div');
+            sendingMessageDiv.classList.add('sending-message');
+            sendingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Please send your samples</p>
+              <p>Delivery Information</p>
+              <p>Anonas Street, Sta. Mesa, Manila</p>
+              <p>028335-1990 local 283</p>
+              <p>Gary Feliciano</p>
+              <p>Open hours: 10am - 4pm</p>
+            `;
+            requestDetailsContent.appendChild(sendingMessageDiv);
+          }
+
         if (requestDoc.request_status === "analysing") {
             const analysingMessageDiv = document.createElement('div');
             analysingMessageDiv.classList.add('analysing-message');
@@ -448,6 +462,15 @@ async function showRequestDetails(requestId) {
               <p><strong>Note:</strong> Your request is being drafted.</p>
             `;
             requestDetailsContent.appendChild(draftingMessageDiv);
+          }
+
+          if (requestDoc.request_status === "approving") {
+            const approvingMessageDiv = document.createElement('div');
+            approvingMessageDiv.classList.add('approving-message');
+            approvingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is in the process of Legal Review</p>
+            `;
+            requestDetailsContent.appendChild(approvingMessageDiv);
           }
 
           if (requestDoc.request_status === "inspecting") {
