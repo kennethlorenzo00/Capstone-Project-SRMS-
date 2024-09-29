@@ -168,8 +168,7 @@ confirmSubmitButton.addEventListener('click', async () => {
         // Log notification to Firestore
         await logNotificationToFirestore({
             userId: pendingData.userId,
-            role: 'Client',
-            message: `New ${pendingData.requestType} request submitted with ID: ${pendingData.requestId}.`,
+            message: `New ${pendingData.requestOption} request submitted with ID: ${pendingData.requestId}.`,
             timestamp: new Date().toISOString()
         });
 

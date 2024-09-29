@@ -350,7 +350,7 @@ appointmentForm.addEventListener('submit', async (event) => {
 
     // Save appointment details to Firestore
     const appointmentsRef = collection(firestore, 'appointments');
-    await addDoc(appointmentsRef, {
+    const appointmentDoc = await addDoc(appointmentsRef, {
       requestId: requestId,
       requesterName: clientName,
       samplesCount: samplesCount,
@@ -362,6 +362,8 @@ appointmentForm.addEventListener('submit', async (event) => {
       createdAt: serverTimestamp()
     });
 
+    const appointmentId = appointmentDoc.id; // Get the new appointment ID
+
     // Fetch the request document based on requestId
     const requestsRef = collection(firestore, 'requests');
     const requestQuery = query(requestsRef, where('requestId', '==', requestId));
@@ -372,17 +374,36 @@ appointmentForm.addEventListener('submit', async (event) => {
       return;
     }
 
-    const requestDoc = requestSnapshot.docs[0]; // Assuming there's only one matching document
-    const requestDocId = requestDoc.id;
+    const requestDoc = requestSnapshot.docs[0].data();
+    const requestDocRef = requestSnapshot.docs[0].ref;
 
-    // Update the request document with priorityLevel and assignedLaboratoryStaff
-    const requestRef = doc(firestore, 'requests', requestDocId);
-    await updateDoc(requestRef, {
-      priorityLevel: priorityLevel,
-      assignedLaboratoryStaff: assignedLaboratoryStaff // Store the staff name
-    });
+    // Determine updated status based on current request_status
+    let updatedStatus = '';
+    
+    if (requestDoc.request_status === 'validating') {
+      updatedStatus = 'analysing';
+    } else if (requestDoc.request_status === 'scheduling') {
+      updatedStatus = 'preparing';
+    }
 
-    alert('Appointment scheduled successfully!');
+    if (updatedStatus) {
+      // Update the request document with the new status
+      await updateDoc(requestDocRef, {
+        request_status: updatedStatus,
+        priorityLevel: priorityLevel,
+        assignedLaboratoryStaff: assignedLaboratoryStaff // Store the staff name
+      });
+    }
+
+    // Log staff notification
+    await logStaffNotification(appointmentId, assignedLaboratoryStaff, endDate);
+
+    // Log client notification
+    const clientId = requestDoc.userId; // Assuming the request document contains userId
+    const clientMessage = `Your appointment for request ID: ${requestId} has been scheduled from ${startDate} to ${endDate} with priority: ${priorityLevel}. Assigned staff: ${assignedLaboratoryStaff}.`;
+    await logClientNotification(requestId, clientId, clientMessage);
+
+    alert(`Appointment scheduled successfully and request status updated to "${updatedStatus}".`);
     appointmentForm.reset();
     appointmentPage.classList.add('hidden');
     backToRequestList(); // Or any other function to navigate back
@@ -464,6 +485,22 @@ appointmentForm.addEventListener('submit', async (event) => {
     });
   });
   
+}
+
+// Function to log notifications to "staffnotification" collection
+async function logStaffNotification(appointmentId, staffName, endDate) {
+  try {
+      const staffNotificationRef = collection(firestore, 'staffnotification');
+      await addDoc(staffNotificationRef, {
+          appointmentId,
+          staffName,
+          message: `You have been assigned to appointment ID: ${appointmentId}. End date: ${endDate}`,
+          timestamp: new Date().toISOString()
+      });
+      console.log("Staff notification logged.");
+  } catch (error) {
+      console.error("Error logging staff notification:", error.message);
+  }
 }
 
 // Function to show the request history and populate it
@@ -639,6 +676,21 @@ async function calculateSamplesCount(userId) {
     });
 
     return totalSamples;
+}
+
+async function logClientNotification(requestId, clientId, message) {
+  try {
+      const clientNotificationRef = collection(firestore, 'clientnotification');
+      await addDoc(clientNotificationRef, {
+          requestId,
+          clientId,
+          message,
+          timestamp: new Date().toISOString()
+      });
+      console.log("Client notification logged.");
+  } catch (error) {
+      console.error("Error logging client notification:", error.message);
+  }
 }
 
 const requestListContainer = document.getElementById('requestListContainer');
@@ -837,53 +889,64 @@ async function showRequestDetails(requestId) {
     adminRequestDetailsContent.insertAdjacentHTML('beforeend', tableHTML);
 
    // Add buttons for pending requests
-    if (requestDoc.request_status === "pending") {
-      const buttonsHTML = `
-          <div class="request-action-buttons">
-              <button class="reject-button">Reject</button>
-              <button class="approve-button">Approve</button>
-          </div>
-      `;
-      adminRequestDetailsContent.insertAdjacentHTML('beforeend', buttonsHTML);
-      
-      const rejectButton = adminRequestDetailsContent.querySelector('.reject-button');
-      const approveButton = adminRequestDetailsContent.querySelector('.approve-button');
+   if (requestDoc.request_status === "pending") {
+    const buttonsHTML = `
+        <div class="request-action-buttons">
+            <button class="reject-button">Reject</button>
+            <button class="approve-button">Approve</button>
+        </div>
+    `;
+    adminRequestDetailsContent.insertAdjacentHTML('beforeend', buttonsHTML);
+    
+    const rejectButton = adminRequestDetailsContent.querySelector('.reject-button');
+    const approveButton = adminRequestDetailsContent.querySelector('.approve-button');
 
-      // Add event listeners to the buttons
-      rejectButton.addEventListener('click', async () => {
-          // Update request status to "reviewing"
-          const requestsRef = collection(firestore, 'requests');
-          const requestQuery = query(requestsRef, where('requestId', '==', requestId));
-          const requestSnapshot = await getDocs(requestQuery);
-          const requestDocRef = requestSnapshot.docs[0].ref;
-          await updateDoc(requestDocRef, { request_status: 'reviewing' });
-          alert('Request has been rejected.');
-          backToRequestList()
-      });
-
-      approveButton.addEventListener('click', async () => {
+    // Add event listeners to the buttons
+    rejectButton.addEventListener('click', async () => {
+        // Fetch request document
         const requestsRef = collection(firestore, 'requests');
         const requestQuery = query(requestsRef, where('requestId', '==', requestId));
         const requestSnapshot = await getDocs(requestQuery);
         const requestDocRef = requestSnapshot.docs[0].ref;
+        const clientId = requestSnapshot.docs[0].data().userId; // Assuming the request has a userId field
+        
+        // Update request status to "reviewing"
+        await updateDoc(requestDocRef, { request_status: 'reviewing' });
+
+        // Log rejection notification
+        await logClientNotification(requestId, clientId, 'Your request has been rejected');
+
+        alert('Request has been rejected.');
+        backToRequestList();
+    });
+
+    approveButton.addEventListener('click', async () => {
+        // Fetch request document
+        const requestsRef = collection(firestore, 'requests');
+        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+        const requestSnapshot = await getDocs(requestQuery);
+        const requestDocRef = requestSnapshot.docs[0].ref;
+        const clientId = requestSnapshot.docs[0].data().userId; // Assuming the request has a userId field
         
         let updatedStatus = 'sending'; // Default status for approval
         
         // Conditional logic based on requestOption
         if (requestDoc.requestOption === 'researchCollaboration') {
-          updatedStatus = 'initiating';
+            updatedStatus = 'initiating';
         } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
-          updatedStatus = 'scheduling';
+            updatedStatus = 'scheduling';
         }
         
         // Update request status based on the requestOption
         await updateDoc(requestDocRef, { request_status: updatedStatus });
+
+        // Log approval notification
+        await logClientNotification(requestId, clientId, `Your request has been approved and is now ${updatedStatus}. Please send the samples now.`);
+
         alert(`Request has been approved and moved to ${updatedStatus}.`);
-        
         backToRequestList();
-      });
-      
-    }
+    });
+}
 
     if (requestDoc.request_status === "sending") {
       const sendingMessageDiv = document.createElement('div');
@@ -892,6 +955,15 @@ async function showRequestDetails(requestId) {
         <p><strong>Note:</strong> Waiting for the client to send their samples.</p>
       `;
       adminRequestDetailsContent.appendChild(sendingMessageDiv);
+    }
+
+    if (requestDoc.request_status === "reviewing") {
+      const reviewingMessageDiv = document.createElement('div');
+      reviewingMessageDiv.classList.add('reviewing-message');
+      reviewingMessageDiv.innerHTML = `
+        <p><strong>Note:</strong> The request has been rejected.</p>
+      `;
+      adminRequestDetailsContent.appendChild(reviewingMessageDiv);
     }
 
     if (requestDoc.request_status === "analysing") {

@@ -291,7 +291,6 @@ async function logNotificationToFirestore(notificationData) {
       const lastName = document.getElementById("lastName").value;
       const username = document.getElementById("username").value;
       const address = document.getElementById("address").value;
-      const school = document.getElementById("school").value;
       const contactNumber = document.getElementById("contactNumber").value;
       const userType = document.getElementById("userType").value;
       const department = document.getElementById("department").value;
@@ -307,7 +306,6 @@ async function logNotificationToFirestore(notificationData) {
         contactNumber,
         userType,
         department,
-        school,
         email,
         role: 'Client',
         clientType: 'Internal',
@@ -779,7 +777,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         username: requestData.username,
                         contactNumber: requestData.contactNumber,
                         userType: requestData.userType,
-                        school: requestData.school,
                         department: requestData.department
                     }).then(() => {
                         console.log("Client added.");

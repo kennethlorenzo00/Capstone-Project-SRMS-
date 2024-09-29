@@ -13,7 +13,10 @@ let notifications = [];
 
 // Utility: Update notification count
 function updateNotificationCount() {
-    const count = notifications.length;
+    // Filter out notifications with status "read" or undefined status
+    const unreadNotifications = notifications.filter(notification => notification.status !== "read");
+
+    const count = unreadNotifications.length;
     notificationCount.textContent = count;
 
     if (count === 0) {
@@ -22,6 +25,7 @@ function updateNotificationCount() {
         renderNotifications(); // Renders updated notifications
     }
 }
+
 
 // Utility: Render notifications in the popup
 function renderNotifications() {
@@ -34,7 +38,6 @@ function renderNotifications() {
         notificationItem.classList.toggle("read", notification.status === "read");
 
         notificationItem.innerHTML = `
-            <p><strong>${notification.title}</strong></p>
             <p>${notification.message}</p>
             <div class="notification-menu">
                 <i class="fa-solid fa-ellipsis-v"></i>
@@ -47,20 +50,6 @@ function renderNotifications() {
 
         notificationsList.appendChild(notificationItem);
     });
-}
-
-// Add a new notification to Firestore for persistence
-async function saveNotificationToDatabase(notification) {
-    try {
-        await addDoc(collection(firestore, "notifications"), {
-            title: notification.title,
-            message: notification.message,
-            timestamp: new Date(), // Ensure this is included
-            status: "unread"
-        });
-    } catch (error) {
-        console.error("Error saving notification: ", error);
-    }
 }
 
 // Fetch notifications from Firestore

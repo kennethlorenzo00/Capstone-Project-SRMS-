@@ -414,6 +414,15 @@ async function showRequestDetails(requestId) {
             requestDetailsContent.appendChild(validatingMessageDiv);
           }
 
+          if (requestDoc.request_status === "pending") {
+            const pendingMessageDiv = document.createElement('div');
+            pendingMessageDiv.classList.add('pending-message');
+            pendingMessageDiv.innerHTML = `
+              <p><strong>Note:</strong> Your request is being reviewed.</p>
+            `;
+            requestDetailsContent.appendChild(pendingMessageDiv);
+          }
+
         if (requestDoc.request_status === "sending") {
             const sendingMessageDiv = document.createElement('div');
             sendingMessageDiv.classList.add('sending-message');
@@ -424,8 +433,21 @@ async function showRequestDetails(requestId) {
               <p>028335-1990 local 283</p>
               <p>Gary Feliciano</p>
               <p>Open hours: 10am - 4pm</p>
+              <button class="send-button">Samples Sent</button>
             `;
             requestDetailsContent.appendChild(sendingMessageDiv);
+            const sendButton = requestDetailsContent.querySelector('.send-button');
+
+            sendButton.addEventListener('click', async () => {
+                const requestsRef = collection(firestore, 'requests');
+                const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+                const requestSnapshot = await getDocs(requestQuery);
+                const requestDocRef = requestSnapshot.docs[0].ref;
+                await updateDoc(requestDocRef, { request_status: 'validating' });
+                alert('Samples Sent');
+                requestDetailsSection.classList.add('hidden');
+                    requestListGroup.classList.remove('hidden');
+            });
           }
 
         if (requestDoc.request_status === "analysing") {

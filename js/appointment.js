@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query, where, doc, getDoc, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 import { firestore } from './firebase.js';
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
@@ -105,7 +105,22 @@ async function openEditModal(appointmentId) {
     }
 }
 
-// Save updated appointment details
+// Function to log notifications to "staffnotification" collection
+async function logStaffNotification(appointmentId, staffName, endDate) {
+    try {
+        const staffNotificationRef = collection(firestore, 'staffnotification');
+        await addDoc(staffNotificationRef, {
+            appointmentId,
+            staffName,
+            message: `You have been assigned to appointment ID: ${appointmentId}. End date: ${endDate}`,
+            timestamp: new Date().toISOString()
+        });
+        console.log("Staff notification logged.");
+    } catch (error) {
+        console.error("Error logging staff notification:", error.message);
+    }
+}
+
 // Save updated appointment details
 async function saveAppointment() {
     if (!currentAppointmentId) return;
@@ -114,14 +129,22 @@ async function saveAppointment() {
     const updatedEndDate = endDateInput.value;
 
     const appointmentRef = doc(firestore, 'appointments', currentAppointmentId);
-    await setDoc(appointmentRef, {
-        assignedStaff: updatedStaff, // Save the staff name instead of ID
-        endDate: updatedEndDate,
-    }, { merge: true });
+    
+    try {
+        await setDoc(appointmentRef, {
+            assignedStaff: updatedStaff, // Save the staff name instead of ID
+            endDate: updatedEndDate,
+        }, { merge: true });
 
-    // Close modal and refresh the appointments table
-    document.getElementById('editAppointmentModal').style.display = 'none';
-    renderAppointments();
+        // Log staff notification
+        await logStaffNotification(currentAppointmentId, updatedStaff, updatedEndDate);
+
+        // Close modal and refresh the appointments table
+        document.getElementById('editAppointmentModal').style.display = 'none';
+        renderAppointments();
+    } catch (error) {
+        console.error("Error saving appointment:", error.message);
+    }
 }
 
 // Add event listener to the edit buttons
