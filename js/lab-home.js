@@ -32,7 +32,7 @@ async function fetchAssignedTasksCount(userFullName) {
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
         
         // Count only tasks where request_status is 'validating' or 'scheduling'
-        if (['validating', 'scheduling'].includes(requestData.request_status)) {
+        if (['analysing', 'preparing'].includes(requestData.request_status)) {
             assignedCount++;
         }
     }
@@ -54,7 +54,7 @@ async function fetchOngoingTasksCount(userFullName) {
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
         
         // Count tasks where request_status is not 'releasing', 'rejected', 'validating', or 'scheduling'
-        if (!['releasing', 'rejected', 'validating', 'scheduling'].includes(requestData.request_status)) {
+        if (!['releasing', 'rejected', 'analysing', 'scheduling', 'preparing'].includes(requestData.request_status)) {
             ongoingCount++;
         }
     }

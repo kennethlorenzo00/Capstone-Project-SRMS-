@@ -21,6 +21,23 @@ async function getUserFullName(userId) {
     }
 }
 
+function formatTimestamp(timestamp) {
+    // Check if the timestamp is a Firestore server timestamp
+    if (timestamp && timestamp.constructor.name === 'Timestamp') {
+        // Convert Firestore Timestamp to JavaScript Date
+        const date = timestamp.toDate();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    } else if (timestamp) {
+        // If it's a normal date, format it
+        const date = new Date(timestamp);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    return 'Invalid Date';
+}
+
+
 // Define a variable to store userFullName in a higher scope
 let userFullName = '';
 let selectedRequestId = null; // Variable to hold the selected request ID
@@ -51,9 +68,7 @@ async function fetchAssignedTasks(userFullName) {
         const excludedStatuses = [
             'releasing',
             'rejected',
-            'analysing',
             'verifying',
-            'preparing',
             'inspecting',
             'reporting',
             'initiating',
@@ -84,6 +99,99 @@ async function fetchAssignedTasks(userFullName) {
     }
 }
 
+document.getElementById('backToTasksButton').addEventListener('click', () => {
+    document.getElementById('taskDetailsSection').style.display = 'none';
+    document.getElementById('ongoing').style.display = 'block';
+    taskList.style.display = 'block';
+});
+
+async function showTaskDetails(requestId) {
+    try {
+        // Fetch appointment details using requestId
+        const appointmentsSnapshot = await getDocs(query(collection(firestore, 'appointments'), where('requestId', '==', requestId)));
+        const appointmentData = appointmentsSnapshot.empty ? null : appointmentsSnapshot.docs[0].data();
+
+        // Fetch request details using requestId
+        const requestsSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
+        const requestData = requestsSnapshot.empty ? null : requestsSnapshot.docs[0].data();
+
+        // If no appointment or request data is found, show an error message
+        if (!appointmentData || !requestData) {
+            alert('No details found for this request ID.');
+            return;
+        }
+
+        // Hide the ongoing tasks and show the task details section
+        taskList.style.display = 'none';
+        document.getElementById('ongoing').style.display = 'none';
+        document.getElementById('taskDetailsSection').style.display = 'block';
+
+        // Fill in the task details header
+        document.getElementById('taskHeader').innerHTML = `
+            Requester Name: ${appointmentData.requesterName || 'N/A'} <br>
+            Request ID: ${requestId} <br>
+            Appointed At: ${formatTimestamp(appointmentData.createdAt) || 'N/A'} <br>
+            Priority Level: ${appointmentData.priorityLevel || 'N/A'}
+        `;
+
+        // Populate the samples table
+        const sampleTableBody = document.getElementById('sampleTableBody');
+        sampleTableBody.innerHTML = ''; // Clear previous content
+
+        if (requestData.samples && requestData.samples.length > 0) {
+            requestData.samples.forEach((sample, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>   
+                        <td>${sample.status || 'In Progress'}</td>
+                        <td>
+                            <button class="btn-samplereport">Report</button>
+                            ${['plateCount', 'microbialWaterAnalysis'].includes(requestData.requestOption) ? '<button class="btn-count-colonies">Count Colonies</button>' : ''}
+                        </td>
+                    </tr>
+                `;
+                sampleTableBody.innerHTML += row;
+            });
+        } else {
+            const row = `
+                <tr>
+                    <td>EQUIPMENT</td> <!-- Adjust the sample number as needed -->
+                    <td>${requestData.equipmentRequesting}</td>
+                    <td>${requestData.equipmentStatus || 'In Progress'}</td>
+                    <td>
+                        <button class="btn-equipreport">Report</button>
+                    </td>
+                </tr>
+            `;
+            sampleTableBody.innerHTML += row;
+        }
+
+        // Attach event listeners to the report and count colonies buttons
+        document.querySelectorAll('.btn-samplereport').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Sample Report action clicked');
+            });
+        });
+
+        document.querySelectorAll('.btn-equipreport').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Equipment Report action clicked');
+            });
+        });
+
+        document.querySelectorAll('.btn-count-colonies').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Count colonies action clicked');
+                document.getElementById('taskDetailsSection').style.display = 'none';
+                document.getElementById('colonyCountSection').style.display = 'block';
+            });
+        });
+    } catch (error) {
+        console.error('Error fetching task details:', error);
+        alert('An error occurred while fetching task details. Please try again later.');
+    }
+}
+
 // Function to fetch ongoing tasks
 async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
     const ongoingTaskTableBody = document.getElementById('ongoingTaskTableBody');
@@ -107,31 +215,44 @@ async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
-        if (['releasing', 'rejected', 'validating', 'scheduling'].includes(requestData.request_status)) {
+        if (['releasing', 'rejected', 'analysing', 'scheduling', 'preparing'].includes(requestData.request_status)) {
             continue;
         }
 
         // Check filtering criteria
         const matchesFilter =
-            (filterCriteria.requestType ? appointmentData.requestType === filterCriteria.requestType : true) &&
+            (filterCriteria.requestType ? requestData.requestType === filterCriteria.requestType : true) &&
             (filterCriteria.priorityLevel ? appointmentData.priorityLevel === filterCriteria.priorityLevel : true);
 
         if (matchesFilter) {
             const row = `
-                <tr>
-                    <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
-                    <td>${requestId}</td>
-                    <td>${requestData.requestOption || 'N/A'}</td>
-                    <td>${appointmentData.clientType || 'N/A'}</td>
-                    <td>${appointmentData.requesterName || 'N/A'}</td>
-                    <td>${requestData.samples ? requestData.samples.length : 0}</td>
-                    <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                    <td>${requestData.request_status || 'N/A'}</td>
-                </tr>
-            `;
+            <tr data-request-id="${requestId}" class="ongoing-task-row">
+                <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
+                <td>${requestId}</td>
+                <td>${appointmentData.requestType || 'N/A'}</td>
+                <td>${appointmentData.clientType || 'N/A'}</td>
+                <td>${appointmentData.requesterName || 'N/A'}</td>
+                <td>${requestData.samples ? requestData.samples.length : 0}</td>
+                <td>${appointmentData.priorityLevel || 'N/A'}</td>
+                <td>${requestData.request_status || 'N/A'}</td>
+            </tr>
+        `;
+
             ongoingTaskTableBody.innerHTML += row; // Append new row to the ongoing tasks table
         }
     }
+    // Attach the event listener to the ongoing task table body
+    ongoingTaskTableBody.addEventListener('click', function (event) {
+        const row = event.target.closest('tr'); // Get the closest row
+        if (row) {
+            const cells = row.getElementsByTagName('td'); // Get all cells in the row
+            const requestIdCell = cells[1]; // Assuming the Request ID is the second column (index 1)
+            const requestId = requestIdCell.textContent; // Get the text content of the Request ID cell
+            console.log("Request ID:", requestId); // Log the requestId
+            showTaskDetails(requestId);
+        }
+    });    
+
 }
 
 // Function to fetch processed tasks with filtering
@@ -338,10 +459,10 @@ document.getElementById('addToOngoingButton').addEventListener('click', async ()
                     let newStatus;
 
                     // Determine the new status based on the current status
-                    if (requestData.request_status === 'validating') {
-                        newStatus = 'analysing'; // Change to 'analyzing' if current status is 'validating'
-                    } else if (requestData.request_status === 'scheduling') {
-                        newStatus = 'preparing'; // Change to 'preparing' if current status is 'scheduling'
+                    if (requestData.request_status === 'analysing') {
+                        newStatus = 'verifying'; // Change to 'analyzing' if current status is 'validating'
+                    } else if (requestData.request_status === 'preparing') {
+                        newStatus = 'inspecting'; // Change to 'preparing' if current status is 'scheduling'
                     } else {
                         alert('Invalid current status for this operation.');
                         return;

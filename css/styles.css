@@ -3,7 +3,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    padding-top: 100px;
     box-sizing: border-box;
+}
+
+#tabContents {
+    margin-top: 100px; /* Add this to move the div down */
 }
 
 /* Header Styles */
@@ -18,7 +23,7 @@ body {
     justify-content: space-between;
     height: 100px;
     align-items: center;
-    z-index: 1000; /* Ensure header is above other content */
+    z-index: 1000; 
 }
 
 .header-icons button {
@@ -2857,4 +2862,89 @@ input[type="text"] {
 .notification-item.read {
     background-color: #f0f0f0; /* Change background color for read notifications */
     text-decoration: line-through; /* Optional: add strikethrough for read notifications */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.input-section {
+    margin-bottom: 20px;
+}
+
+.input-section input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.input-section button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.input-section button:hover {
+    background-color: #3e8e41;
+}
+
+.parameters {
+    margin-bottom: 20px;
+}
+
+.parameters div {
+    margin-bottom: 10px;
+}
+
+.parameters label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.image-container canvas {
+    width: 45%;
+    height: 300px;
+    border: 1px solid #ccc;
+}
+
+.results {
+    margin-bottom: 20px;
+}
+
+.results h2 {
+    margin-top: 0;
+}
+
+#resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#resultsTable th, #resultsTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+#resultsTable th {
+    background-color: #f0f0f0;
 }
