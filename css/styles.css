@@ -1189,7 +1189,7 @@ h1 {
 /*manage users*/
 
     .manageusers h1 {
-        margin-top: 40px;
+        margin-top: 0;
         margin-bottom: 0px;
     }
 
@@ -1351,9 +1351,30 @@ h1 {
     background-color: #A90000;
     overflow-x: hidden;
     transition: width 0.5s;  /* Smooth width transition */
-    padding-top: 20px;
+    padding-top: 100px;
     color: white;
     z-index: 999;
+}
+
+
+.admin-sidebar a i {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 20px; /* Adjust icon size if needed */
+    align-items: center;
+    
+    
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+    display: flex;
+    align-items: center; /* Center vertically */
+    padding: 10px; /* Add some padding for spacing */
+}
+
+.sidebar-logo-img {
+    height: 50px; /* Set a consistent height for the logo */
+    width: auto;  /* Maintain aspect ratio */
 }
 
 /* Make the sidebar shrink instead of hiding it immediately */
@@ -1397,6 +1418,7 @@ h1 {
 .side-logo {
     display: flex;                  /* Use flexbox to arrange items in a row */
     align-items: center;            /* Center logo and text vertically */
+    
 }
 
 .side-logo img {
@@ -1956,7 +1978,12 @@ h1 {
 #appointment {
     font-family: Arial, sans-serif;
     padding: 20px;
+    padding-top: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 #appointmentsTable {
     width: 100%;
