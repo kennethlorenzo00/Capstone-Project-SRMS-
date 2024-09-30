@@ -76,7 +76,6 @@ body {
 
 /* Main Content Styles */
 #main {
-    margin-left: 250px; /* Space for the sidebar */
     padding: 20px;
     padding-top: calc(15px + 75px); /* Increased space for the header */
     transition: margin-left 0.5s;
@@ -429,7 +428,6 @@ body {
 
 
 #main {
-    margin-left: 250px;
     padding: 15px;
     transition: margin-left 0.5s;
 }
@@ -1231,6 +1229,13 @@ h1 {
     }
 
 
+    #main {
+        transition: margin-left 0.5s;  /* Smooth transition effect for shifting */
+    }
+    
+    .hidden {
+        display: none;  /* Ensure the hidden class hides the sidebar */
+    }
 
 /* Registration */
         .register-body {
@@ -1330,8 +1335,7 @@ h1 {
     color: white;
     top: 0;
     position: fixed;
-    width: calc(100% - 250px); /* Adjust for sidebar width */
-    left: 250px;
+    width: 100%; /* Adjust for sidebar width */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1342,18 +1346,25 @@ h1 {
     margin: 0;
 }
 
+/* Sidebar width transition for smooth closing/opening */
 .admin-sidebar {
     height: 100%;
-    width: 250px;
+    width: 250px;  /* Initial width */
     position: fixed;
     top: 0;
     left: 0;
     background-color: #A90000;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: width 0.5s;  /* Smooth width transition */
     padding-top: 20px;
     color: white;
     z-index: 999;
+}
+
+/* Make the sidebar shrink instead of hiding it immediately */
+.sidebar-closed {
+    width: 0;
+    padding: 0;  /* Optional: remove padding for a smoother collapse */
 }
 
 .admin-sidebar a {
@@ -1368,7 +1379,8 @@ h1 {
     background-color: #A90000;
 }
 
-.admin-main {
+
+#admin-content {
     margin-left: 250px; /* Space for the sidebar */
     padding: 20px;
     padding-top: calc(15px + 75px); /* Increased space for the header */
@@ -1376,11 +1388,15 @@ h1 {
 }
 
 
+/* Logo Container */
 .admin-logo {
     display: flex;
-    align-items: center;            /* Center items vertically */
-    margin-right: 400px;           /* Adjust if needed */
-    height: 50px;                  /* Set a consistent height */
+    align-items: center; /* Center items vertically */
+    height: 50px;        /* Set a consistent height */
+    position: absolute;   /* Fix the logo in place */
+    left: 50%;            /* Center it horizontally */
+    transform: translateX(-50%); /* Offset to perfectly center */
+    transition: margin-left 0.5s, transform 0.5s; /* Add transform transition */
 }
 
 .side-logo {
@@ -1563,6 +1579,7 @@ h1 {
 /* Styles for the Request List Tab */
 #requestList .requestList {
     padding: 20px;
+    padding-top: 0;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -1884,7 +1901,6 @@ h1 {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-    margin-top: 90px;
     padding: 10px;
     background-color: #f9f9f9;
     border-bottom: 1px solid #ddd;
@@ -2250,6 +2266,7 @@ h1 {
 /* Unique class for account section */
 #account {
     padding: 20px;
+    padding-top: 0;
     font-family: Arial, sans-serif;
 }
 

@@ -17,7 +17,6 @@
 <body>
     <!-- Sidebar -->
     <div id="sidebar" class="admin-sidebar hidden">
-        <button id="closeSidebar" class="closebtn">&times;</button>
         <a href="#" id="dashboardLink" onclick="openTab(event, 'home')">Home (Dashboard)</a>
         <a href="#" id="requestListLink" onclick="openTab(event, 'requestList')">Request List</a>
         <a href="#" id="manageUsersLink" onclick="openTab(event, 'manageUsers')">Manage Users</a>
@@ -180,7 +179,7 @@
                 </div>
 
                 <!-- Request History Section -->
-                <div id="requestHistoryContainer" style="display: none; margin-top: 75px;">
+                <div id="requestHistoryContainer" style="display: none; ">
                     <div style="border-bottom: 2px solid black;">
                         <h1>Request History</h1>
                         <div id="requestHistoryButtons" class="manageuserbutton">
@@ -328,7 +327,7 @@
             </div>
 
             <!-- Appointment Tab -->
-            <div id="appointment" class="tabcontent hidden" style="margin-top: 75px;">
+            <div id="appointment" class="tabcontent hidden">
                 <h2>Appointments</h2>
                 <table id="appointmentsTable">
                     <thead>
