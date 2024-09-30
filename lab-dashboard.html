@@ -12,6 +12,7 @@
     <script type="module" src="js/task-list.js" defer></script>
     <script type="module" src="js/lab-account.js" defer></script> 
     <script type="module" src="js/lab-home.js" defer></script> 
+    <script type="module" src="js/lab-notification.js" defer></script> 
 
 </head>
 <body>
@@ -38,10 +39,23 @@
             </div>
             <div class="header-icons">
                 <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-                <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
+                <button id="notificationsBtn" class="notifications-btn">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="notificationCount" class="notification-count">0</span>
+                </button>
                 <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
             </div>
         </header>
+
+        <div id="notificationPopup" class="notification-popup hidden">
+            <div class="popup-header">
+                <h3>Notifications</h3>
+                <button id="closePopup" class="close-popup-btn">&times;</button>
+            </div>
+            <div id="notificationsList" class="popup-body">
+                <p>No notifications available</p>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <div id="content">

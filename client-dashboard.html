@@ -11,6 +11,7 @@
         <script type="module" src="js/auth.js" defer></script> 
         <script type="module" src="js/client-account.js" defer></script> 
         <script type="module" src="js/client-home.js" defer></script> 
+        <script type="module" src="js/client-notification.js" defer></script> 
 
     </head>
     <body>
@@ -28,15 +29,37 @@
             <!-- Header -->
             <header class="client-header">
                 <button id="openSidebar" class="openbtn">&#9776;</button>
-                <h1>Client Dashboard</h1>
+                <div class="client-logo">
+                    <div class="side-logo">
+                        <img src="Logo.webp" class="side-logo" alt="Logo">
+                    </div>
+                    <span class="logo-name">Client Dashboard</span>
+                </div>
+
                 <div class="header-icons">
                     <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-                    <button id="notificationsBtn"><i class="fa-solid fa-circle-exclamation"></i></button>
-                    <button id="settingsBtn"><i class= "fa-solid fa-gear"></i></button>
+
+                    <!-- Notifications Button with Pop-up Tab -->
+                    <button id="notificationsBtn" class="notifications-btn">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="notificationCount" class="notification-count">0</span>
+                    </button>
+                    
+                    <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
                 </div>
             </header>
 
-            
+            <!-- Notification Pop-up Tab -->
+            <div id="notificationPopup" class="notification-popup hidden">
+                <div class="popup-header">
+                    <h3>Notifications</h3>
+                    <button id="closePopup" class="close-popup-btn">&times;</button>
+                </div>
+                <div id="notificationsList" class="popup-body">
+                    <p>No notifications available</p>
+                </div>
+            </div>
+                        
 
             <!-- Dashboard Section -->
 
