@@ -1,8 +1,8 @@
-import { firestore, database } from './firebase.js';
+import { firestore, database, storage } from './firebase.js';
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-import { collection, getDocs, query, where, updateDoc, doc, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
+import { collection, getDocs, query, where, updateDoc, doc, getDoc, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import {ref as storageRef, uploadBytes} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
 let currentSampleId = null;
 
 // Function to get the current user
@@ -105,6 +105,164 @@ document.getElementById('backToTasksButton').addEventListener('click', () => {
     document.getElementById('taskDetailsSection').style.display = 'none';
     document.getElementById('ongoing').style.display = 'block';
     taskList.style.display = 'block';
+});
+
+let selectedRequestIdPass = null;
+
+document.getElementById('createReportButton').addEventListener('click', async () => {
+    document.getElementById('taskDetailsSection').style.display = 'none';
+
+    if (!selectedRequestIdPass) {
+        console.error('No selectedRequestId. Please select a request.');
+        return;
+    }
+
+    console.log('Fetching data for Request ID:', selectedRequestIdPass);
+
+    const appointmentsSnapshot = await getDocs(query(collection(firestore, 'appointments'), where('requestId', '==', selectedRequestIdPass)));
+    const appointmentData = appointmentsSnapshot.empty ? null : appointmentsSnapshot.docs[0].data();
+
+    if (!appointmentData) {
+        console.error('No appointment data found.');
+        return;
+    }
+
+    const requestsSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', selectedRequestIdPass)));
+    const requestData = requestsSnapshot.empty ? null : requestsSnapshot.docs[0].data();
+
+    if (!requestData) {
+        console.error('No request data found.');
+        return;
+    }
+
+    const requestId = requestData.requestId || appointmentData.requestId;
+
+    if (!requestId) {
+        console.error('No requestId found in fetched data');
+        return;
+    }
+
+    console.log('Request ID from fetched data:', requestId);
+
+    const reportHeader = `
+        <h2>Report's Details</h2>
+        <table>
+            <tr><th>Requester Name:</th><td>${appointmentData.requesterName || 'N/A'}</td></tr>
+            <tr><th>Request ID:</th><td>${requestId}</td></tr>
+            <tr><th>Appointed At:</th><td>${formatTimestamp(appointmentData.createdAt) || 'N/A'}</td></tr>
+            <tr><th>Priority Level:</th><td>${appointmentData.priorityLevel || 'N/A'}</td></tr>
+        </table>
+    `;
+
+    const reportsSnapshot = await getDocs(query(collection(firestore, 'reports'), where('requestId', '==', requestId)));
+
+    let reportSummary = `<h3>Report Summary</h3>`;
+    if (!reportsSnapshot.empty) {
+        reportSummary += `<ul>`;
+        reportsSnapshot.docs.forEach(doc => {
+            const reportData = doc.data();
+            let reportContent = `<li><strong>Report:</strong><ul>`;
+
+            Object.keys(reportData).forEach(key => {
+                let value = reportData[key];
+
+                if (value instanceof Timestamp) {
+                    value = formatTimestamp(value);
+                }
+
+                reportContent += `<li><strong>${key}:</strong> ${value || 'N/A'}</li>`;
+            });
+
+            reportContent += `</ul></li>`;
+            reportSummary += reportContent;
+        });
+        reportSummary += `</ul>`;
+    } else {
+        reportSummary += `<p>No reports found for this request ID.</p>`;
+    }
+
+    const fullReport = reportHeader + reportSummary + `
+        <button id="backButton">Back</button>
+        <button id="sendButton">Send</button>
+    `;
+
+    const reportContainer = document.getElementById('reportContainer');
+    reportContainer.innerHTML = fullReport;
+    reportContainer.style.display = 'block';
+
+    document.getElementById('ongoing').style.display = 'none';
+    document.getElementById('taskList').style.display = 'none';
+
+    // Back button functionality
+    document.getElementById('backButton').addEventListener('click', () => {
+        reportContainer.style.display = 'none';
+        document.getElementById('ongoing').style.display = 'block';
+        document.getElementById('taskList').style.display = 'block';
+    });
+
+    // Move the send button functionality here
+    document.getElementById('sendButton').addEventListener('click', async () => {
+        try {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            // Adding report details
+            doc.setFontSize(12);
+            doc.text('Report\'s Details', 10, 10);
+            doc.autoTable({
+                head: [['Requester Name', 'Request ID', 'Appointed At', 'Priority Level']],
+                body: [[
+                    appointmentData.requesterName || 'N/A',
+                    requestId,
+                    formatTimestamp(appointmentData.createdAt) || 'N/A',
+                    appointmentData.priorityLevel || 'N/A'
+                ]],
+                startY: 20
+            });
+    
+            // Adding report summary
+            const reportsSnapshot = await getDocs(query(collection(firestore, 'reports'), where('requestId', '==', requestId)));
+    
+            let reportSummary = 'Report Summary:\n\n';
+            if (!reportsSnapshot.empty) {
+                reportsSnapshot.docs.forEach(doc => {
+                    const reportData = doc.data();
+                    reportSummary += `Report:\n`;
+    
+                    // Loop through keys and dynamically create the report fields
+                    Object.keys(reportData).forEach(key => {
+                        let value = reportData[key];
+    
+                        // Check if the value is a Firestore Timestamp and format it
+                        if (value instanceof Timestamp) {
+                            value = formatTimestamp(value); // Convert Firestore Timestamp to readable format
+                        }
+    
+                        reportSummary += `  - ${key}: ${value || 'N/A'}\n`;
+                    });
+                    reportSummary += '\n';
+                });
+            } else {
+                reportSummary += 'No reports found for this request ID.\n';
+            }
+    
+            // Add report summary to the PDF
+            doc.text(reportSummary, 10, doc.autoTable.previous.finalY + 10);
+    
+            // Save PDF to a blob
+            const pdfBlob = doc.output('blob');
+    
+            // Upload PDF to Firebase Storage in 'reports' folder
+            const pdfStorageRef = storageRef(storage, `reports/report_${requestId}.pdf`); // Create a reference for the file
+            await uploadBytes(pdfStorageRef, pdfBlob); // Use uploadBytes instead of put
+    
+            alert('Report sent and saved to Firebase Storage successfully!');
+        } catch (error) {
+            console.error('Error generating or uploading PDF:', error);
+            alert('An error occurred while sending the report. Please try again.');
+        }
+    });
+    
 });
 
 async function showTaskDetails(requestId) {
@@ -690,6 +848,11 @@ async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
             const requestIdCell = cells[1]; // Assuming the Request ID is the second column (index 1)
             const requestId = requestIdCell.textContent; // Get the text content of the Request ID cell
             console.log("Request ID:", requestId); // Log the requestId
+            
+            selectedRequestIdPass = requestId // Trim whitespace
+
+            console.log('Selected Request ID:', selectedRequestIdPass); // Debugging log
+
             showTaskDetails(requestId);
         }
     });    
@@ -867,10 +1030,10 @@ document.getElementById('taskTableBody').addEventListener('click', (event) => {
         // Show the "Add to Ongoing" button
         document.getElementById('addToOngoingButton').classList.remove('hidden');
 
-        // Store the selected appointment document ID for later use
-        selectedAppointmentDocId = targetRow.cells[1].innerText; // Assuming the Appointment Doc ID is in the second cell
+        selectedAppointmentDocId = targetRow.cells[1].innerText;
     }
 });
+
 
 // Add event listener for the "Add to Ongoing" button
 document.getElementById('addToOngoingButton').addEventListener('click', async () => {

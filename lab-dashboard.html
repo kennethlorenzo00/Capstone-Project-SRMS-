@@ -13,6 +13,9 @@
     <script type="module" src="js/lab-account.js" defer></script> 
     <script type="module" src="js/lab-home.js" defer></script> 
     <script type="module" src="js/lab-notification.js" defer></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+   
 
 </head>
 <body>
@@ -335,6 +338,8 @@
             <!-- Placeholder for dynamic report form -->
             <div id="reportFormContainer" style="display:none;"></div>
 
+            <div id="reportContainer" style="display: none;"></div>
+
             <!-- Task Details Section (initially hidden) -->
             <div id="taskDetailsSection" style="display:none;">
                 <h3 id="taskHeader"></h3>
@@ -351,6 +356,7 @@
                     </tbody>
                 </table>
                 <button id="backToTasksButton">Back to Ongoing Tasks</button>
+                <button id="createReportButton">Create Full Report</button>
             </div>
 
         </div>
