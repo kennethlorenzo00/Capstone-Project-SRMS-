@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 "plateCount": "Plate Count Method",
                 "agarDiscDiffusion": "Agar Disc Diffusion Method",
                 "agarWellDiffusion": "Agar Well Diffusion Method",
-                "MIC": "Minimum Inhibitory Concentration (MIC) Testing",
-                "MBC": "Minimum Bactericidal Concentration (MBC) Testing"
+                "micTesting": "Minimum Inhibitory Concentration (MIC) Testing",
+                "mbcTesting": "Minimum Bactericidal Concentration (MBC) Testing"
             }
         },
         microbialAnalysis: {
@@ -24,14 +24,14 @@ document.addEventListener("DOMContentLoaded", function() {
             options: {
                 "waterAnalysis": "Microbial Analysis of Water",
                 "microbialCharacterization": "Microbial Characterization",
-                "cultureCollections": "Microbial Culture Collections (PUPMCC)",
+                "microbialCultureCollections": "Microbial Culture Collections (PUPMCC)",
                 "microscopy": "Microscopy"
             }
         },
         labResearchProcesses: {
             title: "Laboratory & Research Processes",
             options: {
-                "plantIdentification": "Plant Species Identification and Herbarium Curation",
+                "plantSpeciesIdentification": "Plant Species Identification and Herbarium Curation",
                 "labUseEquipmentAccess": "Laboratory Use and Equipment Access",
                 "researchCollaboration": "Research Collaboration Process"
             }

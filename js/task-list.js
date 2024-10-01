@@ -1,7 +1,9 @@
 import { firestore, database } from './firebase.js';
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-import { collection, getDocs, query, where, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query, where, updateDoc, doc, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+let currentSampleId = null;
 
 // Function to get the current user
 export function getCurrentUser() {
@@ -145,7 +147,7 @@ async function showTaskDetails(requestId) {
                         <td>${index + 1}</td>   
                         <td>${sample.status || 'In Progress'}</td>
                         <td>
-                            <button class="btn-samplereport">Report</button>
+                            <button class="btn-samplereport" data-sample-id="${sample.sampleId}">Report</button>
                             ${['plateCount', 'microbialWaterAnalysis'].includes(requestData.requestOption) ? '<button class="btn-count-colonies">Count Colonies</button>' : ''}
                         </td>
                     </tr>
@@ -159,7 +161,7 @@ async function showTaskDetails(requestId) {
                     <td>${requestData.equipmentRequesting}</td>
                     <td>${requestData.equipmentStatus || 'In Progress'}</td>
                     <td>
-                        <button class="btn-equipreport">Report</button>
+                        <button class="btn-samplereport" data-sample-id="${requestData.equipmentId}">Report</button>
                     </td>
                 </tr>
             `;
@@ -168,14 +170,14 @@ async function showTaskDetails(requestId) {
 
         // Attach event listeners to the report and count colonies buttons
         document.querySelectorAll('.btn-samplereport').forEach(button => {
-            button.addEventListener('click', () => {
-                alert('Sample Report action clicked');
-            });
-        });
+            button.addEventListener('click', (event) => {
+                const sampleId = event.currentTarget.getAttribute('data-sample-id'); 
+                const requestOption = requestData.requestOption;
+                const requestId = requestData.requestId;
 
-        document.querySelectorAll('.btn-equipreport').forEach(button => {
-            button.addEventListener('click', () => {
-                alert('Equipment Report action clicked');
+                currentSampleId = sampleId; 
+
+                showReportForm(requestOption, requestId);
             });
         });
 
@@ -190,6 +192,445 @@ async function showTaskDetails(requestId) {
         console.error('Error fetching task details:', error);
         alert('An error occurred while fetching task details. Please try again later.');
     }
+}
+
+async function saveReportToFirestore(requestData, formData) {
+    try {
+        // Ensure requestData is valid
+        if (!requestData || !requestData.requestId) {
+            alert('Invalid request data. Please try again.');
+            return; // Exit the function if data is invalid
+        }
+
+        const reportsCollection = collection(firestore, 'reports');
+
+        // Check if the collection exists by querying for any documents
+        const reportsSnapshot = await getDocs(reportsCollection);
+
+        // If no documents exist in the collection, you can handle it if needed
+        if (reportsSnapshot.empty) {
+            console.log('Reports collection is empty. A new document will be added.');
+        }
+
+        // Prepare the report data
+        const reportData = {
+            requestId: requestData.requestId, // Save the requestId
+            reportDate: new Date(), // Automatically set the report date
+            ...formData // Spread formData which contains the dynamic form fields
+        };
+
+        // Add the reportData to Firestore
+        await addDoc(reportsCollection, reportData);
+        alert('Report saved successfully!');
+    } catch (error) {
+        console.error('Error saving report:', error);
+        alert('An error occurred while saving the report. Please try again later.');
+    }
+}
+
+async function updateRequestInFirestore(requestId, updatedData) {
+    try {
+        // Create a reference to the requests collection
+        const requestsCollection = collection(firestore, 'requests');
+
+        // Query to find the document with the matching requestId
+        const q = query(requestsCollection, where('requestId', '==', requestId));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            throw new Error('No document found for the specified requestId.');
+        }
+
+        // Assuming only one document will match
+        for (const docSnapshot of querySnapshot.docs) {
+            const requestDocRef = doc(firestore, `requests/${docSnapshot.id}`);
+
+            // Check for undefined values before updating
+            console.log('Before update:', updatedData);
+            Object.entries(updatedData).forEach(([key, value]) => {
+                if (value === undefined) {
+                    console.warn(`Field "${key}" is undefined. Update might fail.`);
+                }
+            });
+
+            // Update the document with the new data
+            await updateDoc(requestDocRef, updatedData);
+            console.log('Request data updated successfully!');
+        }
+    } catch (error) {
+        console.error('Error updating request data in Firestore:', error);
+        throw error; // Re-throw the error to handle it elsewhere if needed
+    }
+}
+
+
+function showReportForm(requestOption, requestId) {
+    const reportFormContainer = document.getElementById('reportFormContainer');
+    reportFormContainer.innerHTML = ''; // Clear the previous form
+
+    // Show the report form based on the requestOption using if-else structure
+    if (requestOption === 'plateCount') {
+        reportFormContainer.innerHTML = `
+            <h3>Plate Count Report</h3>
+            <form>
+                <label for="dilutionSeries">Dilution Series Used:</label>
+                <input type="text" id="dilutionSeries" name="dilutionSeries" placeholder="Enter Dilution Series"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="colonyCount">Colony Count (CFUs):</label>
+                <input type="text" id="colonyCount" name="colonyCount" placeholder="Enter Colony Count"><br>
+                <label for="cfusCalculation">CFUs/mL Calculation:</label>
+                <input type="text" id="cfusCalculation" name="cfusCalculation" placeholder="Enter CFUs/mL Calculation"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'agarDiscDiffusion') {
+        reportFormContainer.innerHTML = `
+            <h3>Agar Disc Diffusion Report</h3>
+            <form>
+                <label for="testSubstance">Test Substance:</label>
+                <input type="text" id="testSubstance" name="testSubstance" placeholder="Enter Test Substance"><br>
+                <label for="discConcentration">Disc Concentration:</label>
+                <input type="text" id="discConcentration" name="discConcentration" placeholder="Enter Disc Concentration"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="zoneOfInhibition">Zone of Inhibition (mm):</label>
+                <input type="text" id="zoneOfInhibition" name="zoneOfInhibition" placeholder="Enter Zone of Inhibition"><br>
+                <label for="interpretation">Interpretation:</label>
+                <input type="text" id="interpretation" name="interpretation" placeholder="Enter Interpretation"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'agarWellDiffusion') {
+        reportFormContainer.innerHTML = `
+            <h3>Agar Well Diffusion Report</h3>
+            <form>
+                <label for="testSubstance">Test Substance:</label>
+                <input type="text" id="testSubstance" name="testSubstance" placeholder="Enter Test Substance"><br>
+                <label for="wellVolume">Well Volume:</label>
+                <input type="text" id="wellVolume" name="wellVolume" placeholder="Enter Well Volume"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="zoneOfInhibition">Zone of Inhibition (mm):</label>
+                <input type="text" id="zoneOfInhibition" name="zoneOfInhibition" placeholder="Enter Zone of Inhibition"><br>
+                <label for="interpretation">Interpretation:</label>
+                <input type="text" id="interpretation" name="interpretation" placeholder="Enter Interpretation"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'micTesting') {
+        reportFormContainer.innerHTML = `
+            <h3>MIC Testing Report</h3>
+            <form>
+                <label for="antimicrobialAgent">Antimicrobial Agent:</label>
+                <input type="text" id="antimicrobialAgent" name="antimicrobialAgent" placeholder="Enter Antimicrobial Agent"><br>
+                <label for="dilutionSeries">Dilution Series:</label>
+                <input type="text" id="dilutionSeries" name="dilutionSeries" placeholder="Enter Dilution Series"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="micValue">MIC Value (µg/mL):</label>
+                <input type="text" id="micValue" name="micValue" placeholder="Enter MIC Value"><br>
+                <label for="interpretation">Interpretation:</label>
+                <input type="text" id="interpretation" name="interpretation" placeholder="Enter Interpretation"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'mbcTesting') {
+        reportFormContainer.innerHTML = `
+            <h3>MBC Testing Report</h3>
+            <form>
+                <label for="antimicrobialAgent">Antimicrobial Agent:</label>
+                <input type="text" id="antimicrobialAgent" name="antimicrobialAgent" placeholder="Enter Antimicrobial Agent"><br>
+                <label for="subculturingDate">Subculturing Date:</label>
+                <input type="text" id="subculturingDate" name="subculturingDate" placeholder="Enter Subculturing Date"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="mbcValue">MBC Value (µg/mL):</label>
+                <input type="text" id="mbcValue" name="mbcValue" placeholder="Enter MBC Value"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'microbialWaterAnalysis') {
+        reportFormContainer.innerHTML = `
+            <h3>Water Analysis Report</h3>
+            <form>
+                <label for="filtrationMethod">Filtration/Plating Method:</label>
+                <input type="text" id="filtrationMethod" name="filtrationMethod" placeholder="Enter Filtration Method"><br>
+                <label for="selectiveMedia">Selective Media Used:</label>
+                <input type="text" id="selectiveMediaUsed" name="selectiveMedia" placeholder="Enter Selective Media"><br>
+                <label for="incubationConditions">Incubation Conditions:</label>
+                <input type="text" id="incubationConditions" name="incubationConditions" placeholder="Enter Incubation Conditions"><br>
+                <label for="colonyCount">Colony Count (CFUs):</label>
+                <input type="text" id="colonyCount" name="colonyCount" placeholder="Enter Colony Count"><br>
+                <label for="microbeIdentified">Microbe Identified:</label>
+                <input type="text" id="microbeIdentified" name="microbeIdentified" placeholder="Enter Microbe Identified"><br>
+                <label for="confirmationTest">Confirmation Test Results:</label>
+                <input type="text" id="confirmationTestResults" name="confirmationTest" placeholder="Enter Confirmation Test Results"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'microbialCharacterization') {
+        reportFormContainer.innerHTML = `
+            <h3>Microbial Characterization Report</h3>
+            <form>
+                <label for="biochemicalTests">Biochemical Tests Conducted:</label>
+                <input type="text" id="biochemicalTests" name="biochemicalTests" placeholder="Enter Biochemical Tests"><br>
+                <label for="molecularIdentification">Molecular Identification (16S rRNA):</label>
+                <input type="text" id="molecularIdentification" name="molecularIdentification" placeholder="Enter Molecular Identification"><br>
+                <label for="antibioticSusceptibility">Antibiotic Susceptibility:</label>
+                <input type="text" id="antibioticSusceptibility" name="antibioticSusceptibility" placeholder="Enter Antibiotic Susceptibility"><br>
+                <label for="pupmcc">Included in PUPMCC (yes/no):</label>
+                <input type="text" id="pupmcc" name="pupmcc" placeholder="Yes or No"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'microbialCultureCollections') {
+        reportFormContainer.innerHTML = `
+            <h3>Microbial Culture Collections Report</h3>
+            <form>
+                <label for="characterizationStatus">Characterization Status:</label>
+                <input type="text" id="characterizationStatus" name="characterizationStatus" placeholder="Enter Characterization Status"><br>
+                <label for="preservationDate">Preservation Date:</label>
+                <input type="text" id="preservationDate" name="preservationDate" placeholder="Enter Preservation Date"><br>
+                <label for="catalogNumber">Catalog Number:</label>
+                <input type="text" id="catalogNumber" name="catalogNumber" placeholder="Enter Catalog Number"><br>
+                <label for="accessProvided">Access Provided (yes/no):</label>
+                <input type="text" id="accessProvided" name="accessProvided" placeholder="Yes or No"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'microscopy') {
+        reportFormContainer.innerHTML = `
+            <h3>Microscopy Report</h3>
+            <form>
+                <label for="stainingMethod">Staining Method:</label>
+                <input type="text" id="stainingMethod" name="stainingMethod" placeholder="Enter Staining Method"><br>
+                <label for="magnificationUsed">Magnification Used:</label>
+                <input type="text" id="magnificationUsed" name="magnificationUsed" placeholder="Enter Magnification Used"><br>
+                <label for="morphologicalObservations">Morphological Observations:</label>
+                <input type="text" id="morphologicalObservations" name="morphologicalObservations" placeholder="Enter Morphological Observations"><br>
+                <label for="photomicrographyDone">Photomicrography Done:</label>
+                <input type="text" id="photomicrographyDone" name="photomicrographyDone" placeholder="Yes or No"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else if (requestOption === 'plantSpeciesIdentification') {
+        reportFormContainer.innerHTML = `
+            <h3>Plant Species Identification Report</h3>
+            <form>
+                <label for="plantSpecimen">Plant Specimen:</label>
+                <input type="text" id="plantSpecimen" name="plantSpecimen" placeholder="Enter Plant Specimen"><br>
+                <label for="identificationStatus">Identification Status:</label>
+                <input type="text" id="identificationStatus" name="identificationStatus" placeholder="Enter Identification Status"><br>
+                <label for="accessionNumber">Accession Number:</label>
+                <input type="text" id="accessionNumber" name="accessionNumber" placeholder="Enter Accession Number"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    } else {
+        // Default form for any other request options
+        reportFormContainer.innerHTML = `
+            <h3>Equipment Report</h3>
+            <form>
+                <label for="equipmentRequested">Equipment Requested:</label>
+                <input type="text" id="equipmentRequested" name="equipmentRequested" placeholder="Enter Equipment Requested"><br>
+                <label for="scheduledUseDate">Scheduled Use Date:</label>
+                <input type="text" id="scheduledUseDate" name="scheduledUseDate" placeholder="Enter Scheduled Use Date"><br>
+                <label for="postUseCondition">Post-Use Condition:</label>
+                <input type="text" id="postUseCondition" name="postUseCondition" placeholder="Enter Post-Use Condition"><br>
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" placeholder="Enter Notes"></textarea><br>
+                <button type="button" class="btn-done">Done</button>
+            </form>
+            <button id="backButton">Back</button>
+        `;
+    }
+
+    // Show the report form
+    document.getElementById('taskDetailsSection').style.display = 'none';
+    reportFormContainer.style.display = 'block';
+
+    const backButton = document.getElementById('backButton');
+    backButton.addEventListener('click', () => {
+        reportFormContainer.style.display = 'none';
+        document.getElementById('taskDetailsSection').style.display = 'block'; // Show the task details section again
+    });
+
+    // Add event listener for Done button
+    document.querySelector('.btn-done').addEventListener('click', async () => {
+        // Collect form data
+        const formData = {};
+
+        const requestData = {
+            reportType: requestOption,
+            requestId: requestId
+          };
+    
+        if (requestOption === 'plateCount') {
+            formData.dilutionSeries = document.getElementById('dilutionSeries').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.colonyCount = document.getElementById('colonyCount').value;
+            formData.cfuCalculation = document.getElementById('cfuCalculation').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'agarDiscDiffusion') {
+            formData.testSubstance = document.getElementById('testSubstance').value;
+            formData.discConcentration = document.getElementById('discConcentration').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.zoneOfInhibition = document.getElementById('zoneOfInhibition').value;
+            formData.interpretation = document.getElementById('interpretation').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'agarWellDiffusion') {
+            formData.testSubstance = document.getElementById('testSubstance').value;
+            formData.wellVolume = document.getElementById('wellVolume').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.zoneOfInhibition = document.getElementById('zoneOfInhibition').value;
+            formData.interpretation = document.getElementById('interpretation').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'micTesting') {
+            formData.antimicrobialAgent = document.getElementById('antimicrobialAgent').value;
+            formData.dilutionSeries = document.getElementById('dilutionSeries').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.micValue = document.getElementById('micValue').value;
+            formData.interpretation = document.getElementById('interpretation').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'mbcTesting') {
+            formData.antimicrobialAgent = document.getElementById('antimicrobialAgent').value;
+            formData.subculturingDate = document.getElementById('subculturingDate').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.mbcValue = document.getElementById('mbcValue').value;
+            formData.interpretation = document.getElementById('interpretation').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'microbialWaterAnalysis') {
+            formData.filtrationMethod = document.getElementById('filtrationMethod').value;
+            formData.selectiveMediaUsed = document.getElementById('selectiveMediaUsed').value;
+            formData.incubationConditions = document.getElementById('incubationConditions').value;
+            formData.colonyCount = document.getElementById('colonyCount').value;
+            formData.microbeIdentified = document.getElementById('microbeIdentified').value;
+            formData.confirmationTestResults = document.getElementById('confirmationTestResults').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'microbialCharacterization') {
+            formData.biochemicalTests = document.getElementById('biochemicalTests').value;
+            formData.molecularIdentification = document.getElementById('molecularIdentification').value;
+            formData.antibioticSusceptibility = document.getElementById('antibioticSusceptibility').value;
+            formData.includedInPUPMCC = document.getElementById('pupmcc').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'microbialCultureCollections') {
+            formData.characterizationStatus = document.getElementById('characterizationStatus').value;
+            formData.preservationDate = document.getElementById('preservationDate').value;
+            formData.catalogNumber = document.getElementById('catalogNumber').value;
+            formData.accessProvided = document.getElementById('accessProvided').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'microscopy') {
+            formData.stainingMethod = document.getElementById('stainingMethod').value;
+            formData.magnificationUsed = document.getElementById('magnificationUsed').value;
+            formData.morphologicalObservations = document.getElementById('morphologicalObservations').value;
+            formData.photomicrographyDone = document.getElementById('photomicrographyDone').value;
+            formData.notes = document.getElementById('notes').value;
+        } else if (requestOption === 'plantSpeciesIdentification') {
+            formData.plantSpecimen = document.getElementById('plantSpecimen').value;
+            formData.identificationStatus = document.getElementById('identificationStatus').value;
+            formData.accessionNumber = document.getElementById('accessionNumber').value;
+            formData.notes = document.getElementById('notes').value;
+        } else {
+            // Default case for equipment requests
+            formData.equipmentRequested = document.getElementById('equipmentRequested').value;
+            formData.scheduledUseDate = document.getElementById('scheduledUseDate').value;
+            formData.postUseCondition = document.getElementById('postUseCondition').value;
+            formData.notes = document.getElementById('notes').value;
+        }
+
+        console.log("Request Data:", requestData);
+        console.log("Form Data:", formData);
+
+        // Save to Firestore
+        await saveReportToFirestore(requestData, formData);
+
+        const requestsSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
+        const requestDataFromFirestore = requestsSnapshot.empty ? null : requestsSnapshot.docs[0].data();
+        
+        // Check if samples exist and initialize them
+        if (requestDataFromFirestore && requestDataFromFirestore.samples) {
+            requestData.samples = requestDataFromFirestore.samples; // Assign samples from Firestore
+        } else {
+            requestData.samples = []; // Initialize samples as an empty array if none exist
+        }
+        
+        // Check if equipmentId is present
+        if (requestDataFromFirestore && requestDataFromFirestore.equipmentId) {
+            // Prepare updated data with equipmentStatus
+            const updatedData = {
+                equipmentStatus: 'Done', // Set equipmentStatus
+            };
+        
+            // Log updated data to ensure it's not undefined
+            console.log('Updated Data:', updatedData);
+        
+            // Update Firestore
+            await updateRequestInFirestore(requestData.requestId, updatedData);
+        } else if (requestData.samples && requestData.samples.length > 0) {
+            // Collect sample data
+            const sampleIdToUpdate = currentSampleId; // Ensure this is defined
+            console.log("Current Sample ID:", sampleIdToUpdate);
+            console.log("Samples Array:", requestData.samples); // Log the samples array
+        
+            // Find the sample with the matching sampleId and update its status
+            const sampleToUpdate = requestData.samples.find(sample => sample.sampleId === sampleIdToUpdate);
+            if (sampleToUpdate) {
+                sampleToUpdate.status = 'Done'; // Set the status to 'Done'
+                console.log(`Sample with ID ${sampleIdToUpdate} updated to Done.`);
+            } else {
+                console.error(`Sample with ID ${sampleIdToUpdate} not found.`);
+            }
+        
+            // Prepare updated data
+            const updatedData = {
+                samples: requestData.samples // Include the updated samples array
+            };
+        
+            // Log updated data to ensure it's not undefined
+            console.log('Updated Data:', updatedData);
+        
+            // Update Firestore
+            await updateRequestInFirestore(requestData.requestId, updatedData);
+        } else {
+            console.warn("No samples to update.");
+        }
+
+        // Hide the report form and show the taskDetailsSection again
+        reportFormContainer.style.display = 'none';
+        document.getElementById('taskDetailsSection').style.display = 'block';
+    });
+    
 }
 
 // Function to fetch ongoing tasks
