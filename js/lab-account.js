@@ -16,8 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal Elements
     const modal = document.getElementById('editModal');
-    var closeBtn = document.querySelectorAll(".close");
+    const closeBtn = document.querySelectorAll(".close"); // Select all elements with the 'close' class
     const saveChangesBtn = document.getElementById('saveChangesBtn');
+
+    // Close the modal when any "x" is clicked
+    closeBtn.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    });
+    
     
 
     // Input fields in the modal
