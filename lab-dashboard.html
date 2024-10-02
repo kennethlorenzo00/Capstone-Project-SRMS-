@@ -13,6 +13,7 @@
     <script type="module" src="js/lab-account.js" defer></script> 
     <script type="module" src="js/lab-home.js" defer></script> 
     <script type="module" src="js/lab-notification.js" defer></script> 
+    <script type="module" src="js/lab-analysis-report.js" defer></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
    
@@ -367,7 +368,29 @@
             <div id="analysisReport" class="tabcontent" style="display:none;">
                 <h2>Analysis Reports</h2>
                 <p>This is the analysis reports section. All analysis reports will be shown here.</p>
+                
+                <!-- Search Bar -->
+                <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+            
+                <table id="analysisReportTable">
+                    <thead>
+                        <tr>
+                            <th>Deadline</th>
+                            <th>Request ID</th>
+                            <th>Service Type</th>
+                            <th>Client Type</th>
+                            <th>Client Name</th>
+                            <th>No. of Samples</th>
+                            <th>Priority Level</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analysisReportTableBody">
+                        <!-- Analysis report rows will be dynamically added here -->
+                    </tbody>
+                </table>
             </div>
+            
 
             <!-- Events Section -->
             <div id="events" class="tabcontent hidden" style="margin-left: 250px;">

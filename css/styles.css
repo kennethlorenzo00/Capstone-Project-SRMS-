@@ -3017,3 +3017,60 @@ button#saveChangesBtn {
     margin: 20px auto; /* Center the button horizontally */
     margin-bottom: 100px;
 }
+
+/* General styles for the analysis report section */
+#analysisReport {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Styles for the search bar */
+#searchBar {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding for a better look */
+    margin-bottom: 10px; /* Space between search bar and table */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+}
+
+/* Styles for the table */
+#analysisReportTable {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    margin-top: 10px; /* Space above the table */
+}
+
+/* Header styles */
+#analysisReportTable th {
+    background-color: #007BFF; /* Header background color */
+    color: white; /* Header text color */
+    padding: 10px; /* Padding for header cells */
+    text-align: left; /* Align text to the left */
+}
+
+/* Body cell styles */
+#analysisReportTable td {
+    border: 1px solid #ddd; /* Border around each cell */
+    padding: 8px; /* Padding for body cells */
+}
+
+/* Alternate row color for better readability */
+#analysisReportTable tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+/* Hover effect for table rows */
+#analysisReportTable tr:hover {
+    background-color: #e0e0e0; /* Darker gray on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    #searchBar {
+        font-size: 14px; /* Smaller font size on mobile */
+    }
+    #analysisReportTable {
+        font-size: 14px; /* Smaller font size on mobile */
+    }
+}

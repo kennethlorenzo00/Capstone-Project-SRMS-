@@ -54,7 +54,7 @@ async function fetchOngoingTasksCount(userFullName) {
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
         
         // Count tasks where request_status is not 'releasing', 'rejected', 'validating', or 'scheduling'
-        if (!['releasing', 'rejected', 'analysing', 'scheduling', 'preparing'].includes(requestData.request_status)) {
+        if (!['releasing', 'rejected', 'analysing', 'scheduling', 'preparing', 'checking', 'reporting'].includes(requestData.request_status)) {
             ongoingCount++;
         }
     }
@@ -75,7 +75,7 @@ async function fetchProcessedTasksCount(userFullName) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
         
-        if (['releasing'].includes(requestData.request_status)) {
+        if (['releasing', 'checking', 'reporting'].includes(requestData.request_status)) {
             processedCount++;
         }
     }

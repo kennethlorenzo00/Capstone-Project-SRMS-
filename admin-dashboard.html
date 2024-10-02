@@ -11,6 +11,7 @@
     <script type="module" src="js/admin-request.js" defer></script>
     <script type="module" src="js/admin-account.js" defer></script> 
     <script type="module" src="js/admin-notification.js" defer></script> 
+    <script type="module" src="js/admin-analysis-report.js" defer></script> 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 </head>
@@ -274,7 +275,19 @@
             <!-- Analysis Report Tab -->
             <div id="analysisReport" class="tabcontent hidden">
                 <h2>Analysis Report</h2>
-                <p>No reports available at the moment.</p>
+                <p>This section displays all analysis report messages and their corresponding Request IDs.</p>
+                <table id="analysisReportTable">
+                    <thead>
+                        <tr>
+                            <th>Message</th>
+                            <th>Request ID</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analysisReportTableBody">
+                        <!-- Analysis report rows will be dynamically added here -->
+                    </tbody>
+                </table>
             </div>
 
             <!-- Admin Account Tab -->
@@ -392,37 +405,37 @@
                 </div>
             </div>
             
-<!-- Add Event Form - Initially Hidden -->
-<div id="addEventForm" style="display: none;">
-    <h3>Add New Event</h3>
-    
-    <div class="form-container">
-        <!-- Container for the image upload section -->
-        <div class="photo-container">
-            <label for="eventImage">Upload Image:</label>
-            <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
-            <input type="file" id="eventImage"><br>
-            
-            <label for="eventStartDate">Start Date:</label>
-            <input type="date" id="eventStartDate"><br>
-            
-            <label for="eventEndDate">End Date:</label>
-            <input type="date" id="eventEndDate">
-        </div>
-        
-        <!-- Container for the event title and description -->
-        <div class="event-details-container">
-            <label for="eventTitle">Title:</label>
-            <input type="text" id="eventTitle" placeholder="Event Title"><br>
-            
-            <label for="eventDescription">Description:</label>
-            <textarea id="eventDescription" placeholder="Event Description"></textarea>
-            <br><br>
-            <button id="uploadEventBtn">Upload Event</button>
-            <button id="closeAddEventForm" style="float: right;">Close</button>
-        </div>
-    </div>
-</div>
+                <!-- Add Event Form - Initially Hidden -->
+                <div id="addEventForm" style="display: none;">
+                    <h3>Add New Event</h3>
+                    
+                    <div class="form-container">
+                        <!-- Container for the image upload section -->
+                        <div class="photo-container">
+                            <label for="eventImage">Upload Image:</label>
+                            <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
+                            <input type="file" id="eventImage"><br>
+                            
+                            <label for="eventStartDate">Start Date:</label>
+                            <input type="date" id="eventStartDate"><br>
+                            
+                            <label for="eventEndDate">End Date:</label>
+                            <input type="date" id="eventEndDate">
+                        </div>
+                        
+                        <!-- Container for the event title and description -->
+                        <div class="event-details-container">
+                            <label for="eventTitle">Title:</label>
+                            <input type="text" id="eventTitle" placeholder="Event Title"><br>
+                            
+                            <label for="eventDescription">Description:</label>
+                            <textarea id="eventDescription" placeholder="Event Description"></textarea>
+                            <br><br>
+                            <button id="uploadEventBtn">Upload Event</button>
+                            <button id="closeAddEventForm" style="float: right;">Close</button>
+                        </div>
+                    </div>
+                </div>
 
             
             <!-- Event Details Modal -->

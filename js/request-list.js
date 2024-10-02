@@ -423,6 +423,23 @@ async function showRequestDetails(requestId) {
             requestDetailsContent.appendChild(pendingMessageDiv);
           }
 
+          if (requestDoc.request_status === "releasing") {
+            const pendingMessageDiv = document.createElement('div');
+            pendingMessageDiv.classList.add('pending-message');
+        
+            // Construct the PDF file name and URL
+            const requestId = requestDoc.requestId; // Get the requestId from requestDoc
+            const pdfFileName = `report_${requestId}.pdf`; // Construct the PDF file name
+            const pdfUrl = `https://firebasestorage.googleapis.com/v0/b/srms-be1e2.appspot.com/o/reports%2F${encodeURIComponent(pdfFileName)}?alt=media`;
+        
+            pendingMessageDiv.innerHTML = `
+                <p><strong>Note:</strong> You may now view and download your request from here.</p>
+                <button onclick="window.open('${pdfUrl}', '_blank')">View Your Request</button>
+            `;
+            
+            requestDetailsContent.appendChild(pendingMessageDiv);
+        }        
+
         if (requestDoc.request_status === "sending") {
             const sendingMessageDiv = document.createElement('div');
             sendingMessageDiv.classList.add('sending-message');

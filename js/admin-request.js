@@ -503,6 +503,21 @@ async function logStaffNotification(appointmentId, staffName, endDate) {
   }
 }
 
+async function logRejectedReportStaff(requestId, staffName) {
+  try {
+      const staffNotificationRef = collection(firestore, 'staffnotification');
+      await addDoc(staffNotificationRef, {
+          requestId,
+          staffName,
+          message: `The report for request ID: ${requestId} has been rejected.`,
+          timestamp: new Date().toISOString()
+      });
+      console.log("Staff notification logged.");
+  } catch (error) {
+      console.error("Error logging staff notification:", error.message);
+  }
+}
+
 // Function to show the request history and populate it
 async function showRequestHistory() {
   document.getElementById('requestList').style.display = 'none'; // Hide the request list
@@ -745,6 +760,7 @@ async function showRequestDetails(requestId) {
         { label: "Validating Samples", value: "validating" },
         { label: "Analysis in Progress", value: "analysing" },
         { label: "Verifying Analysis Report", value: "verifying" },
+        { label: "Final Checking of the Report", value: "checking" },
         { label: "Released Analysis Report", value: "releasing" }
       ];
       const currentStageIndex = sampleStages.findIndex(stage => stage.value === requestDoc.request_status);
@@ -956,6 +972,68 @@ async function showRequestDetails(requestId) {
       `;
       adminRequestDetailsContent.appendChild(sendingMessageDiv);
     }
+
+    if (requestDoc.request_status === "checking") {
+      const checkingMessageDiv = document.createElement('div');
+      checkingMessageDiv.classList.add('checking-message');
+  
+      // Construct the PDF file name and URL
+      const requestId = requestDoc.requestId; // Get the requestId from requestDoc
+      const pdfFileName = `report_${requestId}.pdf`; // Construct the PDF file name
+      const pdfUrl = `https://firebasestorage.googleapis.com/v0/b/srms-be1e2.appspot.com/o/reports%2F${encodeURIComponent(pdfFileName)}?alt=media`;
+  
+      checkingMessageDiv.innerHTML = `
+          <p><strong>Note:</strong> The report is already submitted. Please check the Analysis Reports Tab.</p>
+          <button onclick="window.open('${pdfUrl}', '_blank')">View the Report</button>
+          <button class="rejectReport-button">Reject Report</button>
+          <button class="approveReport-button">Approve Report</button>
+      `;
+      
+      adminRequestDetailsContent.appendChild(checkingMessageDiv);
+  
+      // Fetch request document
+      const requestsRef = collection(firestore, 'requests');
+      const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+      const requestSnapshot = await getDocs(requestQuery);
+      const requestDocRef = requestSnapshot.docs[0].ref;
+  
+      // Fetch the request data to get the assignedLaboratoryStaff
+      const requestData = requestSnapshot.docs[0].data();
+      const clientId = requestData.userId;
+      const staffName = requestData.assignedLaboratoryStaff; // Get the staff name from requestDoc
+  
+      // Add event listeners to the buttons directly after creating them
+      checkingMessageDiv.querySelector('.rejectReport-button').addEventListener('click', async () => {
+          // Update request status to "rejected"
+          await updateDoc(requestDocRef, { request_status: 'rejected' });
+  
+          // Log rejection notification for staff
+          await logRejectedReportStaff(requestId, staffName); 
+  
+          alert('Request has been rejected.');
+          backToRequestList();
+      });
+  
+      checkingMessageDiv.querySelector('.approveReport-button').addEventListener('click', async () => {
+          let updatedStatus = 'releasing'; // Default status for approval
+          
+          // Conditional logic based on requestOption
+          if (requestDoc.requestOption === 'researchCollaboration') {
+              updatedStatus = 'releasing';
+          } else if (requestDoc.requestOption === 'labUseEquipmentAccess') {
+              updatedStatus = 'releasing';
+          }
+          
+          // Update request status based on the requestOption
+          await updateDoc(requestDocRef, { request_status: updatedStatus });
+  
+          // Log approval notification
+          await logClientNotification(requestId, clientId, `Your request has been approved and is now finished.`);
+  
+          alert(`Request has been approved and moved to ${updatedStatus}.`);
+          backToRequestList();
+      });
+  }  
 
     if (requestDoc.request_status === "reviewing") {
       const reviewingMessageDiv = document.createElement('div');

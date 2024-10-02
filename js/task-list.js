@@ -204,40 +204,41 @@ document.getElementById('createReportButton').addEventListener('click', async ()
     document.getElementById('sendButton').addEventListener('click', async () => {
         try {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-    
+            const pdfDoc = new jsPDF();
+
             // Adding report details
-            doc.setFontSize(12);
-            doc.text('Report\'s Details', 10, 10);
-            doc.autoTable({
-                head: [['Requester Name', 'Request ID', 'Appointed At', 'Priority Level']],
+            pdfDoc.setFontSize(12);
+            pdfDoc.text('Report\'s Details', 10, 10);
+            pdfDoc.autoTable({
+                head: [['Requester Name', 'Request ID', 'Appointed At', 'Priority Level', 'Submitted by']],
                 body: [[
                     appointmentData.requesterName || 'N/A',
                     requestId,
                     formatTimestamp(appointmentData.createdAt) || 'N/A',
-                    appointmentData.priorityLevel || 'N/A'
+                    appointmentData.priorityLevel || 'N/A',
+                    appointmentData.assignedStaff
                 ]],
                 startY: 20
             });
-    
+
             // Adding report summary
             const reportsSnapshot = await getDocs(query(collection(firestore, 'reports'), where('requestId', '==', requestId)));
-    
+
             let reportSummary = 'Report Summary:\n\n';
             if (!reportsSnapshot.empty) {
                 reportsSnapshot.docs.forEach(doc => {
                     const reportData = doc.data();
                     reportSummary += `Report:\n`;
-    
+
                     // Loop through keys and dynamically create the report fields
                     Object.keys(reportData).forEach(key => {
                         let value = reportData[key];
-    
+
                         // Check if the value is a Firestore Timestamp and format it
                         if (value instanceof Timestamp) {
                             value = formatTimestamp(value); // Convert Firestore Timestamp to readable format
                         }
-    
+
                         reportSummary += `  - ${key}: ${value || 'N/A'}\n`;
                     });
                     reportSummary += '\n';
@@ -245,18 +246,69 @@ document.getElementById('createReportButton').addEventListener('click', async ()
             } else {
                 reportSummary += 'No reports found for this request ID.\n';
             }
-    
+
             // Add report summary to the PDF
-            doc.text(reportSummary, 10, doc.autoTable.previous.finalY + 10);
-    
+            pdfDoc.text(reportSummary, 10, pdfDoc.autoTable.previous.finalY + 10);
+
             // Save PDF to a blob
-            const pdfBlob = doc.output('blob');
+            const pdfBlob = pdfDoc.output('blob');
     
             // Upload PDF to Firebase Storage in 'reports' folder
             const pdfStorageRef = storageRef(storage, `reports/report_${requestId}.pdf`); // Create a reference for the file
             await uploadBytes(pdfStorageRef, pdfBlob); // Use uploadBytes instead of put
     
+            const user = getCurrentUser(); // Use the getCurrentUser() function
+            if (!user) {
+                throw new Error('No user logged in.');
+            }
+            const userId = user.uid;
+    
+            // Add to the notifications collection
+            await addDoc(collection(firestore, 'notifications'), {
+                message: `The report for request: ${requestId} is now submitted. Please review for approval.`,
+                timestamp: new Date().toISOString(),
+                userId: userId
+            });
+    
+            // Add to the analysisreport collection
+            await addDoc(collection(firestore, 'analysisreport'), {
+                message: `The report done by ${appointmentData.assignedStaff || 'N/A'} has been released already and is waiting for validation.`,
+                timestamp: new Date().toISOString(),
+                userId: userId,
+                requestId: requestId
+            });
+
+            const requestsRef = collection(firestore, 'requests');
+            const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+            const requestSnapshot = await getDocs(requestQuery);
+
+            // Check if a request document exists
+            if (!requestSnapshot.empty) {
+                const requestDocRef = requestSnapshot.docs[0].ref; // Get the reference of the first document
+
+                // Fetch the document data to check the current status
+                const requestDoc = requestSnapshot.docs[0].data(); // Get the data from the document
+
+                let updatedStatus = 'testing'; // Default status for approval
+
+                // Conditional logic based on current request_status
+                if (requestDoc.request_status === 'verifying') {
+                    updatedStatus = 'checking';
+                } else if (requestDoc.request_status === 'inspecting') {
+                    updatedStatus = 'reporting';
+                }
+
+                // Update request status based on the evaluated status
+                await updateDoc(requestDocRef, { request_status: updatedStatus });
+                console.log(`Request status updated to: ${updatedStatus}`);
+            } else {
+                console.log('No request found with the specified requestId.');
+            }
+
             alert('Report sent and saved to Firebase Storage successfully!');
+            reportContainer.style.display = 'none';
+            document.getElementById('ongoing').style.display = 'block';
+            document.getElementById('taskList').style.display = 'block';
         } catch (error) {
             console.error('Error generating or uploading PDF:', error);
             alert('An error occurred while sending the report. Please try again.');
@@ -882,7 +934,7 @@ async function fetchProcessedTasks(userFullName, filterCriteria = {}) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
-        if (!['releasing'].includes(requestData.request_status)) {
+        if (!['releasing', 'checking','reporting'].includes(requestData.request_status)) {
             continue; // Only include tasks with 'completed' or 'approved' status
         }
 
@@ -961,6 +1013,22 @@ async function fetchRejectedTasks(userFullName, filterCriteria = {}) {
         `;
         rejectedTaskTableBody.innerHTML += row; // Append new row to the rejected tasks table
     }
+
+    rejectedTaskTableBody.addEventListener('click', function (event) {
+        const row = event.target.closest('tr'); // Get the closest row
+        if (row) {
+            const cells = row.getElementsByTagName('td'); // Get all cells in the row
+            const requestIdCell = cells[1]; // Assuming the Request ID is the second column (index 1)
+            const requestId = requestIdCell.textContent; // Get the text content of the Request ID cell
+            console.log("Request ID:", requestId); // Log the requestId
+            
+            selectedRequestIdPass = requestId // Trim whitespace
+
+            console.log('Selected Request ID:', selectedRequestIdPass); // Debugging log
+
+            showTaskDetails(requestId);
+        }
+    });   
 }
 
 // Event listeners for filter buttons in ongoing tasks
