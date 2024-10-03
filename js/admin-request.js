@@ -973,7 +973,7 @@ async function showRequestDetails(requestId) {
       adminRequestDetailsContent.appendChild(sendingMessageDiv);
     }
 
-    if (requestDoc.request_status === "checking") {
+    if (requestDoc.request_status === "checking" || requestDoc.request_status === "reporting") {
       const checkingMessageDiv = document.createElement('div');
       checkingMessageDiv.classList.add('checking-message');
   

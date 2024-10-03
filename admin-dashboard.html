@@ -11,9 +11,14 @@
     <script type="module" src="js/admin-request.js" defer></script>
     <script type="module" src="js/admin-account.js" defer></script> 
     <script type="module" src="js/admin-notification.js" defer></script> 
-    <script type="module" src="js/admin-analysis-report.js" defer></script> 
+    <script type="module" src="js/admin-analysis-report.js" defer></script>
+    <script type="module" src="js/admin-home.js" defer></script>  
+    <script type="module" src="js/admin-forecast.js" defer></script>  
+    <script type="module" src="js/admin-home-event.js" defer></script>  
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <!-- Sidebar -->
@@ -91,12 +96,90 @@
                 <p>You are not authorized to view this content.</p>
             </div>
 
-            <!-- Home Tab -->
+           <!-- Home Tab -->
             <div id="home" class="tabcontent hidden">
                 <h2>Home</h2>
                 <p>Welcome to the Admin Dashboard! Here you can manage clients, laboratory staff, and user requests.</p>
                 <p>Select a section from the sidebar to get started.</p>
+
+                <!-- Dashboard Boxes -->
+                <div class="dashboard-container">
+                    <!-- Row 1 -->
+                    <div class="dashboard-row">
+                        <div class="dashboard-box">
+                            <h3>Pending Requests</h3>
+                            <p id="pendingRequestsCount">0</p>
+                        </div>
+                        <div class="dashboard-box">
+                            <h3>Ongoing Requests</h3>
+                            <p id="ongoingRequestsCount">0</p>
+                        </div>
+                        <div class="dashboard-box">
+                            <h3>Overall Requests (This Month)</h3>
+                            <p id="overallRequestsCount">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="dashboard-row">
+                        <div class="dashboard-box">
+                            <h3>Pending Follow-Up</h3>
+                            <p id="pendingFollowUpCount">0</p>
+                        </div>
+                        <div class="dashboard-box">
+                            <h3>Pending Analysis Report</h3>
+                            <p id="pendingAnalysisReportCount">0</p>
+                        </div>
+                        <div class="dashboard-box">
+                            <h3>Pending User Registration</h3>
+                            <p id="pendingUserRegistrationCount">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forecasting and Top 3 Requests Section -->
+                <div class="charts-container">
+                    <h2>Request Forecasting and Top Requests</h2>
+                    
+                    <!-- Line Chart for Forecasting Requests -->
+                    <div class="chart-box">
+                        <h3>Request Forecasting (Past 3 Months + Future 3 Months)</h3>
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+
+                    <!-- Line Chart for Top 3 Request Types -->
+                    <div class="chart-box">
+                        <h3>Top 3 Request Types</h3>
+                        <canvas id="topRequestsChart"></canvas>
+                    </div>
+                </div>          
+                
+               <!-- Admin Events Section -->
+                <div class="admin-events-section">
+                    <h2 id="adminUpcomingEventsTitle">Upcoming Events</h2>
+
+                    <!-- Event Search -->
+                    <input type="text" id="adminEventSearch" placeholder="Search events..." class="admin-search-bar">
+
+                    <!-- Event Container -->
+                    <div id="adminEventContainer" class="admin-event-container">
+                        <!-- Events will be dynamically rendered here -->
+                    </div>
+                </div>
+
+                <!-- Event Details Modal -->
+                <div id="adminEventDetailsModal" class="admin-modal">
+                    <div class="admin-modal-content">
+                        <span class="admin-close">&times;</span>
+                        <img id="adminEventImageModal" src="" alt="Event Image">
+                        <h3 id="adminEventTitleModal"></h3>
+                        <p id="adminEventDescriptionModal"></p>
+                    </div>
+                </div>
+
+
             </div>
+
 
             <!-- Request List Tab -->
             <div id="requestListContainer">
