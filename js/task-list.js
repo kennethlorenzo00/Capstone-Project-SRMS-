@@ -1,7 +1,7 @@
 import { firestore, database, storage } from './firebase.js';
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-import { collection, getDocs, query, where, updateDoc, doc, getDoc, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query, where, updateDoc, doc, getDoc, addDoc, Timestamp, setDoc, arrayUnion} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 import {ref as storageRef, uploadBytes} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
 let currentSampleId = null;
 
@@ -358,8 +358,7 @@ async function showTaskDetails(requestId) {
                         <td>${sample.status || 'In Progress'}</td>
                         <td>
                             <button class="btn-samplereport" data-sample-id="${sample.sampleId}">Report</button>
-                            ${['plateCount', 'microbialWaterAnalysis'].includes(requestData.requestOption) ? '<button class="btn-count-colonies">Count Colonies</button>' : ''}
-                        </td>
+                            ${['plateCount', 'microbialWaterAnalysis'].includes(requestData.requestOption) ? `<button class="btn-count-colonies" data-sample-id="${sample.sampleId}">Count Colonies</button>` : ''}   </td>
                     </tr>
                 `;
                 sampleTableBody.innerHTML += row;
@@ -392,15 +391,79 @@ async function showTaskDetails(requestId) {
         });
 
         document.querySelectorAll('.btn-count-colonies').forEach(button => {
-            button.addEventListener('click', () => {
-                alert('Count colonies action clicked');
+            button.addEventListener('click', (event) => {
+                const sampleId = event.currentTarget.getAttribute('data-sample-id');
+                console.log('Sample ID:', sampleId); // Debugging line
+                const requestId = requestData.requestId;
+
+                // Show the sample duration section
                 document.getElementById('taskDetailsSection').style.display = 'none';
-                document.getElementById('colonyCountSection').style.display = 'block';
+                document.getElementById('sampleDurationSection').style.display = 'block';
+
+                // Load any existing days from Firestore for this sample
+                loadSampleData(sampleId);
+
+                // Handle adding new day
+                document.getElementById('addDayButton').addEventListener('click', async () => {
+                    const timestamp = new Date().toISOString();
+                    const dayCount = document.querySelectorAll('.day-box').length + 1;
+
+                    // Add the "Day" box in the UI
+                    const dayBox = document.createElement('div');
+                    dayBox.className = 'day-box';
+                    dayBox.innerText = `Day ${dayCount}`;
+                    document.querySelector('.duration-container').appendChild(dayBox);
+
+                    // Save to Firestore
+                    const sampleRef = doc(firestore, 'sample', sampleId);
+                    const sampleDoc = await getDoc(sampleRef);
+
+                    if (sampleDoc.exists()) {
+                        // Append the new day to the existing array
+                        await updateDoc(sampleRef, {
+                            day: arrayUnion({
+                                dayNumber: dayCount,
+                                timestamp: timestamp
+                            })
+                        });
+                    } else {
+                        // Create a new document with sampleId, requestId, and the first day
+                        await setDoc(sampleRef, {
+                            sampleId: sampleId,
+                            requestId: requestId,
+                            day: [{
+                                dayNumber: dayCount,
+                                timestamp: timestamp
+                            }]
+                        });
+                    }
+                });
             });
         });
     } catch (error) {
         console.error('Error fetching task details:', error);
         alert('An error occurred while fetching task details. Please try again later.');
+    }
+}
+
+async function loadSampleData(sampleId) {
+    const sampleRef = doc(firestore, 'sample', sampleId);
+    const sampleDoc = await getDoc(sampleRef);
+
+    if (sampleDoc.exists()) {
+        const sampleData = sampleDoc.data();
+        const days = sampleData.day;
+
+        // Clear the container first
+        document.querySelector('.duration-container').innerHTML = '<button id="addDayButton">+ Add Day</button>';
+
+        // Re-render each saved day
+        days.forEach(day => {
+            const dayBox = document.createElement('div');
+            dayBox.className = 'day-box';
+            dayBox.innerText = `Day ${day.dayNumber}`;
+            document.querySelector('.duration-container').appendChild(dayBox);
+        });
     }
 }
 

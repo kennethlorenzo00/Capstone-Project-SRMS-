@@ -3266,3 +3266,17 @@ canvas {
     height: auto;
     margin-bottom: 15px;
 }
+
+.duration-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.day-box {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
