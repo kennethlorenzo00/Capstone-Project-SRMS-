@@ -1644,112 +1644,328 @@ h1 {
 
 /* Specific Styles for Each Table */
   /* all Requests Table Styling */
-  #allRequestsTable {
+#allRequestsTable {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 2px solid #A90000;
 }
 
-#allRequestsTable th, 
-#allRequestsTable td {
-    border: none;
-    padding: 8px;
+#allRequestsTable thead {
+    background-color: #f2f2f2;
     text-align: left;
+}
+
+#allRequestsTable th, #allRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#allRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#allRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 #allRequestsTable th {
     background-color: #A90000;
     color: white;
-    text-transform: uppercase;
+}
+
+#allRequestsTable td {
+    color: #333;
+}
+
+#allRequestsTable button {
+    background-color: #4CAF50; 
+    color: white;
     border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 100px;
 }
 
-#allRequestsTable tr:nth-child(even) {
+#allRequestsTable button:hover {
+    background-color: #45a049;
+}
+
+#allRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+#allRequestsTable thead {
     background-color: #f2f2f2;
+    text-align: left;
 }
 
-#allRequestsTable tr:hover {
-    background-color: #ddd;
+#allRequestsTable th, #allRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
-#allRequestsTable th:last-child,
-#allRequestsTable td:last-child {
-    text-align: center;
+#allRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
+
+#allRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#allRequestsTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#allRequestsTable td {
+    color: #333;
+}
+
+#allRequestsTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+}
+
+#allRequestsTable button:hover {
+    background-color: #45a049;
+}
+
+#allRequestsTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#allRequestsTable th:last-child {
+    border-radius: 0 15px 15px 0; 
+}
+
 
 
   /* Service Requests Table Styling */
-#serviceRequestsTable {
+  #serviceRequestsTable {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 2px solid #A90000;
 }
 
-#serviceRequestsTable th, 
-#serviceRequestsTable td {
-    border: none;
-    padding: 8px;
+#serviceRequestsTable thead {
+    background-color: #f2f2f2;
     text-align: left;
+}
+
+#serviceRequestsTable th, #serviceRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#serviceRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#serviceRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 #serviceRequestsTable th {
     background-color: #A90000;
     color: white;
-    text-transform: uppercase;
+}
+
+#serviceRequestsTable td {
+    color: #333;
+}
+
+#serviceRequestsTable button {
+    background-color: #A90000; 
+    color: white;
     border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-#serviceRequestsTable tr:nth-child(even) {
+#serviceRequestsTable button:hover {
+    background-color: #45a049;
+}
+
+#serviceRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+#serviceRequestsTable thead {
     background-color: #f2f2f2;
+    text-align: left;
 }
 
-#serviceRequestsTable tr:hover {
-    background-color: #ddd;
+#serviceRequestsTable th, #serviceRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
-#serviceRequestsTable th:last-child,
-#serviceRequestsTable td:last-child {
-    text-align: center;
+#serviceRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
+
+#serviceRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#serviceRequestsTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#serviceRequestsTable td {
+    color: #333;
+}
+
+#serviceRequestsTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    margin-left: 100px;
+}
+
+#serviceRequestsTable button:hover {
+    background-color: #4CAF50;
+}
+
+#serviceRequestsTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#serviceRequestsTable th:last-child {
+    border-radius: 0 15px 15px 0; 
+}
+
   /* Follow up Requests Table Styling */
   #followUpRequestsTable {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 2px solid #A90000;
 }
 
-#followUpRequestsTable th, 
-#followUpRequestsTable td {
-    border: none;
-    padding: 8px;
+#followUpRequestsTable thead {
+    background-color: #f2f2f2;
     text-align: left;
+}
+
+#followUpRequestsTable th, #followUpRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#followUpRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#followUpRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 #followUpRequestsTable th {
     background-color: #A90000;
     color: white;
-    text-transform: uppercase;
+}
+
+#followUpRequestsTable td {
+    color: #333;
+}
+
+#followUpRequestsTable button {
+    background-color: #A90000; 
+    color: white;
     border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-#followUpRequestsTable tr:nth-child(even) {
+#followUpRequestsTable button:hover {
+    background-color: #45a049;
+}
+
+#followUpRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+#followUpRequestsTable thead {
     background-color: #f2f2f2;
+    text-align: left;
 }
 
-#followUpRequestsTable tr:hover {
-    background-color: #ddd;
+#followUpRequestsTable th, #followUpRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
-#followUpRequestsTable th:last-child,
-#followUpRequestsTable td:last-child {
-    text-align: center;
+#followUpRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
+
+#followUpRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#followUpRequestsTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#followUpRequestsTable td {
+    color: #333;
+}
+
+#followUpRequestsTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    margin-left: 100px;
+}
+
+#followUpRequestsTable button:hover {
+    background-color: #4CAF50;
+}
+
+#followUpRequestsTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#followUpRequestsTable th:last-child {
+    border-radius: 0 15px 15px 0; 
+}
+
 
 
 /* Input Styles within Request List */
@@ -1820,75 +2036,217 @@ h1 {
   }
   
   /* Released Requests Table Styling */
-#releasedRequestsTable {
+  #releasedRequestsTable {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 2px solid #A90000;
 }
 
-#releasedRequestsTable th, 
-#releasedRequestsTable td {
-    border: none;
-    padding: 8px;
+#releasedRequestsTable thead {
+    background-color: #f2f2f2;
     text-align: left;
+}
+
+#releasedRequestsTable th, #releasedRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#releasedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#releasedRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 #releasedRequestsTable th {
     background-color: #A90000;
     color: white;
-    text-transform: uppercase;
+}
+
+#releasedRequestsTable td {
+    color: #333;
+}
+
+#releasedRequestsTable button {
+    background-color: #A90000; 
+    color: white;
     border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-#releasedRequestsTable tr:nth-child(even) {
+#releasedRequestsTable button:hover {
+    background-color: #45a049;
+}
+
+#releasedRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+#releasedRequestsTable thead {
     background-color: #f2f2f2;
+    text-align: left;
 }
 
-#releasedRequestsTable tr:hover {
-    background-color: #ddd;
+#releasedRequestsTable th, #releasedRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
-#releasedRequestsTable th:last-child,
-#releasedRequestsTable td:last-child {
-    text-align: center;
+#releasedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#releasedRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#releasedRequestsTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#releasedRequestsTable td {
+    color: #333;
+}
+
+#releasedRequestsTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    margin-left: 100px;
+}
+
+#releasedRequestsTable button:hover {
+    background-color: #4CAF50;
+}
+
+#releasedRequestsTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#releasedRequestsTable th:last-child {
+    border-radius: 0 15px 15px 0; 
 }
 
 /* Rejected Requests Table Styling */
 #rejectedRequestsTable {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
-    background-color: #ffefef;
-    border: 2px solid #A90000;
 }
 
-#rejectedRequestsTable th, 
-#rejectedRequestsTable td {
-    border: none;
-    padding: 8px;
+#rejectedRequestsTable thead {
+    background-color: #f2f2f2;
     text-align: left;
+}
+
+#rejectedRequestsTable th, #rejectedRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#rejectedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#rejectedRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 #rejectedRequestsTable th {
     background-color: #A90000;
     color: white;
-    text-transform: uppercase;
+}
+
+#rejectedRequestsTable td {
+    color: #333;
+}
+
+#rejectedRequestsTable button {
+    background-color: #A90000; 
+    color: white;
     border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-#rejectedRequestsTable tr:nth-child(even) {
-    background-color: #ffecec;
+#rejectedRequestsTable button:hover {
+    background-color: #45a049;
 }
 
-#rejectedRequestsTable tr:hover {
-    background-color: #fddddd;
+#rejectedRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
 }
 
-#rejectedRequestsTable th:last-child,
-#rejectedRequestsTable td:last-child {
-    text-align: center;
+#rejectedRequestsTable thead {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+#rejectedRequestsTable th, #rejectedRequestsTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#rejectedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#rejectedRequestsTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#rejectedRequestsTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#rejectedRequestsTable td {
+    color: #333;
+}
+
+#rejectedRequestsTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    margin-left: 100px;
+}
+
+#rejectedRequestsTable button:hover {
+    background-color: #4CAF50;
+}
+
+#rejectedRequestsTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#rejectedRequestsTable th:last-child {
+    border-radius: 0 15px 15px 0; 
 }
 
 .event-item {
@@ -3019,51 +3377,112 @@ button#saveChangesBtn {
 }
 
 /* General styles for the analysis report section */
-#analysisReport {
-    margin: 20px;
+#analysisReportTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
     font-family: Arial, sans-serif;
 }
 
-/* Styles for the search bar */
-#searchBar {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding for a better look */
-    margin-bottom: 10px; /* Space between search bar and table */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Font size */
+#analysisReportTable thead {
+    background-color: #f2f2f2;
+    text-align: left;
 }
 
-/* Styles for the table */
-#analysisReportTable {
-    width: 100%; /* Full width */
-    border-collapse: collapse; /* Remove gaps between table cells */
-    margin-top: 10px; /* Space above the table */
+#analysisReportTable th, #analysisReportTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
-/* Header styles */
+#analysisReportTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#analysisReportTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
 #analysisReportTable th {
-    background-color: #007BFF; /* Header background color */
-    color: white; /* Header text color */
-    padding: 10px; /* Padding for header cells */
-    text-align: left; /* Align text to the left */
+    background-color: #A90000;
+    color: white;
 }
 
-/* Body cell styles */
 #analysisReportTable td {
-    border: 1px solid #ddd; /* Border around each cell */
-    padding: 8px; /* Padding for body cells */
+    color: #333;
 }
 
-/* Alternate row color for better readability */
-#analysisReportTable tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray background for even rows */
+#analysisReportTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-/* Hover effect for table rows */
-#analysisReportTable tr:hover {
-    background-color: #e0e0e0; /* Darker gray on hover */
+#analysisReportTable button:hover {
+    background-color: #45a049;
 }
+
+#analysisReportTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+#analysisReportTable thead {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+#analysisReportTable th, #analysisReportTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#analysisReportTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#analysisReportTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#analysisReportTable th {
+    background-color: #A90000;
+    color: white;
+}
+
+#analysisReportTable td {
+    color: #333;
+}
+
+#analysisReportTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    margin-left: 100px;
+}
+
+#analysisReportTable button:hover {
+    background-color: #4CAF50;
+}
+
+#analysisReportTable th:first-child {
+    border-radius: 15px 0 0 15px; 
+}
+
+#analysisReportTable th:last-child {
+    border-radius: 0 15px 15px 0; 
+}
+
 
 /* Responsive styles */
 @media (max-width: 600px) {

@@ -359,6 +359,9 @@
             <div id="analysisReport" class="tabcontent hidden">
                 <h2>Analysis Report</h2>
                 <p>This section displays all analysis report messages and their corresponding Request IDs.</p>
+                                <!-- Search Bar -->
+                                <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+            
                 <table id="analysisReportTable">
                     <thead>
                         <tr>
