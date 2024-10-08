@@ -707,35 +707,40 @@ text-align: left;
     <!-- Events Section -->
     <section id="events" class="events">
         <h1>Events and Activities</h1>
-        <div class="event-grid">
-            <!-- Event Cards -->
-            <div class="event-card">
-                <img src="log-in-bg.jpg" alt="Event 1">
-                <p>24th PHMNCC Annual Symposium and General Assembly</p>
-                <a href="#">More info...</a>
-            </div>
-            <div class="event-card">
-                <img src="log-in-bg.jpg" alt="Event 2">
-                <p>CALL FOR ENTRIES: Calling all Innovators & Future Scientists!</p>
-                <a href="#">More info...</a>
-            </div>
-            <div class="event-card">
-                <img src="log-in-bg.jpg" alt="Event 3">
-                <p>RIST Core Seminar Episode 2: Biotechnology and Marine Toxicology</p>
-                <a href="#">More info...</a>
-            </div>
-            <div class="event-card">
-                <img src="log-in-bg.jpg" alt="Event 4">
-                <p>CALL FOR ENTRIES: 3rd PUP Research Pitching Competition</p>
-                <a href="#">More info...</a>
-            </div>
-            <div class="event-card">
-                <img src="log-in-bg.jpg" alt="Event 5">
-                <p>PHMNCC Annual Symposium and General Assembly 2024</p>
-                <a href="#">More info...</a>
-            </div>
+        <div class="event-grid" id="eventContainer">
+            <!-- Event Cards will be populated here dynamically -->
         </div>
     </section>
+
+    <script type="module">
+        import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+        import { firestore } from './js/firebase.js';
+
+        const eventContainer = document.getElementById('eventContainer');
+
+        // Function to render the event list
+        function renderEventList() {
+            eventContainer.innerHTML = ''; // Clear container
+
+            getDocs(collection(firestore, 'events')).then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const event = doc.data();
+                    const eventHTML = `
+                        <div class="event-card" data-event-id="${doc.id}">
+                            <img src="${event.imageURL}" alt="${event.title}">
+                            <p>${event.title}</p>
+                        </div>
+                    `;
+                    eventContainer.innerHTML += eventHTML;
+                });
+            }).catch((error) => {
+                console.error('Error fetching events:', error);
+            });
+        }
+
+        // Initial render
+        renderEventList();
+    </script>
 
     <!-- Contact Us Section -->
     <section id="contact" class="contact-us">
