@@ -86,252 +86,299 @@ async function logNotificationToFirestore(notificationData) {
   }
   
   // Handle Admin Registration
-  if (document.getElementById("adminRegisterForm")) {
+if (document.getElementById("adminRegisterForm")) {
     const registerBtn = document.getElementById("registerBtn");
-    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
-  
-    sendVerificationBtn.addEventListener("click", () => {
-      handleSendVerification();
-      checkEmailVerification("registerBtn");
-    });
-  
+
     document.getElementById("adminRegisterForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      if (!isEmailVerified) {
-        alert("Please verify your email before registering.");
-        return;
-      }
-  
-      const firstName = document.getElementById("firstName").value;
-      const middleName = document.getElementById("middleName").value || '';
-      const lastName = document.getElementById("lastName").value;
-      const username = document.getElementById("username").value;
-      const contactNumber = document.getElementById("contactNumber").value;
-      const address = document.getElementById("address").value;
-      const email = document.getElementById("email").value;
-  
-      // Save data to Realtime Database
-      set(ref(database, 'new_user_requests/' + auth.currentUser.uid), {
-        firstName,
-        middleName,
-        lastName,
-        username,
-        contactNumber,
-        address,
-        email,
-        role: 'admin',
-        status: 'Pending'
-      }).then(() => {
-        alert("Registration successful, waiting for admin approval.");
-  
-        // Log notification to Firestore
-        logNotificationToFirestore({
-          userId: auth.currentUser.uid,
-          role: 'Admin',
-          message: "New admin registration pending approval.",
-          timestamp: new Date().toISOString()
-        }).then(() => {
-          // Sign out the user after logging the notification
-          auth.signOut();
-          window.location.href = 'admin-login.html';
-        });
-      }).catch((error) => {
-        console.error("Error saving registration:", error.message);
-        alert("Error saving registration: " + error.message);
-      });
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Create user in Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const currentUser = userCredential.user;
+                console.log("User created, sending verification email...");
+
+                // Send verification email
+                sendEmailVerification(currentUser)
+                    .then(() => {
+                        alert("Verification email sent. Please verify your email.");
+                    })
+                    .catch((error) => {
+                        console.error("Error sending verification email:", error.message);
+                    });
+
+                // Save data to Realtime Database
+                const firstName = document.getElementById("firstName").value;
+                const middleName = document.getElementById("middleName").value || '';
+                const lastName = document.getElementById("lastName").value;
+                const username = document.getElementById("username").value;
+                const contactNumber = document.getElementById("contactNumber").value;
+                const address = document.getElementById("address").value;
+
+                set(ref(database, 'new_user_requests/' + currentUser.uid), {
+                    firstName,
+                    middleName,
+                    lastName,
+                    username,
+                    contactNumber,
+                    address,
+                    email,
+                    role: 'admin',
+                    status: 'pending'
+                }).then(() => {
+                    alert("Registration successful, waiting for admin approval.");
+
+                    // Log notification to Firestore
+                    logNotificationToFirestore({
+                        userId: currentUser.uid,
+                        role: 'Admin',
+                        message: "New admin registration pending approval.",
+                        timestamp: new Date().toISOString()
+                    }).then(() => {
+                        // Sign out the user after logging the notification
+                        auth.signOut();
+                        window.location.href = 'admin-login.html';
+                    });
+                }).catch((error) => {
+                    console.error("Error saving registration:", error.message);
+                    alert("Error saving registration: " + error.message);
+                });
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error.message);
+                alert("Error during registration: " + error.message);
+            });
     });
-  }
+}
   
   // Handle Laboratory Staff Registration
-  if (document.getElementById("labRegisterForm")) {
+if (document.getElementById("labRegisterForm")) {
     const registerBtn = document.getElementById("registerBtn");
-    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
-  
-    sendVerificationBtn.addEventListener("click", () => {
-      handleSendVerification();
-      checkEmailVerification("registerBtn");
-    });
-  
+
     document.getElementById("labRegisterForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      if (!isEmailVerified) {
-        alert("Please verify your email before registering.");
-        return;
-      }
-  
-      const firstName = document.getElementById("firstName").value;
-      const middleName = document.getElementById("middleName").value || '';
-      const lastName = document.getElementById("lastName").value;
-      const username = document.getElementById("username").value;
-      const contactNumber = document.getElementById("contactNumber").value;
-      const address = document.getElementById("address").value;
-      const email = document.getElementById("email").value;
-  
-      // Save data to Realtime Database
-      set(ref(database, 'new_user_requests/' + auth.currentUser.uid), {
-        firstName,
-        middleName,
-        lastName,
-        username,
-        contactNumber,
-        address,
-        email,
-        role: 'Staff',
-        status: 'Pending'
-      }).then(() => {
-        alert("Registration successful, waiting for admin approval.");
-  
-        // Log notification to Firestore
-        logNotificationToFirestore({
-          userId: auth.currentUser.uid,
-          role: 'Staff',
-          message: "New staff registration pending approval.",
-          timestamp: new Date().toISOString()
-        }).then(() => {
-          // Sign out the user after logging the notification
-          auth.signOut();
-          window.location.href = 'lab-login.html';
-        });
-      }).catch((error) => {
-        console.error("Error saving registration:", error.message);
-        alert("Error saving registration: " + error.message);
-      });
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Register user with Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                currentUser = userCredential.user;
+                console.log("User created, sending verification email...");
+
+                // Send verification email
+                sendEmailVerification(currentUser)
+                    .then(() => {
+                        alert("Verification email sent. Please verify your email.");
+
+                        const firstName = document.getElementById("firstName").value;
+                        const middleName = document.getElementById("middleName").value || '';
+                        const lastName = document.getElementById("lastName").value;
+                        const username = document.getElementById("username").value;
+                        const contactNumber = document.getElementById("contactNumber").value;
+                        const address = document.getElementById("address").value;
+
+                        // Save data to Realtime Database
+                        return set(ref(database, 'new_user_requests/' + currentUser.uid), {
+                            firstName,
+                            middleName,
+                            lastName,
+                            username,
+                            contactNumber,
+                            address,
+                            email,
+                            role: 'Staff',
+                            status: 'Pending'
+                        });
+                    })
+                    .then(() => {
+                        // Log notification to Firestore
+                        return logNotificationToFirestore({
+                            userId: currentUser.uid,
+                            role: 'Staff',
+                            message: "New staff registration pending approval.",
+                            timestamp: new Date().toISOString()
+                        });
+                    })
+                    .then(() => {
+                        // Redirect to login page
+                        alert("Registration successful. Please verify your email.");
+                        auth.signOut();
+                        window.location.href = 'lab-login.html';
+                    })
+                    .catch((error) => {
+                        console.error("Error during registration:", error.message);
+                        alert("Error: " + error.message);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error.message);
+                alert("Error during registration: " + error.message);
+            });
     });
-  }
+}
   
-  // Handle External Client Registration
-  if (document.getElementById("externalClientRegisterForm")) {
+ // Handle External Client Registration
+if (document.getElementById("externalClientRegisterForm")) {
     const registerBtn = document.getElementById("registerBtn");
-    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
-  
-    sendVerificationBtn.addEventListener("click", () => {
-      handleSendVerification();
-      checkEmailVerification("registerBtn");
-    });
-  
+
     document.getElementById("externalClientRegisterForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      if (!isEmailVerified) {
-        alert("Please verify your email before registering.");
-        return;
-      }
-  
-      const firstName = document.getElementById("firstName").value;
-      const middleName = document.getElementById("middleName").value || '';
-      const lastName = document.getElementById("lastName").value;
-      const username = document.getElementById("username").value;
-      const address = document.getElementById("address").value;
-      const contactNumber = document.getElementById("contactNumber").value;
-      const userType = document.getElementById("userType").value;
-      const school = document.getElementById("school").value;
-      const department = document.getElementById("department").value;
-      const email = document.getElementById("email").value;
-  
-      // Save data to Realtime Database
-      set(ref(database, 'new_user_requests/' + auth.currentUser.uid), {
-        firstName,
-        middleName,
-        lastName,
-        username,
-        address,
-        contactNumber,
-        userType,
-        school,
-        department,
-        email,
-        role: 'Client',
-        clientType: 'External',
-        withMOU: 'false',
-        status: 'Pending'
-      }).then(() => {
-        alert("Registration successful, waiting for admin approval.");
-  
-        // Log notification to Firestore
-        logNotificationToFirestore({
-          userId: auth.currentUser.uid,
-          role: 'Client',
-          clientType: 'External',
-          message: "New external client registration pending approval.",
-          timestamp: new Date().toISOString()
-        }).then(() => {
-          // Sign out the user after logging the notification
-          auth.signOut();
-          window.location.href = 'external-client-login.html';
-        });
-      }).catch((error) => {
-        console.error("Error saving registration:", error.message);
-        alert("Error saving registration: " + error.message);
-      });
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Create user in Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const currentUser = userCredential.user;
+                console.log("User created, sending verification email...");
+
+                // Send verification email
+                sendEmailVerification(currentUser)
+                    .then(() => {
+                        alert("Verification email sent. Please verify your email.");
+
+                        // Collect form data
+                        const firstName = document.getElementById("firstName").value;
+                        const middleName = document.getElementById("middleName").value || '';
+                        const lastName = document.getElementById("lastName").value;
+                        const username = document.getElementById("username").value;
+                        const address = document.getElementById("address").value;
+                        const contactNumber = document.getElementById("contactNumber").value;
+                        const userType = document.getElementById("userType").value;
+                        const school = document.getElementById("school").value;
+                        const department = document.getElementById("department").value;
+
+                        // Save data to Realtime Database
+                        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+                            firstName,
+                            middleName,
+                            lastName,
+                            username,
+                            address,
+                            contactNumber,
+                            userType,
+                            school,
+                            department,
+                            email,
+                            role: 'Client',
+                            clientType: 'External',
+                            withMOU: 'false',
+                            status: 'Pending'
+                        }).then(() => {
+                            alert("Registration successful, waiting for admin approval.");
+
+                            // Log notification to Firestore
+                            logNotificationToFirestore({
+                                userId: currentUser.uid,
+                                role: 'Client',
+                                clientType: 'External',
+                                message: "New external client registration pending approval.",
+                                timestamp: new Date().toISOString()
+                            }).then(() => {
+                                // Sign out the user after logging the notification
+                                auth.signOut();
+                                window.location.href = 'external-client-login.html';
+                            });
+                        }).catch((error) => {
+                            console.error("Error saving registration:", error.message);
+                            alert("Error saving registration: " + error.message);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error sending verification email:", error.message);
+                        alert("Error sending verification email: " + error.message);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error.message);
+                alert("Error during registration: " + error.message);
+            });
     });
-  }
+}
   
-  // Handle Internal Client Registration
-  if (document.getElementById("internalClientRegisterForm")) {
+// Handle Internal Client Registration
+if (document.getElementById("internalClientRegisterForm")) {
     const registerBtn = document.getElementById("registerBtn");
-    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
-  
-    sendVerificationBtn.addEventListener("click", () => {
-      handleSendVerification();
-      checkEmailVerification("registerBtn");
-    });
-  
+
     document.getElementById("internalClientRegisterForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      if (!isEmailVerified) {
-        alert("Please verify your email before registering.");
-        return;
-      }
-  
-      const firstName = document.getElementById("firstName").value;
-      const middleName = document.getElementById("middleName").value || '';
-      const lastName = document.getElementById("lastName").value;
-      const username = document.getElementById("username").value;
-      const address = document.getElementById("address").value;
-      const contactNumber = document.getElementById("contactNumber").value;
-      const userType = document.getElementById("userType").value;
-      const department = document.getElementById("department").value;
-      const email = document.getElementById("email").value;
-  
-      // Save data to Realtime Database
-      set(ref(database, 'new_user_requests/' + auth.currentUser.uid), {
-        firstName,
-        middleName,
-        lastName,
-        username,
-        address,
-        contactNumber,
-        userType,
-        department,
-        email,
-        role: 'Client',
-        clientType: 'Internal',
-        withMOU: 'true',
-        status: 'Pending'
-      }).then(() => {
-        alert("Registration successful, waiting for admin approval.");
-  
-        // Log notification to Firestore
-        logNotificationToFirestore({
-          userId: auth.currentUser.uid,
-          role: 'Client',
-          clientType: 'Internal',
-          message: "New internal client registration pending approval.",
-          timestamp: new Date().toISOString()
-        }).then(() => {
-          // Sign out the user after logging the notification
-          auth.signOut();
-          window.location.href = 'internal-client-login.html';
-        });
-      }).catch((error) => {
-        console.error("Error saving registration:", error.message);
-        alert("Error saving registration: " + error.message);
-      });
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Create user in Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const currentUser = userCredential.user;
+                console.log("User created, sending verification email...");
+
+                // Send verification email
+                sendEmailVerification(currentUser)
+                    .then(() => {
+                        alert("Verification email sent. Please verify your email.");
+
+                        // Collect form data
+                        const firstName = document.getElementById("firstName").value;
+                        const middleName = document.getElementById("middleName").value || '';
+                        const lastName = document.getElementById("lastName").value;
+                        const username = document.getElementById("username").value;
+                        const address = document.getElementById("address").value;
+                        const contactNumber = document.getElementById("contactNumber").value;
+                        const userType = document.getElementById("userType").value;
+                        const department = document.getElementById("department").value;
+
+                        // Save data to Realtime Database
+                        set(ref(database, 'new_user_requests/' + currentUser.uid), {
+                            firstName,
+                            middleName,
+                            lastName,
+                            username,
+                            address,
+                            contactNumber,
+                            userType,
+                            department,
+                            email,
+                            role: 'Client',
+                            clientType: 'Internal',
+                            withMOU: 'true',
+                            status: 'pending'
+                        }).then(() => {
+                            alert("Registration successful, waiting for admin approval.");
+
+                            // Log notification to Firestore
+                            logNotificationToFirestore({
+                                userId: currentUser.uid,
+                                role: 'Client',
+                                clientType: 'Internal',
+                                message: "New internal client registration pending approval.",
+                                timestamp: new Date().toISOString()
+                            }).then(() => {
+                                // Sign out the user after logging the notification
+                                auth.signOut();
+                                window.location.href = 'internal-client-login.html';
+                            });
+                        }).catch((error) => {
+                            console.error("Error saving registration:", error.message);
+                            alert("Error saving registration: " + error.message);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error sending verification email:", error.message);
+                        alert("Error sending verification email: " + error.message);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error.message);
+                alert("Error during registration: " + error.message);
+            });
     });
-  }
+}
 
 // Handle Admin Login
 document.getElementById("adminLoginForm")?.addEventListener("submit", function(event) {
@@ -383,7 +430,6 @@ document.getElementById("adminLoginForm")?.addEventListener("submit", function(e
             alert("Login failed: " + errorMessage);
         });
 });
-
 
 // Handle Laboratory Staff Login
 document.getElementById("labLoginForm")?.addEventListener("submit", function(event) {

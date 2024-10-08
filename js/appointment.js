@@ -7,7 +7,7 @@ const modal = document.getElementById('editModal');
 const staffSelect = document.getElementById('staffSelect');
 const endDateInput = document.getElementById('endDate');
 const saveButton = document.getElementById('saveButton');
-const closeButton = document.querySelector('.close');
+const closeButton = document.querySelector('#editAppointmentModal .close');
 
 let currentAppointmentId = null;
 

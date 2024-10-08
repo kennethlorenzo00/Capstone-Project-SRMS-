@@ -12,7 +12,7 @@
             <div class="register-form">
                 <img src="Logo.webp" class="reg-logo" alt="Logo">
                 <div class="lower-reg-form">
-                <h1 class="register-h1">Internal Client Registration</h1>
+                    <h1 class="register-h1">Internal Client Registration</h1>
                     <form class="form-reg-client" id="internalClientRegisterForm">
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="firstName" placeholder="First Name" required style="flex: 1; width:30%;">
@@ -27,20 +27,17 @@
                             <option value="" disabled selected>Select Account Type</option>
                             <option value="student">Student</option>
                             <option value="teacher">Teacher</option>
-                            <option value="teacher">Researcher</option>
+                            <option value="researcher">Researcher</option> <!-- Corrected duplicate value -->
                         </select>
                         
                         <input type="text" id="department" placeholder="Department" required>
                         <input type="email" id="email" placeholder="Email" required>
                         <input type="password" id="password" placeholder="Password" required>
                         
-                        <!-- Send Verification Link Button -->
-                        <button type="button" id="sendVerificationBtn">Send Verification Link</button>
-                        
-                        <!-- Register Button (Initially Disabled) -->
-                        <button type="submit" id="registerBtn" disabled>Register</button>
-                </form>
-                <p><a href="internal-client-login.html">Already registered? Login here</a></p>
+                        <!-- Register Button -->
+                        <button type="submit" id="registerBtn">Register</button>
+                    </form>
+                    <p><a href="internal-client-login.html">Already registered? Login here</a></p>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal Elements
     const modal = document.getElementById('editClientModal');
-    const closeModal = document.querySelector('.close');
+    const closeModal = document.querySelector('#editClientModal .close');
     const saveChangesBtn = document.getElementById('saveClientChangesBtn');
 
     // Input fields in the modal

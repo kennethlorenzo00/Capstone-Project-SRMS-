@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Center for Natural Sciences and Resources Research (CNSRR)</title>
+    <style>
+        /* Basic resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header */
+header {
+    background-color: #a30d23;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    color: white;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center; 
+}
+
+.logo img {
+    height: 70px;
+    width: 70px;
+}
+
+.logo h3 {
+    font-size: 13px;
+    margin-left: 10px; 
+    font-weight: bold;
+    margin-bottom: 0%;
+}
+
+.logo h4 {
+    font-size: 13px; 
+    margin-left: 10px; 
+    font-weight: bold;
+}
+
+.logo h5 {
+    font-size: 8px;
+    color: #f5f1f1;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+
+/* Navigation */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 75px; 
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    gap: 0px; 
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    padding: 7px 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-buttons .signup-btn {
+    background-color: white;
+    color: #a30d23;
+}
+
+        /* Banner Section */
+        .banner {
+            background-image: url('intern sample pic.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px;
+            color: rgb(255, 255, 255);
+            text-align: left;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 580px;
+        }
+
+        .banner-text {
+    
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .banner-text h1 {
+            font-size: 36px;
+            margin-top: 300px;
+        }
+
+        .banner-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 0; 
+    margin: 0;  
+}
+
+.internship-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #e9e9e9;
+    border-radius: 10px;
+}
+
+.internship-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    text-align: left;
+}
+
+.card img {
+    max-width: 100px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 600px;
+    }
+}
+
+.apply {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #a30d23;
+    padding: 40px; 
+}
+
+.apply-text {
+    width: 60%;
+    text-align: justify;
+}
+
+.apply-text h2 {
+    color: #ffffff;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.apply-text p, 
+.apply-text ul {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.who-apply {
+    width: 35%;
+}
+
+.who-apply img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+
+        /* Who could apply */
+        .apply-now-section {
+            background-color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .apply-now-section h2 {
+            font-size: 32px;
+            color: #6d0212;
+            margin-bottom: 20px;
+        }
+
+    .contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%; /* Keep the input and textarea full width */
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.contact-form label {
+    margin-bottom: 5px; /* Adds space between label and input */
+    font-weight: bold;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    background-color: #a30d23;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    align-self: center; /* Center the button horizontally */
+}
+
+        .contact-form button:hover {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #a30d23;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-logo img {
+            width: 50px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="logo.webp" alt="CNSRR Logo">
+            <div class="logo-text">
+                <h3>Center for Natural Sciences</h3>
+                <h4>and Resources Research</h4>
+                <h5>Research Institute of Science and Technology</h5>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick="login()">Login</button>
+            <button class="signup-btn" onclick="signup()">Sign Up</button>
+        </div>
+    </header>
+
+    <!-- Main Banner Section -->
+    <section id="home" class="banner">
+        <div class="banner-text">
+            <h1>Internship Opportunity at the Center for Natural Sciences and Resources Research (CNSRR)</h1>
+            <p class="lower-text"></p>
+        </div>
+    </section>
+
+    <section class="internship-section">
+        <h2>Why Join Our Internship Program?</h2>
+
+        <div class="cards-container">
+
+            <div class="card">
+                <img src="log-in-bg.jpg">
+                <h3>Experience Real-World Research</h3>
+                <p>Gain invaluable experience where you'll get hands-on experience with laboratory equipment and techniques that will prepare you for a professional career.</p>
+            </div>
+
+            <div class="card">
+                <img src="log-in-bg.jpg">
+                <h3>Research Mentorship</h3>
+                <p>Work directly with experienced researchers, receiving one-on-one mentoring to sharpen your research skills and deepen your scientific understanding.</p>
+            </div>
+
+            <div class="card">
+                <img src="log-in-bg.jpg">
+                <h3>Collaborate on Meaningful Projects</h3>
+                <p>Be part of research collaborations on impactful projects that aim to address key questions in microbiology and parasitology.</p>
+            </div>
+
+        </div>
+    </section>
+
+<!-- Who could apply -->
+<section id="apply" class="apply">
+    <div class="who-apply">
+        <img src="log-in-bg.jpg" alt="Application Image">
+    </div>
+    <div class="apply-text">
+        <h2>Who Could Apply?</h2>
+        <p>We invite students with a passion for science and an interest in microbiology, parasitology, or STEM education. This program is perfect for:</p>
+        <ul>
+            <li>Undergraduate students in Microbiology, Biology, Parasitology, or related fields.</li>
+            <li>Aspiring STEM educators looking to gain research experience.</li>
+            <li>Individuals aiming to pursue careers in research, diagnostics, or public health.</li>
+        </ul>
+    </div>
+</section>
+
+
+    <!-- Apply Now Section -->
+    <section id="apply-now" class="apply-now-section">
+        <h2>Apply Now!</h2>
+        <p>To apply for the internship program, please submit your application along with a</p>
+        <p>brief personal statement outlining your interests and career goals.</p>
+        <br>
+        <form id="internshipForm" class="contact-form">
+            <label for="name">Name <span style="color: red;">*</span></label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email <span style="color: red;">*</span></label>
+            <input type="email" id="email" name="email" required>
+            <label for="school">School <span style="color: red;">*</span></label>
+            <input type="text" id="school" name="school" required>
+            <label for="message">Message <span style="color: red;">*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="logo.webp" alt="Center for Natural Sciences Logo">
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-support">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:rist@pup.edu.ph">rist@pup.edu.ph</a></p>
+                <p>Phone: <a href="tel:+63283351990">+63 2833-51990</a></p>
+                <p>Address: Anonas Street, Sta. Mesa, Manila</p>
+            </div>
+        </div>
+        <p>&copy; 2024 Center for Natural Sciences in Resources Research. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function login() {
+            window.location.href = "index.html";
+        }
+        
+        function signup() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+<script type="module">
+    import { firestore } from './js/firebase.js';  // Import Firestore from your firebase.js file
+    import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js'; 
+  
+    // Function to log the notification to Firestore
+    async function logNotificationToFirestore(notificationData) {
+      try {
+        console.log("Attempting to log notification:", notificationData); // Debugging log
+        const notificationsRef = collection(firestore, 'notifications');
+        await addDoc(notificationsRef, notificationData);
+        console.log("Notification logged to Firestore.");
+      } catch (error) {
+        console.error("Error logging notification:", error.message);
+      }
+    }
+  
+    // Event listener for the form submission
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('internshipForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevent default form submission
+  
+        // Extract form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const school = document.getElementById('school').value;
+        const message = document.getElementById('message').value;
+  
+        // Create notification data
+        const notificationData = {
+          message: `New internship application from ${name} (${email}) at ${school}. Personal Statement: ${message}`,
+          timestamp: serverTimestamp(), // Use server timestamp
+          userId: 'system', // You can update this with the current user ID if available
+        };
+  
+        // Log the notification to Firestore
+        await logNotificationToFirestore(notificationData);
+  
+        // Clear the form after submission
+        document.getElementById('internshipForm').reset();
+  
+        // Optionally, show a success message to the user
+        alert("Your application has been submitted successfully.");
+      });
+    });
+  </script>
+  
+</body>
+</html>

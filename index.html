@@ -3,30 +3,827 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRMS Role Selection</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Center for Natural Sciences and Resources Research (CNSRR)</title>
+   
 </head>
+<style>
+    /* Basic resets */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+    }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+    /* Header */
+header {
+background-color: #a30d23;
+padding: 10px 30px;
+display: flex;
+justify-content: space-between; 
+align-items: center; 
+color: white;
+}
+
+/* Logo */
+.logo {
+display: flex;
+align-items: center; 
+}
+
+.logo img {
+height: 70px;
+width: 70px;
+}
+
+.logo h3 {
+font-size: 13px;
+margin-left: 10px; 
+font-weight: bold;
+margin-bottom: 0%;
+}
+
+.logo h4 {
+font-size: 13px; 
+margin-left: 10px; 
+font-weight: bold;
+}
+
+.logo h5 {
+font-size: 8px;
+color: #f5f1f1;
+margin-left: 10px;
+margin-bottom: 0px;
+font-weight: normal;
+}
+
+/* Navigation */
+nav ul {
+list-style: none;
+display: flex;
+gap: 75px; 
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-size: 15px;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+display: flex;
+gap: 0px; 
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+background-color: #ffcc00;
+color: black;
+border: none;
+padding: 7px 15px;
+cursor: pointer;
+font-size: 16px;
+transition: background-color 0.3s, color 0.3s;
+
+}
+
+.auth-buttons .signup-btn {
+background-color: white;
+color: #a30d23;
+}
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .signup-btn:hover {
+background-color: #a30d23;
+color: white;
+font-weight: bold;
+        }
+
+
+    /* Banner Section */
+    .banner {
+        background-image: url('log-in-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 100px;
+        color: rgb(168, 163, 163);
+        text-align: left;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 400px;
+    }
+
+    .banner-text {
+
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .banner-text h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    .banner-text p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .btn-request {
+        background-color: #b3041e;
+        color: rgb(250, 244, 244);
+        padding: 15px 30px;
+        text-decoration: none;
+        font-size: 18px;
+        border-radius: 5px;
+    }
+
+    /* Services Section */
+.services {
+background-color: #fff;
+padding: 40px 20px;
+text-align: center;
+}
+
+.services h2 {
+font-size: 32px;
+color: #a30d23;
+margin-bottom: 30px;
+}
+
+.service-item {
+display: none;
+justify-content: center;
+align-items: center;
+padding: 20px;
+}
+
+.service-item.active {
+display: flex;
+}
+
+.service-item img {
+width: 300px;
+height: auto;
+margin-right: 20px;
+}
+
+.service-info h3 {
+font-size: 24px;
+color: #a30d23;
+}
+
+.service-info p {
+font-size: 16px;
+margin: 10px 0;
+text-align: left;
+}
+
+.service-info ul {
+list-style: disc;
+text-align: left;
+padding-left: 20px;
+}
+
+.navigation {
+margin-top: 20px;
+}
+
+.navigation button {
+padding: 10px 20px;
+font-size: 16px;
+color: #fff;
+background-color: #a30d23;
+border: none;
+cursor: pointer;
+margin: 0 10px;
+border-radius: 4px;
+}
+
+.navigation button:hover {
+background-color: #800000;
+}
+
+nav ul li a:hover {
+        color: #ffcc00;
+        font-weight: bolder;
+    }
+
+/* Who Can Avail the Services */
+.service-section {
+flex: 1; 
+margin: 0 10px; 
+text-align: center;
+background-color: #f7f7f7;
+padding: 40px 0;
+}
+
+.service-section h2 {
+font-size: 24px;
+color: #800000; 
+margin-bottom: 30px;
+}
+
+.service-options {
+display: grid; 
+grid-template-columns: repeat(2, 1fr); 
+gap: 20px; 
+margin-left: 20px;
+}
+
+.service-option {
+display: flex; 
+align-items: center;
+margin: 0 80px; 
+text-align: left; 
+}
+
+.service-option img {
+max-width: 100px; 
+height: auto; 
+margin-right: 15px; 
+}
+
+.service-options .service-item {
+flex: 1;
+margin: 0 20px;
+max-width: 450px;
+}
+
+.service-options .service-item p {
+font-size: 16px;
+color: #555;
+line-height: 1.6;
+}
+    
+.internship-section {
+background-image: url('log-in-bg.jpg');
+background-size: cover;
+background-position: center;
+height: 400px;
+position: relative;
+display: flex;
+align-items: flex-end;
+justify-content: flex-start;
+margin-top: 20px;
+color: white;
+}
+
+    .overlay-text {
+padding: 20px;
+border-radius: 10px;
+position: absolute; 
+bottom: 20px; 
+left: 20px; 
+text-align: left; 
+    }
+
+    .overlay-text h3 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .overlay-text p {
+        font-size: 18px;
+    }
+
+    .overlay-text a {
+        color: #FFD700;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .overlay-text a:hover {
+        text-decoration: underline;
+    }
+
+
+        .about-us {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f5f5f5;
+        padding: 40px;
+    }
+
+    .about-us-text {
+        width: 60%;
+        text-align: justify;
+    }
+
+    .about-us-text h2 {
+        color: #a30d23;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-us-text p {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .about-us-video {
+        width: 35%;
+    }
+
+    /* Events Section */
+    .events {
+        padding: 40px;
+        text-align: center;
+    }
+
+    .events h2 {
+        font-size: 32px;
+        color: #a30d23;
+    }
+
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .event-card {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+
+    }
+
+    .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+    .event-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    /* Contact Us Section */
+    .contact-us {
+        background-color: #fff;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .contact-us h2 {
+        font-size: 32px;
+        color: #a30d23;
+        margin-bottom: 20px;
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+        border: 1px solid #ccc;
+    }
+
+    .contact-form button {
+        padding: 10px 20px;
+        background-color: #a30d23;
+        color: white;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .contact-form button:hover {
+        background-color: #ffcc00;
+        color: #000;
+    }
+
+    /* Footer Section */
+    footer {
+        background-color: #a30d23; 
+        color: white;
+        padding: 10px 1px;
+        padding-top: 40px;
+    }
+
+
+    .footer-content {
+        display: flex;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px; 
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-left: 90px;
+
+    }
+
+    .footer-logo img {
+        width: 220px;
+        height: 150px;
+        margin-bottom: 15px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    
+
+    .footer-links,
+    .footer-support,
+    .footer-contact,
+    .footer-social {
+        font-size: 12px;
+        
+    }
+
+    .footer-links h3,
+    .footer-support h3,
+    .footer-contact h3,
+    .footer-social h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #ffcc00;
+    }
+
+    .footer-links ul,
+    .footer-support ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links ul li,
+    .footer-support ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links ul li a,
+    .footer-support ul li a {
+        color: #ffffff;
+        transition: color 0.3s;
+    }
+
+    .footer-links ul li a:hover,
+    .footer-support ul li a:hover {
+        color: #ffcc00;
+    }
+
+    .footer-contact p {
+        margin-bottom: 10px;
+        color: #ffffff;
+    }
+
+    .footer-contact a {
+        color: #ffcc00;
+        transition: color 0.3s;
+    }
+
+    .footer-contact a:hover {
+        color: #fff;
+    }
+
+    .footer-social {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-social a {
+        color: #ffffff;
+        font-size: 20px;
+        margin-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    .footer-social a:hover {
+        color: #ffcc00;
+    }
+
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid #ffffff;
+        padding-top: 20px;
+        font-size: 14px;
+        color: #ffffff;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav ul {
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .auth-buttons {
+            margin-top: 15px;
+        }
+
+        .banner {
+            height: 350px;
+            padding: 80px 20px;
+        }
+
+        .banner-text h1 {
+            font-size: 32px;
+        }
+
+        .banner-text p {
+            font-size: 16px;
+        }
+
+        .service-item img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .about-us {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-us-text,
+        .about-us-video {
+            width: 100%;
+        }
+
+        .service-option {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-option img {
+            margin-bottom: 15px;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        
+    }
+</style>
 <body>
-    <!--sample comment commit-->
-    <div class="bg-image-section"></div>
-        <img src="log-in-bg.jpg"  class="LogInBg-image">
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="logo.webp" alt="CNSRR Logo">
+            <div class="logo-text">
+                <h3>Center for Natural Sciences</h3>
+                <h4>and Resources Research</h4>
+                <h5>Research Institute of Science and Technology</h5>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="role-selection.html" class="login-btn">Login</a>
+            <a href="role-selection.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Main Banner Section -->
+    <section id="home" class="banner">
+        <div class="banner-text">
+            <h1>Welcome to CNSRR</h1>
+            <p>Your partner in Natural Sciences Resources Research!</p>
+            <a href="role-selection.html" class="btn-request">Request now!</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+<section id="services" class="services">
+    <h2>SERVICES</h2>
+
+    <!-- Plate Count Method -->
+    <div class="service-item active" id="service-1">
+        <img src="log-in-bg.jpg" alt="Plate Count Method">
+        <div class="service-info">
+            <h3>Plate Count Method</h3>
+            <p>The plate count method is a standard microbiological technique used to estimate the number of viable bacteria or fungal cells in a sample.</p>
+            <ul>
+                <li>Samples are diluted appropriately.</li>
+                <li>Aliquots are plated on nutrient agar plates.</li>
+                <li>Plates are incubated for a specific duration.</li>
+                <li>SmartColony app is used to count colonies and calculate CFU/mL.</li>
+            </ul>
+        </div>
     </div>
-    <div class="logo">
-        <img src="logo.webp">
-       <br><br> <h1> Welcome!</h1>
+
+    <!-- Water Quality Analysis -->
+    <div class="service-item" id="service-2">
+        <img src="log-in-bg.jpg" alt="Water Quality Analysis">
+        <div class="service-info">
+            <h3>Water Quality Analysis</h3>
+            <p>Water quality analysis helps determine the physical, chemical, and biological characteristics of water samples to ensure safety and compliance with regulations.</p>
+            <ul>
+                <li>Parameters like pH, turbidity, and dissolved oxygen are measured.</li>
+                <li>Samples are tested for contaminants such as bacteria or chemicals.</li>
+                <li>SmartColony app is integrated to record the results and generate reports.</li>
+            </ul>
+        </div>
     </div>
-    <div class = "options">
-        <i id = "arrow"class="fa-solid fa-arrow-down-long"></i><p>Please click or tap your destination.</p>
+
+    <!-- Navigation Arrows -->
+    <div class="navigation">
+        <button id="prev-btn">Prev</button>
+        <button id="next-btn">Next</button>
     </div>
-    </div>
-    <div class="logInMenu-container">
-        <button id = "client-login-menu"onclick="location.href='client-selection.html'">Client</button><br>
-        <button id  = "lab-staff-login"onclick="location.href='lab-login.html'">Laboratory Staff</button><br>
-        <button id  = "admin-login"onclick="location.href='admin-login.html'">Admin</button><br>
-    </div>
-    <div class = "index-lower-label">
-        <p>By using this service, you understood and agree to  the PUP  <br>  Online Services <a href="external-client-login.html">Terms of Use</a> and <a href="external-client-login.html">Privacy Statement</a>.</p>
-    </div>
+</section>
+
+<!-- Who Can Avail the Services Section -->
+<section class="service-section">
+    <h2>Who Can Avail the Services:</h2>
+    <div class="service-options">
+        <div class="service-option">
+            <img src="logo.webp" alt="Internal Clients Icon">
+            <p>Internal Clients: PUP faculty members, researchers, and students (both undergraduate and postgraduate).</p>
+        </div>
+        <div class="service-option">
+            <img src="logo.webp" alt="External Clients Icon">
+            <p>External Clients: Researchers, faculty members, and students from other universities with existing MOUs with PUP RIST.</p>
+        </div>
+    </div>    
+</section>
+
+        <!-- Internship Opportunity Section -->
+        <div class="internship-section">
+            <div class="overlay-text">
+                <h3>Internship Opportunity at CNSRR</h3>
+                <p>Interested in being an intern? <a href="internship.html">Click here</a> to learn more about our internship opportunities!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-us">
+        <div class="about-us-text">
+            <h2>About Us</h2>
+            <p>The Center for Natural Sciences and Resources Research (CNSRR) offers comprehensive analytical services for various industries and research projects. Our mission is to provide high-quality, reliable scientific analysis for environmental, biological, and chemical samples.</p>
+            <p>Our team of experts is committed to maintaining the highest standards of accuracy and precision in our results, helping our clients meet their goals and regulatory requirements.</p>
+        </div>
+        <div class="about-us-video">
+            <video src="your-video-url.mp4" controls width="100%"></video>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <h1>Events and Activities</h1>
+        <div class="event-grid">
+            <!-- Event Cards -->
+            <div class="event-card">
+                <img src="log-in-bg.jpg" alt="Event 1">
+                <p>24th PHMNCC Annual Symposium and General Assembly</p>
+                <a href="#">More info...</a>
+            </div>
+            <div class="event-card">
+                <img src="log-in-bg.jpg" alt="Event 2">
+                <p>CALL FOR ENTRIES: Calling all Innovators & Future Scientists!</p>
+                <a href="#">More info...</a>
+            </div>
+            <div class="event-card">
+                <img src="log-in-bg.jpg" alt="Event 3">
+                <p>RIST Core Seminar Episode 2: Biotechnology and Marine Toxicology</p>
+                <a href="#">More info...</a>
+            </div>
+            <div class="event-card">
+                <img src="log-in-bg.jpg" alt="Event 4">
+                <p>CALL FOR ENTRIES: 3rd PUP Research Pitching Competition</p>
+                <a href="#">More info...</a>
+            </div>
+            <div class="event-card">
+                <img src="log-in-bg.jpg" alt="Event 5">
+                <p>PHMNCC Annual Symposium and General Assembly 2024</p>
+                <a href="#">More info...</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="contact-us">
+        <h2>Contact Us</h2>
+        <p>Any questions? Send us a message!</p>
+        <p>Just fill out this form and we will contact you promptly to discuss your queries.</p>
+        <form class="contact-form" action="submit-form.php" method="post">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <!-- Logo and Short About Us -->
+            <div class="footer-logo">
+                <img src="logo.webp" alt="Center for Natural Sciences Logo">
+            </div>
+
+            <!-- Company Links -->
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+            <!-- Support Links -->
+            <div class="footer-support">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:rist@pup.edu.ph">rist@pup.edu.ph</a></p>
+                <p>Phone: <a href="tel:+63283351990">+63 2833-51990</a></p>
+                <p>Address: Anonas Street, Sta. Mesa, Manila</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+           <p>&copy; 2024 Center for Natural Sciences and Resources Research. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function login() {
+            window.location.href = "index.html";
+        }
+        
+        function signup() {
+            window.location.href = "index.html";
+        }
+
+        const serviceItems = document.querySelectorAll('.service-item');
+        let currentIndex = 0;
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            serviceItems[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % serviceItems.length;
+            serviceItems[currentIndex].classList.add('active');
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            serviceItems[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex - 1 + serviceItems.length) % serviceItems.length;
+            serviceItems[currentIndex].classList.add('active');
+        });
+    </script>
 </body>
-</html>

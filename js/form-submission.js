@@ -8,6 +8,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const confirmSubmitButton = document.getElementById('confirmSubmit');
     let pendingData = {}; 
 
+    const reviewRequestClose = document.querySelector('#reviewRequestModal .close');
+
+    // Close the modal when the "x" is clicked
+    reviewRequestClose.addEventListener('click', () => {
+        reviewModal.style.display = 'none';
+    });
+
     const requestOptionsMap = {
         microbialTesting: {
             title: "Microbial Testing Methods",

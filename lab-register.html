@@ -7,7 +7,7 @@
     <script type="module" src="js/auth.js" defer></script>
 </head>
 <body>
-    <div class="wrapper" style="background-image: url('registrationBG.jpg') !important; background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
+    <div class="wrapper" style="background-image: url('registrationBG.jpg'); background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
         <div class="register-body">
             <div class="register-form">
                 <img src="Logo.webp" class="reg-logo" alt="Logo">
@@ -24,14 +24,13 @@
                         <input type="text" id="contactNumber" placeholder="Contact Number" required>
                         <input type="email" id="email" placeholder="Email" required>
                         <input type="password" id="password" placeholder="Password" required>
-                        
-                        <!-- Send Verification Link Button -->
-                        <button type="button" id="sendVerificationBtn">Send Verification Link</button>
-                        
-                        <!-- Register Button (Initially Disabled) -->
-                        <button type="submit" id="registerBtn" disabled>Register</button>
-                </form>
-                <p><a href="lab-login.html">Already registered? Login here</a></p>
+
+                        <!-- Removed Send Verification Button -->
+
+                        <!-- Register Button -->
+                        <button type="submit" id="registerBtn">Register</button>
+                    </form>
+                    <p><a href="lab-login.html">Already registered? Login here</a></p>
                 </div>
             </div>
         </div>

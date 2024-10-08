@@ -7,44 +7,41 @@
     <script type="module" src="js/auth.js" defer></script>
 </head>
 <body>
-        <div class="wrapper" style="background-image: url('registrationBG.jpg') !important; background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
-            <div class="register-body">
-                <div class="register-form">
-                    <img src="Logo.webp" class="reg-logo" alt="Logo">
-                    <div class="lower-reg-form">
+    <div class="wrapper" style="background-image: url('registrationBG.jpg') !important; background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
+        <div class="register-body">
+            <div class="register-form">
+                <img src="Logo.webp" class="reg-logo" alt="Logo">
+                <div class="lower-reg-form">
                     <h1 class="register-h1">External Client Registration</h1>
-                        <form class="form-reg-client" id="externalClientRegisterForm">
-                            <div style="display: flex; gap: 10px;">
-                                <input type="text" id="firstName" placeholder="First Name" required style="flex: 1; width:30%;">
-                                <input type="text" id="middleName" placeholder="Middle Name" style="flex: 1; width:30%;">
-                                <input type="text" id="lastName" placeholder="Last Name" required style="flex: 1; width:30%;">
-                            </div>
-                            <input type="text" id="username" placeholder="Username" required>
-                            <input type="text" id="address" placeholder="Address" required>
-                            <input type="text" id="contactNumber" placeholder="Contact Number" required>
+                    <form class="form-reg-client" id="externalClientRegisterForm">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="firstName" placeholder="First Name" required style="flex: 1; width:30%;">
+                            <input type="text" id="middleName" placeholder="Middle Name" style="flex: 1; width:30%;">
+                            <input type="text" id="lastName" placeholder="Last Name" required style="flex: 1; width:30%;">
+                        </div>
+                        <input type="text" id="username" placeholder="Username" required>
+                        <input type="text" id="address" placeholder="Address" required>
+                        <input type="text" id="contactNumber" placeholder="Contact Number" required>
 
-                            <select id="userType" required>
-                                <option value="" disabled selected>Select Account Type</option>
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="teacher">Researcher</option>
-                            </select>
-                            
-                            <input type="text" id="school" placeholder="School" required>
-                            <input type="text" id="department" placeholder="Department" required>
-                            <input type="email" id="email" placeholder="Email" required>
-                            <input type="password" id="password" placeholder="Password" required>
-                            
-                            <!-- Send Verification Link Button -->
-                            <button type="button" id="sendVerificationBtn">Send Verification Link</button>
-                            
-                            <!-- Register Button (Initially Disabled) -->
-                            <button type="submit" id="registerBtn" disabled>Register</button>
+                        <select id="userType" required>
+                            <option value="" disabled selected>Select Account Type</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="researcher">Researcher</option> <!-- Corrected duplicate value -->
+                        </select>
+                        
+                        <input type="text" id="school" placeholder="School" required>
+                        <input type="text" id="department" placeholder="Department" required>
+                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="password" id="password" placeholder="Password" required>
+                        
+                        <!-- Register Button -->
+                        <button type="submit" id="registerBtn">Register</button>
                     </form>
                     <p><a href="external-client-login.html">Already registered? Login here</a></p>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
