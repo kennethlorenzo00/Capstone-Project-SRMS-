@@ -2668,6 +2668,15 @@ h1 {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
+    margin: 0;
+}
+
+span#fullNameDetail, span#address, span#contactNumber, span#username {
+    background: lightgray;
+    height: 30px;
+    align-content: center;
+    padding-left: 10px;
+    width: 100%;
 }
 
 .account-header {
@@ -2693,6 +2702,93 @@ h1 {
     background-color: #f0f0f0; /* Placeholder background color */
 }
 
+/*admin account profile*/
+h1.accproflabel {
+    width: 100%;
+    border-bottom: 2px solid;
+}
+
+h2.profinfolabel {
+    background: #7D1B1B;
+    height: 50px;
+    color: white;
+    text-align: center;
+    align-content: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.accountinfo {
+    padding: 20px 150px;
+}
+
+button#editAccountBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.adminprofile {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+p.accdeetslbl { /*account details label*/
+    margin: 0;
+    width: 20%;
+    align-content: center;
+}
+
+/*edit account admin*/
+input#editFirstName, input#editMiddleName, input#editLastName {
+    width: 95%;
+}
+button#saveChangesBtn {
+    margin: auto;
+}
+
+input#editAddress, input#editContactNumber,input#editUsername {
+    width: auto;
+}
+
+/*account profile for client*/
+
+div#myAccountContent {
+    margin-left: 250px;
+    margin-top: 50px;
+}
+
+span#clientfullNameDetail, span#clientaddress, span#clientcontactNumber, span#clientusername {
+    background: lightgray;
+    height: 30px;
+    align-content: center;
+    padding-left: 10px;
+}
+
+button#editClientAccountBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+/*edit account for client*/
+
+input#editClientFirstName, input#editClientMiddleName, input#editClientLastName {
+    width: 95%;
+}
+
+input#editClientAddress, input#editClientContactNumber,input#editClientUsername {
+    width: auto;
+}
+
+button#saveClientChangesBtn {
+    margin: auto;
+}
+
 /* Laboratory Staff Role Bubble */
 .role-bubble {
     background-color: #FFFACD; /* Light yellow color */
@@ -2702,8 +2798,9 @@ h1 {
     display: inline-block;
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
+    width: 30%;
 }
 
 /* Account Details Bubbles */
@@ -2711,7 +2808,6 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 30px;
 }
 
 .detail-bubble {

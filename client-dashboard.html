@@ -679,29 +679,30 @@
 
             <!-- My Account Section -->
             <div id="myAccountContent" class="tabcontent">
-                <h1>My Account</h1>
-                <h2>Profile Information</h2>
+                <h1 class="accproflabel">My Account</h1>
+                <div class="adminprofile">
+                <h2 class="profinfolabel">Profile Information</h2>
 
+                <div class="accountinfo">
                 <!-- Full Name and Account Number (Header) -->
                 <div class="account-header">
                     <!-- Profile picture placeholder -->
                     <div class="profile-picture-container">
                         <img id="clientProfilePicture" class="profile-picture" src="default-avatar.png" alt="Profile Picture">
                         <input type="file" id="clientProfilePictureInput" accept="image/*" style="display: none;"> 
-
                     </div>
                     
                     <!-- Account Details -->
                     <div class="account-details">
                         <span id="clientFullName" class="full-name"></span>
-                        <p class="account-number" id="clientAccountNumber"></p>
-                    </div>
-                </div>
-
+                        <p class="account-number" id="clientAccountNumber"></p>       
                 <!-- Role Bubble -->
                 <div class="role-bubble" style="background-color: rgb(0, 255, 110); color: white;">
                     Client
                 </div>
+                    </div>
+                </div>
+
 
                 <!-- Account Details Bubbles -->
                 <div class="account-details">
@@ -713,31 +714,39 @@
 
                 <!-- Edit Button -->
                 <button id="editClientAccountBtn" class="edit-btn">Edit</button>
+                </div>
+                </div>
             </div>
 
             <!-- Edit Modal -->
             <div id="editClientModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content" style="display:flex;height: 65%;flex-direction: column;">
                     <span class="close">&times;</span>
                     <h2>Edit Account Details</h2>
                     
-                    <label for="editClientFirstName">First Name:</label>
-                    <input type="text" id="editClientFirstName" placeholder="First Name">
-                    
-                    <label for="editClientMiddleName">Middle Name:</label>
-                    <input type="text" id="editClientMiddleName" placeholder="Middle Name">
-                    
-                    <label for="editClientLastName">Last Name:</label>
-                    <input type="text" id="editClientLastName" placeholder="Last Name">
+                    <div style="display: flex;align-items: center;justify-content: space-between;"> 
+                        <div style="display: flex;flex-direction: column;width: 30%;">
+                        <label for="editClientFirstName">First Name:</label>
+                        <input type="text" id="editClientFirstName" placeholder="First Name">
+                        </div>
+                        <div style="display: flex;flex-direction: column;width: 30%;">
+                        <label for="editClientMiddleName">Middle Name:</label>
+                        <input type="text" id="editClientMiddleName" placeholder="Middle Name">
+                        </div>
+                        <div style="display: flex;flex-direction: column;width: 30%;">
+                        <label for="editClientLastName">Last Name:</label>
+                        <input type="text" id="editClientLastName" placeholder="Last Name">
+                        </div>
+                    </div>
+
+                    <label for="editClientUsername">Username:</label>
+                    <input type="text" id="editClientUsername" placeholder="Username">
                     
                     <label for="editClientAddress">Address:</label>
                     <input type="text" id="editClientAddress" placeholder="Address">
                     
-                    <label for="editClientContactNumber">Contact Number:</label>
+                    <label for="editClientContactNumber" style="width: 250px;">Contact Number:</label>
                     <input type="text" id="editClientContactNumber" placeholder="Contact Number">
-                    
-                    <label for="editClientUsername">Username:</label>
-                    <input type="text" id="editClientUsername" placeholder="Username">
                     
                     <button id="saveClientChangesBtn">Save Changes</button>
                 </div>
