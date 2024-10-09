@@ -57,7 +57,7 @@ async function renderAppointments() {
                             <td>${requesterName}</td>
                             <td>${endDate}</td>
                             <td>${assignedStaff}</td>
-                            <td><button class="edit-btn" data-appointment-id="${appointmentId}">Edit</button></td>
+                            <td><button class="adappedit-btn" data-appointment-id="${appointmentId}">Edit</button></td>
                         </tr>
                     `;
                     appointmentsTable.innerHTML += appointmentRow;
