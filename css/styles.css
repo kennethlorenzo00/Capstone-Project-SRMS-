@@ -1016,6 +1016,80 @@ h1 {
    -ms-transform: translateY(12px);
 }
 
+/* Styling for the Edit Event Modal */
+#editEventModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* On top of everything */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+    overflow: auto; /* Enable scrolling if needed */
+}
+
+/* Modal content box */
+#editEventModal .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and center-aligned */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Adjust width as needed */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    animation: fadeIn 0.5s; /* Fade-in animation */
+}
+
+/* Close button */
+#editEventModal .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#editEventModal .close:hover,
+#editEventModal .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Input fields */
+#editEventModal input[type="text"],
+#editEventModal textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Save button */
+#saveEditEventBtn {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#saveEditEventBtn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Modal fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
 
 /* Modal styles */

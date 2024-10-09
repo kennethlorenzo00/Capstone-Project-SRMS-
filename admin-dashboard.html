@@ -15,6 +15,7 @@
     <script type="module" src="js/admin-home.js" defer></script>  
     <script type="module" src="js/admin-forecast.js" defer></script>  
     <script type="module" src="js/admin-home-event.js" defer></script>  
+    <script type="module" src="js/request-forecast.js" defer></script> 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -197,9 +198,12 @@
                             <div id="allRequests-table-container">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h2>All Requests</h2>
+                                    <!-- Search and Forecast Button -->
                                     <div style="margin-top: auto;">
                                         <input type="text" id="allRequestsSearch" placeholder="Search all requests...">
+                                        <button id="forecastBtn">Show Forecast</button>
                                     </div>
+
                                 </div>
                                 <table id="allRequestsTable">
                                     <thead>
@@ -343,6 +347,26 @@
                     </div>
                 </div>
             </div>
+
+         <!-- Forecasting and Top 3 Requests Section -->
+         <div id="forecastSection" style="display: none;">
+            <div class="charts-container">
+                <h2>Request Forecasting and Top Requests</h2>
+                
+                <!-- Line Chart for Forecasting Requests -->
+                <div class="chart-box">
+                    <h3>Request Forecasting (Past 3 Months + Future 3 Months)</h3>
+                    <canvas id="requestForecastChart"></canvas>
+                </div>
+
+                <!-- Line Chart for Top 3 Request Types -->
+                <div class="chart-box">
+                    <h3>Top 3 Request Types</h3>
+                    <canvas id="requestsTopRequestsChart"></canvas>
+                </div>
+            </div>
+            <button id="backForecastBtn">Back</button>
+        </div>
 
         <!-- Admin Request Details Section -->
         <div id="adminRequestDetailsSection" class="hidden">
