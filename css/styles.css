@@ -1644,89 +1644,68 @@ h1 {
 
 /* Specific Styles for Each Table */
   /* all Requests Table Styling */
-#allRequestsTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
+  #appointment {
     font-family: Arial, sans-serif;
-}
-
-#allRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#allRequestsTable th, #allRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#allRequestsTable tbody tr:nth-child(even) {
+    padding: 20px;
+    padding-top: 10px;
     background-color: #f9f9f9;
-}
-
-#allRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#allRequestsTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#allRequestsTable td {
-    color: #333;
-}
-
-#allRequestsTable button {
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 100px;
-}
-
-#allRequestsTable button:hover {
-    background-color: #45a049;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
 }
 
 #allRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 20px;
 }
 
+/* Table header styles */
 #allRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#allRequestsTable th, #allRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#allRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#allRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #allRequestsTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#allRequestsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#allRequestsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#allRequestsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#allRequestsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #allRequestsTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
 }
+
+/* Hover effect for rows */
+#allRequestsTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
 
 #allRequestsTable button {
     background-color: #A90000; 
@@ -1735,129 +1714,77 @@ h1 {
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 5px;
-    
+    margin-left: 100px;
 }
-
-#allRequestsTable button:hover {
-    background-color: #45a049;
-}
-
-#allRequestsTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
-
-#allRequestsTable th:last-child {
-    border-radius: 0 15px 15px 0; 
-}
-
 
 
   /* Service Requests Table Styling */
-  #serviceRequestsTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
-}
-
-#serviceRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#serviceRequestsTable th, #serviceRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#serviceRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#serviceRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#serviceRequestsTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#serviceRequestsTable td {
-    color: #333;
-}
-
-#serviceRequestsTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#serviceRequestsTable button:hover {
-    background-color: #45a049;
-}
-
+  
 #serviceRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 20px;
 }
 
+/* Table header styles */
 #serviceRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#serviceRequestsTable th, #serviceRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#serviceRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#serviceRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #serviceRequestsTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#serviceRequestsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#serviceRequestsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#serviceRequestsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#serviceRequestsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #serviceRequestsTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
 }
 
-#serviceRequestsTable button {
+/* Hover effect for rows */
+#serviceRequestsTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+
+
+#serviceRequestsTablebutton {
     background-color: #A90000; 
     color: white;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 5px;
-    
     margin-left: 100px;
 }
 
-#serviceRequestsTable button:hover {
-    background-color: #4CAF50;
-}
 
-#serviceRequestsTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
-
-#serviceRequestsTable th:last-child {
-    border-radius: 0 15px 15px 0; 
-}
 
   /* Follow up Requests Table Styling */
   #followUpRequestsTable {
@@ -2344,6 +2271,7 @@ h1 {
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
 }
 
 
@@ -2354,10 +2282,6 @@ h1 {
 }
 
 /* Table header styles */
-#appointmentsTable{
-    border: 2px solid #A90000; /* Border around cells */
-}
-
 #appointmentsTable thead {
     background-color: #A90000; /* Green background */
     color: white; /* White text */
@@ -2366,16 +2290,32 @@ h1 {
 #appointmentsTable th {
     padding: 12px 15px;
     text-align: left;
+    border-top: 2px solid;
+}
+
+#appointmentsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#appointmentsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
 }
 
 /* Table body styles */
 #appointmentsTable tbody tr {
     background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
 }
 
 #appointmentsTable tbody tr:nth-child(even) {
     background-color: #f2f2f2; /* Alternate row color */
 }
+
 
 #appointmentsTable td {
     padding: 12px 15px;
@@ -2384,7 +2324,7 @@ h1 {
 
 /* Hover effect for rows */
 #appointmentsTable tbody tr:hover {
-    background-color: #d1e7dd; /* Light green on hover */
+    background-color: #d8f0e5; /* Light green on hover */
 }
 
 /* Edit button styles */
@@ -2840,6 +2780,17 @@ button#saveClientChangesBtn {
 
 .edit-btn:hover {
     background-color: #870303;
+}
+
+.adappedit-btn {
+    background-color: #A90000   ;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: -6px;
 }
 
 /* Process container styling */
