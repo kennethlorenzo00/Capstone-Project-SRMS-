@@ -2264,7 +2264,7 @@ h1 {
   }
   
   .event-item .more-info-btn {
-    display: block;
+    display: center;
     margin-top: 10px;
   }
   
@@ -2826,7 +2826,7 @@ button#saveClientChangesBtn {
 
 .detail-bubble {
     background-color: #f0f0f0;
-    padding: 15px;
+    padding: 5px;
     border-radius: 30px;
     font-size: 14px;
     color: #333;
@@ -2868,8 +2868,21 @@ button#saveClientChangesBtn {
 }
 
 /* Process container styling */
+.process-container h2 {
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+.process-container h3 {
+    text-align: left;
+    padding-left: 20px;
+    font-size: 30px;
+    margin:0;
+    margin-bottom: 20px;
+}
+
 .process-container {
-    background-color: #f4f4f4;
+    background-color: #D4D4D4;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -2892,36 +2905,83 @@ button#saveClientChangesBtn {
     background-color: #ffffff;
     padding: 15px;
     border: 1px solid #ccc;
-    width: 150px;
+    width: 170px;
     text-align: center;
     border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    height: 100px;
 }
 
 .step-box h4 {
     font-size: 1.2em;
+    margin: 0;
+    color: #7D1B1B !important;
+    text-align: left;
+}
+
+.step-box p {
+    text-align: left;
 }
 
 /* Button styling */
 #requestNowButton {
-    background-color: #28a745;
+    background-color: #008AC0;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display:block;
+    margin: 20px;
+    margin-bottom: 10px;
 }
 
 /* Requests Overview */
+.requests-overview {
+    padding: 10px 25px 20px;
+    background: #EAA6A660;
+    border-radius: 15px;
+}
+
 .requests-overview table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.requests-overview th, td {
+.requests-overview th {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: left;
 }
+
+.requests-overview td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    text-align: center;
+}
+
+
+#recentRequestsTable thead {
+    background: #7D1B1B;
+    color: white;
+}
+
+#recentRequestsTable th, td{
+    border: none;
+    text-align: center;
+
+}
+
+#recentRequestsTable td {
+    padding: 10px; /* Adds padding to table cells */
+    border: none; /* Removes borders from table data cells */
+    background-color: white; /* White background for body rows */
+    vertical-align: middle; /* Vertically center-align text */
+    border-bottom: 2px solid #00000030;
+}
+
+
 
 /* Events Section */
 .scroll-container {
@@ -2930,12 +2990,13 @@ button#saveClientChangesBtn {
 }
 
 .event-item {
-    width: 200px;
+    width: 20%;
     margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 15px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 5px 5px 5px rgba(106, 106, 106, 0.2);
+    background-color: white;
 }
 
 .event-item img {
@@ -2943,6 +3004,7 @@ button#saveClientChangesBtn {
     height: 150px;
     object-fit: cover;
 }
+
 
 .task-count {
     display: flex;
