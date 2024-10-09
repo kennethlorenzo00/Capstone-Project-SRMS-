@@ -3,6 +3,19 @@ import { database, firestore } from './firebase.js'; // Adjust the path as neede
 import { ref, get, } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp, doc, getDoc} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
+
+const buttons = document.querySelectorAll('.manageuserbutton button');
+
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove 'active' class from all buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add 'active' class to the clicked button
+        this.classList.add('active');
+    });
+});
+
 // Function to format Firestore timestamps
 function formatTimestamp(timestamp) {
     if (timestamp) {

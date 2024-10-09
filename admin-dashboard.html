@@ -186,14 +186,19 @@
             <div id="requestListContainer">
                 <div id="requestList" class="tabcontent">
                     <div class="requestList">
-                        <div style="border-bottom: 2px solid black;">
-                            <h1>Request List</h1>
+                        <div style="border-bottom: 2px solid black; margin-bottom: 0px;">
+                            <div class="header-section">
+                                <h1 class="left-align">Request List</h1>
+                                <button id="forecastBtn">Forecast</button>
+                            </div>
+                            
                             <div id="requestButtons" class="manageuserbutton">
-                                <button class="color-change" id="allRequestsBtn" onclick="openTab(event, 'allRequests')">All Requests</button>
+                                <button class="color-change active" id="allRequestsBtn" onclick="openTab(event, 'allRequests')">All Requests</button>
                                 <button class="color-change" id="serviceRequestsBtn" onclick="openTab(event, 'serviceRequests')">Service Requests</button>
                                 <button class="color-change" id="followUpRequestsBtn" onclick="openTab(event, 'followUpRequests')">Follow-up Requests</button>
-                            </div>
+                            </div>                            
                         </div>
+                        
                         <div id="table-container">
                             <div id="allRequests-table-container">
                                 <div style="display: flex; justify-content: space-between;">
@@ -201,7 +206,6 @@
                                     <!-- Search and Forecast Button -->
                                     <div style="margin-top: auto;">
                                         <input type="text" id="allRequestsSearch" placeholder="Search all requests...">
-                                        <button id="forecastBtn">Show Forecast</button>
                                     </div>
 
                                 </div>
@@ -271,14 +275,18 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="paginationControls" style="display: flex; justify-content: center; margin-top: 20px;">
-                            <button id="prevPage" disabled>Previous</button>
-                            <span id="pageInfo">Page 1</span>
-                            <button id="nextPage">Next</button>
+                        <a href="#" id="requestHistoryBtn">
+                            <i class="fas fa-history" style="font-size: 24px; margin-right: 5px;"></i> <!-- History icon -->
+                            <span style="line-height: 1;">Request History</span> <!-- Adjust line height -->
+                        </a>
+                        
+                            <div id="paginationControls" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                                <button id="prevPage" disabled>Previous</button>
+                                <span id="pageInfo">Page 1</span>
+                                <button id="nextPage">Next</button>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: center; margin-top: 10px;">
-                            <button id="requestHistoryBtn" style="margin-left: 20px;" >Request History</button> <!-- Button to show request history -->
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -380,25 +388,27 @@
         </div>
           
             <!-- Analysis Report Tab -->
-            <div id="analysisReport" class="tabcontent hidden">
-                <h2>Analysis Report</h2>
-                <p>This section displays all analysis report messages and their corresponding Request IDs.</p>
-                                <!-- Search Bar -->
-                                <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+<div id="analysisReport" class="tabcontent hidden">
+    <h2>Analysis Report</h2>
+    <div class="header-container">
+        <p>This section displays all analysis report messages and their corresponding Request IDs.</p>
+        <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+    </div>
+    <table id="analysisReportTable">
+        <thead>
+            <tr>
+                <th>Message</th>
+                <th>Request ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="analysisReportTableBody">
+            <!-- Analysis report rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
             
-                <table id="analysisReportTable">
-                    <thead>
-                        <tr>
-                            <th>Message</th>
-                            <th>Request ID</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="analysisReportTableBody">
-                        <!-- Analysis report rows will be dynamically added here -->
-                    </tbody>
-                </table>
-            </div>
 
             <!-- Admin Account Tab -->
             <div id="account" class="tabcontent" style="display:none;">
