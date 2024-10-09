@@ -1264,6 +1264,7 @@ h1 {
             overflow: hidden;
         }
 
+        
 /*manage users*/
 
     .manageusers h1 {
@@ -1271,14 +1272,31 @@ h1 {
         margin-bottom: 0px;
     }
 
-    .manageuserbutton {
-        margin-top: 10px;
-        margin-bottom: 15px;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        
+    .manageuserbutton button {
+        background-color: rgb(207, 207, 207); /* Default button color */
+        color: black; /* Text color */
+        border: none; /* Remove default border */
+        padding: 10px 20px; /* Add padding */
+        margin: 5px; /* Add margin */
+        cursor: pointer; /* Pointer cursor on hover */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s; /* Smooth transition for color change */
     }
+
+/* More specific selector for the active button */
+#requestButtons .manageuserbutton button.active {
+    background-color: yellow; /* Color when the button is selected */
+    color: black; /* Change text color for better contrast */
+}
+
+
+    
+/* Active Button Style */
+.manageuserbutton button.active {
+    background-color: yellow; /* Color when the button is selected */
+    color: black; /* Change text color for better contrast */
+}
+
 
     #addClientBtn, #addStaffBtn {
         background-color: #FFCC00 !important;
@@ -1299,6 +1317,11 @@ h1 {
     .color-change {
         margin:0px;
         margin-right:10px;
+    }
+    
+    .color-change button.active {
+        background-color: yellow; /* Color when the button is selected */
+        color: black; /* Change text color for better contrast */
     }
 
 
@@ -1675,14 +1698,17 @@ h1 {
 #requestList .requestList {
     padding: 20px;
     padding-top: 0;
+    padding-bottom: 15px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 /* Table Container Styles */
 #requestList #table-container {
-    margin-top: 20px;
+    margin-top: 5px;
+    margin-bottom: 1px;
 }
 
 /* Table Styles */
@@ -1726,6 +1752,29 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     
+}
+
+
+/* Flexbox for aligning h1 and button */
+.header-section {
+    display: flex;
+    justify-content: space-between; /* Aligns h1 to the left and button to the right */
+    align-items: center; /* Vertically centers both elements */
+}
+
+/* Heading alignment is already handled by flexbox */
+.left-align {
+    margin: 0; /* Removes default margin to align better */
+}
+
+/* Style for the button */
+#forecastBtn {
+    background-color: #1EBFFF;
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #allRequestsTable {
@@ -1774,6 +1823,7 @@ h1 {
     border: none    ;
 }
 
+
 /* Hover effect for rows */
 #allRequestsTable tbody tr:hover {
     background-color: #d8f0e5; /* Light green on hover */
@@ -1787,9 +1837,14 @@ h1 {
     border: none;
     padding: 8px 12px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-left: 100px;
+    border-radius: 10px;
 }
+
+#allRequestsTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
 
 
   /* Service Requests Table Styling */
@@ -1848,53 +1903,78 @@ h1 {
 
 
 
-#serviceRequestsTablebutton {
+
+#serviceRequestsTable button {
     background-color: #A90000; 
     color: white;
     border: none;
     padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 100px;
+    cursor: pointer;    
+    border-radius: 10px;
+}
+
+#serviceRequestsTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
 }
 
 
 
   /* Follow up Requests Table Styling */
+
   #followUpRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 20px;
 }
 
+/* Table header styles */
 #followUpRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#followUpRequestsTable th, #followUpRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#followUpRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#followUpRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #followUpRequestsTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#followUpRequestsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#followUpRequestsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#followUpRequestsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#followUpRequestsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #followUpRequestsTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
 }
+
+/* Hover effect for rows */
+#followUpRequestsTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
 
 #followUpRequestsTable button {
     background-color: #A90000; 
@@ -1902,72 +1982,14 @@ h1 {
     border: none;
     padding: 8px 12px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
-#followUpRequestsTable button:hover {
-    background-color: #45a049;
+#followUpRequestsTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
 }
-
-#followUpRequestsTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
-}
-
-#followUpRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#followUpRequestsTable th, #followUpRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#followUpRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#followUpRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#followUpRequestsTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#followUpRequestsTable td {
-    color: #333;
-}
-
-#followUpRequestsTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    
-    margin-left: 100px;
-}
-
-#followUpRequestsTable button:hover {
-    background-color: #4CAF50;
-}
-
-#followUpRequestsTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
-
-#followUpRequestsTable th:last-child {
-    border-radius: 0 15px 15px 0; 
-}
-
-
 
 /* Input Styles within Request List */
 #requestList input[type="text"] {
@@ -2264,7 +2286,7 @@ h1 {
   }
   
   .event-item .more-info-btn {
-    display: center;
+    display: block;
     margin-top: 10px;
   }
   
@@ -2557,6 +2579,7 @@ h1 {
 }
 
 
+
 /* General Button Styles */
 .filter-buttons {
     display: flex; /* Use flexbox for horizontal alignment */
@@ -2826,7 +2849,7 @@ button#saveClientChangesBtn {
 
 .detail-bubble {
     background-color: #f0f0f0;
-    padding: 5px;
+    padding: 15px;
     border-radius: 30px;
     font-size: 14px;
     color: #333;
@@ -2868,21 +2891,8 @@ button#saveClientChangesBtn {
 }
 
 /* Process container styling */
-.process-container h2 {
-    text-align: left;
-    padding-left: 20px;
-    margin: 10px 0;
-}
-.process-container h3 {
-    text-align: left;
-    padding-left: 20px;
-    font-size: 30px;
-    margin:0;
-    margin-bottom: 20px;
-}
-
 .process-container {
-    background-color: #D4D4D4;
+    background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -2905,106 +2915,51 @@ button#saveClientChangesBtn {
     background-color: #ffffff;
     padding: 15px;
     border: 1px solid #ccc;
-    width: 170px;
+    width: 150px;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    height: 100px;
 }
 
 .step-box h4 {
     font-size: 1.2em;
-    margin: 0;
-    color: #7D1B1B !important;
-    text-align: left;
-}
-
-.step-box p {
-    text-align: left;
 }
 
 /* Button styling */
 #requestNowButton {
-    background-color: #008AC0;
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display:block;
-    margin: 20px;
-    margin-bottom: 10px;
 }
+
 
 /* Requests Overview */
-.requests-overview {
-    padding: 10px 25px 20px;
-    background: #EAA6A660;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
 .requests-overview table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.requests-overview th {
+.requests-overview th, td {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: left;
 }
-
-.requests-overview td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
-    text-align: center;
-}
-
-
-#recentRequestsTable thead {
-    background: #7D1B1B;
-    color: white;
-}
-
-#recentRequestsTable th, td{
-    border: none;
-    text-align: center;
-
-}
-
-#recentRequestsTable td {
-    padding: 10px; /* Adds padding to table cells */
-    border: none; /* Removes borders from table data cells */
-    background-color: white; /* White background for body rows */
-    vertical-align: middle; /* Vertically center-align text */
-    border-bottom: 2px solid #00000030;
-}
-
-
 
 /* Events Section */
-
-div#eventsSection {
-    background: #e7dede;
-    border-radius: 15px;
-    padding: 20px;
-}
-
 .scroll-container {
     display: flex;
     overflow-x: auto;
 }
 
 .event-item {
-    width: 20%;
+    width: 200px;
     margin: 10px;
-    padding: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 5px 5px 5px rgba(106, 106, 106, 0.2);
-    background-color: white;
 }
 
 .event-item img {
@@ -3012,7 +2967,6 @@ div#eventsSection {
     height: 150px;
     object-fit: cover;
 }
-
 
 .task-count {
     display: flex;
@@ -3568,110 +3522,77 @@ button#saveChangesBtn {
 }
 
 /* General styles for the analysis report section */
-#analysisReportTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
-}
-
-#analysisReportTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#analysisReportTable th, #analysisReportTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#analysisReportTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#analysisReportTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#analysisReportTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#analysisReportTable td {
-    color: #333;
-}
-
-#analysisReportTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#analysisReportTable button:hover {
-    background-color: #45a049;
-}
 
 #analysisReportTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 20px;
 }
 
+/* Table header styles */
 #analysisReportTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#analysisReportTable th, #analysisReportTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#analysisReportTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#analysisReportTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #analysisReportTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#analysisReportTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#analysisReportTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#analysisReportTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#analysisReportTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #analysisReportTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
+}
+#analysisReportTable td:last-child {
+    display: flex;
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button (optional) */
+    margin-left: -50px;
 }
 
-#analysisReportTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    
-    margin-left: 100px;
+/* Hover effect for rows */
+#analysisReportTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
 }
 
-#analysisReportTable button:hover {
-    background-color: #4CAF50;
+
+.header-container {
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: space-between; /* Space between the elements */
+    align-items: center; /* Center the items vertically */
+    margin-bottom: 20px; /* Add some space below the header */
 }
 
-#analysisReportTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
-
-#analysisReportTable th:last-child {
-    border-radius: 0 15px 15px 0; 
+#searchBar {
+    padding: 8px 12px; /* Padding for the search bar */
+    border: 1px solid #ccc; /* Border for the search bar */
+    border-radius: 4px; /* Rounded corners */
+    width: 300px; /* Set a width for the search bar */
 }
 
 
@@ -3684,6 +3605,20 @@ button#saveChangesBtn {
         font-size: 14px; /* Smaller font size on mobile */
     }
 }
+
+.search-container {
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: flex-end; /* Align to the right */
+    margin-bottom: 20px; /* Add some space below the search bar */
+}
+
+#searchBar {
+    padding: 8px 12px; /* Padding for the search bar */
+    border: 1px solid #ccc; /* Border for the search bar */
+    border-radius: 4px; /* Rounded corners */
+    width: 300px; /* Set a width for the search bar */
+}
+
 
 /* Dashboard Styles */
 .dashboard-container {
@@ -3889,4 +3824,26 @@ canvas {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     border-radius: 4px;
+}
+
+#requestHistoryBtn {
+    text-decoration: none; /* Removes underline from the link */
+    color: inherit; /* Keeps the text color consistent */
+    align-items: center; /* Vertically centers the icon and text */
+    margin: 10vh 2vw ;
+}
+
+#requestHistoryBtn i {
+    font-size: 24px; /* Size of the icon */
+    margin-right: 5px; /* Space between icon and text */
+    margin-top: 10px;
+}
+
+#requestHistoryBtn span {
+    line-height: 1; /* Ensures text aligns properly with the icon */
+}
+
+
+#paginationControls button {
+    margin: 0 10px; /* Optional margin between pagination buttons */
 }
