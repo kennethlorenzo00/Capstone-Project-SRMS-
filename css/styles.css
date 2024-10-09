@@ -2941,6 +2941,7 @@ button#saveClientChangesBtn {
     padding: 10px 25px 20px;
     background: #EAA6A660;
     border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .requests-overview table {
@@ -2984,6 +2985,13 @@ button#saveClientChangesBtn {
 
 
 /* Events Section */
+
+div#eventsSection {
+    background: #e7dede;
+    border-radius: 15px;
+    padding: 20px;
+}
+
 .scroll-container {
     display: flex;
     overflow-x: auto;
