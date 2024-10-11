@@ -22,57 +22,66 @@
 
 </head>
 <body>
+
+    <!-- Header -->
+    <header class="admin-header">
+        <button id="openSidebar" class="openbtn">&#9776;</button>
+        <div class="admin-logo">
+            <div class="side-logo">
+                <img src="Logo.webp" class="side-logo" alt="">
+            </div>
+            <span class="logo-name">Center for Natural Science and Resources Research</span>
+        </div>
+    
+        <div class="header-icons">
+            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+    
+            <!-- Notifications Button with Pop-up Tab -->
+            <button id="notificationsBtn" class="notifications-btn">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="notificationCount" class="notification-count">0</span>
+            </button>
+            
+            <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
     <!-- Sidebar -->
-    <div id="sidebar" class="admin-sidebar hidden">
+    <div id="sidebar" class="admin-sidebar">
 
         <a href="#" id="dashboardLink" onclick="openTab(event, 'home')">
-            <i class="fa-solid fa-home"></i> Home (Dashboard)
+            <i class="fa-solid fa-home"></i> 
+            <span class="lab-side"> Home (Dashboard) </span>
         </a>
         <a href="#" id="requestListLink" onclick="openTab(event, 'requestList')">
-            <i class="fa-solid fa-list"></i> Request List
+            <i class="fa-solid fa-list"></i> 
+            <span class="lab-side"> Request List </span>
         </a>
         <a href="#" id="manageUsersLink" onclick="openTab(event, 'manageUsers')">
-            <i class="fa-solid fa-users"></i> Manage Users
+            <i class="fa-solid fa-users"></i> 
+            <span class="lab-side"> Manage Users </span>
         </a>
         <a href="#" id="analysisReportLink" onclick="openTab(event, 'analysisReport')">
-            <i class="fa-solid fa-chart-bar"></i> Analysis Report
+            <i class="fa-solid fa-chart-bar"></i> 
+            <span class="lab-side"> Analysis Report </span>
         </a>
         <a href="#" id="appointmentLink" onclick="openTab(event, 'appointment')">
-            <i class="fa-solid fa-calendar-alt"></i> Appointment
+            <i class="fa-solid fa-calendar-alt"></i> 
+            <span class="lab-side"> Appointment </span>
         </a>
         <a href="#" id="eventsLink" onclick="openTab(event, 'events')">
-            <i class="fa-solid fa-calendar"></i> Events
+            <i class="fa-solid fa-calendar"></i> 
+            <span class="lab-side"> Events </span>
         </a>
         <a href="#" id="accountLink" onclick="openTab(event, 'account')">
-            <i class="fa-solid fa-user"></i> Account
+            <i class="fa-solid fa-user"></i> 
+            <span class="lab-side"> Account </span>
         </a>
     </div>
     
 
     <!-- Page Content -->
     <div id="main">
-        <!-- Header -->
-        <header class="admin-header">
-            <button id="openSidebar" class="openbtn">&#9776;</button>
-            <div class="admin-logo">
-                <div class="side-logo">
-                    <img src="Logo.webp" class="side-logo" alt="">
-                </div>
-                <span class="logo-name">Center for Natural Science and Resources Research</span>
-            </div>
         
-            <div class="header-icons">
-                <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-        
-                <!-- Notifications Button with Pop-up Tab -->
-                <button id="notificationsBtn" class="notifications-btn">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span id="notificationCount" class="notification-count">0</span>
-                </button>
-                
-                <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
-            </div>
-        </header>
         
         <!-- Notification Pop-up Tab -->
         <div id="notificationPopup" class="notification-popup hidden">

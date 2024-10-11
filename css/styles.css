@@ -74,12 +74,6 @@ body {
     background-color: #555;
 }
 
-/* Main Content Styles */
-#main {
-    padding: 20px;
-    padding-top: calc(15px + 75px); /* Increased space for the header */
-    transition: margin-left 0.5s;
-}
 
 /* Tabs Styles */
 .tabcontent {
@@ -1427,16 +1421,18 @@ h1 {
 
 /* Admin Dashboard Specific Styles */
 .admin-header {
-    padding: 15px;
+    padding: 5px;
     background-color: #A90000;
     color: white;
     top: 0;
     position: fixed;
-    width: 100%; /* Adjust for sidebar width */
+    width: 100vw; /* Adjust for sidebar width */
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    padding-left: 1vw;
+    margin-left: 0px;
 }
 
 .admin-header .header-icons button {
@@ -1445,27 +1441,87 @@ h1 {
 
 /* Sidebar width transition for smooth closing/opening */
 .admin-sidebar {
-    height: 100%;
-    width: 250px;  /* Initial width */
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 20vw;
+    transition: width .5s ease;
+    /* Any other existing styles */
     background-color: #A90000;
-    overflow-x: hidden;
-    transition: width 0.5s;  /* Smooth width transition */
-    padding-top: 100px;
-    color: white;
-    z-index: 999;
+    height: 92vh;
+    margin-top: 12vh;
 }
 
+.admin-sidebar.minimized {
+    width: 7vw; /* Adjust as needed */
+}
 
-.admin-sidebar a i {
-    margin-right: 10px; /* Space between icon and text */
-    font-size: 20px; /* Adjust icon size if needed */
+.admin-sidebar a {
+    display: flex;
     align-items: center;
-    
-    
+    padding: 10px;
+    text-decoration: none;
 }
+
+.admin-sidebar a {
+    font-size: 24px;
+    margin-right: 10px;
+    transition: .3s;
+    margin-top: 2vh;
+}
+.admin-sidebar i{
+    font-size: 30px;
+}
+
+.admin-sidebar.minimized a i {
+    margin-right: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.admin-sidebar.minimized .lab-side {
+    display: none;
+}
+
+#main {
+    transition: margin-left 0.3s;
+    margin-left: 250px;
+    margin-top: 10vh;
+}
+
+#main.minimized {
+    margin-left: 10vw; /* Match sidebar width */
+}
+
+.admin-sidebar {
+    width: 250px; /* Initial sidebar width */
+    transition: width .5s ease; /* Adjusted transition */
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+
+.admin-content {
+    margin-left: 250px; /* Match the sidebar width */
+    transition: margin-left 0.3s ease;
+}
+
+.admin-header {
+    transition: padding-left 0.3s ease;
+}
+
+.minimized-sidebar {
+    width: 50px; /* Sidebar in minimized state */
+}
+
+.minimized-content {
+    margin-left: 50px; /* Content adjusted for minimized sidebar */
+}
+
+.minimized-header {
+    padding-left: 50px; /* Adjust header padding when sidebar is minimized */
+}
+
+
 
 /* Sidebar Logo */
 .sidebar-logo {
@@ -1494,16 +1550,9 @@ h1 {
 }
 
 .admin-sidebar a:hover {
-    background-color: #A90000;
+    background-color: #cc0202;
 }
 
-
-#admin-content {
-    margin-left: 250px; /* Space for the sidebar */
-    padding: 20px;
-    padding-top: calc(15px + 75px); /* Increased space for the header */
-    transition: margin-left 0.5s;
-}
 
 
 /* Logo Container */
