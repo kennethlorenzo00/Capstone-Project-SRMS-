@@ -160,11 +160,12 @@
 
             <!-- Tasks List Section -->
             <div id="taskList" class="tabcontent" style="display:none;">
+                <div>
                 <h2>Tasks List</h2>
                 <p>This is the tasks list section. List of all tasks assigned will appear here.</p>
-
+                </div>
                 <!-- Task Category Buttons -->
-                <div class="task-buttons">
+                <div class="task-buttons" style="border-bottom: 2px solid black; margin-bottom: 2vh;">
                     <button id="allAssignedBtn">All Assigned</button>
                     <button id="ongoingTasksBtn">Ongoing Tasks</button>
                     <button id="processedTasksBtn">Processed Tasks</button>
@@ -211,8 +212,11 @@
                         <div id="ongoing" class="task-placeholder hidden">
                             <div class="filter-buttons">
                                 <button id="filterHighPriority">Priority</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialTesting">Microbial Testing</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialAnalysis">Microbial Analysis</button>
+                                <span class="separator"></span>
                                 <button id="filterLabResearchProcesses">Laboratory & Research Processes</button>
                             </div>
 
@@ -251,10 +255,14 @@
                         <div id="processed" class="task-placeholder hidden">
                             <div class="filter-buttons">
                                 <button id="filterHighPriorityProcessed">Priority</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialTestingProcessed">Microbial Testing</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialAnalysisProcessed">Microbial Analysis</button>
+                                <span class="separator"></span>
                                 <button id="filterLabResearchProcessesProcessed">Laboratory & Research Processes</button>
                             </div>
+                            
             
                             <script>
                                 // JavaScript code to toggle active button state
@@ -291,8 +299,11 @@
                         <div id="rejected" class="task-placeholder hidden">
                         <div class="filter-buttons">
                             <button id="filterHighPriorityRejected">Priority</button>
+                            <span class="separator"></span>
                             <button id="filterMicrobialTestingRejected">Microbial Testing</button>
+                            <span class="separator"></span>
                             <button id="filterMicrobialAnalysisRejected">Microbial Analysis</button>
+                            <span class="separator"></span>
                             <button id="filterLabResearchProcessesRejected">Laboratory & Research Processes</button>
                         </div>
 
@@ -370,12 +381,13 @@
 
             <!-- Analysis Reports Section -->
             <div id="analysisReport" class="tabcontent" style="display:none; margin-left: 250px;">
+                <div style="border-bottom: 2px solid black;">
                 <h2>Analysis Reports</h2>
-                <p>This is the analysis reports section. All analysis reports will be shown here.</p>
-                
-                <!-- Search Bar -->
-                <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
-            
+                    <div class="analysis-reports-header">
+                        <p>This is the analysis reports section. All analysis reports will be shown here.</p>
+                        <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+                    </div>
+                </div>
                 <table id="analysisReportTable">
                     <thead>
                         <tr>
