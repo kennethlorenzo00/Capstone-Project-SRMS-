@@ -3925,3 +3925,15 @@ canvas {
 #paginationControls button {
     margin: 0 10px; /* Optional margin between pagination buttons */
 }
+
+.colony-list {
+    max-height: 150px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    width: 200px;
+  }
+  .colony-list label {
+    margin-right: 10px;
+  }

@@ -107,6 +107,17 @@ document.getElementById('backToTasksButton').addEventListener('click', () => {
     taskList.style.display = 'block';
 });
 
+document.getElementById('backSampleDuration').addEventListener('click', () => {
+    document.getElementById('sampleDurationSection').style.display = 'none';
+    document.getElementById('ongoing').style.display = 'block';
+    taskList.style.display = 'block';
+});
+
+document.getElementById('backToSampleDuration').addEventListener('click', () => {
+    document.getElementById('colonyCountSection').style.display = 'none';
+    document.getElementById('sampleDurationSection').style.display = 'block';
+});
+
 let selectedRequestIdPass = null;
 
 document.getElementById('createReportButton').addEventListener('click', async () => {
@@ -463,8 +474,60 @@ async function loadSampleData(sampleId) {
             dayBox.className = 'day-box';
             dayBox.innerText = `Day ${day.dayNumber}`;
             document.querySelector('.duration-container').appendChild(dayBox);
+
+            // Add a click event listener to the day-box
+            dayBox.addEventListener('click', () => {
+                // Hide the current section (sampleDurationSection)
+                document.getElementById('sampleDurationSection').style.display = 'none';
+
+                // Show the colony count section
+                document.getElementById('colonyCountSection').style.display = 'block';
+
+                // You can pass the day information if needed, like day number or timestamp
+                console.log(`Day ${day.dayNumber} clicked`);
+
+                // Optionally, you can load specific data for this day to the colonyCountSection
+                loadColonyDataForDay(day, sampleId);
+
+                // Ensure the "Save" button exists before adding the event listener
+                const saveButton = document.getElementById('saveColonyCountBtn');
+                if (saveButton) {
+                    // Remove any previous event listeners to prevent duplicates
+                    saveButton.replaceWith(saveButton.cloneNode(true));
+                    document.getElementById('saveColonyCountBtn').addEventListener('click', async () => {
+                        const colonyCount = document.getElementById('colonyCount').innerText; // Get the colony count value
+
+                        // Access the current day's array and save the colonyCount
+                        const updatedDays = days.map(d => {
+                            if (d.dayNumber === day.dayNumber) {
+                                d.colonyCount = parseInt(colonyCount); // Update colony count for the selected day
+                            }
+                            return d;
+                        });
+
+                        // Update Firestore with the new colony count
+                        await updateDoc(sampleRef, {
+                            day: updatedDays
+                        });
+
+                        alert(`Colony count for Day ${day.dayNumber} saved successfully!`);
+
+                        document.getElementById('colonyCountSection').style.display = 'none';
+                        document.getElementById('sampleDurationSection').style.display = 'block';
+                    });
+                }
+            });
         });
     }
+}
+
+
+// Function to load colony data for the selected day (optional)
+function loadColonyDataForDay(day, sampleId) {
+    // For example, you can display the day information in the colonyCountSection
+    document.getElementById('colonyCountHeader').innerText = `Colony Count for Day ${day.dayNumber} (Sample ID: ${sampleId})`;
+
+    // Add more logic here to load data related to this specific day if needed
 }
 
 async function saveReportToFirestore(requestData, formData) {
