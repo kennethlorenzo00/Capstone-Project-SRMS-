@@ -121,20 +121,20 @@ font-weight: bold;
 
     /* Banner Section */
     .banner {
-        background-image: url('HomepageCover.jpg');
+        background-image: url('images/HomepageCover.jpg');
         background-size:cover;
         background-position: center;
         color: rgb(255, 255, 255);
         text-align: left;
         display: flex;
         justify-content: flex-start;
-
+        object-fit:cover;
         height: 100vh;
         width: 100vw;
     }
 
     .banner-text {
-        color: #30302d;
+        color: #ececec;
        padding-top: 10%;
         padding-left: 40px;
         font-weight: 400;
@@ -197,6 +197,15 @@ display: flex;
   margin: auto; /* Center the container */
 }
 
+.img-service-item {
+  width: 300px; /* Set the exact width */
+  height: 200px; /* Set the exact height */
+  object-fit: cover; /* This ensures the image fits the container and maintains quality */
+  border-radius: 8px; /* Optional: Rounds the corners */
+  background-color: #f9f9f9; /* Optional: Adds background color */
+}
+
+
 /* Image Styling */
 .img-service-item-active, .img-service-item {
   width: 40vh; /* Fixed width for the image */
@@ -213,7 +222,7 @@ display: flex;
   flex-grow: 1; /* Allow the service info to grow and take up the remaining space */
   text-align: left; /* Align text to the left */
   padding-right: 20px; padding-left: 20px;
-  background-color: #eeeeee;
+  background-color: #f3f3f3;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 50vw;
@@ -230,30 +239,28 @@ display: flex;
 }
 
 
-
-
-
-
 .service-info h3 {
     color: #6b0d0d;
   font-size: 1.8rem;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
 .service-info p {
-font-size: 18px;
+font-size: 16px;
 text-align: left;
+padding-left: 20px;
 }
 
 .service-info ul {
 list-style: disc;
 text-align: left;
-padding-left: 20px;
+padding-left: 40px;
+padding-bottom: 10px;
 }
 
 .service-info li {
-font-size: 18px;
+font-size: 16px;
 }
 
 .navigation-slider {
@@ -269,7 +276,7 @@ font-size: 18px;
   cursor: pointer;
   font-size: 4rem;
   position: absolute;
-  top: 157%;
+  top: 150%;
   transform: translateY(20%);
   transform: translateX(80%);
 }
@@ -282,7 +289,7 @@ font-size: 18px;
   cursor: pointer;
   font-size: 4rem;
   position: absolute;
-  top: 157%;
+  top: 150%;
   transform: translateY(20%);
   transform: translateX(-80%);
 }
@@ -363,7 +370,7 @@ line-height: 1.6;
 }
     
 .internship-section {
-background-image: url('Intern.jpg');
+background-image: url('images/Intern.jpg');
 background-size: cover;
 background-position: center;
 height: 400px;
@@ -458,7 +465,7 @@ text-align: left;
         text-align: center;
         height: 100vh;
         width: 100vw;
-        background-color: #f7f7f7;
+        background-color: #d1cfc9;
     }
 
     .events h1 {
@@ -729,7 +736,7 @@ font-family:Georgia, 'Times New Roman', Times, serif;
     <!-- Header Section -->
     <header>
         <div class="logo">
-            <img src="logo.webp" alt="CNSRR Logo">
+            <img src="images/logo.webp" alt="CNSRR Logo">
             <div class="logo-text">
                 <h3>Center for Natural Sciences and</h3>
                 <h4>Resources Research</h4>
@@ -765,42 +772,60 @@ font-family:Georgia, 'Times New Roman', Times, serif;
 <section id="services" class="services">
     <br>
     <h2>SERVICES</h2>
-        <div class="service-content">
-            <!-- Plate Count Method -->
-            <div class="service-item active" id="service-1">
-                <button class="navigation-slider" id="prev-btn"><i class="fa-solid fa-angle-left"></i></button>
-                <img class="img-service-item" src="PlateCount.jpg" alt="Water Quality Analysis">
-                <div class="service-info">
+    <div class="service-content">
+        <!-- Plate Count Method -->
+        <div class="service-item active" id="service-1">
+            <img class="img-service-item" src="images/PlateCount.jpg" alt="Microbial Testing Methods">
+            <div class="service-info">
+                <br>
+                <h3>Microbial Testing Methods</h3>
+                <p>This offers evaluating the efficacy of antimicrobial agents. It involves determining the minimum concentrations required to inhibit or kill microorganisms, helping to assess the effectiveness of antibiotics and other antimicrobial substances.</p>
+                <ul>
                     <br>
-                    <h3>Plate Count Method</h3>
-                    <p>The plate count method is a standard microbiological technique used to estimate the number of viable bacteria or fungal cells in a sample.</p>
-                    <ul>
-                        <br>
-                        <li>Samples are diluted appropriately.</li>
-                        <li>Aliquots are plated on nutrient agar plates.</li>
-                        <li>Plates are incubated for a specific duration.</li>
-                        <li>SmartColony app is used to count colonies and calculate CFU/mL.</li>
-                    </ul>
-                </div>
-            </div>
-            <button class="navigation-slider" id="prev-btn"><i class="fa-solid fa-angle-left"></i></button>
-            <!-- Water Quality Analysis -->
-            <div class="service-item" id="service-2">
-                <img class="img-service-item" src="log-in-bg.jpg" alt="Water Quality Analysis">
-                <div class="service-info">
-                    <h3>Water Quality Analysis</h3>
-                    <p>Water quality analysis helps determine the physical, chemical, and biological characteristics of water samples to ensure safety and compliance with regulations.</p>
-                    <ul>
-                        <li>Parameters like pH, turbidity, and dissolved oxygen are measured.</li>
-                        <li>Samples are tested for contaminants such as bacteria or chemicals.</li>
-                        <li>SmartColony app is integrated to record the results and generate reports.</li>
-                    </ul>
-                </div>
-                
+                    <li>Plate Count Method</li>
+                    <li>Agar Disc Diffusion Method</li>
+                    <li>Agar Well Diffusion Method</li>
+                    <li>Minimum Inhibitory Concentration (MIC) Testing</li>
+                    <li>Minimum Bactericidal Concentration (MBC) Testing</li>
+                </ul>
             </div>
         </div>
-
-        <button class="navigation-slider" id="next-btn"><i class="fa-solid fa-angle-right"></i></button>
+        <!-- Water Quality Analysis -->
+        <div class="service-item" id="service-2">
+            <img class="img-service-item" src="images/Microscopy.jpg" alt="Microbial Analysis & Characterization">
+            <div class="service-info">
+                <br>
+                <h3>Microbial Analysis & Characterization</h3>
+                <p>This category offers techniques for examining and analyzing microorganisms. This includes methods for counting microbial populations, identifying microbial species, and assessing their characteristics using various laboratory techniques.</p>
+                <ul>
+                    <br>
+                    <li>Microbial Analysis of Water</li>
+                    <li>Microbial Characterization</li>
+                    <li>Microbial Culture Collections (PUPMCC)</li>
+                    <li>Microscopy</li>
+                </ul>
+            </div>
+        </div>
+        <div class="service-item" id="service-3">
+            <img class="img-service-item" src="images/LabEquipment.jpg" alt="Microbial Analysis & Characterization">
+            <div class="service-info">
+                <br>
+                <h3>Laboratory & Research Processes</h3>
+                <p>This category offers techniques for examining and analyzing microorganisms. This includes methods for counting microbial populations, identifying microbial species, and assessing their characteristics using various laboratory techniques.</p>
+                <ul>
+                    <br>
+                    <li>Plant Species Identification and Herbarium Curation</li>
+                    <li>Laboratory Use and Equipment Access</li>
+                    <li>Research Collaboration Process</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation buttons -->
+    <button class="navigation-slider" id="prev-btn"><i class="fa-solid fa-angle-left"></i></button>
+    <button class="navigation-slider" id="next-btn"><i class="fa-solid fa-angle-right"></i></button>
+</section>
+        </div>
     </div>
 </section>
 
@@ -811,11 +836,11 @@ font-family:Georgia, 'Times New Roman', Times, serif;
     <h2>Who Can Avail the Services:</h2>
     <div class="service-options">
         <div class="service-option">
-            <img src="InternalClient.png" alt="Internal Clients Icon">
+            <img src="images/InternalClient.png" alt="Internal Clients Icon">
             <p><b>Internal Clients:</b> PUP faculty members, <br> researchers, and students (both <br>undergraduate and postgraduate).</p>
         </div>
         <div class="service-option">
-            <img src="ExternalClient.png" alt="External Clients Icon">
+            <img src="images/ExternalClient.png" alt="External Clients Icon">
             <p><b>External Clients:</b> Researchers, faculty <br> members, and students from other <br> universities with existing MOUs <br> with PUP RIST.</p>
         </div>
     </div>    
@@ -918,13 +943,13 @@ font-family:Georgia, 'Times New Roman', Times, serif;
         <div class="footer-content-left">
             <!-- Logo and Text Beside It -->
             <div class="footer-logo">
-                <img src="logo.webp" alt="Center for Natural Sciences Logo">
+                <img src="images/logo.webp" alt="Center for Natural Sciences Logo">
                 <div class="footer-logo-text">
                     <p class = footer-top-name>Center for Natural Sciences <br>and Resources Research</p>
                     <p class = "footer-sub-name">Research Institute of Science and Technology</p>
                 </div>
             </div>
-            <p class="footer-bottom">&copy; 2024 Center for Natural Sciences and Resources Research. All rights reserved.</p>
+            <p class="footer-bottom">© 2024 Center for Natural Sciences and Resources Research. All rights reserved.</p>
         </div>
 
         <div class="footer-content-right">
