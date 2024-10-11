@@ -12,18 +12,62 @@ body {
 }
 
 /* Header Styles */
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.admin-logo {
+    display: flex;
+    align-items: center;
+    
+}
+
+.admin-logo img {
+    height: 75px;
+    width: 75px;
+    margin-left: 40px; /* Add spacing between logo and text */
+}
+
+.admin-logo h3,
+.admin-logo h4 {
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+    padding-left: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sub-name{
+    font-size: 18px; 
+margin-left: 1px; 
+font-family:Georgia, 'Times New Roman', Times, serif;
+padding-left: 8px;
+}
+
+.admin-logo h3,
+.admin-logo-text h4 {
+    margin: 0; /* Remove extra margin */
+}
+
+.sub-name {
+    font-size: 13px;
+    margin-top: 0;
+    color: #f5f1f1;
+}
+
 .header {
     background-color: #550000;
-    color: white;
-    position: fixed;
-    top: 0;
-    width: calc(100% - 250px); /* Adjust for sidebar width */
-    left: 250px;
     display: flex;
-    justify-content: space-between;
-    height: 100px;
-    align-items: center;
-    z-index: 1000; 
+    justify-content: space-between; /* Space between logo + menu and icons */
+    color: white;
+    width: 100vw;
+    padding: 15px 30px;
+    width: calc(100% - 250px); /* Adjust for sidebar width */
+}
+
+.header-icons {
+    display: flex;
 }
 
 .header-icons button {
@@ -31,8 +75,17 @@ body {
     border: none;
     color: white;
     font-size: 16px;
-    margin: 0 5px;
+    margin: 0 10px; /* Adjust spacing between icons */
     cursor: pointer;
+}
+
+.notification-count {
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 6px;
+    margin-left: 5px;
 }
 
 .openbtn, .closebtn {
@@ -41,6 +94,21 @@ body {
     border: none;
     font-size: 24px;
     cursor: pointer;
+}
+
+.sidebar-openbtn{
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+
+.sidebar-openbtn:hover {
+    color: #ffbb00;
+    background-color: transparent;
 }
 
 .openbtn:hover, .closebtn:hover {
@@ -389,11 +457,14 @@ input {
 
 
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #ffffff;
+  
+    line-height: 1.6;
+    
+
 }
 
 #mySidebar {
@@ -422,7 +493,7 @@ body {
 
 
 #main {
-    padding: 15px;
+    padding: 2px;
     transition: margin-left 0.5s;
 }
 
@@ -1319,10 +1390,11 @@ h1 {
         color: black; /* Change text color for better contrast */
     }
 
-
     #main {
         transition: margin-left 0.5s;  /* Smooth transition effect for shifting */
     }
+    
+
     
     .hidden {
         display: none;  /* Ensure the hidden class hides the sidebar */
@@ -1421,19 +1493,19 @@ h1 {
 
 /* Admin Dashboard Specific Styles */
 .admin-header {
-    padding: 5px;
     background-color: #A90000;
-    color: white;
-    top: 0;
-    position: fixed;
-    width: 100vw; /* Adjust for sidebar width */
+    padding-top: 15px;
+    padding-bottom:6px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    padding-left: 1vw;
-    margin-left: 0px;
+    padding-left: 8px;
+    justify-content: space-between; 
+    width: 100vw;
+    position: fixed; /* Keeps the header fixed at the top */
+    top: 0; /* Position it at the top */
+    z-index: 1000; /* Ensure it stays above other content */
 }
+
+
 
 .admin-header .header-icons button {
     margin: 0;
@@ -1441,9 +1513,9 @@ h1 {
 
 /* Sidebar width transition for smooth closing/opening */
 .admin-sidebar {
-    width: 20vw;
+    width: 100vw;
+    height: 100vh;
     transition: width .5s ease;
-    /* Any other existing styles */
     background-color: #A90000;
     height: 92vh;
     margin-top: 12vh;
@@ -1484,6 +1556,7 @@ h1 {
     transition: margin-left 0.3s;
     margin-left: 250px;
     margin-top: 10vh;
+    padding-left: 100px;
 }
 
 #main.minimized {
@@ -1555,16 +1628,6 @@ h1 {
 
 
 
-/* Logo Container */
-.admin-logo {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    height: 50px;        /* Set a consistent height */
-    position: absolute;   /* Fix the logo in place */
-    left: 50%;            /* Center it horizontally */
-    transform: translateX(-50%); /* Offset to perfectly center */
-    transition: margin-left 0.5s, transform 0.5s; /* Add transform transition */
-}
 
 .side-logo {
     display: flex;                  /* Use flexbox to arrange items in a row */
@@ -3524,7 +3587,7 @@ input[type="text"] {
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 .container {
