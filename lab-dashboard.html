@@ -14,6 +14,7 @@
     <script type="module" src="js/lab-home.js" defer></script> 
     <script type="module" src="js/lab-notification.js" defer></script> 
     <script type="module" src="js/lab-analysis-report.js" defer></script> 
+    <script async src="https://docs.opencv.org/3.4.1/opencv.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
    
@@ -160,11 +161,12 @@
 
             <!-- Tasks List Section -->
             <div id="taskList" class="tabcontent" style="display:none;">
+                <div>
                 <h2>Tasks List</h2>
                 <p>This is the tasks list section. List of all tasks assigned will appear here.</p>
-
+                </div>
                 <!-- Task Category Buttons -->
-                <div class="task-buttons">
+                <div class="task-buttons" style="border-bottom: 2px solid black; margin-bottom: 2vh;">
                     <button id="allAssignedBtn">All Assigned</button>
                     <button id="ongoingTasksBtn">Ongoing Tasks</button>
                     <button id="processedTasksBtn">Processed Tasks</button>
@@ -211,8 +213,11 @@
                         <div id="ongoing" class="task-placeholder hidden">
                             <div class="filter-buttons">
                                 <button id="filterHighPriority">Priority</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialTesting">Microbial Testing</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialAnalysis">Microbial Analysis</button>
+                                <span class="separator"></span>
                                 <button id="filterLabResearchProcesses">Laboratory & Research Processes</button>
                             </div>
 
@@ -251,10 +256,14 @@
                         <div id="processed" class="task-placeholder hidden">
                             <div class="filter-buttons">
                                 <button id="filterHighPriorityProcessed">Priority</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialTestingProcessed">Microbial Testing</button>
+                                <span class="separator"></span>
                                 <button id="filterMicrobialAnalysisProcessed">Microbial Analysis</button>
+                                <span class="separator"></span>
                                 <button id="filterLabResearchProcessesProcessed">Laboratory & Research Processes</button>
                             </div>
+                            
             
                             <script>
                                 // JavaScript code to toggle active button state
@@ -291,8 +300,11 @@
                         <div id="rejected" class="task-placeholder hidden">
                         <div class="filter-buttons">
                             <button id="filterHighPriorityRejected">Priority</button>
+                            <span class="separator"></span>
                             <button id="filterMicrobialTestingRejected">Microbial Testing</button>
+                            <span class="separator"></span>
                             <button id="filterMicrobialAnalysisRejected">Microbial Analysis</button>
+                            <span class="separator"></span>
                             <button id="filterLabResearchProcessesRejected">Laboratory & Research Processes</button>
                         </div>
 
@@ -338,6 +350,50 @@
                     <!-- Plus Button to Add Days -->
                     <button id="addDayButton">+ Add Day</button>
                 </div>
+                <button id="backSampleDuration">Back</button>
+            </div>
+
+            <div id="colonyCountSection" style="display: none;">
+                <h2>Bacterial Colony Detection</h2>
+                <h2 id="colonyCountHeader"></h2>
+                <p id="status">OpenCV.js is loading...</p>
+
+                <div>
+                <label for="blurSize">Gaussian Blur Size (odd number):</label>
+                <input type="number" id="blurSize" value="5" min="1" step="2" />
+                
+                <label for="threshBlockSize">Threshold Block Size (odd number):</label>
+                <input type="number" id="threshBlockSize" value="11" min="3" step="2" />
+                
+                <label for="threshC">Threshold C Value:</label>
+                <input type="number" id="threshC" value="2" step="0.1" />
+                
+                <label for="minColonySize">Min Colony Size:</label>
+                <input type="number" id="minColonySize" value="60" min="1" step="1" />
+                
+                <label for="maxColonySize">Max Colony Size:</label>
+                <input type="number" id="maxColonySize" value="5000" min="1" step="1" />
+                </div>
+
+                <p><strong>Total Colony Count: <span id="colonyCount">0</span></strong></p>
+
+                <div>
+                <div class="inputoutput">
+                    <img id="imageSrc" alt="No Image" />
+                    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+                </div>
+                <div class="inputoutput">
+                    <canvas id="canvasOutput"></canvas>
+                    <div class="caption">canvasOutput</div>
+                </div>
+                </div>
+
+                <div class="colony-list" id="colonyList">
+                <!-- Colony IDs and validation options will be added here -->
+                </div>
+
+                <button id="saveColonyCountBtn">Save Colony Count</button>
+                <button id="backToSampleDuration">Back</button>
             </div>
 
             <!-- Placeholder for dynamic report form -->
@@ -370,12 +426,13 @@
 
             <!-- Analysis Reports Section -->
             <div id="analysisReport" class="tabcontent" style="display:none; margin-left: 250px;">
+                <div style="border-bottom: 2px solid black;">
                 <h2>Analysis Reports</h2>
-                <p>This is the analysis reports section. All analysis reports will be shown here.</p>
-                
-                <!-- Search Bar -->
-                <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
-            
+                    <div class="analysis-reports-header">
+                        <p>This is the analysis reports section. All analysis reports will be shown here.</p>
+                        <input type="text" id="searchBar" placeholder="Search by Request ID or Client Name" oninput="filterAnalysisReports()">
+                    </div>
+                </div>
                 <table id="analysisReportTable">
                     <thead>
                         <tr>
@@ -421,9 +478,11 @@
             <!-- Account Section -->
             <div id="account" class="tabcontent" style="display:none; margin-left: 220px; margin-top: 0px;">
                 <div class="labaccount">
-                    <h1>Account Profile</h1>
-                    <h2>Profile Information</h2>
+                    <h1 class="accproflabel">Account Profile</h1>
+                    <div class="adminprofile">
+                    <h2 class="profinfolabel">Profile Information</h2>
                 
+                    <div class="accountinfo">
                     <!-- Full Name and Account Number (Header) -->
                     <div class="account-header">
                         <!-- Profile picture placeholder -->
@@ -436,55 +495,55 @@
                         <div class="account-details">
                             <span id="fullName" class="full-name"></span>
                             <p class="account-number" id="accountNumber"></p>
+                            <div class="role-bubble">
+                                Laboratory Staff
+                            </div>
                         </div>
-                    </div>
-                
-                    <!-- Laboratory Staff Role Bubble -->
-                    <div class="role-bubble">
-                        Laboratory Staff
                     </div>
                 
                     <!-- Account Details Bubbles -->
                     <div class="account-details">
-                        <div class="detail-bubble">Full Name: <span id="fullNameDetail"></span></div>
-                        <div class="detail-bubble">Address: <span id="address"></span></div>
-                        <div class="detail-bubble">Contact Number: <span id="contactNumber"></span></div>
-                        <div class="detail-bubble">Username: <span id="username"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Full Name:</p> <span id="fullNameDetail"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Address:</p>  <span id="address"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Contact Number:</p>  <span id="contactNumber"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Username:</p>  <span id="username"></span></div>
                     </div>
                 
                     <!-- Edit Button -->
                     <button id="editAccountBtn" class="edit-btn">Edit</button>
                 </div>
+                </div>
+                </div>
             </div>            
 
             <div id="editModal" class="modal">
-                <div class="editmodal-content" style="margin-bottom: 125px; margin-top: 125px;">
+                <div class="modal-content" style="margin-bottom: 125px; margin-top: 125px; display:flex;flex-direction: column;">
                     <span class="close">&times;</span>
                     <h2>Edit Account Details</h2>
                 
-                    <div class="name-group">
-                        <div class="input-group">
+                    <div style="display: flex;align-items: center;justify-content: space-between;">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editFirstName">First Name:</label>
                             <input type="text" id="editFirstName" placeholder="First Name">
                         </div>
-                        <div class="input-group">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editMiddleName">Middle Name:</label>
                             <input type="text" id="editMiddleName" placeholder="Middle Name">
                         </div>
-                        <div class="input-group">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editLastName">Last Name:</label>
                             <input type="text" id="editLastName" placeholder="Last Name">
                         </div>
                     </div>
+
+                    <label for="editUsername">Username:</label>
+                    <input type="text" id="editUsername" placeholder="Username">
                 
                     <label for="editAddress">Address:</label>
                     <input type="text" id="editAddress" placeholder="Address">
                 
                     <label for="editContactNumber">Contact Number:</label>
                     <input type="text" id="editContactNumber" placeholder="Contact Number">
-                
-                    <label for="editUsername">Username:</label>
-                    <input type="text" id="editUsername" placeholder="Username">
                 
                     <button id="saveChangesBtn">Save Changes</button>
                 </div>                
@@ -498,5 +557,6 @@
     </div>
 
     <script type="module" src="js/lab-events.js" defer></script> 
+    <script type="text/javascript" src="js/colony-count.js"></script>
 </body>
 </html>
