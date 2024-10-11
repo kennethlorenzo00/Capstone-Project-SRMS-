@@ -421,9 +421,11 @@
             <!-- Account Section -->
             <div id="account" class="tabcontent" style="display:none; margin-left: 220px; margin-top: 0px;">
                 <div class="labaccount">
-                    <h1>Account Profile</h1>
-                    <h2>Profile Information</h2>
+                    <h1 class="accproflabel">Account Profile</h1>
+                    <div class="adminprofile">
+                    <h2 class="profinfolabel">Profile Information</h2>
                 
+                    <div class="accountinfo">
                     <!-- Full Name and Account Number (Header) -->
                     <div class="account-header">
                         <!-- Profile picture placeholder -->
@@ -436,55 +438,55 @@
                         <div class="account-details">
                             <span id="fullName" class="full-name"></span>
                             <p class="account-number" id="accountNumber"></p>
+                            <div class="role-bubble">
+                                Laboratory Staff
+                            </div>
                         </div>
-                    </div>
-                
-                    <!-- Laboratory Staff Role Bubble -->
-                    <div class="role-bubble">
-                        Laboratory Staff
                     </div>
                 
                     <!-- Account Details Bubbles -->
                     <div class="account-details">
-                        <div class="detail-bubble">Full Name: <span id="fullNameDetail"></span></div>
-                        <div class="detail-bubble">Address: <span id="address"></span></div>
-                        <div class="detail-bubble">Contact Number: <span id="contactNumber"></span></div>
-                        <div class="detail-bubble">Username: <span id="username"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Full Name:</p> <span id="fullNameDetail"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Address:</p>  <span id="address"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Contact Number:</p>  <span id="contactNumber"></span></div>
+                        <div class="detail-bubble"><p class="accdeetslbl">Username:</p>  <span id="username"></span></div>
                     </div>
                 
                     <!-- Edit Button -->
                     <button id="editAccountBtn" class="edit-btn">Edit</button>
                 </div>
+                </div>
+                </div>
             </div>            
 
             <div id="editModal" class="modal">
-                <div class="editmodal-content" style="margin-bottom: 125px; margin-top: 125px;">
+                <div class="modal-content" style="margin-bottom: 125px; margin-top: 125px; display:flex;flex-direction: column;">
                     <span class="close">&times;</span>
                     <h2>Edit Account Details</h2>
                 
-                    <div class="name-group">
-                        <div class="input-group">
+                    <div style="display: flex;align-items: center;justify-content: space-between;">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editFirstName">First Name:</label>
                             <input type="text" id="editFirstName" placeholder="First Name">
                         </div>
-                        <div class="input-group">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editMiddleName">Middle Name:</label>
                             <input type="text" id="editMiddleName" placeholder="Middle Name">
                         </div>
-                        <div class="input-group">
+                        <div style="display: flex;flex-direction: column;width: 30%;">
                             <label for="editLastName">Last Name:</label>
                             <input type="text" id="editLastName" placeholder="Last Name">
                         </div>
                     </div>
+
+                    <label for="editUsername">Username:</label>
+                    <input type="text" id="editUsername" placeholder="Username">
                 
                     <label for="editAddress">Address:</label>
                     <input type="text" id="editAddress" placeholder="Address">
                 
                     <label for="editContactNumber">Contact Number:</label>
                     <input type="text" id="editContactNumber" placeholder="Contact Number">
-                
-                    <label for="editUsername">Username:</label>
-                    <input type="text" id="editUsername" placeholder="Username">
                 
                     <button id="saveChangesBtn">Save Changes</button>
                 </div>                

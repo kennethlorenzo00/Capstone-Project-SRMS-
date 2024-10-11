@@ -1243,6 +1243,7 @@ h1 {
             padding: 20px;
             border: 1px solid #888;
             width: 70%;
+            height: 55vh;
         }
         .close {
             color: #aaa;
@@ -2837,7 +2838,7 @@ button#saveClientChangesBtn {
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
-    width: 30%;
+    width: 15vh;
 }
 
 /* Account Details Bubbles */
@@ -2848,10 +2849,9 @@ button#saveClientChangesBtn {
 }
 
 .detail-bubble {
-    background-color: #f0f0f0;
     padding: 15px;
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     display: flex;
     justify-content: space-between;
