@@ -3,99 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Center for Natural Sciences and Resources Research (CNSRR)</title>
     <style>
-        /* Basic resets */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+     /* Basic resets */
+     * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+    }
 
-        /* Header */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+   
+    /* Header */
 header {
-    background-color: #a30d23;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    color: white;
+background-color: #550000;
+padding: 15px 30px;
+display: flex;
+justify-content: space-between; 
+align-items: center; 
+color: white;
+width: 100vw;
 }
 
 /* Logo */
 .logo {
-    display: flex;
-    align-items: center; 
+display: flex;
+align-items: center; 
 }
 
 .logo img {
-    height: 70px;
-    width: 70px;
+height: 75px;
+width: 75px;
 }
 
 .logo h3 {
-    font-size: 13px;
-    margin-left: 10px; 
-    font-weight: bold;
-    margin-bottom: 0%;
+font-size: 13px;
+margin-left: 10px; 
+font-weight: bold;
+margin-bottom: 0%;
 }
 
 .logo h4 {
-    font-size: 13px; 
-    margin-left: 10px; 
-    font-weight: bold;
+font-size: 13px; 
+margin-left: 10px; 
+font-weight: bold;
 }
 
 .logo h5 {
-    font-size: 8px;
-    color: #f5f1f1;
-    margin-left: 10px;
-    margin-bottom: 0px;
-    font-weight: normal;
+font-size: 8px;
+color: #f5f1f1;
+margin-left: 10px;
+margin-bottom: 0px;
+font-weight: normal;
 }
 
+.sub-name{
+    font-size: 13px; 
+margin-left: 10px; 
+font-family:Georgia, 'Times New Roman', Times, serif;
+
+}
 /* Navigation */
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 75px; 
+list-style: none;
+display: flex;
+gap: 75px; 
 }
 
 nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
+color: white;
+text-decoration: none;
+font-size: 15px;
 }
+
+nav ul li a:hover {
+        color: #ffcc00;
+        font-weight: bolder;
+    }
 
 /* Auth Buttons */
 .auth-buttons {
-    display: flex;
-    gap: 0px; 
+display: flex;
+gap: 0px; 
 }
 
 .auth-buttons .login-btn,
 .auth-buttons .signup-btn {
-    background-color: #ffcc00;
-    color: black;
-    border: none;
-    padding: 7px 15px;
-    cursor: pointer;
-    font-size: 16px;
+background-color: #ffcc00;
+color: black;
+border: none;
+padding: 7px 15px;
+cursor: pointer;
+font-size: 16px;
+transition: background-color 0.3s, color 0.3s;
+
 }
 
 .auth-buttons .signup-btn {
-    background-color: white;
-    color: #a30d23;
+background-color: white;
+color: #550000;
 }
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .signup-btn:hover {
+background-color: #550000;
+color: white;
+font-weight: bold;
+        }
+
+
 
         /* Banner Section */
         .banner {
-            background-image: url('intern sample pic.jpg');
+            background-image: url('images/Intern.jpg');
             background-size: cover;
             background-position: center;
             padding: 100px;
@@ -104,18 +133,19 @@ nav ul li a {
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            height: 580px;
+            height: 100vh;
         }
 
         .banner-text {
     
-            padding: 20px;
             border-radius: 10px;
+            width: 100vw;
+            height: 55vh;
         }
 
         .banner-text h1 {
-            font-size: 36px;
-            margin-top: 300px;
+            font-size: 40px;
+            margin-top: 360px;
         }
 
         .banner-text p {
@@ -129,54 +159,63 @@ nav ul li a {
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    padding: 0; 
-    margin: 0;  
-}
+
 
 .internship-section {
-    text-align: center;
-    padding: 40px 20px;
+    padding: 15px 15px;
     background-color: #e9e9e9;
     border-radius: 10px;
+    width: 99vw;
+    height: 55vh;
 }
 
 .internship-section h2 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 20px;
+    text-align: center;
+    padding-top: 1%;
+
 }
 
 .cards-container {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
+
 }
 
 .card {
     background-color: white;
-    padding: 20px;
+    padding-top: 2%;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 20px);
-    text-align: left;
+    width: calc(33.333% - 15px);
+    text-align: center;
+    padding-bottom: -40px;
+
 }
 
 .card img {
-    max-width: 100px;
-    margin-bottom: 15px;
+    height: 40%;
+    width: 32%;
 }
 
 .card h3 {
     font-size: 18px;
-    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: -40px;
 }
 
 .card p {
-    font-size: 14px;
+    font-size: 10px;
     color: #555;
+    text-align: center;
+    padding-top: 3%;
+    padding-bottom: -40px;
+    padding-right: 7%;
+    padding-left: 7%;
+
 }
 
 @media (max-width: 768px) {
@@ -193,131 +232,304 @@ body {
 
 .apply {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #a30d23;
+    align-items: center; /* Align items vertically centered */
+    justify-content: space-between; /* Space between children */
+    background-color: #550000;
     padding: 40px; 
 }
 
 .apply-text {
-    width: 60%;
+    width: 80%;
     text-align: justify;
+    margin-right: 80px; /* Add some margin to the right for spacing */
 }
 
 .apply-text h2 {
     color: #ffffff;
     font-size: 32px;
     text-align: center;
-    margin-bottom: 20px;
+}
+
+.apply-text ul {
+    padding-left: 6%;
 }
 
 .apply-text p, 
 .apply-text ul {
     font-size: 18px;
     color: white;
-    margin-bottom: 10px;
+    margin-bottom: 1px;
+    padding-top: 2%;
 }
 
 .who-apply {
-    width: 35%;
+    width: 45vw;
+    height: 33vh;
 }
 
 .who-apply img {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 10px;
+    width: 59%;
+    height: 100%;
+    margin-left: 20%; /* Remove auto margin to bring it closer */
+    object-fit: cover; /* This ensures the image fits the container and maintains quality */
+    border-radius: 5px; /* Maintain the rounded corners */
 }
+
 
 
         /* Who could apply */
         .apply-now-section {
             background-color: #fff;
-            padding: 40px;
             text-align: center;
         }
 
         .apply-now-section h2 {
             font-size: 32px;
-            color: #6d0212;
-            margin-bottom: 20px;
+            color: #550000;
+            margin-bottom: 1%;
         }
+
+        .apply-now-section {
+        background-color: #fff;
+        text-align: center;
+        width: 99vw;
+        height: 100vh;
+    }
+
+    
+    .apply-now-section h2 {
+        padding-top: 5%;
+        font-size: 35px;
+        color: #550000;
+        margin-bottom: 20px;
+    }
 
     .contact-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .contact-top {
+        font-size: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .contact-form button {
+        margin-top: 8%;
+        padding: 10px 20px;
+        background-color: #550000;
+        color: white;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .contact-form button:hover {
+        background-color: #ffcc00;
+        color: #000;
+       
+    }
+
+ /* Footer Section */
+footer {
+    background-color: #550000;
+    color: white;
+    width: 99vw;
+    padding: 1% 1%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.footer-content-left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 40%;
+    padding-left: 2%;
 }
 
-.contact-form input,
-.contact-form textarea {
-    width: 100%; /* Keep the input and textarea full width */
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+.footer-logo {
+    display: flex;
+    align-items: center;
 }
 
-.contact-form label {
-    margin-bottom: 5px; /* Adds space between label and input */
-    font-weight: bold;
+.footer-logo img {
+    width: 7vw; /* Adjust size */
+    height: auto;
+    margin-right: 10px; /* Space between the logo and text */
 }
 
-.contact-form button {
-    padding: 10px 20px;
-    background-color: #a30d23;
-    color: white;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    align-self: center; /* Center the button horizontally */
+.footer-sub-name {
+    font-size: 11px; 
+    padding-top: 2%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-        .contact-form button:hover {
-            background-color: #ffcc00;
-            color: #000;
-        }
+.footer-top-name {
+    padding-top: 10%;
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold; 
+}
 
-        /* Footer Section */
-        footer {
-            background-color: #a30d23;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+.footer-bottom {
+    padding-top: 2%;
+    font-size: 12px;
+    color: #ffffff;
+}
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
+.footer-content-right {
+    padding-top: 1%;
+    padding-right: 3%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-links, .footer-support, .footer-contact {
+    font-size: 12px;
+}
+
+.footer-links h3,
+.footer-support h3,
+.footer-contact h3 {
+    font-size: 15px;
+    margin-bottom: 3px;
+    color: #ffcc00;
+}
+
+.footer-links ul,
+.footer-support ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li,
+.footer-support ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a,
+.footer-support ul li a {
+    color: #ffffff;
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s;
+}
+
+.footer-links ul li a:hover,
+.footer-support ul li a:hover {
+    color: #ffcc00;
+}
+
+.footer-contact p {
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.footer-contact a {
+    color: #ffcc00;
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s;
+}
+
+.footer-contact a:hover {
+    color: #fff;
+}
+
+
+     /* Responsive Adjustments */
+     @media (max-width: 768px) {
+        header {
+            flex-direction: column;
             align-items: flex-start;
         }
 
-        .footer-logo img {
-            width: 50px;
+        nav ul {
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
         }
 
-        footer ul {
-            list-style: none;
+        .auth-buttons {
+            margin-top: 15px;
         }
 
-        footer ul li a {
+        .banner {
+            height: 350px;
+            padding: 80px 20px;
+        }
+
+        .banner-text h1 {
+            font-size: 32px;
+        }
+
+        .banner-text p {
+            font-size: 16px;
+        }
+
+
+        .about-us {
+            flex-direction: column;
+            align-items: center;
             color: white;
-            text-decoration: none;
         }
-    </style>
+
+
+
+        .about-us-text,
+        .about-us-video {
+            width: 100vh;
+            color: rgb(255, 255, 255);
+        }
+
+        .service-option {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-option img {
+            margin-bottom: 15px;
+        }
+
+        .footer-content {
+            grid-template-columns: .5fr;
+            text-align: center;
+        }
+
+        
+    }
+</style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
         <div class="logo">
-            <img src="logo.webp" alt="CNSRR Logo">
+            <img src="images/logo.webp" alt="CNSRR Logo">
             <div class="logo-text">
-                <h3>Center for Natural Sciences</h3>
-                <h4>and Resources Research</h4>
-                <h5>Research Institute of Science and Technology</h5>
+                <h3>Center for Natural Sciences and</h3>
+                <h4>Resources Research</h4>
+                <p class = "sub-name">Research Institute of Science and Technology</h5>
             </div>
         </div>
         <nav>
@@ -330,52 +542,53 @@ body {
             </ul>
         </nav>
         <div class="auth-buttons">
-            <button class="login-btn" onclick="login()">Login</button>
-            <button class="signup-btn" onclick="signup()">Sign Up</button>
+            <a href="role-selection.html" class="login-btn">Login</a>
+            <a href="role-selection.html" class="signup-btn">Sign Up</a>
         </div>
     </header>
 
     <!-- Main Banner Section -->
     <section id="home" class="banner">
         <div class="banner-text">
-            <h1>Internship Opportunity at the Center for Natural Sciences and Resources Research (CNSRR)</h1>
+            <h1>Internship Opportunity at the Center for Natural Sciences<br> and Resources Research (CNSRR)</h1>
             <p class="lower-text"></p>
         </div>
     </section>
 
-    <section class="internship-section">
+    <div class="internship-section">
         <h2>Why Join Our Internship Program?</h2>
 
         <div class="cards-container">
 
             <div class="card">
-                <img src="log-in-bg.jpg">
+                <img src="images/realworldresearch.png">
                 <h3>Experience Real-World Research</h3>
                 <p>Gain invaluable experience where you'll get hands-on experience with laboratory equipment and techniques that will prepare you for a professional career.</p>
             </div>
 
             <div class="card">
-                <img src="log-in-bg.jpg">
+                <img src="images/mentorship.png">
                 <h3>Research Mentorship</h3>
                 <p>Work directly with experienced researchers, receiving one-on-one mentoring to sharpen your research skills and deepen your scientific understanding.</p>
             </div>
 
             <div class="card">
-                <img src="log-in-bg.jpg">
+                <img src="images/collab.png">
                 <h3>Collaborate on Meaningful Projects</h3>
                 <p>Be part of research collaborations on impactful projects that aim to address key questions in microbiology and parasitology.</p>
             </div>
 
         </div>
-    </section>
+    </div>
+</div>
 
 <!-- Who could apply -->
 <section id="apply" class="apply">
     <div class="who-apply">
-        <img src="log-in-bg.jpg" alt="Application Image">
+        <img src="images/Microscopy.jpg" alt="Application Image">
     </div>
     <div class="apply-text">
-        <h2>Who Could Apply?</h2>
+        <h2>Who Could Apply?<br></h2>
         <p>We invite students with a passion for science and an interest in microbiology, parasitology, or STEM education. This program is perfect for:</p>
         <ul>
             <li>Undergraduate students in Microbiology, Biology, Parasitology, or related fields.</li>
@@ -393,48 +606,56 @@ body {
         <p>brief personal statement outlining your interests and career goals.</p>
         <br>
         <form id="internshipForm" class="contact-form">
-            <label for="name">Name <span style="color: red;">*</span></label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Email <span style="color: red;">*</span></label>
-            <input type="email" id="email" name="email" required>
-            <label for="school">School <span style="color: red;">*</span></label>
-            <input type="text" id="school" name="school" required>
-            <label for="message">Message <span style="color: red;">*</span></label>
-            <textarea id="message" name="message" rows="5" required></textarea>
+            <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="school" name="school" placeholder="School" required>
+            <textarea id="message" name="message" rows="5" placeholder="Message" required></textarea>
             <button type="submit">Send Message</button>
         </form>
     </section>
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="footer-content">
+<!-- Footer Section -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-content-left">
+            <!-- Logo and Text Beside It -->
             <div class="footer-logo">
-                <img src="logo.webp" alt="Center for Natural Sciences Logo">
+                <img src="images/logo.webp" alt="Center for Natural Sciences Logo">
+                <div class="footer-logo-text">
+                    <p class = footer-top-name>Center for Natural Sciences <br>and Resources Research</p>
+                    <p class = "footer-sub-name">Research Institute of Science and Technology</p>
+                </div>
             </div>
+            <p class="footer-bottom">&copy; 2024 Center for Natural Sciences and Resources Research. All rights reserved.</p>
+        </div>
+
+        <div class="footer-content-right">
+            <!-- Company Links -->
             <div class="footer-links">
                 <h3>Company</h3>
                 <ul>
                     <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
+
+            <!-- Support Links -->
             <div class="footer-support">
                 <h3>Support</h3>
                 <ul>
                     <li><a href="#">Help Center</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Help</a></li>
                 </ul>
             </div>
+
             <div class="footer-contact">
                 <h3>Contact Us</h3>
-                <p>Email: <a href="mailto:rist@pup.edu.ph">rist@pup.edu.ph</a></p>
-                <p>Phone: <a href="tel:+63283351990">+63 2833-51990</a></p>
-                <p>Address: Anonas Street, Sta. Mesa, Manila</p>
+                <p><i class="fas fa-envelope"></i>&nbsp; <a href="mailto:info@cnsrr.com">info@cnsrr.com</a></p>
+                <p><i class="fas fa-phone"></i>&nbsp; (123) 456-7890</p>
+                <p><i class="fas fa-map-marker-alt">&nbsp;</i> Anonas St. Sta. Mesa, Manila</p>
             </div>
         </div>
-        <p>&copy; 2024 Center for Natural Sciences in Resources Research. All rights reserved.</p>
-    </footer>
+    </div>
+</footer>
+
 
     <script>
         function login() {
