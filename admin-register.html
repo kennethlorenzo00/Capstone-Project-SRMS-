@@ -9,21 +9,23 @@
     <script type="module" src="js/auth.js"></script>    <!-- Authentication logic -->
 </head>
 <body>
-    <div class="wrapper" style="background-image: url('registrationBG.jpg') !important; background-size: auto 118%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
-        <div class="admin-register-body">
+    <div class="wrapper" style="background-image: url('registrationBG.jpg') !important; background-size: auto 110%; background-position: left; background-repeat: no-repeat; height: 100vh; display: flex;">
+        <div class="register-body">
             <div class="register-form">
                 <img src="Logo.webp" class="reg-logo" alt="Logo">
                 <div class="lower-reg-form">
                     <h1 class="register-h1">Admin Registration</h1>
-                    <form id="adminRegisterForm">
-                        <input type="text" id="firstName" placeholder="First Name" required>
-                        <input type="text" id="middleName" placeholder="Middle Name">
-                        <input type="text" id="lastName" placeholder="Last Name" required>
+                    <form class="form-reg" id="adminRegisterForm">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="firstName" placeholder="First Name" required style="flex: 1; width:30%;">
+                            <input type="text" id="middleName" placeholder="Middle Name" style="flex: 1; width:30%;">
+                            <input type="text" id="lastName" placeholder="Last Name" required style="flex: 1; width:30%;">
+                        </div>
+                        <input type="email" id="email" placeholder="Email" required>
                         <input type="text" id="username" placeholder="Username" required>
+                        <input type="password" id="password" placeholder="Password" required>
                         <input type="text" id="contactNumber" placeholder="Contact Number" required>
                         <input type="text" id="address" placeholder="Address" required>
-                        <input type="email" id="email" placeholder="Email" required>
-                        <input type="password" id="password" placeholder="Password" required>
                         <button type="submit" id="registerBtn">Register</button>
                     </form>
                     <p><a href="admin-login.html">Already registered? Login here</a></p>
