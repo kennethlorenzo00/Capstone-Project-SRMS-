@@ -21,36 +21,59 @@
 
 </head>
 <body>
-    <!-- Sidebar -->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn">×</a>
-        <a href="#" onclick="openTab(event, 'home')">Home (Dashboard)</a>
-        <a href="#" onclick="openTab(event, 'taskList')">Tasks List</a>
-        <a href="#" onclick="openTab(event, 'analysisReport')">Analysis Reports</a>
-        <a href="#" onclick="openTab(event, 'events')">Events</a>
-        <a href="#" onclick="openTab(event, 'account')">Account</a>
-    </div>
-
-    <!-- Header -->
-    <div id="main">
-        <header class="header">
-            <button class="openbtn">☰</button>
+     <!-- Header -->
+     <header class="lab-header">
+        <div class="header-content">
+            <button id="openSidebar" class="sidebar-openbtn">&#9776;</button>
             <div class="admin-logo">
-                <div class="side-logo">
-                    <img src="Logo.webp" class="side-logo" alt="Lab Logo">
+                <img src="images/logo.webp" alt="CNSRR Logo">
+                <div class="admin-logo-text">
+                    <h3>Center for Natural Sciences and</h3>
+                    <h4>Resources Research</h4>
+                    <p class="sub-name">Research Institute of Science and Technology</p>
                 </div>
-                <span class="logo-name">Center for Natural Science and Resources Research</span>
-                
             </div>
-            <div class="header-icons">
-                <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-                <button id="notificationsBtn" class="notifications-btn">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span id="notificationCount" class="notification-count">0</span>
-                </button>
-                <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
-            </div>
-        </header>
+        </div>
+        
+        <div class="header-icons">
+            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+            <button id="notificationsBtn" class="notifications-btn">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="notificationCount" class="notification-count">0</span>
+            </button>
+            <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
+    
+    
+    <!-- Sidebar -->
+    <div id="sidebar" class="lab-sidebar">
+
+        <a href="#" id="dashboardLink" onclick="openTab(event, 'home')">
+            <i class="fa-solid fa-home"></i> 
+            <span class="lab-side">Dashboard </span>
+        </a>
+        <a href="#" id="requestListLink" onclick="openTab(event, 'taskList')">
+            <i class="fa-solid fa-file"></i> 
+            <span class="lab-side">Tasks Lists </span>
+        </a>
+        <a href="#" id="analysisReportLink" onclick="openTab(event, 'analysisReport')">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span class="lab-side">Analysis Report </span>
+        </a>
+        <a href="#" id="eventsLink" onclick="openTab(event, 'events')">
+            <i class="fa-solid fa-bullhorn"></i> 
+            <span class="lab-side">Events </span>
+        </a>
+        <a href="#" id="accountLink" onclick="openTab(event, 'account')">
+            <i class="fa-solid fa-user"></i> 
+            <span class="lab-side">Account </span>
+        </a>
+    </div>
+    
+ <!-- Page Content -->
+ <div id="main">
+        
 
         <div id="notificationPopup" class="notification-popup hidden">
             <div class="popup-header">
@@ -158,6 +181,7 @@
                 </div>                
 
             </div>
+        </div>
 
             <!-- Tasks List Section -->
             <div id="taskList" class="tabcontent" style="display:none;">
