@@ -9,45 +9,61 @@
         <link rel="stylesheet" href="css/styles.css"> 
         <script type="module" src="../js/firebase.js"></script>
         <script type="module" src="js/auth.js" defer></script> 
+        <script src="js/client-sidebar.js" defer></script>
         <script type="module" src="js/client-account.js" defer></script> 
         <script type="module" src="js/client-home.js" defer></script> 
         <script type="module" src="js/client-notification.js" defer></script> 
 
     </head>
     <body>
-        <!-- Sidebar -->
-        <div id="mySidebar" class="client-sidebar hidden">
-            <button id="closeSidebar" class="closebtn">&times;</button>
-            <a href="#" id="homeLink">Home (Dashboard)</a>
-            <a href="#" id="createRequestLink">Create Request</a>
-            <a href="#" id="requestListLink">Request List</a>
-            <a href="#" id="myAccountLink">My Account</a>
+        <!-- Header -->
+     <header class="client-header">
+        <div class="header-content">
+            <button id="openSidebar" class="sidebar-openbtn">&#9776;</button>
+            <div class="admin-logo">
+                <img src="images/logo.webp" alt="CNSRR Logo">
+                <div class="admin-logo-text">
+                    <h3>Center for Natural Sciences and</h3>
+                    <h4>Resources Research</h4>
+                    <p class="sub-name">Research Institute of Science and Technology</p>
+                </div>
+            </div>
         </div>
+        
+        <div class="header-icons">
+            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+            <button id="notificationsBtn" class="notifications-btn">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="notificationCount" class="notification-count">0</span>
+            </button>
+            <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
+    
+    
+    <!-- Sidebar -->
+    <div id="sidebar" class="client-sidebar">
 
-        <!-- Main Content -->
-        <div id="main">
-            <!-- Header -->
-            <header class="client-header">
-                <button id="openSidebar" class="openbtn">&#9776;</button>
-                <div class="client-logo">
-                    <div class="side-logo">
-                        <img src="images/Logo.webp" class="side-logo" alt="Logo">
-                    </div>
-                    <span class="logo-name">Client Dashboard</span>
-                </div>
-
-                <div class="header-icons">
-                    <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-
-                    <!-- Notifications Button with Pop-up Tab -->
-                    <button id="notificationsBtn" class="notifications-btn">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <span id="notificationCount" class="notification-count">0</span>
-                    </button>
-                    
-                    <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
-                </div>
-            </header>
+        <a href="#" id="dashboardLink" onclick="openTab(event, 'home')">
+            <i class="fa-solid fa-home"></i> 
+            <span class="lab-side">Dashboard </span>
+        </a>
+        <a href="#" id="createRequestLink" onclick="openTab(event, 'taskList')">
+            <i class="fa-solid fa-file"></i> 
+            <span class="lab-side">Create Request</span>
+        </a>
+        <a href="#" id="createRequestLink" onclick="openTab(event, 'analysisReport')">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span class="lab-side">Request List</span>
+        </a>
+        <a href="#" id="accountLink" onclick="openTab(event, 'account')">
+            <i class="fa-solid fa-user"></i> 
+            <span class="lab-side"> Account </span>
+        </a>
+    </div>
+    
+ <!-- Page Content -->
+ <div id="main">
 
             <!-- Notification Pop-up Tab -->
             <div id="notificationPopup" class="notification-popup hidden">
