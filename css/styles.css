@@ -2716,13 +2716,13 @@ h1 {
     color: #999; /* Grey text */
     font-style: italic;
 }
-/* General Table Styles */
+/* Counter */
 #taskTable,
 #ongoingTaskTable {
-    width: 100%;
+    width: 70%; /* Set the width to 70% for a more compact look */
     border-collapse: collapse; /* Remove space between cells */
-    margin: 20px 0; /* Add some margin above and below the table */
-    font-size: 1rem; /* Set the base font size */
+    margin: 20px auto; /* Center the table and add margin */
+    font-size: 0.8rem; /* Set the base font size smaller */
 }
 
 /* Table Header Styles */
@@ -2740,58 +2740,29 @@ h1 {
 #ongoingTaskTable th,
 #processedTaskTable th,
 #rejectedTaskTable th {
-    padding: 12px 15px;
-    text-align: left;
+    padding: 8px 10px; /* Reduced padding for headers */
+    text-align: left; /* Keep left-aligned header text */
     border-top: 2px solid;
 }
 
-#taskTable th:first-child{
+#taskTable th:first-child,
+#ongoingTaskTable th:first-child,
+#processedTaskTable th:first-child,
+#rejectedTaskTable th:first-child {
     border-radius: 15px 0 0 0; 
     border-left: 2px solid;
     border-top: 2px solid;
 }
 
-#ongoingTaskTable th:first-child{
-    border-radius: 15px 0 0 0; 
-    border-left: 2px solid;
-    border-top: 2px solid;
-}
-
-#taskTable th:last-child{
+#taskTable th:last-child,
+#ongoingTaskTable th:last-child,
+#processedTaskTable th:last-child,
+#rejectedTaskTable th:last-child {
     border-radius: 0 10px 0 0;
     border-right: 2px solid;
     border-top: 2px solid;
 }
 
-#ongoingTaskTable th:last-child{
-    border-radius: 0 10px 0 0;
-    border-right: 2px solid;
-    border-top: 2px solid;
-}
-
-#processedTaskTable th:last-child{
-    border-radius: 0 10px 0 0;
-    border-right: 2px solid;
-    border-top: 2px solid;
-}
-
-#processedTaskTable th:first-child{
-    border-radius: 15px 0 0 0; 
-    border-left: 2px solid;
-    border-top: 2px solid;
-}
-
-#rejectedTaskTable th:first-child{
-    border-radius: 15px 0 0 0; 
-    border-left: 2px solid;
-    border-top: 2px solid;
-}
-
-#rejectedTaskTable th:last-child{
-    border-radius: 0 10px 0 0;
-    border-right: 2px solid;
-    border-top: 2px solid;
-}
 /* Table Body Styles */
 #taskTable tbody,
 #ongoingTaskTable tbody {
@@ -2800,8 +2771,9 @@ h1 {
 
 #taskTable td,
 #ongoingTaskTable td {
-    padding: 10px; /* Padding for table cells */
+    padding: 6px; /* Reduced padding for table cells */
     border-bottom: 1px solid #ddd; /* Light gray border at the bottom */
+    font-size: 0.8rem; /* Match table cell font size with header */
 }
 
 /* Hover Effect for Table Rows */
@@ -2814,16 +2786,234 @@ h1 {
 @media (max-width: 768px) {
     #taskTable,
     #ongoingTaskTable {
-        font-size: 0.9rem; /* Slightly smaller font on smaller screens */
+        font-size: 0.7rem; /* Smaller font on smaller screens */
+        width: 90%; /* Make it slightly wider on smaller screens */
     }
 
     #taskTable th, 
     #taskTable td,
     #ongoingTaskTable th,
     #ongoingTaskTable td {
-        padding: 8px; /* Reduce padding on smaller screens */
+        padding: 4px; /* Further reduce padding on smaller screens */
     }
 }
+
+.task-overview {
+    background-color: #ffffff; /* White background for the entire section */
+    padding: 15px; /* Reduced padding around the section */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin-left: -18px; /* Move the box to the left */
+    margin-right: auto; /* Center align the box to the left */
+    width: 90%; /* Width of the overview box */
+    max-width: 800px; /* Maximum width to control size */
+}
+
+.task-overview h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    margin-top: 2px;
+    color: #333;
+}
+
+.task-overview table {
+    width: 100%; /* Full-width table */
+    border-collapse: collapse; /* Collapse borders */
+    border-radius: 10px; /* Rounded corners for the table */
+    overflow: hidden; /* Hide overflow for rounded corners */
+}
+
+.task-overview th, .task-overview td {
+    padding: 10px; /* Reduced padding for table cells */
+    text-align: center; /* Center align text in headers and cells */
+    border: none; /* No borders */
+    font-size: 14px; /* Decreased font size for table text */
+    font-family: Arial, sans-serif; /* Font family for table text */
+    color: #333; /* Dark text color for better readability */
+}
+
+.task-overview thead {
+    background-color: #f2f2f2; /* Light gray header background */
+    color: #333; /* Dark text color for header */
+}
+
+.task-overview th {
+    font-weight: bold; /* Bold text for headers */
+    font-size: 16px; /* Decreased font size for header text */
+    border-bottom: 2px solid #ddd; /* Border below the header */
+}
+
+.task-overview tbody tr {
+    border-bottom: 1px solid #ddd; /* Bottom border for each row */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Default shadow for all rows */
+    border-radius: 5px; /* Slightly rounded corners for floating effect */
+    transition: box-shadow 0.3s; /* Smooth transition for shadow effect */
+}
+
+.task-overview tbody tr:hover {
+    background-color: #e9ecef; /* Slightly darker gray on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Shadow for floating effect on hover */
+}
+
+.task-overview .priority-high {
+    background-color: #ff4c4c; /* Red for high priority */
+    color: #ffffff; /* White text for high priority */
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 5px; /* Rounded corners for priority levels */
+    font-size: 12px; /* Decreased font size for priority level */
+}
+
+.task-overview .priority-medium {
+    background-color: #ffc107; /* Yellow for medium priority */
+    color: #000; /* Black text for medium priority */
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 5px; /* Rounded corners for priority levels */
+    font-size: 12px; /* Decreased font size for priority level */
+}
+
+.task-overview .priority-low {
+    background-color: #28a745; /* Green for low priority */
+    color: #ffffff; /* White text for low priority */
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 5px; /* Rounded corners for priority levels */
+    font-size: 12px; /* Decreased font size for priority level */
+}
+
+.task-overview .status-button {
+    padding: 5px 10px; /* Adjusted padding for the button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners for the button */
+    color: white; /* White text color */
+    font-size: 12px; /* Decreased font size for the button text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    outline: none; /* Remove outline */
+}
+
+.task-overview .status-processed {
+    background-color: #28a745; /* Green for processed status */
+}
+
+.task-overview .status-in-progress {
+    background-color: #ffc107; /* Yellow for in-progress status */
+}
+
+.task-overview .status-rejected {
+    background-color: #dc3545; /* Red for rejected status */
+}
+
+.task-overview .status-button:hover {
+    filter: brightness(85%); /* Darken button on hover */
+}
+
+/* Column Width Adjustments */
+.task-overview th:nth-child(1), /* Date */
+.task-overview td:nth-child(1) {
+    width: 15%; /* Width for Date */
+}
+
+.task-overview th:nth-child(2), /* Request No. */
+.task-overview td:nth-child(2) {
+    width: 25%; /* Width for Request No. */
+}
+
+.task-overview th:nth-child(3), /* Service Type */
+.task-overview td:nth-child(3) {
+    width: 25%; /* Width for Service Type */
+}
+
+.task-overview th:nth-child(4), /* Client Type */
+.task-overview td:nth-child(4) {
+    width: 15%; /* Width for Client Type */
+}
+
+.task-overview th:nth-child(5), /* Client Name */
+.task-overview td:nth-child(5) {
+    width: 30%; /* Width for Client Name */
+}
+
+.task-overview th:nth-child(6), /* No. of Samples */
+.task-overview td:nth-child(6) {
+    width: 10%; /* Width for No. of Samples */
+}
+
+.task-overview th:nth-child(7), /* Priority Level */
+.task-overview td:nth-child(7) {
+    width: 15%; /* Width for Priority Level */
+}
+
+.task-overview th:nth-child(8), /* Status */
+.task-overview td:nth-child(8) {
+    width: 15%; /* Width for Status */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .task-overview {
+        width: 85%; /* Reduce width on larger screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .task-overview {
+        width: 90%; /* Further reduce width on medium screens */
+        padding: 10px; /* Less padding */
+    }
+
+    .task-overview h3 {
+        font-size: 22px; /* Smaller heading size */
+    }
+
+    .task-overview th, .task-overview td {
+        font-size: 12px; /* Smaller font size for table */
+    }
+
+    .task-overview .status-button {
+        font-size: 10px; /* Smaller font size for buttons */
+    }
+}
+
+@media (max-width: 768px) {
+    .task-overview {
+        width: 95%; /* Almost full width on smaller screens */
+    }
+
+    .task-overview h3 {
+        font-size: 20px; /* Smaller heading size */
+    }
+
+    .task-overview th, .task-overview td {
+        font-size: 12px; /* Smaller font size for table */
+        padding: 8px; /* Less padding */
+    }
+
+    .task-overview .status-button {
+        font-size: 10px; /* Smaller font size for buttons */
+        padding: 4px 6px; /* Less padding for buttons */
+    }
+}
+
+@media (max-width: 576px) {
+    .task-overview {
+        width: 100%; /* Full width on the smallest screens */
+        padding: 5px; /* Minimal padding */
+    }
+
+    .task-overview h3 {
+        font-size: 18px; /* Smaller heading size */
+    }
+
+    .task-overview th, .task-overview td {
+        font-size: 10px; /* Smaller font size for table */
+        padding: 4px; /* Less padding */
+    }
+
+    .task-overview .status-button {
+        font-size: 8px; /* Smaller font size for buttons */
+        padding: 3px 5px; /* Less padding for buttons */
+    }
+}
+
 
 /* General Table Styles */
 #processedTaskTable,
@@ -3017,6 +3207,201 @@ button:hover {
         padding: 8px; /* Reduce padding on smaller screens */
     }
 }
+
+/*Approching Deadlines*/
+#approachingDeadlines {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+/* Heading styling */
+#approachingDeadlines h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    margin-top: 2px;
+    color: #800000;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Flexbox container for the cards */
+.approaching-deadlines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Card styling */
+.deadline-card {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    width: 270px;
+    align-items: stretch; /* Ensures the date box and info section are the same height */
+}
+
+/* Date box styling */
+.date-box {
+    background-color: #800000;
+    color: #ffffff;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px; /* Keeps the width consistent */
+    margin-right: 10px;
+    flex-shrink: 0; /* Prevents the date box from shrinking */
+}
+
+/* Ensure the date box stretches the entire height of the card */
+.deadline-card .date-box {
+    height: 100%;
+}
+
+/* Styling for day and month in date box */
+.date-box .day {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.date-box .month {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Information section styling */
+.deadline-info {
+    padding: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.deadline-info h4 {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+}
+
+.deadline-info p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.deadline-info .days-left {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Responsive design to handle mobile views */
+@media (max-width: 768px) {
+    .approaching-deadlines-container {
+        flex-direction: column;
+    }
+
+    .deadline-card {
+        width: 100%; /* Full width on small screens */
+    }
+}
+
+/* Upcoming Events */
+#upcomingEvents {
+    position: absolute; /* Position it absolutely */
+    top: 185px; /* Distance from the top */
+    right: 2px; /* Distance from the right */
+    background-color: #fdf1f1; /* Light pink background */
+    border-radius: 15px;
+    padding: 10px; /* Padding for the container */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    width: 50%; /* Set to 50% of the container width */
+    max-width: 300px; /* Optional: Max width to keep it reasonable */
+    display: flex; /* Enable flexbox for the container */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+/* Heading styling */
+#upcomingEvents h3 {
+    font-size: 1rem; /* Reduced size for the heading */
+    margin-bottom: 8px; /* Reduced margin */
+    color: #333;
+    font-weight: bold;
+    text-align: center; /* Center the heading text */
+}
+
+/* Upcoming events list */
+.upcoming-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Remove space between events */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+/* Each event item */
+.event-item {
+    display: flex;
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center vertically */
+    padding: 4px 0; /* Padding for each event item */
+    height: 30px; /* Set a fixed height for event items to keep text on the same line */
+    border-bottom: 1px solid #e0e0e0; /* Light border between items */
+    width: 100%; /* Make items full width of the container */
+}
+
+/* Date styling */
+.event-date {
+    color: #800000; /* Dark red color */
+    font-weight: bold;
+    font-size: 12px; /* Reduced font size */
+    margin-right: 5px; /* Space between date and title */
+}
+
+/* Title styling */
+.event-title {
+    flex-grow: 1; /* Allow title to take up available space */
+    text-align: center; /* Center text */
+    font-size: 12px; /* Reduced font size */
+    color: #333;
+    font-weight: 600; /* Semi-bold for emphasis */
+}
+
+/* Days left styling */
+.event-days-left {
+    color: #777; /* Light gray for days left */
+    font-size: 12px; /* Reduced font size */
+    margin-left: 5px; /* Space between title and days left */
+}
+
+/* Last event should not have a border */
+.event-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #upcomingEvents {
+        max-width: 100%; /* Full width on smaller screens */
+    }
+}
+
+
+
+
+
+
 
 /* Unique class for account section */
 #account {
@@ -3301,40 +3686,112 @@ button#saveClientChangesBtn {
     object-fit: cover;
 }
 
+#taskOverview {
+    text-align: left; /* Align text to the left */
+    padding: 20px; /* Maintain padding for the section */
+}
+
 .task-count {
     display: flex;
-    justify-content: space-between; /* Distribute the boxes evenly */
-    gap: 20px; /* Space between the boxes */
-    margin: 0 auto; /* Center the task count section */
-    max-width: 100%; /* Ensure the width stretches across the container */
+    justify-content: flex-start; /* Keep boxes aligned to the left */
+    gap: 17px; /* Space between the boxes */
+    margin: 0; /* Remove margin to shift left */
+    padding-left: 0; /* Remove left padding */
+    flex-wrap: nowrap; /* Ensure boxes stay on the same line */
 }
 
 .task-count p {
-    background-color: #f1f1f1; /* Light background for the rectangle */
-    padding: 20px;
-    border-radius: 8px; /* Rounded corners */
-    flex: 1; /* Ensure each box takes equal space */
+    position: relative; /* Needed for the colored line */
+    background-color: #fff; /* White background for boxes */
+    padding: 5px 25px; /* Slightly reduced padding */
+    padding-left: 20px; /* Space for the number */
+    border-radius: 8px; /* Rounded corners for the boxes */
     display: flex;
-    flex-direction: column; /* Stack the number and text vertically */
-    align-items: center; /* Center content horizontally */
-    font-family: Arial, sans-serif;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    text-align: center; /* Center align text inside */
+    flex-direction: row; /* Align number and text horizontally */
+    align-items: center; /* Vertically center content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Increased shadow for depth */
+    text-align: left; /* Align text to the left */
+    min-width: 100px; /* Minimum width of each box */
+    max-width: 200px; /* Adjusted maximum width */
+    white-space: nowrap; /* Ensure text stays on the same line */
 }
 
+/* Ensure the third box's text stays on the same line */
+.task-count p:nth-child(3) {
+    max-width: 200px; /* Adjust this as necessary */
+}
+
+/* Position the first box more to the left */
+.task-count p:first-child {
+    margin-left: -39px; /* Adjust left margin to move the first box more to the left */
+}
+
+/* Add the colored line to the top-left using ::before */
+.task-count p::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px; /* Thickness of the colored line */
+    height: 100%;
+    border-radius: 8px 0 0 8px; /* Smooth the top left corner */
+}
+
+/* Center the number and text side by side */
 .task-count p span {
-    font-size: 2.5rem; /* Larger font size for numbers */
-    color: #007BFF; /* Blue color for the numbers */
-    margin-bottom: 10px; /* Space between number and label */
+    font-size: 2.5rem; /* Font size for the numbers */
+    font-weight: bold; /* Bold font for the number */
+    margin-right: 8px; /* Space between number and text */
+    color: inherit;
+}
+
+/* Ensure the label text stays in line */
+.task-count p .task-label {
+    flex: 1; /* Allow the label to take up available space */
+    text-align: left; /* Align text to the left */
+    font-size: 1rem; /* Font size for text */
+    color: #555; /* Dark color for the label */
 }
 
 .task-count p strong {
-    font-size: 1rem; /* Normal font size for the label */
-    color: #555; /* Different color for label */
+    font-size: 1rem; /* Font size for the label */
+    color: #555; /* Dark color for the label */
+    font-weight: normal;
 }
+
+/* Task-specific color styling for the top-left border */
+.assigned::before {
+    background-color: #007BFF; /* Blue for Assigned tasks */
+}
+
+.ongoing::before {
+    background-color: #28A745; /* Green for Ongoing tasks */
+}
+
+.processed::before {
+    background-color: #FFC107; /* Yellow for Processed tasks */
+}
+
+.rejected::before {
+    background-color: #DC3545; /* Red for Rejected tasks */
+}
+
+/* Media query for when the sidebar is collapsed */
+@media (max-width: 900px) { /* Adjust this width based on when the sidebar collapses */
+    .task-count {
+        justify-content: flex-start; /* Align boxes to the left */
+    }
+
+    .task-count p {
+        margin-right: 10px; /* Adjust margin between boxes */
+    }
+}
+
+
 
 #approachingDeadlines {
     margin: 20px;
+    margin-left: -20px;
 }
 
 #approachingDeadlines h3 {
@@ -3403,15 +3860,54 @@ button#saveClientChangesBtn {
     background-color: #f1f1f1;
 }
 
+/*Progress Bar Styles*/
+
+/* Circular Progress Bar Section */
 #progressBarSection {
     text-align: center;
+    margin: 20px; /* Add margin for spacing */
 }
 
+/* Progress circle container */
 .progress-circle {
     position: relative;
     width: 100px; /* Adjust size as needed */
     height: 100px; /* Adjust size as needed */
 }
+
+/* SVG styling */
+svg {
+    width: 100%; /* Make SVG fill the container */
+    height: 100%;
+    transform: rotate(-90deg); /* Rotate to start from the top */
+}
+
+/* Background circle */
+.progress-background {
+    fill: none; /* No fill */
+    stroke: #e0e0e0; /* Light gray background */
+    stroke-width: 10; /* Adjust thickness */
+}
+
+/* Foreground circle (progress) */
+.progress-foreground {
+    fill: none; /* No fill */
+    stroke: #800000; /* Dark red color */
+    stroke-width: 10; /* Adjust thickness */
+    stroke-linecap: round; /* Rounded ends */
+}
+
+/* Progress text styling */
+.progress-text {
+    position: absolute; /* Position over the circle */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to center */
+    font-size: 14px; /* Adjust text size */
+    color: #333; /* Text color */
+    font-weight: bold; /* Bold text */
+}
+
 
 svg {
     transform: rotate(-90deg);
