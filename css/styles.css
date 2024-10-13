@@ -157,7 +157,7 @@ padding-left: 8px;
 
 
 #newRequestsTable th, #staffTable th, #clientsTable th {
-    background-color: #7D1B1B;
+    background-color: #A90000;
     color: white;
     padding: 15px;
 }
@@ -2006,13 +2006,49 @@ h1 {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    border: none;
 }
 
-#newRequestsTable, #staffTable, #clientsTable {
-    border:  2px solid #7D1B1B
+#clientsTable th:first-child, #newRequestsTable th:first-child, #staffTable th:first-child {
+    border-radius: 15px 0 0 0;
+}
+
+#clientsTable th:last-child, #newRequestsTable th:last-child, #staffTable th:last-child {
+    border-radius: 0 15px 0 0;
+    justify-content: center;
+    align-items: center;
 
 }
 
+#staffTable th:nth-child(3), #staffTable td:nth-child(3){
+    text-align: center; /* Center text horizontally */
+    vertical-align: middle;
+}
+
+#clientsTable th:nth-child(3){
+    text-align: center; /* Center text horizontally */
+    vertical-align: middle;
+}
+
+#clientsTable td:last-child, #clientsTable td:nth-child(3){
+    text-align: center; /* Center text horizontally */
+    vertical-align: middle;
+}
+
+#clientsTable tbody tr {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+.manageusers{
+font-family: Arial, sans-serif;
+    padding: 20px;
+    padding-top: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
 /* Specific Styles for Each Table */
   /* all Requests Table Styling */
