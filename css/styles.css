@@ -7,6 +7,61 @@ body {
     box-sizing: border-box;
 }
 
+h2{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+/* Admin Pages Styles */
+#home {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#requestList {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#manageUsers {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#analysisReport {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#appointment {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#events {
+    margin-top: 7vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+#account {
+    margin-top: 3vh; 
+    margin-right: 4vw;
+    margin-left: 1vw;
+    margin-bottom: 6vh;
+}
+
+
 #tabContents {
     margin-top: 100px; /* Add this to move the div down */
 }
@@ -226,10 +281,6 @@ button {
     background-color: #00761A;
     text-align: center;
 }
-
-
-
-
 
 
 button:hover {
@@ -1315,7 +1366,7 @@ h1 {
         background-color: rgb(207, 207, 207); /* Default button color */
         color: black; /* Text color */
         border: none; /* Remove default border */
-        padding: 10px 20px; /* Add padding */
+        padding: .7vw 1vw; /* Add padding */
         margin: 5px; /* Add margin */
         cursor: pointer; /* Pointer cursor on hover */
         border-radius: 5px; /* Rounded corners */
@@ -1326,6 +1377,21 @@ h1 {
 #requestButtons .manageuserbutton button.active {
     background-color: yellow; /* Color when the button is selected */
     color: black; /* Change text color for better contrast */
+    display: flex;
+    justify-content: flex-start; /* Align items starting from the left */
+    align-items: center; /* Vertically centers the content */
+}
+
+.manageuserbutton {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Pushes the search bar to the right */
+}
+
+#allRequestsSearch {
+    padding: 5px;
+    font-size: 14px;
+    width: 200px;
 }
 
 
@@ -1967,19 +2033,11 @@ h1 {
 }
 
 /* Styles for the Request List Tab */
-#requestList .requestList {
-    padding: 20px;
-    padding-top: 0;
-    padding-bottom: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-}
 
 /* Table Container Styles */
 #requestList #table-container {
-    margin-top: 5px;
+    margin-top: 0;
     margin-bottom: 1px;
 }
 
@@ -2043,24 +2101,9 @@ h1 {
 
 .manageusers{
 font-family: Arial, sans-serif;
-    padding: 20px;
-    padding-top: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Specific Styles for Each Table */
-  /* all Requests Table Styling */
-  #appointment {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    padding-top: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
-}
 
 
 /* Flexbox for aligning h1 and button */
@@ -2088,7 +2131,7 @@ font-family: Arial, sans-serif;
 #allRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 /* Table header styles */
@@ -2667,16 +2710,6 @@ font-family: Arial, sans-serif;
     border-radius: 10px;
   }
 
-  /* General styles for the appointment tab */
-#appointment {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    padding-top: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
-}
 
 
 #appointmentsTable {
@@ -3440,11 +3473,7 @@ button:hover {
 
 
 /* Unique class for account section */
-#account {
-    padding: 20px;
-    padding-top: 0;
-    font-family: Arial, sans-serif;
-}
+
 
 /* Full Name Styling (Header) */
 .full-name {
@@ -4489,7 +4518,7 @@ button#saveChangesBtn {
 .search-container {
     display: flex; /* Use Flexbox for alignment */
     justify-content: flex-end; /* Align to the right */
-    margin-bottom: 20px; /* Add some space below the search bar */
+    margin-left: 43vw;
 }
 
 #searchBar {
