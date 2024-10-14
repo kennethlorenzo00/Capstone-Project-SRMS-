@@ -2948,6 +2948,30 @@ font-family: Arial, sans-serif;
     font-size: 12px; /* Decreased font size for priority level */
 }
 
+.status-rejected {
+    background-color: #ff4c4c; 
+    color: #ffffff;
+    padding: 5px 10px; 
+    border-radius: 5px;
+    font-size: 12px; 
+}
+
+.status-released {
+    background-color: #4cff6a; 
+    color: #ffffff; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    font-size: 12px; 
+}
+
+.status-preparing {
+    background-color: #4c97ff; 
+    color: #ffffff; 
+    padding: 5px 10px; 
+    border-radius: 5px;
+    font-size: 12px; 
+}
+
 .task-overview .status-button {
     padding: 5px 10px; /* Adjusted padding for the button */
     border: none; /* No border */

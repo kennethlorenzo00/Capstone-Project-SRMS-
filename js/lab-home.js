@@ -117,34 +117,53 @@ async function fetchRecentTasks(userFullName) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
-        // Determine the display status
+        // Determine the display status and apply the correct class
         let displayStatus;
-        if (requestData.request_status === 'rejected' || requestData.request_status === 'releasing') {
-            displayStatus = requestData.request_status; // Keep as is
+        let statusClass = ''; // Class for status color
+
+        if (requestData.request_status === 'rejected') {
+            displayStatus = 'Rejected';
+            statusClass = 'status-rejected'; // Red color for rejected
+        } else if (requestData.request_status === 'releasing') {
+            displayStatus = 'Released';
+            statusClass = 'status-released'; // Green color for released
         } else {
-            displayStatus = 'preparing'; // Set to 'preparing' for all other statuses
+            displayStatus = 'Preparing';
+            statusClass = 'status-preparing'; // Blue color for preparing
         }
 
+        let priorityLevel = appointmentData.priorityLevel || 'N/A';
+        let priorityClass = '';
+        if (priorityLevel.toLowerCase() === 'low') {
+            priorityClass = 'priority-low'; // Green
+        } else if (priorityLevel.toLowerCase() === 'medium') {
+            priorityClass = 'priority-medium'; // Yellow
+        } else if (priorityLevel.toLowerCase() === 'high') {
+            priorityClass = 'priority-high'; // Red
+        }
+
+
+        // Create the table row
         const row = `
             <tr>
                 <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
                 <td>${requestId}</td>
                 <td>${requestData.requestOption || 'N/A'}</td>
-                <td>${appointmentData.clientType || 'N/A'}</td>
                 <td>${appointmentData.requesterName || 'N/A'}</td>
                 <td>${requestData.samples ? requestData.samples.length : 0}</td>
-                <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                <td>${displayStatus}</td> <!-- Use the determined display status -->
+                <td><span class="${priorityClass}">${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1).toLowerCase()}</span></td>
+                <td><span class="${statusClass}">${displayStatus}</span></td> <!-- Display status with the proper class -->
             </tr>
         `;
         recentTaskTableBody.innerHTML += row;
     }
 }
 
+
 // Fetch approaching deadlines
 async function fetchApproachingDeadlines(userFullName) {
-    const approachingDeadlinesTableBody = document.getElementById('approachingDeadlinesTableBody');
-    approachingDeadlinesTableBody.innerHTML = ''; // Clear previous content
+    const approachingDeadlinesContainer = document.querySelector('.approaching-deadlines-container');
+    approachingDeadlinesContainer.innerHTML = ''; // Clear previous content
     const now = new Date();
     const nextWeek = new Date(now);
     nextWeek.setDate(now.getDate() + 7);
@@ -159,23 +178,32 @@ async function fetchApproachingDeadlines(userFullName) {
 
         if (endDate >= now && endDate <= nextWeek) {
             const daysLeft = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24)); // Calculate days left
-            const row = `
-                <tr>
-                    <td>${endDate.toLocaleDateString()}</td>
-                    <td>${appointmentData.requesterName || 'N/A'}</td>
-                    <td>${appointmentData.requestId || 'N/A'}</td>
-                    <td>${daysLeft} days left</td>
-                </tr>
+            const day = endDate.getDate();
+            const month = endDate.toLocaleString('default', { month: 'short' });
+
+            const card = `
+                <div class="deadline-card">
+                    <div class="date-box">
+                        <span class="day">${day}</span>
+                        <span class="month">${month.toUpperCase()}</span>
+                    </div>
+                    <div class="deadline-info">
+                        <h4>${appointmentData.requesterName || 'N/A'}</h4>
+                        <p>Request No. ${appointmentData.requestId || 'N/A'}</p>
+                        <p class="days-left">${daysLeft} days left</p>
+                    </div>
+                </div>
             `;
-            approachingDeadlinesTableBody.innerHTML += row;
+            approachingDeadlinesContainer.innerHTML += card;
         }
     }
 }
 
+
 // Fetch upcoming events
 async function fetchUpcomingEvents() {
-    const upcomingEventsTableBody = document.getElementById('upcomingEventsTableBody');
-    upcomingEventsTableBody.innerHTML = ''; // Clear previous content
+    const upcomingEventsList = document.querySelector('.upcoming-events-list');
+    upcomingEventsList.innerHTML = ''; // Clear previous content
     const now = new Date();
 
     const eventsRef = collection(firestore, 'events');
@@ -186,14 +214,18 @@ async function fetchUpcomingEvents() {
         const startDate = new Date(eventData.startDate);
         const daysLeft = Math.ceil((startDate - now) / (1000 * 60 * 60 * 24)); // Calculate days left
 
-        const row = `
-            <tr>
-                <td>${startDate.toLocaleDateString()}</td>
-                <td>${eventData.title || 'N/A'}</td>
-                <td>${daysLeft} days left</td>
-            </tr>
+        const day = startDate.getDate();
+        const month = startDate.toLocaleString('default', { month: 'short' });
+
+        // Create event item
+        const eventItem = `
+            <div class="event-item">
+                <span class="event-date">${day} ${month.toUpperCase()}</span>
+                <span class="event-title">${eventData.title || 'N/A'}</span>
+                <span class="event-days-left">${daysLeft} days left</span>
+            </div>
         `;
-        upcomingEventsTableBody.innerHTML += row;
+        upcomingEventsList.innerHTML += eventItem;
     }
 }
 
@@ -201,7 +233,7 @@ async function updateProgressBar(userFullName) {
     const assignedCount = await fetchAssignedTasksCount(userFullName);
     const ongoingCount = await fetchOngoingTasksCount(userFullName);
     const processedCount = await fetchProcessedTasksCount(userFullName);
-    
+
     const totalTasks = assignedCount + ongoingCount + processedCount;
     
     // Calculate the percentage of tasks processed
@@ -211,14 +243,18 @@ async function updateProgressBar(userFullName) {
     document.getElementById('progressText').textContent = `${percentage}% Total Finished`;
 
     // Update the circular progress
-    const radius = 45; // radius of the circle
-    const circumference = 2 * Math.PI * radius;
+    const radius = 45; // Radius of the circle
+    const circumference = 2 * Math.PI * radius; // Circumference of the circle
 
-    // Set the stroke-dasharray and stroke-dashoffset for the foreground circle
     const progressForeground = document.querySelector('.progress-foreground');
-    const offset = circumference - (percentage / 100 * circumference);
+    const offset = circumference - (percentage / 100 * circumference); // Calculate the offset based on the percentage
+
+    // Update the circle's stroke-dasharray and stroke-dashoffset for animation
     progressForeground.style.strokeDasharray = `${circumference} ${circumference}`;
     progressForeground.style.strokeDashoffset = offset;
+
+    // Optional: Add animation for a smooth transition (CSS alternative)
+    progressForeground.style.transition = 'stroke-dashoffset 0.5s ease';
 }
 
 // Initialize the dashboard data
