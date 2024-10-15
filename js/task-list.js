@@ -111,6 +111,7 @@ document.getElementById('backSampleDuration').addEventListener('click', () => {
     document.getElementById('sampleDurationSection').style.display = 'none';
     document.getElementById('ongoing').style.display = 'block';
     taskList.style.display = 'block';
+    document.querySelector('.duration-container').innerHTML = '<button id="addDayButton">+ Add Day</button>';
 });
 
 document.getElementById('backToSampleDuration').addEventListener('click', () => {
@@ -412,7 +413,7 @@ async function showTaskDetails(requestId) {
                 document.getElementById('sampleDurationSection').style.display = 'block';
 
                 // Load any existing days from Firestore for this sample
-                loadSampleData(sampleId);
+                loadSamplesByRequestId(requestId);
 
                 // Handle adding new day
                 document.getElementById('addDayButton').addEventListener('click', async () => {
@@ -457,16 +458,24 @@ async function showTaskDetails(requestId) {
     }
 }
 
-async function loadSampleData(sampleId) {
-    const sampleRef = doc(firestore, 'sample', sampleId);
-    const sampleDoc = await getDoc(sampleRef);
+async function loadSamplesByRequestId(requestId) {
+    const samplesSnapshot = await getDocs(query(collection(firestore, 'sample'), where('requestId', '==', requestId)));
 
-    if (sampleDoc.exists()) {
+    if (samplesSnapshot.empty) {
+        console.log('No samples found for requestId:', requestId);
+        return;
+    }
+
+    // Clear the container first
+    document.querySelector('.duration-container').innerHTML = '<button id="addDayButton">+ Add Day</button>';
+
+    samplesSnapshot.forEach(sampleDoc => {
         const sampleData = sampleDoc.data();
         const days = sampleData.day;
 
-        // Clear the container first
-        document.querySelector('.duration-container').innerHTML = '<button id="addDayButton">+ Add Day</button>';
+        // Log sample details for debugging
+        console.log('Loaded Sample ID:', sampleDoc.id); // Log the sample document ID
+        console.log('Sample Data:', sampleData); // Log sample data
 
         // Re-render each saved day
         days.forEach(day => {
@@ -487,7 +496,7 @@ async function loadSampleData(sampleId) {
                 console.log(`Day ${day.dayNumber} clicked`);
 
                 // Optionally, you can load specific data for this day to the colonyCountSection
-                loadColonyDataForDay(day, sampleId);
+                loadColonyDataForDay(day, sampleDoc.id); // Use sampleDoc.id to identify the sample
 
                 // Ensure the "Save" button exists before adding the event listener
                 const saveButton = document.getElementById('saveColonyCountBtn');
@@ -506,7 +515,7 @@ async function loadSampleData(sampleId) {
                         });
 
                         // Update Firestore with the new colony count
-                        await updateDoc(sampleRef, {
+                        await updateDoc(sampleDoc.ref, { // Use sampleDoc.ref for the document reference
                             day: updatedDays
                         });
 
@@ -518,9 +527,8 @@ async function loadSampleData(sampleId) {
                 }
             });
         });
-    }
+    });
 }
-
 
 // Function to load colony data for the selected day (optional)
 function loadColonyDataForDay(day, sampleId) {
