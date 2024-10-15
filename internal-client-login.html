@@ -21,11 +21,18 @@
         <p>Sign in to your session</p>
         </div>
     <div class = "InternalClientLoginForm">
-    <form id="internalClientLoginForm">
-        <input class="user-icon" type="email" id="email" placeholder ="Username"required>
-        <input class="key-icon" type="password" id="password" placeholder="Password" required>
-        <button id = "sign-inbtn" type="submit">Sign In</button>
-    </form>
+        <form id="internalClientLoginForm">
+            <div class="input-wrapper">
+                <div class="icon user-icon"></div>
+                <input type="email" id="email" placeholder="Username" required>
+            </div>
+            <div class="input-wrapper">
+                <div class="icon key-icon"></div>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button id="sign-inbtn" type="submit">Sign In</button>
+        </form>
+        
     </div>
     <div class=" low-label">
     <p><a href="password-reset.html">Forgot Password?</a> | <a href="internal-client-register.html">Create New Account</a></p>

@@ -19,11 +19,18 @@
     <div class = "sign-in">
         <p>Sign in to your session</p>
         </div>
-    <form id="labLoginForm">
-        <input class="user-icon" type="email" id="email" placeholder ="Username"required>
-        <input class="key-icon" type="password" id="password" placeholder="Password" required>
-        <button id="lab-inbtn" type="submit">Sign In</button>
-    </form>
+        <form id="labLoginForm">
+            <div class="input-wrapper">
+                <div class="icon user-icon"></div>
+                <input type="email" id="email" placeholder="Username" required>
+            </div>
+            <div class="input-wrapper">
+                <div class="icon key-icon"></div>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button id="lab-inbtn" type="submit">Sign In</button>
+        </form>
+        
     <div class="lab-low-label">
     <p><a href="password-reset.html">Forgot Password?</a>  <!-- Added forgot password link --> | <a href="lab-register.html">Register as Laboratory Staff</a></p>
     </div>
