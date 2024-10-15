@@ -11,10 +11,10 @@
 </head>
 <body>
     <div class="bg-image-section">
-        <img src="log-in-bg.jpg"  class="LogInBg-image">
+        <img src="images/log-in-bg.jpg"  class="LogInBg-image">
     </div>
     <div class="logo">
-        <img src="logo.webp">
+        <img src="images/logo.webp">
         <br><br><h1>External Client</h1>
         <p>(Researchers, faculty members, and students from other universities with existing MOUs with PUP RIST)</p><br>
     </div>
@@ -22,11 +22,17 @@
         <p>Sign in to your session</p>
         </div>
     <div class = "ExternalClientLoginForm">
-    <form id="internalClientLoginForm">
-        <input class="user-icon" type="email" id="email" placeholder ="Username"required>
-        <input class="key-icon" type="password" id="password" placeholder="Password" required>
-        <button id = "sign-inbtn" type="submit">Sign In</button>
-    </form>
+        <form id="externalClientLoginForm">
+            <div class="input-wrapper">
+                <div class="icon user-icon"></div>
+                <input type="email" id="email" placeholder="Username" required>
+            </div>
+            <div class="input-wrapper">
+                <div class="icon key-icon"></div>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button id = "sign-inbtn" type="submit">Sign In</button>
+        </form>
     </div>
     <div class=" low-label">
     <p><a href="password-reset.html">Forgot Password?</a> | <a href="external-client-login.html">Create New Account</a></p>
@@ -34,7 +40,6 @@
     <div class = "lower-label">
     <p>By using this service, you understood and agree to the PUP <br> Online Services <a href="external-client-login.html">Terms of Use</a> and <a href="external-client-login.html">Privacy Statement</a>.</p>
     </div>
-</div>
 
 </body> 
 </html>
