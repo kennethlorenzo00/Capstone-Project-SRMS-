@@ -21,10 +21,17 @@
         <p>Sign in to your session</p>
     </div>
     <form id="adminLoginForm">
-        <input class="user-icon" type="email" id="email" placeholder ="Username"required>
-        <input class="key-icon" type="password" id="password" placeholder="Password" required>
-        <button id = "admin-inbtn" type="submit">Sign In</button>
+        <div class="input-wrapper">
+            <div class="icon user-icon"></div>
+            <input type="email" id="email" placeholder="Username" required>
+        </div>
+        <div class="input-wrapper">
+            <div class="icon key-icon"></div>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <button id="admin-inbtn" type="submit">Sign In</button>
     </form>
+    
     <div class="adm-low-label">
         <p><a href="password-reset.html">Forgot Password?</a>  <!-- Added forgot password link --> | <a href="admin-register.html">Register as Admin</a></p>
         </div>

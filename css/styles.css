@@ -1487,21 +1487,48 @@ h1 {
             margin: 10px 0;
         }
 
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 350px;
+            margin: 0 auto;
+        }
+        
+        .input-wrapper {
+            position: relative; /* Positioning context for the icon */
+            margin-top: 15px;  /* Space above each input */
+            margin-right: 4vw;
+        }
+        
+        .icon {
+            position: absolute; /* Position icon inside the input field */
+            left: 10px; /* Space from the left edge of the input */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust to perfectly center */
+            width: 22px; /* Icon size */
+            height: 22px; /* Icon size */
+            background-size: contain; /* Ensure the icon fits the space */
+            background-repeat: no-repeat; /* Prevent repetition */
+        }
+        
         .user-icon {
-            padding-left: 45px;
-            background: url("https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png") no-repeat left;
-            background-size: 22px;
-            background-color: #D9D9D9;
-            background-position-x: 10px;
-          }
-
+            background-image: url("https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png");
+        }
+        
         .key-icon {
-            padding-left: 45px;
-            background: url("https://images.vexels.com/content/131184/preview/key-flat-icon-e94865.png") no-repeat left;
-            background-size: 22px;
+            background-image: url("https://images.vexels.com/content/131184/preview/key-flat-icon-e94865.png");
+        }
+        
+        input {
+            padding: 10px 10px 10px 40px; /* Padding for left to make space for icon */
             background-color: #D9D9D9;
-            background-position-x: 10px;
-          }
+            color: #000000;
+            border: 1px solid #ccc; /* Optional: Add border for better visibility */
+            border-radius: 4px; /* Optional: Add rounded corners */
+            font-size: 15px;
+            width: 100%; /* Make input fill the wrapper */
+        }
+        
 
           #helpBtn  {
             border: none;
