@@ -23,9 +23,42 @@ backBtn.addEventListener('click', () => {
     requestList.style.display = 'block'; // Show the request list again
 });
 
+// Function to train the machine learning model
+async function trainModel(data) {
+    const model = tf.sequential();
+    model.add(tf.layers.dense({ units: 10, activation: 'relu', inputShape: [1] }));
+    model.add(tf.layers.dense({ units: 1 }));
+
+    model.compile({ optimizer: 'adam', loss: 'meanSquaredError' });
+
+    const xs = tf.tensor2d(data.slice(0, -1).map(d => [d])); // All but last month
+    const ys = tf.tensor2d(data.slice(1).map(d => [d])); // All but first month
+
+    await model.fit(xs, ys, { epochs: 100 });
+    return model;
+}
+
+// Function to forecast future requests using the trained model
+async function forecastFutureRequestsUsingML(requestCounts) {
+    const model = await trainModel(requestCounts.slice(-3)); // Train with last 3 months
+    const futureCounts = [];
+    let lastMonthCount = requestCounts[requestCounts.length - 1];
+
+    for (let i = 0; i < 3; i++) { // Forecast for the next 3 months
+        const inputTensor = tf.tensor2d([lastMonthCount], [1, 1]); // Last month count as input
+        const prediction = model.predict(inputTensor);
+
+        const forecastedValue = prediction.dataSync()[0]; // Get the predicted value
+        futureCounts.push(Math.round(forecastedValue)); // Round off the predicted value
+        lastMonthCount = forecastedValue; // Update for next iteration
+    }
+
+    return futureCounts;
+}
+
 async function generateForecastChart() {
     const forecastData = await getRequestDataForForecast();
-    
+
     const ctx = document.getElementById('requestForecastChart').getContext('2d');
 
     // Destroy the existing chart instance if it exists
@@ -62,7 +95,8 @@ async function getRequestDataForForecast() {
     const requestCounts = [];
     const monthLabels = [];
 
-    for (let i = -3; i <= 3; i++) {
+    // Get data for the last 3 months
+    for (let i = -3; i <= 0; i++) {
         const targetMonth = (currentMonth + i + 12) % 12;
         const targetYear = currentYear + Math.floor((currentMonth + i) / 12);
         monthLabels.push(new Date(targetYear, targetMonth).toLocaleString('default', { month: 'long' }));
@@ -81,21 +115,19 @@ async function getRequestDataForForecast() {
         requestCounts.push(monthlyRequestCount);
     }
 
-    const forecastedCounts = forecastFutureRequests(requestCounts.slice(-3)); 
-    requestCounts.push(...forecastedCounts);
+    // Forecast using ML for the next 3 months
+    const forecastedCounts = await forecastFutureRequestsUsingML(requestCounts); // Use the last 3 months for ML forecast
 
-    return { monthLabels, requestCounts };
-}
-
-function forecastFutureRequests(lastThreeMonths) {
-    const avgGrowth = (lastThreeMonths[2] - lastThreeMonths[0]) / 2;
-    const futureCounts = [];
-
+    // Add the forecasted counts to the requestCounts and generate labels for future months
     for (let i = 1; i <= 3; i++) {
-        futureCounts.push(Math.round(lastThreeMonths[2] + avgGrowth * i));
+        const futureMonth = (currentMonth + i) % 12;
+        const futureYear = currentYear + Math.floor((currentMonth + i) / 12);
+        monthLabels.push(new Date(futureYear, futureMonth).toLocaleString('default', { month: 'long' }));
     }
 
-    return futureCounts;
+    requestCounts.push(...forecastedCounts); // Add forecasted counts to the end of requestCounts
+
+    return { monthLabels, requestCounts };
 }
 
 async function generateTopRequestsChart() {

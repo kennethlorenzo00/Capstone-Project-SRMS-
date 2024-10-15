@@ -1,42 +1,48 @@
 import { firestore } from './firebase.js';
-import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-async function generateForecastChart() {
-    const forecastData = await getRequestDataForForecast();
+// Function to train the machine learning model
+async function trainModel(data) {
+    const model = tf.sequential();
+    model.add(tf.layers.dense({ units: 10, activation: 'relu', inputShape: [1] }));
+    model.add(tf.layers.dense({ units: 1 }));
     
-    const ctx = document.getElementById('forecastChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: forecastData.monthLabels, // ["July", "August", "September", "October", "November", "December"]
-            datasets: [{
-                label: 'Number of Requests',
-                data: forecastData.requestCounts, // [3, 4, 5, 6, 7, 8] example data
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    model.compile({ optimizer: 'adam', loss: 'meanSquaredError' });
+
+    const xs = tf.tensor2d(data.slice(0, -1).map(d => [d])); // All but last month
+    const ys = tf.tensor2d(data.slice(1).map(d => [d])); // All but first month
+    
+    await model.fit(xs, ys, { epochs: 100 });
+    return model;
+}
+
+// Function to forecast future requests using the trained model
+async function forecastFutureRequestsUsingML(requestCounts) {
+    const model = await trainModel(requestCounts.slice(-6)); // Train with last 6 months
+    const futureCounts = [];
+    let lastMonthCount = requestCounts[requestCounts.length - 1];
+
+    for (let i = 0; i < 3; i++) { // Forecast for the next 3 months
+        const inputTensor = tf.tensor2d([lastMonthCount], [1, 1]); // Last month count as input
+        const prediction = model.predict(inputTensor);
+        
+        const forecastedValue = prediction.dataSync()[0]; // Get the predicted value
+        futureCounts.push(Math.round(forecastedValue)); // Round off the predicted value
+        lastMonthCount = forecastedValue; // Update for next iteration
+    }
+
+    return futureCounts;
 }
 
 async function getRequestDataForForecast() {
-    const currentMonth = new Date().getMonth(); // Current month (0-11)
+    const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     const requestCounts = [];
     const monthLabels = [];
 
     for (let i = -3; i <= 3; i++) {
-        const targetMonth = (currentMonth + i + 12) % 12; // Handle wrap-around for months
-        const targetYear = currentYear + Math.floor((currentMonth + i) / 12); // Handle year change
+        const targetMonth = (currentMonth + i + 12) % 12;
+        const targetYear = currentYear + Math.floor((currentMonth + i) / 12);
         monthLabels.push(new Date(targetYear, targetMonth).toLocaleString('default', { month: 'long' }));
 
         const requestSnapshot = await getDocs(collection(firestore, 'requests'));
@@ -53,21 +59,67 @@ async function getRequestDataForForecast() {
         requestCounts.push(monthlyRequestCount);
     }
 
-    const forecastedCounts = forecastFutureRequests(requestCounts.slice(-3)); // Forecasting based on last 3 months
+    // Forecast using ML
+    const forecastedCounts = await forecastFutureRequestsUsingML(requestCounts.slice(-6)); // Use the last 6 months for ML forecast
     requestCounts.push(...forecastedCounts);
 
     return { monthLabels, requestCounts };
 }
 
-function forecastFutureRequests(lastThreeMonths) {
-    const avgGrowth = (lastThreeMonths[2] - lastThreeMonths[0]) / 2; // Simple average growth
-    const futureCounts = [];
+// Function to generate the forecast chart
+async function generateForecastChart() {
+    const forecastData = await getRequestDataForForecast();
+    
+    const ctx = document.getElementById('forecastChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: forecastData.monthLabels,
+            datasets: [{
+                label: 'Number of Requests',
+                data: forecastData.requestCounts,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-    for (let i = 1; i <= 3; i++) {
-        futureCounts.push(Math.round(lastThreeMonths[2] + avgGrowth * i)); // Forecasting future values
-    }
+// Call the function to generate the forecast chart
+generateForecastChart();
 
-    return futureCounts;
+async function getTopRequestTypes() {
+    const requestSnapshot = await getDocs(collection(firestore, 'requests'));
+    const requestTypeCounts = {};
+
+    requestSnapshot.forEach((doc) => {
+        const requestData = doc.data();
+        const requestOption = requestData.requestOption;
+        if (requestOption) {
+            if (!requestTypeCounts[requestOption]) {
+                requestTypeCounts[requestOption] = 0;
+            }
+            requestTypeCounts[requestOption]++;
+        }
+    });
+
+    const sortedTypes = Object.entries(requestTypeCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3); // Get top 3 request types
+
+    const requestTypes = sortedTypes.map(entry => entry[0]);
+    const requestCounts = sortedTypes.map(entry => entry[1]);
+
+    return { requestTypes, requestCounts };
 }
 
 async function generateTopRequestsChart() {
@@ -96,32 +148,4 @@ async function generateTopRequestsChart() {
         }
     });
 }
-
-async function getTopRequestTypes() {
-    const requestSnapshot = await getDocs(collection(firestore, 'requests'));
-    const requestTypeCounts = {};
-
-    requestSnapshot.forEach((doc) => {
-        const requestData = doc.data();
-        const requestOption = requestData.requestOption;
-        if (requestOption) {
-            if (!requestTypeCounts[requestOption]) {
-                requestTypeCounts[requestOption] = 0;
-            }
-            requestTypeCounts[requestOption]++;
-        }
-    });
-
-    const sortedTypes = Object.entries(requestTypeCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3); // Get top 3 request types
-
-    const requestTypes = sortedTypes.map(entry => entry[0]);
-    const requestCounts = sortedTypes.map(entry => entry[1]);
-
-    return { requestTypes, requestCounts };
-}
-
-// Call the functions to generate the charts
-generateForecastChart();
 generateTopRequestsChart();
