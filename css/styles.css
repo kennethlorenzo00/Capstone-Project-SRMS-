@@ -4792,3 +4792,246 @@ canvas {
   .colony-list label {
     margin-right: 10px;
   }
+
+  #helpSection * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+#helpSection body {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+#helpSection header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4b0000;
+    padding: 1rem 2rem;
+    color: white;
+}
+
+#helpSection .logo img {
+    height: 50px;
+}
+
+#helpSection nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+#helpSection nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#helpSection .auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+#helpSection .auth-buttons .login-btn, .help-section .auth-buttons .signup-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#helpSection .auth-buttons .signup-btn {
+    background-color: white;
+    color: #4b0000;
+}
+
+#helpSection .search-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+#helpSection .search-section h1 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: #4b0000;
+}
+
+#helpSection .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#helpSection .search-bar input {
+    width: 300px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#helpSection .search-bar button {
+    padding: 0.5rem;
+    border: none;
+    background-color: #4b0000;
+    color: white;
+    border-radius: 5px;
+}
+
+#helpSection .categories {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    width: 100%; 
+    text-align: center;
+}
+
+#helpSection .category-box {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; 
+    flex-wrap: wrap; 
+    max-width: 100%;
+}
+
+#helpSection .category-box button {
+    background-color: #f9c4c4;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+#helpSection .category-box button img {
+    width: 20px;
+    height: 20px;
+}
+
+#helpSection .faq, .help-section .instructions {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+#helpSection .faq h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+#helpSection .faq ul {
+    list-style: none;
+}
+
+#helpSection .faq ul li {
+    background-color: #f9c4c4;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#helpSection .faq ul li span {
+    display: inline-block;
+    width: 100%;
+}
+
+#helpSection .faq ul .answer {
+    display: none;
+    margin-top: 0.5rem;
+    background-color: #fff4f4;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+#helpSection .instructions {
+    display: none;
+}
+
+#helpSection .instructions h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+#helpSection .instructions ul {
+    list-style: none;
+}
+
+#helpSection .instructions ul li {
+    background-color: #f9c4c4;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#helpSection .instructions ul li span {
+    display: inline-block;
+    width: 100%;
+}
+
+#helpSection .instructions ul .answer {
+    display: none;
+    margin-top: 0.5rem;
+    background-color: #fff4f4;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+#helpSection .no-results {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    color: red;
+    margin-top: 1rem;
+    text-align: center;
+    padding: 2rem;
+    height: 50vh; 
+}
+
+#helpSection .no-results img {
+    width: 150px; 
+    height: 150px; 
+    margin-bottom: 1rem;
+}
+
+#helpSection .no-results div {
+    font-size: 1.5rem; 
+}
+
+#helpSection html, #helpSection body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+}
+
+#helpSection body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    background-color: #f0f0f0;
+}
+
+#helpSection main {
+    flex: 1; 
+}
+
+#helpSection footer {
+    background-color: #4b0000;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    width: 100%; 
+    margin-top: auto; 
+}
+

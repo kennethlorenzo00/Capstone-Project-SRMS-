@@ -63,19 +63,35 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event listeners for sidebar links
     homeLink.addEventListener("click", function() {
         showSection(dashboardContent);
+        const helpSection = document.getElementById('helpSection');
+        helpSection.classList.add('hidden');
+        const settingsSection = document.getElementById('clientSettingsSection');
+        settingsSection.classList.add('hidden');
     });
 
     createRequestLink.addEventListener("click", function() {
         showSection(createRequestContent);
+        const helpSection = document.getElementById('helpSection');
+        helpSection.classList.add('hidden');
+        const settingsSection = document.getElementById('clientSettingsSection');
+        settingsSection.classList.add('hidden');
     });
 
     requestListLink.addEventListener("click", function() {
         showSection(requestListContent);
+        const helpSection = document.getElementById('helpSection');
+        helpSection.classList.add('hidden');
+        const settingsSection = document.getElementById('clientSettingsSection');
+        settingsSection.classList.add('hidden');
     });
 
     myAccountLink.addEventListener("click", function() {
         showSection(myAccountContent);
-        myAccountContent.style.display = "block"; // Add this line to show the myAccountContent
+        myAccountContent.style.display = "block";
+        const helpSection = document.getElementById('helpSection');
+        helpSection.classList.add('hidden');
+        const settingsSection = document.getElementById('clientSettingsSection');
+        settingsSection.classList.add('hidden');
     });
 
     // Event listeners for request type buttons in Create Request section

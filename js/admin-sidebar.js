@@ -24,6 +24,7 @@ toggleSidebarBtn.addEventListener("click", function() {
 function openTab(evt, tabName) {
     const tabcontents = document.querySelectorAll(".tabcontent");
     const tableContainers = document.querySelectorAll("#table-container > div");
+    const adminSettingsSection = document.getElementById('adminSettingsSection'); // Add this line
 
     // Hide all tab contents
     tabcontents.forEach(tab => {
@@ -35,6 +36,8 @@ function openTab(evt, tabName) {
         container.style.display = "none";
     });
 
+    adminSettingsSection.classList.add('hidden'); 
+    
     // Show the selected tab content
     const selectedTab = document.getElementById(tabName);
     selectedTab.style.display = "block";

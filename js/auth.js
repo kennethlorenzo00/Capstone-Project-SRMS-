@@ -1185,14 +1185,22 @@ function displayLaboratoryStaff() {
 });
 
 // Handle Logout
-document.getElementById("logoutButton")?.addEventListener("click", function() {
-    signOut(auth).then(() => {
-        console.log("Sign-out successful.");
-        window.location.href = 'index.html'; 
-    }).catch((error) => {
-        console.error("Error during sign-out:", error);
-        alert("Error during sign-out: " + error.message);
-    });
+document.getElementById("logoutBtn")?.addEventListener("click", function() {
+    const confirmation = confirm("Are you sure you want to log out?");
+    
+    if (confirmation) {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            // Sign-out successful, redirect to the login page or homepage
+            window.location.href = 'role-selection.html'; // Change this to your login page
+        }).catch((error) => {
+            // An error happened during logout
+            console.error('Logout error:', error);
+            alert("Error during sign-out: " + error.message);
+        });
+    } else {
+        console.log('Logout canceled.');
+    }
 });
 
 // Function to display user details in the modal

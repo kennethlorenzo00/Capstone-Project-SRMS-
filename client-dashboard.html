@@ -11,10 +11,36 @@
     <script type="module" src="js/auth.js" defer></script> 
     <script type="module" src="js/client-account.js" defer></script> 
     <script type="module" src="js/client-home.js" defer></script> 
+    <script type="module" src="js/client-help.js" defer></script> 
+    <script type="module" src="js/client-settings.js" defer></script> 
     <script type="module" src="js/client-notification.js" defer></script> 
 
 </head>
 <body>
+    <!-- Header -->
+    <header class="client-header">
+        <div class="header-content">
+            <button id="openSidebar" class="sidebar-openbtn">&#9776;</button>
+            <div class="admin-logo">
+                <img src="images/logo.webp" alt="CNSRR Logo">
+                <div class="admin-logo-text">
+                    <h3>Center for Natural Sciences and</h3>
+                    <h4>Resources Research</h4>
+                    <p class="sub-name">Research Institute of Science and Technology</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-icons">
+            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+            <button id="notificationsBtn" class="notifications-btn">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="notificationCount" class="notification-count">0</span>
+            </button>
+            <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
+
     <!-- Sidebar -->
     <div id="mySidebar" class="client-sidebar hidden">
         <button id="closeSidebar" class="closebtn">&times;</button>
@@ -34,33 +60,12 @@
             <i class="fa-solid fa-user"></i> 
             <span class="lab-side"> Account </span>
         </a>
+        <button id="logoutBtn" class="sidebar-btn">Logout</button>
     </div>
 
     <!-- Main Content -->
     <div id="main">
-        <!-- Header -->
-        <header class="client-header">
-            <button id="openSidebar" class="openbtn">&#9776;</button>
-            <div class="client-logo">
-                <div class="side-logo">
-                    <img src="Logo.webp" class="side-logo" alt="Logo">
-                </div>
-                <span class="logo-name">Client Dashboard</span>
-            </div>
-
-            <div class="header-icons">
-                <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-
-                <!-- Notifications Button with Pop-up Tab -->
-                <button id="notificationsBtn" class="notifications-btn">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span id="notificationCount" class="notification-count">0</span>
-                </button>
-                
-                <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
-            </div>
-        </header>
-
+        
         <!-- Notification Pop-up Tab -->
         <div id="notificationPopup" class="notification-popup hidden">
             <div class="popup-header">
@@ -71,7 +76,123 @@
                 <p>No notifications available</p>
             </div>
         </div>
-                    
+
+        <!-- Settings Section -->
+        <div id="clientSettingsSection" class="hidden">
+            <form id="settingsPasswordResetForm">
+                <br><br>
+                <label id="enter" for="email">Enter your email to reset your password</label><br>
+                <input class="user-icon" type="email" id="resetEmail" placeholder="Email" required>
+                <button id="reset-btn" type="submit">Reset Password</button>
+            </form>
+        </div>
+
+        <div id="helpSection" class="hidden"> <!-- Initially hidden -->
+            <section class="search-section">
+                <h1>How can we help you?</h1>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search...">
+                    <button id="search-btn"><img src="fa0e7b992eff03c576727e95c746005c.jpg" alt="Search Icon"></button>
+                </div>
+                <div id="no-results" class="no-results">
+                    <img src="no-results.png" alt="No Results Found">
+                    <div>No results found. Please check your query.</div>
+                </div>
+            </section>
+    
+            <section class="categories" id="categories-section">
+                <div class="category-box">
+                    <button id="btn-requests"><img src="request-icon.png" alt="Request"> Requests</button>
+                    <button id="btn-procedures"><img src="procedure-icon.png" alt="Procedure"> Procedures</button>
+                    <button id="btn-services"><img src="services-icon.png" alt="Service"> Services</button>
+                </div>
+            </section>
+    
+            <section class="faq" id="faq-section">
+                <h2>FAQs</h2>
+                <ul>
+                    <li>
+                        <span>Why was my request rejected?</span>
+                        <div class="answer">Your request may be rejected due to incomplete or incorrect information.</div>
+                    </li>
+                    <li>
+                        <span>What do I do if my request has not been approved?</span>
+                        <div class="answer">Please wait for the processing time or contact support for updates.</div>
+                    </li>
+                    <li>
+                        <span>How long until a review of my request is complete?</span>
+                        <div class="answer">The review process usually takes between 5 to 7 business days.</div>
+                    </li>
+                    <li>
+                        <span>How to apply for an internship?</span>
+                        <div class="answer">You can apply for an internship by filling out the form under the 'Careers' section of our website.</div>
+                    </li>
+                </ul>
+            </section>
+    
+            <div id="content-sections">
+                <section id="requests-instructions" class="instructions">
+                    <h3>Request Instructions</h3>
+                    <ul>
+                        <li>
+                            <span>How to submit a request?</span>
+                            <div class="answer">You can submit a request through the online portal by logging in and selecting 'Submit Request'.</div>
+                        </li>
+                        <li>
+                            <span>How long does review take?</span>
+                            <div class="answer">Reviews take about 5-7 days depending on the complexity of the request.</div>
+                        </li>
+                        <li>
+                            <span>Can I cancel my request?</span>
+                            <div class="answer">Yes, you can cancel your request within 24 hours of submission.</div>
+                        </li>
+                    </ul>
+                </section>
+    
+                <section id="procedures-instructions" class="instructions">
+                    <h3>Procedure Instructions</h3>
+                    <ul>
+                        <li>
+                            <span>What is the procedure for sample submission?</span>
+                            <div class="answer">You need to fill out the submission form and attach your sample's information.</div>
+                        </li>
+                        <li>
+                            <span>How do I know if my sample is submitted?</span>
+                            <div class="answer">You will receive a confirmation email once your sample is submitted.</div>
+                        </li>
+                        <li>
+                            <span>What are the procedures for counting bacterial colonies?</span>
+                            <div class="answer">To count bacterial colonies, follow these steps:<br>
+                                1. Prepare your agar plates and allow them to solidify.<br>
+                                2. Inoculate the plates with the sample using sterile techniques.<br>
+                                3. Incubate the plates at the appropriate temperature for a specified time (usually 24-48 hours).<br>
+                                4. After incubation, examine the plates and count the number of colonies using a colony counter or manually.<br>
+                                5. Record the results and calculate the concentration of bacteria in the original sample.
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+    
+                <section id="services-instructions" class="instructions">
+                    <h3>Services Instructions</h3>
+                    <ul>
+                        <li>
+                            <span>How to request a service?</span>
+                            <div class="answer">To request a service, fill out the service request form provided in the portal.</div>
+                        </li>
+                        <li>
+                            <span>What services are offered?</span>
+                            <div class="answer">We offer a variety of services including research assistance, document preparation, and consultation.</div>
+                        </li>
+                        <li>
+                            <span>How can I check the status of my service request?</span>
+                            <div class="answer">You can check the status in your account under the 'My Services' section.</div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>    
+                  
 
         <!-- Dashboard Section -->
 

@@ -14,6 +14,7 @@
     <script type="module" src="js/lab-home.js" defer></script> 
     <script type="module" src="js/lab-notification.js" defer></script> 
     <script type="module" src="js/lab-analysis-report.js" defer></script> 
+    <script type="module" src="js/lab-settings.js" defer></script> 
     <script async src="https://docs.opencv.org/3.4.1/opencv.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
@@ -36,7 +37,6 @@
         </div>
         
         <div class="header-icons">
-            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
             <button id="notificationsBtn" class="notifications-btn">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span id="notificationCount" class="notification-count">0</span>
@@ -69,6 +69,7 @@
             <i class="fa-solid fa-user"></i> 
             <span class="lab-side">Account </span>
         </a>
+        <button id="logoutBtn" class="sidebar-btn">Logout</button>
     </div>
     
  <!-- Page Content -->
@@ -83,6 +84,16 @@
             <div id="notificationsList" class="popup-body">
                 <p>No notifications available</p>
             </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="labSettingsSection" class="hidden">
+            <form id="settingsPasswordResetForm">
+                <br><br>
+                <label id="enter" for="email">Enter your email to reset your password</label><br>
+                <input class="user-icon" type="email" id="resetEmail" placeholder="Email" required>
+                <button id="reset-btn" type="submit">Reset Password</button>
+            </form>
         </div>
 
         <!-- Main Content -->

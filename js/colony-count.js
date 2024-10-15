@@ -134,27 +134,57 @@ function drawValidColonies() {
     }
   });
 
-  // Show the updated image
   cv.imshow('canvasOutput', mat);
-
   mat.delete();
   gray.delete();
 }
 
-imgElement.onload = function() {
-  processImage();
-};
-
-// Function to update the total valid colony count
+// Update the displayed colony count with only valid colonies
 function updateValidColonyCount() {
-  let totalValidCount = colonies.filter(colony => colony.valid).length;
-  colonyCountElement.innerHTML = totalValidCount;
+  let validColonyCount = colonies.filter(colony => colony.valid).length;
+  colonyCountElement.innerHTML = validColonyCount;
 }
 
 // Update output when the user changes any input field
 document.querySelectorAll('#blurSize, #threshBlockSize, #threshC, #minColonySize, #maxColonySize').forEach(input => {
   input.addEventListener('input', processImage);
 });
+
+// Allow the user to add colonies by clicking on the canvas
+document.getElementById('canvasOutput').addEventListener('click', (event) => {
+  let canvas = event.target;
+  let rect = canvas.getBoundingClientRect();
+  let x = event.clientX - rect.left;
+  let y = event.clientY - rect.top;
+
+  // Add a manually marked colony at the clicked position
+  let newColonyId = `colony-${colonies.length + 1}`;
+  let newColonyRect = { x: x - 15, y: y - 15, width: 30, height: 30 };
+  
+  colonies.push({ id: newColonyId, rect: newColonyRect, valid: true });
+
+  let newColonyElement = document.createElement('div');
+  newColonyElement.innerHTML = `<label>ID: ${colonies.length}:</label>
+    <input type="checkbox" class="colony-checkbox" id="${newColonyId}" data-id="${colonies.length}" checked> Valid`;
+  colonyListElement.appendChild(newColonyElement);
+
+  let checkbox = document.getElementById(newColonyId);
+  checkbox.addEventListener('change', (e) => {
+    let colonyIndex = colonies.findIndex(colony => colony.id === newColonyId);
+    if (colonyIndex !== -1) {
+      toggleColonyVisibility(colonyIndex);
+    }
+  });
+
+  // Draw the colony
+  drawValidColonies();
+  updateValidColonyCount();
+});
+
+// Run processImage after the image is loaded
+imgElement.onload = function () {
+  processImage();
+};
 
 var Module = {
   onRuntimeInitialized: function() {

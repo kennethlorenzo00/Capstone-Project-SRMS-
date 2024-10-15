@@ -27,69 +27,96 @@ toggleSidebarBtn.addEventListener("click", function() {
     }
 });
 
-// Tab functionality
 function openTab(evt, tabName) {
     const tabcontents = document.querySelectorAll(".tabcontent");
-    const tableContainers = document.querySelectorAll("#table-container > div");
-
+    const taskListContainer = document.getElementById('taskListContainer');
+    const labSettingsSection = document.getElementById('labSettingsSection');
+    
     // Hide all tab contents
     tabcontents.forEach(tab => {
         tab.style.display = "none";
     });
 
-    // Hide all table containers
-    tableContainers.forEach(container => {
-        container.style.display = "none";
-    });
+    labSettingsSection.classList.add('hidden'); 
 
     // Show the selected tab content
     const selectedTab = document.getElementById(tabName);
     selectedTab.style.display = "block";
 
-    // Manage Users functionality
-    if (tabName === 'manageUsers') {
-        // Show Clients table by default
-        document.getElementById('clients-table-container').style.display = 'block';
-        
-        // Add event listeners to buttons for switching tables
-        document.getElementById('clientsBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('clients-table-container').style.display = "block";
-        };
-
-        document.getElementById('staffBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('staff-table-container').style.display = "block";
-        };
-
-        document.getElementById('newRequestsBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('newRequests-table-container').style.display = "block";
-        };
-    }
-
-    // Request List functionality
-    if (tabName === 'requestList') {
-        // Show All Requests table by default
-        document.getElementById('allRequests-table-container').style.display = "block";
-
-        // Add event listeners to buttons for switching tables
-        document.getElementById('allRequestsBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('allRequests-table-container').style.display = "block";
-        };
-
-        document.getElementById('serviceRequestsBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('serviceRequests-table-container').style.display = "block";
-        };
-
-        document.getElementById('followUpRequestsBtn').onclick = function() {
-            tableContainers.forEach(container => container.style.display = "none");
-            document.getElementById('followUpRequests-table-container').style.display = "block";
-        };
+    // Show or hide the task list based on the selected tab
+    if (tabName === 'taskList') {
+        taskListContainer.style.display = 'block';
+    } else {
+        taskListContainer.style.display = 'none';
     }
 }
+
+// Show tasks based on the selected type
+function showTasks(taskType) {
+    const taskListContainer = document.getElementById('taskListContainer');
+
+    // Hide all task placeholders initially
+    const taskPlaceholders = document.querySelectorAll('.task-placeholder');
+    taskPlaceholders.forEach(task => {
+        task.classList.add('hidden');
+    });
+
+    // Show the relevant task placeholder based on task type
+    switch (taskType) {
+        case 'allAssigned':
+            document.getElementById('allAssigned').classList.remove('hidden');
+            break;
+        case 'ongoing':
+            document.getElementById('ongoing').classList.remove('hidden');
+            break;
+        case 'processed':
+            document.getElementById('processed').classList.remove('hidden');
+            break;
+        case 'rejected':
+            document.getElementById('rejected').classList.remove('hidden');
+            break;
+        default:
+            taskListContainer.innerHTML = '<p>No tasks to display.</p>';
+    }
+}
+
+// Function to handle task count clicks
+function handleTaskCountClick(taskType) {
+    openTab(event, 'taskList'); // Open the taskList tab
+    showTasks(taskType); // Show tasks based on the task type
+}
+
+// Add event listeners to task count elements
+document.getElementById('assignedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('allAssigned');
+});
+
+document.getElementById('ongoingTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('ongoing');
+});
+
+document.getElementById('processedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('processed');
+});
+
+document.getElementById('rejectedTasksCount').addEventListener('click', function() {
+    handleTaskCountClick('rejected');
+});
+
+
+// Add event listeners to task buttons
+document.getElementById('allAssignedBtn').addEventListener('click', function() {
+    showTasks('allAssigned');
+});
+document.getElementById('ongoingTasksBtn').addEventListener('click', function() {
+    showTasks('ongoing');
+});
+document.getElementById('processedTasksBtn').addEventListener('click', function() {
+    showTasks('processed');
+});
+document.getElementById('rejectedTasksBtn').addEventListener('click', function() {
+    showTasks('rejected');
+});
 
 // Show the home tab by default on page load
 document.addEventListener("DOMContentLoaded", function() {
