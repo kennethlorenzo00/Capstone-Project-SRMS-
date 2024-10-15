@@ -149,7 +149,7 @@ async function saveAppointment() {
 
 // Add event listener to the edit buttons
 document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('edit-btn')) {
+    if (e.target.classList.contains('adappedit-btn')) {
         const appointmentId = e.target.dataset.appointmentId;
         openEditModal(appointmentId);
     }
