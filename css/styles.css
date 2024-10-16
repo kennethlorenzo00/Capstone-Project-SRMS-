@@ -15,49 +15,49 @@ h2{
 #home {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #requestList {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #manageUsers {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #analysisReport {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #appointment {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #events {
     margin-top: 7vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
 #account {
     margin-top: 3vh; 
     margin-right: 4vw;
-    margin-left: 1vw;
+    margin-left: 3vw;
     margin-bottom: 6vh;
 }
 
@@ -1780,7 +1780,7 @@ h1 {
     font-size: 5px;
     margin-right: 10px;
     transition: .3s;
-    margin-top: 2vh;
+    margin-top: 1vh;
     
 }
 .admin-sidebar i{
@@ -1867,16 +1867,48 @@ h1 {
 }
 
 .admin-sidebar a {
-    padding: 10px 15px;
+    padding: 1vw 1vw;
     text-decoration: none;
     font-size: 24px;
     color: white;
-    display: block;
+    display: flex; /* Flexbox for icon and text alignment */
+    align-items: center; /* Aligns icon and text vertically */
+    gap: 15px; /* Adjust spacing between icon and text */
+    margin-bottom: 10px; /* Space between each item */
+}
+
+.admin-sidebar i {
+    font-size: 24px; /* Ensure the icon size matches the text */
+    display: inline-block;
+    width: 30px; /* Fixes icon width to maintain uniform alignment */
+    text-align: center; /* Centers the icon within its container */
 }
 
 .admin-sidebar a:hover {
     background-color: #cc0202;
 }
+
+.fa-solid.fa-right-from-bracket {
+    background-color: #680000;
+    height: 4vh;
+    width: 4vh; /* Set the width for the icon's box */
+    display: inline-flex; /* Ensures it respects dimensions */
+    justify-content: center; /* Centers the icon */
+    align-items: center; /* Centers the icon vertically */
+    padding: 0 9px; /* Adjust padding as needed */
+    border-radius: 5vh; /* Fully round border */
+    color: white; /* Optional: Set the icon color */
+    border: 2px solid white; /* Fixes the border styling */
+}
+
+#logoutBtn {
+    margin-top: 3vh; /* Use margin-top to push the icon down */
+}
+#logoutBtn.minimized {
+    margin-top: 10vh;
+}
+
+
 
 
 
@@ -4583,39 +4615,73 @@ button#saveChangesBtn {
 /* Dashboard Styles */
 .dashboard-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+    flex-direction: column; /* Stack the rows vertically */
 }
 
 .dashboard-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px; /* Spacing between rows */
+    display: flex; /* Use flexbox for the row */
+    justify-content: space-between; /* Space out the boxes */
 }
 
 .dashboard-box {
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 20px;
-    margin: 10px;
-    flex: 1;
-    max-width: 250px;
-    min-width: 200px;
+    flex: 1; /* Ensure all boxes are of equal width */
+    margin: 10px; /* Add spacing between boxes */
+    padding: 20px; /* Add padding inside the boxes */
+    color: white; /* Text color */
+    border-radius: 30px; /* Rounded corners */
+    display: flex; /* Use flexbox for the box */
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    position: relative; /* Enable absolute positioning for the icon */
 }
 
 .dashboard-box h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    margin: 0; /* Remove margin for h3 */
+    text-align: left; /* Align text to the left */
 }
 
-.dashboard-box p {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+/* Style the count number */
+.count {
+    font-size: 2.5em; /* Increase font size for visibility */
+    font-weight: bold; /* Make the number bold */
+    margin-bottom: 5px; /* Space between the number and the text */
 }
+
+/* Adjust icon size */
+.dashboard-box h3 i {
+    position: absolute; /* Position the icon absolutely */
+    right: 10px; /* Align the icon to the right */
+    bottom: 10px; /* Adjust the bottom position as needed */
+    font-size: 6em; /* Adjust icon size */
+    color: white; /* Icon color */
+}
+
+
+/* Color classes */
+.green {
+    background-color: #4CAF50; /* Green */
+}
+
+.yellow {
+    background-color: #FFC107; /* Yellow */
+}
+
+.orange {
+    background-color: #FF9800; /* Orange */
+}
+
+.red {
+    background-color: #F44336; /* Red */
+}
+
+.gray {
+    background-color: #9E9E9E; /* Gray */
+}
+
+.blue {
+    background-color: #2196F3; /* Blue */
+}
+
 
 /* Ensure boxes resize properly on smaller screens */
 @media (max-width: 768px) {
@@ -4635,25 +4701,53 @@ button#saveChangesBtn {
     margin-top: 40px;
     text-align: center;
 }
-
 .charts-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Keep this as column for the title */
     gap: 20px;
     margin-top: 30px;
 }
 
+.charts-container > h2 {
+    align-self: flex-start; /* Align the title to the start */
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: column; /* Keeps the title on top */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.charts-container > h2 {
+    align-self: flex-start; /* Align the title to the start */
+}
+
+.chart-box-container {
+    display: flex;          /* Align chart boxes in a row */
+    gap: 20px;             /* Space between boxes */
+}
 .chart-box {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 15px;         /* Padding inside each box */
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+    /* Enhanced box shadow for better visibility */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Increased blur radius and opacity */
+    
+    /* Size adjustments */
+    flex: 1;               /* Change this to 'flex: 2;' or similar for more space */
+    max-width: 80vw;      /* Maximum width for each box - adjust this value */
+    box-sizing: border-box; /* Include padding and border in width calculation */
 }
+
 
 .chart-box h3 {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;   /* Reduced margin */
 }
+
+
 
 canvas {
     max-width: 100%;
