@@ -217,59 +217,99 @@ document.getElementById('createReportButton').addEventListener('click', async ()
         try {
             const { jsPDF } = window.jspdf;
             const pdfDoc = new jsPDF();
-
-            // Adding report details
+    
+            // Set margins and initial Y position
+            const margin = 20;
+            let yPosition = margin;
+    
+            // Header
+            pdfDoc.setFontSize(16);
+            pdfDoc.setFont("helvetica", "bold");
+            pdfDoc.text('Header', margin, yPosition);
+            yPosition += 10;
+            pdfDoc.text('Official Report', margin, yPosition);
+            yPosition += 10;
+    
+            // Report Details
             pdfDoc.setFontSize(12);
-            pdfDoc.text('Report\'s Details', 10, 10);
-            pdfDoc.autoTable({
-                head: [['Requester Name', 'Request ID', 'Appointed At', 'Priority Level', 'Submitted by']],
-                body: [[
-                    appointmentData.requesterName || 'N/A',
-                    requestId,
-                    formatTimestamp(appointmentData.createdAt) || 'N/A',
-                    appointmentData.priorityLevel || 'N/A',
-                    appointmentData.assignedStaff
-                ]],
-                startY: 20
+            pdfDoc.setFont("helvetica", "normal");
+            yPosition += 10;
+            pdfDoc.text('Report Details:', margin, yPosition);
+            yPosition += 10;
+    
+            const details = [
+                { label: 'Requester Name:', value: appointmentData.requesterName || 'N/A' },
+                { label: 'Request ID:', value: requestId },
+                { label: 'Appointed At:', value: formatTimestamp(appointmentData.createdAt) || 'N/A' },
+                { label: 'Priority Level:', value: appointmentData.priorityLevel || 'N/A' }
+            ];
+    
+            details.forEach(detail => {
+                const label = detail.label.replace(/([A-Z])/g, ' $1').trim().replace(/^./, match => match.toUpperCase()); // Add space before uppercase letters and capitalize first letter
+                pdfDoc.text(`${label} ${detail.value}`, margin, yPosition);
+                yPosition += 8;
             });
-
-            // Adding report summary
-            const reportsSnapshot = await getDocs(query(collection(firestore, 'reports'), where('requestId', '==', requestId)));
-
-            let reportSummary = 'Report Summary:\n\n';
+    
+            // Report Summary
+            yPosition += 10;
+            pdfDoc.setFont("helvetica", "bold");
+            pdfDoc.text('Report Summary:', margin, yPosition);
+            pdfDoc.setFont("helvetica", "normal");
+            yPosition += 10;
+    
             if (!reportsSnapshot.empty) {
                 reportsSnapshot.docs.forEach(doc => {
                     const reportData = doc.data();
-                    reportSummary += `Report:\n`;
-
-                    // Loop through keys and dynamically create the report fields
+                    pdfDoc.text('Report:', margin, yPosition);
+                    yPosition += 8;
+    
                     Object.keys(reportData).forEach(key => {
                         let value = reportData[key];
-
-                        // Check if the value is a Firestore Timestamp and format it
                         if (value instanceof Timestamp) {
-                            value = formatTimestamp(value); // Convert Firestore Timestamp to readable format
+                            value = formatTimestamp(value);
                         }
-
-                        reportSummary += `  - ${key}: ${value || 'N/A'}\n`;
+                        const keyLabel = key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, match => match.toUpperCase()); // Add space before uppercase letters and capitalize first letter
+                        pdfDoc.text(`${keyLabel}: ${value || 'N/A'}`, margin + 10, yPosition);
+                        yPosition += 8;
+                        
+                        // Check if we need a new page
+                        if (yPosition > pdfDoc.internal.pageSize.height - 20) {
+                            pdfDoc.addPage();
+                            yPosition = margin;
+                        }
                     });
-                    reportSummary += '\n';
+                    yPosition += 5; // Extra space between reports
                 });
             } else {
-                reportSummary += 'No reports found for this request ID.\n';
+                pdfDoc.text('No reports found for this request ID.', margin, yPosition);
             }
-
-            // Add report summary to the PDF
-            pdfDoc.text(reportSummary, 10, pdfDoc.autoTable.previous.finalY + 10);
-
+    
+            // Footer
+            const footerY = pdfDoc.internal.pageSize.height - 20;
+            pdfDoc.setFont("helvetica", "normal");
+            pdfDoc.setFontSize(10);
+            pdfDoc.text('Footer', margin, footerY);
+            pdfDoc.text('Page ' + pdfDoc.internal.getNumberOfPages(), pdfDoc.internal.pageSize.width - margin - 40, footerY, { align: 'right' });
+    
+            // Signature
+            const signatureY = pdfDoc.internal.pageSize.height - 60;
+            pdfDoc.setFont("helvetica", "bold");
+            const signatureName = appointmentData.assignedStaff ? appointmentData.assignedStaff.toUpperCase() : 'N/A';
+            pdfDoc.text(signatureName, pdfDoc.internal.pageSize.width - margin - 40, signatureY, { align: 'right' });
+            pdfDoc.line(pdfDoc.internal.pageSize.width - margin - 80, signatureY +  2, pdfDoc.internal.pageSize.width - margin, signatureY + 2);
+            pdfDoc.setFont("helvetica", "normal");
+            pdfDoc.setFontSize(10);
+            pdfDoc.text('Signature', pdfDoc.internal.pageSize.width - margin - 40, signatureY + 10, { align: 'right' });
+    
             // Save PDF to a blob
             const pdfBlob = pdfDoc.output('blob');
     
             // Upload PDF to Firebase Storage in 'reports' folder
-            const pdfStorageRef = storageRef(storage, `reports/report_${requestId}.pdf`); // Create a reference for the file
-            await uploadBytes(pdfStorageRef, pdfBlob); // Use uploadBytes instead of put
+            const pdfStorageRef = storageRef(storage, `reports/report_${requestId}.pdf`);
+            await uploadBytes(pdfStorageRef, pdfBlob);
     
-            const user = getCurrentUser(); // Use the getCurrentUser() function
+            // Further code for Firestore operations...
+            const user = getCurrentUser ();
             if (!user) {
                 throw new Error('No user logged in.');
             }
@@ -279,55 +319,57 @@ document.getElementById('createReportButton').addEventListener('click', async ()
             await addDoc(collection(firestore, 'notifications'), {
                 message: `The report for request: ${requestId} is now submitted. Please review for approval.`,
                 timestamp: new Date().toISOString(),
-                userId: userId
+                userId : userId
             });
     
-            // Add to the analysisreport collection
+            // Add to the analysis report collection
             await addDoc(collection(firestore, 'analysisreport'), {
                 message: `The report done by ${appointmentData.assignedStaff || 'N/A'} has been released already and is waiting for validation.`,
                 timestamp: new Date().toISOString(),
                 userId: userId,
                 requestId: requestId
             });
-
-            const requestsRef = collection(firestore, 'requests');
-            const requestQuery = query(requestsRef, where('requestId', '==', requestId));
-            const requestSnapshot = await getDocs(requestQuery);
-
-            // Check if a request document exists
-            if (!requestSnapshot.empty) {
-                const requestDocRef = requestSnapshot.docs[0].ref; // Get the reference of the first document
-
-                // Fetch the document data to check the current status
-                const requestDoc = requestSnapshot.docs[0].data(); // Get the data from the document
-
-                let updatedStatus = 'testing'; // Default status for approval
-
-                // Conditional logic based on current request_status
-                if (requestDoc.request_status === 'verifying') {
-                    updatedStatus = 'checking';
-                } else if (requestDoc.request_status === 'inspecting') {
-                    updatedStatus = 'reporting';
-                }
-
-                // Update request status based on the evaluated status
-                await updateDoc(requestDocRef, { request_status: updatedStatus });
-                console.log(`Request status updated to: ${updatedStatus}`);
-            } else {
-                console.log('No request found with the specified requestId.');
-            }
-
+    
             alert('Report sent and saved to Firebase Storage successfully!');
             reportContainer.style.display = 'none';
             document.getElementById('ongoing').style.display = 'block';
             document.getElementById('taskList').style.display = 'block';
+    
         } catch (error) {
-            console.error('Error generating or uploading PDF:', error);
-            alert('An error occurred while sending the report. Please try again.');
+            console.error('Error generating PDF:', error);
+            alert('An error occurred while generating the report. Please check the console for more details.');
         }
     });
-    
+      
 });
+
+async function addDayToSample(sampleId) {
+    const timestamp = new Date().toISOString();
+    const dayCount = document.querySelectorAll('.day-box').length + 1;
+
+    // Add the "Day" box in the UI
+    const dayBox = document.createElement('div');
+    dayBox.className = 'day-box';
+    dayBox.innerText = `Day ${dayCount}`;
+    document.querySelector('.duration-container').appendChild(dayBox);
+
+    // Save to Firestore
+    const sampleRef = doc(firestore, 'sample', sampleId);
+    const sampleDoc = await getDoc(sampleRef);
+
+    if (sampleDoc.exists()) {
+        // Append the new day to the existing array
+        await updateDoc(sampleRef, {
+            day: arrayUnion({
+                dayNumber: dayCount,
+                timestamp: timestamp
+            })
+        });
+        console.log(`Day ${dayCount} added to sample ${sampleId}.`);
+    } else {
+        console.error('Sample document does not exist:', sampleId);
+    }
+}
 
 async function showTaskDetails(requestId) {
     try {
@@ -407,49 +449,20 @@ async function showTaskDetails(requestId) {
                 const sampleId = event.currentTarget.getAttribute('data-sample-id');
                 console.log('Sample ID:', sampleId); // Debugging line
                 const requestId = requestData.requestId;
+                currentSampleId = sampleId;
 
                 // Show the sample duration section
                 document.getElementById('taskDetailsSection').style.display = 'none';
                 document.getElementById('sampleDurationSection').style.display = 'block';
 
                 // Load any existing days from Firestore for this sample
-                loadSamplesByRequestId(requestId);
+                loadSamplesByRequestId(sampleId);
 
-                // Handle adding new day
-                document.getElementById('addDayButton').addEventListener('click', async () => {
-                    const timestamp = new Date().toISOString();
-                    const dayCount = document.querySelectorAll('.day-box').length + 1;
-
-                    // Add the "Day" box in the UI
-                    const dayBox = document.createElement('div');
-                    dayBox.className = 'day-box';
-                    dayBox.innerText = `Day ${dayCount}`;
-                    document.querySelector('.duration-container').appendChild(dayBox);
-
-                    // Save to Firestore
-                    const sampleRef = doc(firestore, 'sample', sampleId);
-                    const sampleDoc = await getDoc(sampleRef);
-
-                    if (sampleDoc.exists()) {
-                        // Append the new day to the existing array
-                        await updateDoc(sampleRef, {
-                            day: arrayUnion({
-                                dayNumber: dayCount,
-                                timestamp: timestamp
-                            })
-                        });
-                    } else {
-                        // Create a new document with sampleId, requestId, and the first day
-                        await setDoc(sampleRef, {
-                            sampleId: sampleId,
-                            requestId: requestId,
-                            day: [{
-                                dayNumber: dayCount,
-                                timestamp: timestamp
-                            }]
-                        });
-                    }
-                });
+                const addDayButton = document.getElementById('addDayButton');
+                addDayButton.replaceWith(addDayButton.cloneNode(true));
+                addDayButton.addEventListener('click', async () => {
+                    await addDayToSample(currentSampleId); // Pass the currentSampleId to the function
+                }, { once: true });
             });
         });
     } catch (error) {
@@ -458,16 +471,20 @@ async function showTaskDetails(requestId) {
     }
 }
 
-async function loadSamplesByRequestId(requestId) {
-    const samplesSnapshot = await getDocs(query(collection(firestore, 'sample'), where('requestId', '==', requestId)));
+async function loadSamplesByRequestId(sampleId) {
+    const samplesSnapshot = await getDocs(query(collection(firestore, 'sample'), where('sampleId', '==', sampleId)));
 
     if (samplesSnapshot.empty) {
-        console.log('No samples found for requestId:', requestId);
+        console.log('No samples found for sampleId:', sampleId);
         return;
     }
 
     // Clear the container first
-    document.querySelector('.duration-container').innerHTML = '<button id="addDayButton">+ Add Day</button>';
+    const durationContainer = document.querySelector('.duration-container');
+    durationContainer.innerHTML = '';
+
+    let totalColonyCount = 0;
+    let totalDays = 0;
 
     samplesSnapshot.forEach(sampleDoc => {
         const sampleData = sampleDoc.data();
@@ -483,6 +500,11 @@ async function loadSamplesByRequestId(requestId) {
             dayBox.className = 'day-box';
             dayBox.innerText = `Day ${day.dayNumber}`;
             document.querySelector('.duration-container').appendChild(dayBox);
+
+            if (day.colonyCount) {
+                totalColonyCount += day.colonyCount;
+                totalDays++;
+            }
 
             // Add a click event listener to the day-box
             dayBox.addEventListener('click', () => {
@@ -528,6 +550,23 @@ async function loadSamplesByRequestId(requestId) {
             });
         });
     });
+
+    const averageColonyCount = totalDays > 0 ? (totalColonyCount / totalDays).toFixed(2) : 'N/A';
+    document.getElementById('averageColonyCount').innerText = averageColonyCount;
+
+    // Create and append the "Add Day" button
+    const addDayButton = document.createElement('button');
+    addDayButton.id = 'addDayButton';
+    addDayButton.textContent = '+ Add Day';
+    durationContainer.appendChild(addDayButton);
+
+    // Add event listener to the "Add Day" button
+    addDayButton.addEventListener('click', async () => {
+        await addDayToSample(sampleId);
+        // Reload the sample data after adding a new day
+        await loadSamplesByRequestId(sampleId);
+    });
+
 }
 
 // Function to load colony data for the selected day (optional)
