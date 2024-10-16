@@ -1780,7 +1780,7 @@ h1 {
     font-size: 5px;
     margin-right: 10px;
     transition: .3s;
-    margin-top: 2vh;
+    margin-top: 1vh;
     
 }
 .admin-sidebar i{
@@ -1867,16 +1867,48 @@ h1 {
 }
 
 .admin-sidebar a {
-    padding: 10px 15px;
+    padding: 1vw 1vw;
     text-decoration: none;
     font-size: 24px;
     color: white;
-    display: block;
+    display: flex; /* Flexbox for icon and text alignment */
+    align-items: center; /* Aligns icon and text vertically */
+    gap: 15px; /* Adjust spacing between icon and text */
+    margin-bottom: 10px; /* Space between each item */
+}
+
+.admin-sidebar i {
+    font-size: 24px; /* Ensure the icon size matches the text */
+    display: inline-block;
+    width: 30px; /* Fixes icon width to maintain uniform alignment */
+    text-align: center; /* Centers the icon within its container */
 }
 
 .admin-sidebar a:hover {
     background-color: #cc0202;
 }
+
+.fa-solid.fa-right-from-bracket {
+    background-color: #680000;
+    height: 4vh;
+    width: 4vh; /* Set the width for the icon's box */
+    display: inline-flex; /* Ensures it respects dimensions */
+    justify-content: center; /* Centers the icon */
+    align-items: center; /* Centers the icon vertically */
+    padding: 0 9px; /* Adjust padding as needed */
+    border-radius: 5vh; /* Fully round border */
+    color: white; /* Optional: Set the icon color */
+    border: 2px solid white; /* Fixes the border styling */
+}
+
+#logoutBtn {
+    margin-top: 3vh; /* Use margin-top to push the icon down */
+}
+#logoutBtn.minimized {
+    margin-top: 10vh;
+}
+
+
 
 
 
