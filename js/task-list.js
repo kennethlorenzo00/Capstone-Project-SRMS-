@@ -223,25 +223,52 @@ document.getElementById('createReportButton').addEventListener('click', async ()
             let yPosition = margin;
     
             // Header
-            pdfDoc.setFontSize(16);
-            pdfDoc.setFont("helvetica", "bold");
-            pdfDoc.text('Header', margin, yPosition);
-            yPosition += 10;
-            pdfDoc.text('Official Report', margin, yPosition);
-            yPosition += 10;
-    
+            const headerHeight = 30; // 1 inch in points
+            const headerMargin = 20;
+
+            pdfDoc.rect(0, 0, pdfDoc.internal.pageSize.width, headerHeight, 'S'); // Draw a rectangle for the header container
+
+            try {
+                const logoImage = 'images/logo.webp';
+                const logoWidth = 25;
+                const logoHeight = 25;
+                pdfDoc.addImage(logoImage, 'WEBP', 10, headerHeight / 2 - logoHeight / 2, logoWidth, logoHeight);
+            } catch (imgError) {
+                console.error('Error loading logo image:', imgError);
+                pdfDoc.text('(Logo Placeholder)', 10, headerHeight / 2 - 10);
+            }
+
+            pdfDoc.setFontSize(13);
+            pdfDoc.setFont("Segoe UI", "bold");
+            pdfDoc.text('Center for Natural Sciences and Resources Research', 40, headerHeight / 2 + 2);
+            pdfDoc.setFont("Georgia", "normal");
+            pdfDoc.text('Research Institute of Science and Technology', 40, headerHeight / 2 + 6);
+
+            yPosition = headerHeight + 10; // Update yPosition to start below the header container
+
             // Report Details
             pdfDoc.setFontSize(12);
             pdfDoc.setFont("helvetica", "normal");
             yPosition += 10;
-            pdfDoc.text('Report Details:', margin, yPosition);
+            const currentDate = new Date();
+
+            // Function to format the date
+            function formatDate(date) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            }
+
+            const formattedDate = formatDate(currentDate);
+            const dateWidth = pdfDoc.getTextWidth(formattedDate);
+            const dateX = pdfDoc.internal.pageSize.width - margin - dateWidth + 35; // Calculate x position based on text width
+
+            pdfDoc.text(formattedDate, dateX, yPosition, { align: 'right' });
+
             yPosition += 10;
     
             const details = [
-                { label: 'Requester Name:', value: appointmentData.requesterName || 'N/A' },
+                { label: 'Client:', value: appointmentData.requesterName || 'N/A' },
                 { label: 'Request ID:', value: requestId },
-                { label: 'Appointed At:', value: formatTimestamp(appointmentData.createdAt) || 'N/A' },
-                { label: 'Priority Level:', value: appointmentData.priorityLevel || 'N/A' }
             ];
     
             details.forEach(detail => {
@@ -257,12 +284,15 @@ document.getElementById('createReportButton').addEventListener('click', async ()
             pdfDoc.setFont("helvetica", "normal");
             yPosition += 10;
     
+            let reportNumber = 1;   
+
             if (!reportsSnapshot.empty) {
                 reportsSnapshot.docs.forEach(doc => {
                     const reportData = doc.data();
-                    pdfDoc.text('Report:', margin, yPosition);
+                    pdfDoc.text(`${reportNumber}.`, margin, yPosition);
                     yPosition += 8;
-    
+                    reportNumber++;
+                
                     Object.keys(reportData).forEach(key => {
                         let value = reportData[key];
                         if (value instanceof Timestamp) {
@@ -285,12 +315,27 @@ document.getElementById('createReportButton').addEventListener('click', async ()
             }
     
             // Footer
-            const footerY = pdfDoc.internal.pageSize.height - 20;
+            const footerY = pdfDoc.internal.pageSize.height;
+            const footerHeight = 25; // Adjust this value to fit the text
+            pdfDoc.rect(0, footerY - footerHeight, pdfDoc.internal.pageSize.width, footerHeight, 'S'); // Draw a rectangle for the footer container
+
             pdfDoc.setFont("helvetica", "normal");
-            pdfDoc.setFontSize(10);
-            pdfDoc.text('Footer', margin, footerY);
-            pdfDoc.text('Page ' + pdfDoc.internal.getNumberOfPages(), pdfDoc.internal.pageSize.width - margin - 40, footerY, { align: 'right' });
-    
+            const fontSize = 10;
+            pdfDoc.setFontSize(fontSize);
+
+            // Calculate the y-coordinate for the centered text
+            const centerY = footerY - footerHeight / 2 + fontSize / 2 - 9;
+
+            // Left side of the footer
+            pdfDoc.text('Email: gaclirio@pup.edu.ph', 10, centerY);
+            pdfDoc.text('Postal Mail: Anonas Street, Sta. Mesa, Manila, Philippines', 10, centerY + 5);
+            pdfDoc.text('Phone: 0917 634 9906', 10, centerY + 10);
+
+            // Right side of the footer (aligned with the left text)
+            const pageText = 'Page ' + pdfDoc.internal.getNumberOfPages();
+            const pageX = pdfDoc.internal.pageSize.width - margin - pdfDoc.getTextWidth(pageText) + 25; // Calculate x position based on text width
+            pdfDoc.text(pageText, pageX, centerY, { align: 'right' });
+
             // Signature
             const signatureY = pdfDoc.internal.pageSize.height - 60;
             pdfDoc.setFont("helvetica", "bold");
