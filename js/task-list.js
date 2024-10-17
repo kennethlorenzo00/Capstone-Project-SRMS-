@@ -117,6 +117,11 @@ document.getElementById('backSampleDuration').addEventListener('click', () => {
 document.getElementById('backToSampleDuration').addEventListener('click', () => {
     document.getElementById('colonyCountSection').style.display = 'none';
     document.getElementById('sampleDurationSection').style.display = 'block';
+    document.getElementById('inputForm').reset(); 
+    document.getElementById('uploadedImage').src = ''; 
+    colonyCountElement.innerText = ''; 
+    document.getElementById('output').innerHTML = ''; 
+    document.getElementById('resultContainer').classList.add('hidden'); 
 });
 
 let selectedRequestIdPass = null;
@@ -571,12 +576,22 @@ async function loadSamplesByRequestId(sampleId) {
                     // Remove any previous event listeners to prevent duplicates
                     saveButton.replaceWith(saveButton.cloneNode(true));
                     document.getElementById('saveColonyCountBtn').addEventListener('click', async () => {
-                        const colonyCount = document.getElementById('colonyCount').innerText; // Get the colony count value
+                        const colonyCountElement = document.getElementById('colonyCount');
+                        const text = colonyCountElement.innerText.trim();
+                        const match = text.match(/\d+/);
+                        const colonyCount = match ? match[0] : null;
+
+                        if (!colonyCount) {
+                            alert("Colony count is invalid or missing.");
+                            return;
+                        }
+
+                        const colonyCountNumber = parseInt(colonyCount);
 
                         // Access the current day's array and save the colonyCount
                         const updatedDays = days.map(d => {
                             if (d.dayNumber === day.dayNumber) {
-                                d.colonyCount = parseInt(colonyCount); // Update colony count for the selected day
+                                d.colonyCount = colonyCountNumber; // Update colony count for the selected day
                             }
                             return d;
                         });
@@ -587,6 +602,12 @@ async function loadSamplesByRequestId(sampleId) {
                         });
 
                         alert(`Colony count for Day ${day.dayNumber} saved successfully!`);
+
+                        document.getElementById('inputForm').reset(); 
+                        document.getElementById('uploadedImage').src = ''; 
+                        colonyCountElement.innerText = ''; 
+                        document.getElementById('output').innerHTML = ''; 
+                        document.getElementById('resultContainer').classList.add('hidden'); 
 
                         document.getElementById('colonyCountSection').style.display = 'none';
                         document.getElementById('sampleDurationSection').style.display = 'block';
