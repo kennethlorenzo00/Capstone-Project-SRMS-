@@ -8,16 +8,22 @@
     <link rel="stylesheet" href="css/styles.css">
     <script type="module" src="js/firebase.js"></script> 
     <script type="module" src="js/auth.js" defer></script> 
+    <script type="module" src="js/lab-notification.js" defer></script>  
     <script src="js/lab-sidebar.js" defer></script> 
     <script type="module" src="js/task-list.js" defer></script>
-    <script type="module" src="js/lab-account.js" defer></script> 
+    <script type="module" src="js/lab-account.js" defer></script>
     <script type="module" src="js/lab-home.js" defer></script> 
-    <script type="module" src="js/lab-notification.js" defer></script> 
     <script type="module" src="js/lab-analysis-report.js" defer></script> 
     <script type="module" src="js/lab-settings.js" defer></script> 
     <script async src="https://docs.opencv.org/3.4.1/opencv.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/async/3.2.0/async.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
    
 </head>
 <body>
@@ -385,47 +391,215 @@
             </div>
 
             <div id="colonyCountSection" style="display: none;">
-                <h2>Bacterial Colony Detection</h2>
                 <h2 id="colonyCountHeader"></h2>
-                <p id="status">OpenCV.js is loading...</p>
-
-                <div>
-                <label for="blurSize">Gaussian Blur Size (odd number):</label>
-                <input type="number" id="blurSize" value="5" min="1" step="2" />
+                <div class="max-w-6xl mx-auto bg-white p-8 shadow-md mt-10 rounded-lg">
+                    <div class="mb-6 text-center">
+                        <h1 class="text-3xl font-bold text-gray-700">Colony Counter</h1>
+                    </div>
                 
-                <label for="threshBlockSize">Threshold Block Size (odd number):</label>
-                <input type="number" id="threshBlockSize" value="11" min="3" step="2" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <!-- Left side: Form -->
+                        <form id="inputForm" class="space-y-6">
+                            <div>
+                                <label for="file" class="block text-sm font-medium text-gray-700">Select File</label>
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <input type="text" id="fileName" class="block w-full px-4 py-2 border border-gray-300 rounded-l-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" disabled />
+                                    <button id="fileMock" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-indigo-600 text-white hover:bg-indigo-700">Browse</button>
+                                    <input type="file" id="file" style="display: none;" />
+                                </div>
+                            </div>
                 
-                <label for="threshC">Threshold C Value:</label>
-                <input type="number" id="threshC" value="2" step="0.1" />
+                            <div>
+                                <label for="confidence" class="block text-sm font-medium text-gray-700">Min Confidence</label>
+                                <input type="number" id="confidence" value="20" max="100" min="0" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                            </div>
                 
-                <label for="minColonySize">Min Colony Size:</label>
-                <input type="number" id="minColonySize" value="60" min="1" step="1" />
+                            <div>
+                                <label for="overlap" class="block text-sm font-medium text-gray-700">Max Overlap</label>
+                                <input type="number" id="overlap" value="30" max="100" min="0" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                            </div>
                 
-                <label for="maxColonySize">Max Colony Size:</label>
-                <input type="number" id="maxColonySize" value="5000" min="1" step="1" />
-                </div>
-
-                <p><strong>Total Colony Count: <span id="colonyCount">0</span></strong></p>
-
-                <div>
-                <div class="inputoutput">
-                    <img id="imageSrc" alt="No Image" />
-                    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
-                </div>
-                <div class="inputoutput">
-                    <canvas id="canvasOutput"></canvas>
-                    <div class="caption">canvasOutput</div>
-                </div>
-                </div>
-
-                <div class="colony-list" id="colonyList">
-                <!-- Colony IDs and validation options will be added here -->
+                            <div>
+                                <button type="submit" class="w-full inline-flex justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Run Inference</button>
+                            </div>
+                        </form>
+                
+                        <!-- Right side: Result -->
+                        <div id="resultContainer" class="hidden md:block">
+                            <div class="border-t border-gray-300 pt-4">
+                                <h3 class="text-xl font-semibold">Result</h3>
+                                <!-- Small version of the input image -->
+                                <div id="inputImagePreview" class="mt-4 mb-4">
+                                    <img id="uploadedImage" src="" alt="Input Image" class="w-32 h-32 object-cover mx-auto" />
+                                </div>
+                
+                                <!-- Colony count result -->
+                                <p id="colonyCount" class="text-lg font-bold text-gray-600"></p> <!-- Colony count will go here -->
+                                
+                                <!-- Image output (processed image) -->
+                                <div id="output" class="mt-4 p-4 bg-gray-100 rounded-lg"></div> <!-- Image will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button id="saveColonyCountBtn">Save Colony Count</button>
                 <button id="backToSampleDuration">Back</button>
             </div>
+
+            <script type="text/javascript">
+    
+                var infer = function() {
+                    $('#output').html("Inferring...");
+                    $("#resultContainer").removeClass("hidden");
+                    $('html').scrollTop(100000);
+                
+                    // First request: Get the JSON response for the colony count
+                    getSettingsFromForm("json", function(jsonSettings) {
+                        $.ajax(jsonSettings).then(function(jsonResponse) {
+                            // Log the raw API response to the console for debugging
+                            console.log("JSON API Response: ", jsonResponse);
+                
+                            // Parse and display colony count from the JSON response
+                            var colonyCount = jsonResponse.predictions ? jsonResponse.predictions.length : 0;
+                            document.getElementById("colonyCount").textContent = `Colonies Detected: ${colonyCount}`;
+                        }).catch(function(error) {
+                            console.error("Error fetching JSON response:", error);
+                        });
+                    });
+                
+                    // Second request: Get the image response to display
+                    getSettingsFromForm("image", function(imageSettings) {
+                        imageSettings.xhr = function() {
+                            var xhr = new XMLHttpRequest();
+                            xhr.responseType = 'blob';  // Ensure the response is treated as a binary blob
+                            return xhr;
+                        };
+                
+                        imageSettings.error = function(xhr) {
+                            $('#output').html("").append([
+                                "Error loading response.",
+                                "Check your API key, model, version,",
+                                "and other parameters",
+                                "then try again."
+                            ].join("\n"));
+                        };
+                
+                        $.ajax(imageSettings).then(function(imageBlob) {
+                            // Log the blob to the console for debugging
+                            console.log("Image Blob:", imageBlob);
+                
+                            // Create a local URL for the blob and set it as the image source
+                            var url = window.URL.createObjectURL(imageBlob);
+                            var img = $('<img/>');
+                            img.attr('src', url);
+                            img.on('load', function() {
+                                // Clean up memory after image loads
+                                window.URL.revokeObjectURL(url);
+                            });
+                            $('#output').html("").append(img);
+                        }).catch(function(error) {
+                            console.error("Error fetching image response:", error);
+                        });
+                    });
+                };
+                
+                
+                var setupButtonListeners = function() {
+                    // Prevent default action on clicking the Browse button
+                    $('#fileMock').click(function(event) {
+                        event.preventDefault();  // Stop form submission
+                        $('#file').click();      // Trigger file input
+                    });
+                
+                    // Handle file selection and display the file name
+                    $("#file").change(function() {
+                        var path = $(this).val().replace(/\\/g, "/");
+                        var parts = path.split("/");
+                        var filename = parts.pop();
+                        $('#fileName').val(filename);
+                
+                        // Display the uploaded image in a smaller size above the result
+                        var file = $('#file').get(0).files[0];
+                        if (file) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                $('#uploadedImage').attr('src', e.target.result); // Set the src of the small preview
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                
+                    // Handle form submission (only when "Run Inference" is clicked)
+                    $('#inputForm').submit(function(event) {
+                        event.preventDefault(); // Prevent form submission
+                
+                        // Check if a file is selected before running inference
+                        var file = $('#file').get(0).files && $('#file').get(0).files.item(0);
+                        if (!file) {
+                            alert("Please select a file before running inference.");
+                            return false;
+                        }
+                        
+                        // Run inference if the file is selected
+                        infer();
+                    });
+                };
+                
+                setupButtonListeners();
+                
+                var getSettingsFromForm = function(responseType, cb) {
+                    var settings = { method: "POST" };
+                
+                    var parts = [
+                        "https://detect.roboflow.com/",
+                        "bacteria-colony-detection",
+                        "/2",
+                        "?api_key=7h6CV35enVRlPEyiUPK3"
+                    ];
+                
+                    var confidence = $('#confidence').val();
+                    if (confidence) parts.push("&confidence=" + confidence);
+                
+                    var overlap = $('#overlap').val();
+                    if (overlap) parts.push("&overlap=" + overlap);
+                
+                    if (responseType === "json") {
+                        parts.push("&format=json");  // JSON response for counting detected colonies
+                    } else if (responseType === "image") {
+                        parts.push("&format=image"); // Image response for displaying the processed image
+                        parts.push("&labels=off");
+                        parts.push("&stroke=1");
+                    }
+                
+                    settings.url = parts.join("");
+                
+                    var file = $('#file').get(0).files && $('#file').get(0).files.item(0);
+                    if (!file) {
+                        alert("Please select a file.");
+                        return;
+                    }
+                
+                    getBase64fromFile(file).then(function(base64image) {
+                        settings.data = base64image;
+                        cb(settings);
+                    });
+                };
+                
+                var getBase64fromFile = function(file) {
+                    return new Promise(function(resolve, reject) {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function() {
+                            resolve(reader.result);
+                        };
+                        reader.onerror = function(error) {
+                            reject(error);
+                        };
+                    });
+                };
+                
+                </script>
 
             <!-- Placeholder for dynamic report form -->
             <div id="reportFormContainer" style="display:none;"></div>

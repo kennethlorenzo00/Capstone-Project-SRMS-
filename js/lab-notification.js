@@ -143,3 +143,13 @@ async function deleteNotification(index) {
 
 // Initialize notifications
 fetchNotifications();
+
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        fetchNotifications(); // Fetch notifications when user logs in
+    } else {
+        // Optionally clear notifications or perform other actions on logout
+        notifications = [];
+        updateNotificationCount();
+    }
+});
