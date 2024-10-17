@@ -457,7 +457,6 @@ input {
 }
 
 .client-main {
-    margin-left: 250px; /* Space for the sidebar */
     padding: 10px;
     padding-top: calc(15px + 75px); /* Increased space for the header */
     transition: margin-left 0.5s;
@@ -1821,7 +1820,7 @@ h1 {
 
 #main {
     transition: margin-left 0.3s;
-    margin-left: 250px;
+    margin-left: 200px;
     margin-top: 10vh;
     padding-left: 100px;
 }
@@ -2711,7 +2710,7 @@ font-family: Arial, sans-serif;
   }
   
   .event-item .more-info-btn {
-    display: block;
+    display: center;
     margin-top: 10px;
   }
   
@@ -3730,7 +3729,7 @@ button#saveClientChangesBtn {
 }
 
 .detail-bubble {
-    padding: 15px;
+    padding: 5px;
     border-radius: 30px;
     font-size: 16px;
     color: #333;
@@ -3772,6 +3771,17 @@ button#saveClientChangesBtn {
 }
 
 /* Process container styling */
+.process-container h2 {
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+.process-container h3 {
+    text-align: left;
+    padding-left: 20px;
+    font-size: 30px;
+    margin:0;
+}
 .process-container {
     background-color: #f4f4f4;
     padding: 20px;
@@ -3796,56 +3806,120 @@ button#saveClientChangesBtn {
     background-color: #ffffff;
     padding: 15px;
     border: 1px solid #ccc;
-    width: 150px;
+    width: 12vw;
     text-align: center;
     border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    height: 15vh;
+    margin: 20px;
 }
 
 .step-box h4 {
     font-size: 1.2em;
+    margin: 0;
+    color: #7D1B1B !important;
+    text-align: left;
+}
+
+.step-box p {
+    text-align: left;
 }
 
 /* Button styling */
 #requestNowButton {
-    background-color: #28a745;
+    background-color: #008AC0;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display:block;
+    margin: 20px;
+    margin-bottom: 10px;
 }
 
 
 /* Requests Overview */
+.requests-overview {
+    padding: 10px 25px 20px;
+    background: #EAA6A660;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
 .requests-overview table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.requests-overview th, td {
+.requests-overview th {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: left;
 }
 
-/* Events Section */
-.scroll-container {
-    display: flex;
-    overflow-x: auto;
-}
-
-.event-item {
-    width: 200px;
-    margin: 10px;
+.requests-overview td {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    text-align: left;
     text-align: center;
 }
 
+
+#recentRequestsTable thead {
+    background: #7D1B1B;
+    color: white;
+}
+
+#recentRequestsTable th, td{
+    border: none;
+    text-align: center;
+
+}
+
+#recentRequestsTable td {
+    padding: 10px; /* Adds padding to table cells */
+    border: none; /* Removes borders from table data cells */
+    background-color: white; /* White background for body rows */
+    vertical-align: middle; /* Vertically center-align text */
+    border-bottom: 2px solid #00000030;
+}
+
+/* Events Section */
+.events-container h2{    
+    padding-left: 25px;
+    padding-top: 10px;
+}
+
+div#eventsSection{
+    background-color: #f7f7f7;
+    border-radius: 10px;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    height: 42vh;
+    margin-left: 20px;
+}
+
+.event-item {
+    width: 30vh;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 5px 5px 5px rgba(106, 106, 106, 0.2);
+    background-color: white;
+    height: 35vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .event-item img {
-    width: 100%;
-    height: 150px;
+    width: 25vh;
+    height: 15vh;
     object-fit: cover;
 }
 
