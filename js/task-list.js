@@ -47,22 +47,7 @@ let sortOrderRejected = 'asc';
 // Add click event listeners to the "Deadline" headers
 document.querySelector('#taskTable th:first-child').addEventListener('click', () => {
     sortOrderAssigned = sortOrderAssigned === 'asc' ? 'desc' : 'asc';
-    fetchAssignedTasks(currentUserFullName, sortOrderAssigned);
-});
-
-document.querySelector('#ongoingTaskTable th:first-child').addEventListener('click', () => {
-    sortOrderOngoing = sortOrderOngoing === 'asc' ? 'desc' : 'asc';
-    fetchOngoingTasks(currentUserFullName, {}, sortOrderOngoing);
-});
-
-document.querySelector('#processedTaskTable th:first-child').addEventListener('click', () => {
-    sortOrderProcessed = sortOrderProcessed === 'asc' ? 'desc' : 'asc';
-    fetchProcessedTasks(currentUserFullName, {}, sortOrderProcessed);
-});
-
-document.querySelector('#rejectedTaskTable th:first-child').addEventListener('click', () => {
-    sortOrderRejected = sortOrderRejected === 'asc' ? 'desc' : 'asc';
-    fetchRejectedTasks(currentUserFullName, {}, sortOrderRejected);
+    fetchAssignedTasks(userFullName, sortOrderAssigned);
 });
 
 // Define a variable to store userFullName in a higher scope
@@ -93,7 +78,7 @@ async function fetchAssignedTasks(userFullName, sortOrder = 'asc') {
 
         const excludedStatuses = [
             'releasing', 'rejected', 'verifying', 'inspecting', 'reporting', 'initiating',
-            'drafting', 'approving', 'signing', 'managing'
+            'drafting', 'approving', 'signing', 'managing', 'testing', 'checking'
         ];
         
         if (excludedStatuses.includes(requestData.request_status)) {
