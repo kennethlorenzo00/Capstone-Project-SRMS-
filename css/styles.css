@@ -5310,4 +5310,34 @@ canvas {
     width: 100%; 
     margin-top: auto; 
 }
+.sort-icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    position: relative;
+}
+
+.sort-icon::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: -5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+}
+
+.sort-icon.asc {
+    border-top-color: transparent;
+    border-bottom-color: black;
+}
+
+.sort-icon.desc {
+    border-bottom-color: transparent;
+    border-top-color: black;
+}
 

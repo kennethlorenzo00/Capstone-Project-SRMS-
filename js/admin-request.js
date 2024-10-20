@@ -80,7 +80,7 @@ function updatePaginationControls() {
 prevPageButton.addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
-        populateRequestTables();
+        populateRequestTables(sortOrder);
     }
     updatePaginationControls(); // Move this here to ensure it updates after changing the page
 });
@@ -88,7 +88,7 @@ prevPageButton.addEventListener('click', () => {
 // Event listener for next page button
 nextPageButton.addEventListener('click', () => {
     currentPage++;
-    populateRequestTables();
+    populateRequestTables(sortOrder);
     updatePaginationControls(); // Ensure pagination controls are updated
 });
 
@@ -124,6 +124,23 @@ nextHistoryPageButton.addEventListener('click', () => {
     currentHistoryPage++;
     populateRequestHistory();
     updateRequestHistoryPaginationControls(); // Ensure pagination controls are updated
+});
+
+let sortOrder = 'asc'; // Initialize sort order
+
+document.getElementById('dateHeader').addEventListener('click', () => {
+    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle sort order
+    populateRequestTables(sortOrder); 
+});
+
+document.getElementById('dateHeaderSR').addEventListener('click', () => {
+  sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle sort order
+  populateRequestTables(sortOrder); 
+});
+
+document.getElementById('dateHeaderFR').addEventListener('click', () => {
+  sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle sort order
+  populateRequestTables(sortOrder); 
 });
 
 function attachViewButtonListeners() {
@@ -634,15 +651,15 @@ async function getClientName(userId) {
 
 const clientRefs = {}; 
 
-async function populateRequestTables() {
+async function populateRequestTables(sortOrder = 'asc') {
     const requestsRef = collection(firestore, 'requests');
     let requestQuery;
 
     // Construct the query based on pagination
     if (currentPage === 1) {
-        requestQuery = query(requestsRef, orderBy('timeStamp'), limit(pageSize));
+        requestQuery = query(requestsRef,  orderBy('timeStamp', sortOrder === 'asc' ? 'asc' : 'desc'), limit(pageSize));
     } else {
-        requestQuery = query(requestsRef, orderBy('timeStamp'), startAfter(lastVisible), limit(pageSize));
+        requestQuery = query(requestsRef,  orderBy('timeStamp', sortOrder === 'asc' ? 'asc' : 'desc'), startAfter(lastVisible), limit(pageSize));
     }
 
     const requestsSnapshot = await getDocs(requestQuery);
@@ -1358,6 +1375,6 @@ followUpSearchInput.addEventListener('input', async () => {
 
 // Call the function to populate the tables when the document is ready
 document.addEventListener("DOMContentLoaded", function() {
-    populateRequestTables();
+    populateRequestTables(sortOrder);
     populateRequestHistory();
 });
