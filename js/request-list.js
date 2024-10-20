@@ -1,6 +1,6 @@
 import { auth, database, firestore, storage } from './firebase.js';
 import { ref as dbRef, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js"; // For Realtime Database
-import { collection, query, where, onSnapshot, getDocs, limit, startAfter, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, query, where, onSnapshot, getDocs, limit, startAfter, doc, updateDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 import { ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"; // For Storage
 
 // Get the request list table body and details section
@@ -52,7 +52,7 @@ const pageSize = 5; // Number of requests per page
 // Update pagination controls
 function updatePaginationControls() {
     prevPageButton.disabled = currentPage === 1;
-    nextPageButton.disabled = lastVisible === null; // Disable if there's no last visible document
+    nextPageButton.disabled = !lastVisible; // Disable if there's no more data
     pageInfoSpan.textContent = `Page ${currentPage}`;
 }
 
@@ -74,18 +74,26 @@ function createProgressBar(status, stages) {
 prevPageButton.addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
-        fetchRequestData(auth.currentUser);
-        updatePaginationControls();
+        fetchRequestData(auth.currentUser, requestSortOrder);
     }
 });
 
 nextPageButton.addEventListener('click', () => {
-    currentPage++;
-    fetchRequestData(auth.currentUser);
-    updatePaginationControls();
+    if (lastVisible) {
+        currentPage++;
+        fetchRequestData(auth.currentUser, requestSortOrder);
+    }
 });
 
-async function fetchRequestData(user) {
+let requestSortOrder = 'asc'; // Initialize sort order
+
+// Event listener for the Date header
+document.getElementById('requestDateHeader').addEventListener('click', () => {
+    requestSortOrder = requestSortOrder === 'asc' ? 'desc' : 'asc'; // Toggle sort order
+    fetchRequestData(auth.currentUser , requestSortOrder); // Call with current sort order
+});
+
+async function fetchRequestData(user, sortOrder = 'asc') {
     if (!user) {
         console.log('No user is currently logged in.');
         return;
@@ -94,22 +102,32 @@ async function fetchRequestData(user) {
     const requestsRef = collection(firestore, 'requests');
     console.log('Fetching requests for user ID:', user.uid);
 
-    // Start with the query for user requests
-    let userRequestsQuery = query(requestsRef, where('userId', '==', user.uid), limit(pageSize));
-
-    // If not the first page, start after the last visible document
-    if (currentPage > 1 && lastVisible) {
-        userRequestsQuery = query(userRequestsQuery, startAfter(lastVisible), limit(pageSize));
-    }
+    // Fetch all requests for the user without pagination
+    let userRequestsQuery = query(requestsRef, where('userId', '==', user.uid));
 
     const requestsSnapshot = await getDocs(userRequestsQuery);
-    requestListTableBody.innerHTML = ""; // Clear the table body
+    let allRequestsData = [];
 
     if (!requestsSnapshot.empty) {
         requestsSnapshot.forEach(doc => {
             const requestData = doc.data();
-            console.log('Request Data:', requestData);
+            allRequestsData.push(requestData);
+        });
 
+        // Sort all requests based on the timestamp
+        allRequestsData.sort((a, b) => {
+            let dateA = a.timeStamp instanceof Timestamp ? a.timeStamp.toDate() : new Date(a.timeStamp);
+            let dateB = b.timeStamp instanceof Timestamp ? b.timeStamp.toDate() : new Date(b.timeStamp);
+            return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+        });
+
+        // Paginate the sorted data
+        const startIndex = (currentPage - 1) * pageSize;
+        const paginatedData = allRequestsData.slice(startIndex, startIndex + pageSize);
+
+        requestListTableBody.innerHTML = ""; 
+
+        paginatedData.forEach(requestData => {
             const tableRow = document.createElement('tr');
             tableRow.innerHTML = `
                 <td>${formatTimestamp(requestData.timeStamp)}</td>
@@ -123,15 +141,9 @@ async function fetchRequestData(user) {
             requestListTableBody.appendChild(tableRow);
         });
 
-        // Update lastVisible to the last document in the current snapshot
-        lastVisible = requestsSnapshot.docs[requestsSnapshot.docs.length - 1];
+        // Update pagination controls
+        lastVisible = startIndex + pageSize < allRequestsData.length;
 
-        // If the current batch of requests is less than the page size, there are no more documents
-        if (requestsSnapshot.size < pageSize) {
-            lastVisible = null; // No more documents to fetch
-        }
-
-        // Add event listeners to all View buttons
         document.querySelectorAll('.view-button').forEach(button => {
             button.addEventListener('click', () => {
                 const requestId = button.getAttribute('data-request-id');
@@ -142,7 +154,7 @@ async function fetchRequestData(user) {
         console.log('No requests found for the current user.');
     }
 
-    updatePaginationControls(); // Update pagination controls after fetching data
+    updatePaginationControls();
 }
 
 // Search function
@@ -542,7 +554,7 @@ addRequestButton.addEventListener('click', () => {
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log('User is logged in:', user);
-        fetchRequestData(user);
+        fetchRequestData(auth.currentUser , requestSortOrder); 
         updatePaginationControls(); // Update pagination controls on login
     } else {
         console.log('No user is currently logged in.');
@@ -552,6 +564,6 @@ auth.onAuthStateChanged(user => {
 // Call the function to fetch data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     if (auth.currentUser) {
-        fetchRequestData(auth.currentUser);
+        fetchRequestData(auth.currentUser , requestSortOrder); 
     }
 });
