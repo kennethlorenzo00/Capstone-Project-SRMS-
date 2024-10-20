@@ -39,13 +39,38 @@ function formatTimestamp(timestamp) {
     return 'Invalid Date';
 }
 
+let sortOrderAssigned = 'asc';
+let sortOrderOngoing = 'asc';
+let sortOrderProcessed = 'asc';
+let sortOrderRejected = 'asc';
+
+// Add click event listeners to the "Deadline" headers
+document.querySelector('#taskTable th:first-child').addEventListener('click', () => {
+    sortOrderAssigned = sortOrderAssigned === 'asc' ? 'desc' : 'asc';
+    fetchAssignedTasks(currentUserFullName, sortOrderAssigned);
+});
+
+document.querySelector('#ongoingTaskTable th:first-child').addEventListener('click', () => {
+    sortOrderOngoing = sortOrderOngoing === 'asc' ? 'desc' : 'asc';
+    fetchOngoingTasks(currentUserFullName, {}, sortOrderOngoing);
+});
+
+document.querySelector('#processedTaskTable th:first-child').addEventListener('click', () => {
+    sortOrderProcessed = sortOrderProcessed === 'asc' ? 'desc' : 'asc';
+    fetchProcessedTasks(currentUserFullName, {}, sortOrderProcessed);
+});
+
+document.querySelector('#rejectedTaskTable th:first-child').addEventListener('click', () => {
+    sortOrderRejected = sortOrderRejected === 'asc' ? 'desc' : 'asc';
+    fetchRejectedTasks(currentUserFullName, {}, sortOrderRejected);
+});
 
 // Define a variable to store userFullName in a higher scope
 let userFullName = '';
 let selectedRequestId = null; // Variable to hold the selected request ID
 
 // Function to fetch all assigned tasks for the user
-async function fetchAssignedTasks(userFullName) {
+async function fetchAssignedTasks(userFullName, sortOrder = 'asc') {
     const taskTableBody = document.getElementById('taskTableBody');
     taskTableBody.innerHTML = ''; // Clear previous content
 
@@ -53,52 +78,58 @@ async function fetchAssignedTasks(userFullName) {
     const appointmentsQuery = query(appointmentsRef, where('assignedStaff', '==', userFullName));
     const appointmentsSnapshot = await getDocs(appointmentsQuery);
 
-    // Check if there are appointments for the user
     if (appointmentsSnapshot.empty) {
         taskTableBody.innerHTML = '<tr><td colspan="8">No assigned tasks available.</td></tr>';
         return;
     }
 
+    let tasks = [];
     for (const appointmentDoc of appointmentsSnapshot.docs) {
         const appointmentData = appointmentDoc.data();
         const requestId = appointmentData.requestId;
 
-        // Fetch the corresponding request document
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
         const excludedStatuses = [
-            'releasing',
-            'rejected',
-            'verifying',
-            'inspecting',
-            'reporting',
-            'initiating',
-            'drafting',
-            'approving',
-            'signing',
-            'managing'
+            'releasing', 'rejected', 'verifying', 'inspecting', 'reporting', 'initiating',
+            'drafting', 'approving', 'signing', 'managing'
         ];
         
-        // Check if the status is in the excluded statuses
         if (excludedStatuses.includes(requestData.request_status)) {
             continue;
         }
 
-        const row = `
-            <tr>
-                <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
-                <td>${requestId}</td>
-                <td>${requestData.requestOption || 'N/A'}</td>
-                <td>${appointmentData.clientType || 'N/A'}</td>
-                <td>${appointmentData.requesterName || 'N/A'}</td>
-                <td>${requestData.samples ? requestData.samples.length : 0}</td>
-                <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                <td>${requestData.request_status || 'N/A'}</td>
-            </tr>
-        `;
-        taskTableBody.innerHTML += row; // Append new row to the all assigned tasks table
+        tasks.push({
+            endDate: appointmentData.endDate ? new Date(appointmentData.endDate) : new Date(0),
+            requestId: requestId,
+            requestOption: requestData.requestOption || 'N/A',
+            clientType: appointmentData.clientType || 'N/A',
+            requesterName: appointmentData.requesterName || 'N/A',
+            samplesCount: requestData.samples ? requestData.samples.length : 0,
+            priorityLevel: appointmentData.priorityLevel || 'N/A',
+            status: requestData.request_status || 'N/A'
+        });
     }
+
+    // Sort tasks
+    tasks.sort((a, b) => {
+        return sortOrder === 'asc' ? a.endDate - b.endDate : b.endDate - a.endDate;
+    });
+
+    // Populate table with sorted tasks
+    taskTableBody.innerHTML = tasks.map(task => `
+        <tr>
+            <td>${task.endDate.toLocaleDateString()}</td>
+            <td>${task.requestId}</td>
+            <td>${task.requestOption}</td>
+            <td>${task .clientType}</td>
+            <td>${task.requesterName}</td>
+            <td>${task.samplesCount}</td>
+            <td>${task.priorityLevel}</td>
+            <td>${task.status}</td>
+        </tr>
+    `).join('');
 }
 
 document.getElementById('backToTasksButton').addEventListener('click', () => {
@@ -1083,7 +1114,7 @@ function showReportForm(requestOption, requestId) {
 }
 
 // Function to fetch ongoing tasks
-async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
+async function fetchOngoingTasks(userFullName, filterCriteria = {}, sortOrder = 'asc') {
     const ongoingTaskTableBody = document.getElementById('ongoingTaskTableBody');
     ongoingTaskTableBody.innerHTML = ''; // Clear previous content
 
@@ -1091,17 +1122,16 @@ async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
     const appointmentsQuery = query(appointmentsRef, where('assignedStaff', '==', userFullName));
     const appointmentsSnapshot = await getDocs(appointmentsQuery);
 
-    // Check if there are appointments for the user
     if (appointmentsSnapshot.empty) {
         ongoingTaskTableBody.innerHTML = '<tr><td colspan="8">No ongoing tasks available.</td></tr>';
         return;
     }
 
+    let tasks = [];
     for (const appointmentDoc of appointmentsSnapshot.docs) {
         const appointmentData = appointmentDoc.data();
         const requestId = appointmentData.requestId;
 
-        // Fetch the corresponding request document
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
@@ -1109,28 +1139,43 @@ async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
             continue;
         }
 
-        // Check filtering criteria
         const matchesFilter =
-            (filterCriteria.requestType ? requestData.requestType === filterCriteria.requestType : true) &&
+            (filterCriteria.requestType ? appointmentData.requestType === filterCriteria.requestType : true) &&
             (filterCriteria.priorityLevel ? appointmentData.priorityLevel === filterCriteria.priorityLevel : true);
 
         if (matchesFilter) {
-            const row = `
-            <tr data-request-id="${requestId}" class="ongoing-task-row">
-                <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
-                <td>${requestId}</td>
-                <td>${appointmentData.requestType || 'N/A'}</td>
-                <td>${appointmentData.clientType || 'N/A'}</td>
-                <td>${appointmentData.requesterName || 'N/A'}</td>
-                <td>${requestData.samples ? requestData.samples.length : 0}</td>
-                <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                <td>${requestData.request_status || 'N/A'}</td>
-            </tr>
-        `;
-
-            ongoingTaskTableBody.innerHTML += row; // Append new row to the ongoing tasks table
+            tasks.push({
+                endDate: appointmentData.endDate ? new Date(appointmentData.endDate) : new Date(0),
+                requestId: requestId,
+                requestOption: requestData.requestOption || 'N/A',
+                clientType: appointmentData.clientType || 'N/A',
+                requesterName: appointmentData.requesterName || 'N/A',
+                samplesCount: requestData.samples ? requestData.samples.length : 0,
+                priorityLevel: appointmentData.priorityLevel || 'N/A',
+                status: requestData.request_status || 'N/A'
+            });
         }
     }
+
+    // Sort tasks
+    tasks.sort((a, b) => {
+        return sortOrder === 'asc' ? a.endDate - b.endDate : b.endDate - a.endDate;
+    });
+
+    // Populate table with sorted tasks
+    ongoingTaskTableBody.innerHTML = tasks.map(task => `
+        <tr data-request-id="${task.requestId}" class="ongoing-task-row">
+            <td>${task.endDate.toLocaleDateString()}</td>
+            <td>${task.requestId}</td>
+            <td>${task.requestOption}</td>
+            <td>${task.clientType}</td>
+            <td>${task.requesterName}</td>
+            <td>${task.samplesCount}</td>
+            <td>${task.priorityLevel}</td>
+            <td>${task.status}</td>
+        </tr>
+    `).join('');
+
     // Attach the event listener to the ongoing task table body
     ongoingTaskTableBody.addEventListener('click', function (event) {
         const row = event.target.closest('tr'); // Get the closest row
@@ -1147,11 +1192,16 @@ async function fetchOngoingTasks(userFullName, filterCriteria = {}) {
             showTaskDetails(requestId);
         }
     });    
-
 }
 
+
 // Function to fetch processed tasks with filtering
-async function fetchProcessedTasks(userFullName, filterCriteria = {}) {
+async function fetchProcessedTasks(userFullName, filterCriteria = {}, sortOrder = 'asc') {
+    if (!userFullName) {
+        console.error('User full name is not available');
+        return;
+    }
+
     const processedTaskTableBody = document.getElementById('processedTaskTableBody');
     processedTaskTableBody.innerHTML = ''; // Clear previous content
 
@@ -1165,6 +1215,7 @@ async function fetchProcessedTasks(userFullName, filterCriteria = {}) {
         return;
     }
 
+    let tasks = [];
     for (const appointmentDoc of appointmentsSnapshot.docs) {
         const appointmentData = appointmentDoc.data();
         const requestId = appointmentData.requestId;
@@ -1173,8 +1224,8 @@ async function fetchProcessedTasks(userFullName, filterCriteria = {}) {
         const requestSnapshot = await getDocs(query(collection(firestore, 'requests'), where('requestId', '==', requestId)));
         const requestData = requestSnapshot.empty ? {} : requestSnapshot.docs[0].data();
 
-        if (!['releasing', 'checking','reporting'].includes(requestData.request_status)) {
-            continue; // Only include tasks with 'completed' or 'approved' status
+        if (!['releasing', 'checking', 'reporting'].includes(requestData.request_status)) {
+            continue; // Only include tasks with 'releasing', 'checking', or 'reporting' status
         }
 
         // Check if appointment matches the filter criteria
@@ -1186,20 +1237,47 @@ async function fetchProcessedTasks(userFullName, filterCriteria = {}) {
             continue; // Skip if it doesn't match the filter
         }
 
-        const row = `
-            <tr>
-                <td>${appointmentData.endDate ? new Date(appointmentData.endDate).toLocaleDateString() : 'N/A'}</td>
-                <td>${requestId}</td>
-                <td>${requestData.requestOption || 'N/A'}</td>
-                <td>${appointmentData.clientType || 'N/A'}</td>
-                <td>${appointmentData.requesterName || 'N/A'}</td>
-                <td>${requestData.samples ? requestData.samples.length : 0}</td>
-                <td>${appointmentData.priorityLevel || 'N/A'}</td>
-                <td>${requestData.request_status || 'N/A'}</td>
-            </tr>
-        `;
-        processedTaskTableBody.innerHTML += row; // Append new row to the processed tasks table
+        tasks.push({
+            endDate: appointmentData.endDate ? new Date(appointmentData.endDate) : new Date(0),
+            requestId: requestId,
+            requestOption: requestData.requestOption || 'N/A',
+            clientType: appointmentData.clientType || 'N/A',
+            requesterName: appointmentData.requesterName || 'N/A',
+            samplesCount: requestData.samples ? requestData.samples.length : 0,
+            priorityLevel: appointmentData.priorityLevel || 'N/A',
+            status: requestData.request_status || 'N/A'
+        });
     }
+
+    // Sort tasks
+    tasks.sort((a, b) => {
+        return sortOrder === 'asc' ? a.endDate - b.endDate : b.endDate - a.endDate;
+    });
+
+    // Populate table with sorted tasks
+    processedTaskTableBody.innerHTML = tasks.map(task => `
+        <tr>
+            <td>${task.endDate.toLocaleDateString()}</td>
+            <td>${task.requestId}</td>
+            <td>${task.requestOption}</td>
+            <td>${task.clientType}</td>
+            <td>${task.requesterName}</td>
+            <td>${task.samplesCount}</td>
+            <td>${task.priorityLevel}</td>
+            <td>${task.status}</td>
+        </tr>
+    `).join('');
+
+    // Optionally, you can add a click event listener for the processed tasks table
+    processedTaskTableBody.addEventListener('click', function (event) {
+        const row = event.target.closest('tr');
+        if (row) {
+            const requestId = row.querySelector('td:nth-child(2)').textContent;
+            console.log('Selected Processed Task Request ID:', requestId);
+            // You can add additional functionality here, like showing task details
+            // showTaskDetails(requestId);
+        }
+    });
 }
 
 // Function to fetch rejected tasks with filtering
