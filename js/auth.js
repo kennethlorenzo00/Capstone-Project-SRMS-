@@ -804,12 +804,33 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error fetching user details:", error);
         });
     }
+
+    async function sendEmailNotification(to, subject, body) {
+        try {
+            await emailjs.send(
+                "service_8nl1czc",
+                "template_jri9mtg",
+                {
+                    to_email: to,
+                    subject: subject,
+                    message: body,
+                }
+            );
+            console.log("Email sent successfully");
+        } catch (error) {
+            console.error("Error sending email:", error);
+        }
+    }
     
     function handleApprove(userId, role) {
         const requestRef = ref(database, 'new_user_requests/' + userId);
         get(requestRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const requestData = snapshot.val();
+                const email = requestData.email; // Get the user's email for notification
+                const subject = `Registration Accepted`;
+                let body = '';
+
                 if (role === 'Client') {
                     // Add client to the clients table
                     set(ref(database, 'clients/' + userId), {
@@ -826,6 +847,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         department: requestData.department
                     }).then(() => {
                         console.log("Client added.");
+                        body = `Hello ${requestData.firstName},\n\nWelcome! Your account has been approved as a Client. You can now access the system.`;
+                        sendEmailNotification(email, subject, body);
+
                         remove(requestRef).then(() => {
                             console.log("Request removed.");
                             loadNewUserRequests()// Refresh the table
@@ -854,6 +878,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         contactNumber: requestData.contactNumber,
                     }).then(() => {
                         console.log("Laboratory staff added.");
+                        body = `Hello ${requestData.firstName},\n\nWelcome! Your account has been approved as Laboratory Staff. You can now access the system.`;
+                        sendEmailNotification(email, subject, body); // Send email notification
+    
                         remove(requestRef).then(() => {
                             console.log("Request removed.");
                             loadNewUserRequests(); // Refresh the table
@@ -882,6 +909,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         contactNumber: requestData.contactNumber,
                     }).then(() => {
                         console.log("Admin added.");
+                        body = `Hello ${requestData.firstName},\n\nWelcome! Your account has been approved as an Admin. You can now access the system.`;
+                        sendEmailNotification(email, subject, body); // Send email notification
+    
                         remove(requestRef).then(() => {
                             console.log("Request removed.");
                             loadNewUserRequests(); // Refresh the table

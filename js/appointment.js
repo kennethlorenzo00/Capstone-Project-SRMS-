@@ -116,8 +116,57 @@ async function logStaffNotification(appointmentId, staffName, endDate) {
             timestamp: new Date().toISOString()
         });
         console.log("Staff notification logged.");
+
+        // Fetch staff email from the Realtime Database
+        const database = getDatabase();
+        const staffRef = ref(database, `laboratory_staff`); // Reference to the laboratory_staff node
+        const staffSnapshot = await get(staffRef);
+        let staffEmail;
+
+        // Check if staff exists in the Realtime Database
+        if (staffSnapshot.exists()) {
+            const staffData = staffSnapshot.val();
+            // Loop through the staff data to find the matching staffName
+            for (const staffId in staffData) {
+                const staffInfo = staffData[staffId];
+                const fullName = `${staffInfo.firstName || ''} ${staffInfo.middleName || ''} ${staffInfo.lastName || ''}`.trim();
+                if (fullName === staffName) {
+                    staffEmail = staffInfo.email; // Get the email if names match
+                    break; // Exit the loop if found
+                }
+            }
+        }
+
+        // Send email notification if staffEmail is found
+        if (staffEmail) {
+            await sendEmailNotification(
+                staffEmail,
+                "New Appointment Assignment",
+                `You have been assigned to appointment ID: ${appointmentId}. End date: ${endDate}`
+            );
+        } else {
+            console.error("Staff email not found for:", staffName);
+        }
+
     } catch (error) {
         console.error("Error logging staff notification:", error.message);
+    }
+}
+
+async function sendEmailNotification(to, subject, body) {
+    try {
+        await emailjs.send(
+            "service_8nl1czc",
+            "template_jri9mtg",
+            {
+                to_email: to,
+                subject: subject,
+                message: body,
+            }
+        );
+        console.log("Email sent successfully");
+    } catch (error) {
+        console.error("Error sending email:", error);
     }
 }
 

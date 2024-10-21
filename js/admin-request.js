@@ -3,7 +3,6 @@ import { database, firestore } from './firebase.js'; // Adjust the path as neede
 import { ref, get, } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp, doc, getDoc} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-
 const buttons = document.querySelectorAll('.manageuserbutton button');
 
 buttons.forEach(button => {
@@ -377,6 +376,7 @@ appointmentForm.addEventListener('submit', async (event) => {
     
     const staffData = staffSnapshot.val();
     const assignedLaboratoryStaff = `${staffData.firstName || ''} ${staffData.middleName || ''} ${staffData.lastName || ''}`.trim();
+    const staffEmail = staffData.email;
 
     // Save appointment details to Firestore
     const appointmentsRef = collection(firestore, 'appointments');
@@ -426,7 +426,7 @@ appointmentForm.addEventListener('submit', async (event) => {
     }
 
     // Log staff notification
-    await logStaffNotification(appointmentId, assignedLaboratoryStaff, endDate);
+    await logStaffNotification(appointmentId, assignedLaboratoryStaff, endDate, staffEmail);
 
     // Log client notification
     const clientId = requestDoc.userId; // Assuming the request document contains userId
@@ -518,18 +518,43 @@ appointmentForm.addEventListener('submit', async (event) => {
 }
 
 // Function to log notifications to "staffnotification" collection
-async function logStaffNotification(appointmentId, staffName, endDate) {
+async function logStaffNotification(appointmentId, staffName, endDate, staffEmail) {
   try {
-      const staffNotificationRef = collection(firestore, 'staffnotification');
-      await addDoc(staffNotificationRef, {
-          appointmentId,
-          staffName,
-          message: `You have been assigned to appointment ID: ${appointmentId}. End date: ${endDate}`,
-          timestamp: new Date().toISOString()
-      });
-      console.log("Staff notification logged.");
+    const staffNotificationRef = collection(firestore, 'staffnotification');
+    await addDoc(staffNotificationRef, {
+      appointmentId,
+      staffName,
+      message: `You have been assigned to appointment ID: ${appointmentId}. End date: ${endDate}`,
+      timestamp: new Date().toISOString()
+    });
+    console.log("Staff notification logged.");
+
+    // Send email notification
+    await sendEmailNotification(
+      staffEmail,
+      "New Task Assignment",
+      `You have been assigned on a new request wiht an appointment ID: ${appointmentId}. 
+      Deadline: ${endDate}`
+    );
   } catch (error) {
-      console.error("Error logging staff notification:", error.message);
+    console.error("Error logging staff notification:", error.message);
+  }
+}
+
+async function sendEmailNotification(to, subject, body) {
+  try {
+    await emailjs.send(
+      "service_8nl1czc",
+      "template_jri9mtg",
+      {
+        to_email: to,
+        subject: subject,
+        message: body,
+      }
+    );
+    console.log("Email sent successfully");
+  } catch (error) {
+    console.error("Error sending email:", error);
   }
 }
 
@@ -1031,6 +1056,34 @@ async function showRequestDetails(requestId) {
       const requestData = requestSnapshot.docs[0].data();
       const clientId = requestData.userId;
       const staffName = requestData.assignedLaboratoryStaff; // Get the staff name from requestDoc
+
+      // Fetch staff email from the Realtime Database
+      const staffRef = ref(database, `laboratory_staff`); // Reference to the laboratory_staff node
+      const staffSnapshot = await get(staffRef);
+      let staffEmail;
+
+      const clientRef = ref(database, `clients/${clientId}`); // Reference to the client node
+      const clientSnapshot = await get(clientRef);
+      let clientEmail;
+
+      if (clientSnapshot.exists()) {
+        const clientData = clientSnapshot.val();
+        clientEmail = clientData.email; // Get the client's email
+    }
+
+      // Check if staff exists in the Realtime Database
+      if (staffSnapshot.exists()) {
+          const staffData = staffSnapshot.val();
+          // Loop through the staff data to find the matching staffName
+          for (const staffId in staffData) {
+              const staffInfo = staffData[staffId];
+              const fullName = `${staffInfo.firstName || ''} ${staffInfo.middleName || ''} ${staffInfo.lastName || ''}`.trim();
+              if (fullName === staffName) {
+                  staffEmail = staffInfo.email; // Get the email if names match
+                  break; // Exit the loop if found
+              }
+          }
+      }
   
       // Add event listeners to the buttons directly after creating them
       checkingMessageDiv.querySelector('.rejectReport-button').addEventListener('click', async () => {
@@ -1040,6 +1093,17 @@ async function showRequestDetails(requestId) {
           // Log rejection notification for staff
           await logRejectedReportStaff(requestId, staffName); 
   
+          // Send email notification if staffEmail is found
+          if (staffEmail) {
+            await sendEmailNotification(
+                staffEmail,
+                "Report Rejection Notification",
+                `The report for request ID: ${requestId} has been rejected.`
+            );
+        } else {
+            console.error("Staff email not found for:", staffName);
+        }
+
           alert('Request has been rejected.');
           backToRequestList();
       });
@@ -1059,6 +1123,20 @@ async function showRequestDetails(requestId) {
   
           // Log approval notification
           await logClientNotification(requestId, clientId, `Your request has been approved and is now finished.`);
+
+          if (clientEmail) {
+            await sendEmailNotification(
+                clientEmail,
+                "Request Report",
+                `Dear Client,\n\nYour request with ID: ${requestId} has been approved and is now sent.
+                Please log in to view more details.
+                
+                Thank you!`
+            );
+        } else {
+            console.error("Client email not found for:", clientId);
+        }
+
   
           alert(`Request has been approved and moved to ${updatedStatus}.`);
           backToRequestList();
