@@ -5341,3 +5341,36 @@ canvas {
     border-top-color: black;
 }
 
+#sampleContainerLabEquipment {
+    display: flex;
+    flex-direction: column; /* Stack each row */
+    gap: 20px; /* Adds space between rows */
+}
+
+#sampleContainerLabEquipment .sampleEntry {
+    display: flex;
+    flex-wrap: wrap; /* Ensure inputs and labels wrap when needed */
+    justify-content: flex-start; /* Align labels and inputs on the left */
+    gap: 10px; /* Space between label and input */
+    width: 100%; /* Ensure entries span full width of container */
+}
+
+#sampleContainerLabEquipment label {
+    flex: 0 0 13vw; /* Give the labels a fixed width for alignment */
+    margin-top: 1vh;
+}
+
+#sampleContainerLabEquipment input {
+    flex: 1 1 200px; /* Set default width for inputs */
+    margin-top: 0;
+}
+
+/* Specifically target the scheduledDate input to make it smaller */
+#sampleContainerLabEquipment input.scheduledDate[type="date"] {
+    flex: 0 0 150px; /* Fixed size for the date input */
+}
+
+
+
+
+
