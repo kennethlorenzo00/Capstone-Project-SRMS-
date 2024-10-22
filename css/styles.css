@@ -61,6 +61,10 @@ h2{
     margin-bottom: 6vh;
 }
 
+#requestListContent {
+    margin-top: 7vh;
+    margin-right: 3vw;
+}
 
 #tabContents {
     margin-top: 100px; /* Add this to move the div down */
@@ -763,6 +767,9 @@ button .fa-angle-right {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.createRequestContent {
+    
+}
 
 button#backToCreateRequestMicrobialTesting, 
 button#backToCreateRequestMicrobialAnalysis, 
@@ -845,32 +852,44 @@ h1 {
     vertical-align: middle;
 }
 
+.request-header-container {
+    display: flex;
+    align-items: center; /* Vertically aligns the search bar with the header */
+    justify-content: space-between; /* Optional: Space between header and search bar */
+    margin-bottom: 20px; /* Add some space below the header and search bar */
+    border-bottom: 2px solid;
+}
+
+.request-header-container h1 {
+    margin: 0; /* Remove default margin to better align with the input */
+    font-size: 24px; /* Adjust size if needed */
+}
+
 .search-container {
     position: relative;
     display: inline-block;
-   
 }
 
 #searchInput {
     width: 300px;
     padding: 10px 15px;
-    padding-right: 35px; 
-    margin-top: 2.4%;
+    padding-right: 35px;
     border: 1px solid #fcfcfc;
     border-radius: 5px;
     font-size: 16px;
-    float: right;
-
 }
 
 .search-icon {
     position: absolute;
-    bottom: 79%;
-    right: 40px;
-    transform: translateY(0%);
-    color: #636060;
-    font-size: 16px;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
 }
+
+
 
 #requestListTable {
     width: 100%; 
@@ -1360,7 +1379,7 @@ h1 {
     }
 
 /* More specific selector for the active button */
-#requestButtons .manageuserbutton button.active {
+#requestButtons button.active {
     background-color: yellow; /* Color when the button is selected */
     color: black; /* Change text color for better contrast */
     display: flex;
@@ -1392,17 +1411,6 @@ h1 {
     #addClientBtn, #addStaffBtn {
         background-color: #FFCC00 !important;
         color: #000000;
-    }
-
-     #clientsBtn, #staffBtn, #newRequestsBtn {
-        background-color: #0288d1 !important;
-        color: #ffffff;
-    }
-
-    #clientsBtn:focus, #clientsBtn:active,
-    #staffBtn:focus, #staffBtn:active,
-    #newRequestsBtn:focus, #newRequestsBtn:active {
-        background-color: #005a8a !important;
     }
 
     .color-change {
@@ -2174,6 +2182,17 @@ h1 {
 
 .manageusers{
 font-family: Arial, sans-serif;
+}
+
+.view-details-icon {
+    font-size: 18px; /* Adjust icon size */
+    margin-right: 10px; /* Space between icon and delete button */
+    cursor: pointer; /* Make the icon clickable */
+    margin-top: 20px;
+}
+
+.view-details-icon:hover {
+    color: #007bff; /* Change color on hover */
 }
 
 /* Specific Styles for Each Table */
@@ -3674,8 +3693,8 @@ input#editAddress, input#editContactNumber,input#editUsername {
 /*account profile for client*/
 
 div#myAccountContent {
-    margin-left: 250px;
-    margin-top: 50px;
+
+    margin-top: 6vh;
 }
 
 span#clientfullNameDetail, span#clientaddress, span#clientcontactNumber, span#clientusername {
@@ -4549,7 +4568,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 75vw;
     margin: 0 auto;
     background-color: white;
     padding: 20px;
@@ -5370,7 +5389,36 @@ canvas {
     flex: 0 0 150px; /* Fixed size for the date input */
 }
 
+#microbialWaterAnalysisFormContent {
+    border: 2px solid #ccc; /* Add a border */
+    border-radius: 10px; /* Rounded corners (optional) */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add some margin on top of the form */
+    background-color: #f9f9f9; /* Optional background color */
+    width: 50%; /* Ensure form width fits the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+}
 
+#sampleEntry label {
+    flex: 0 0 13vw; /* Give the labels a fixed width for alignment */
+    margin-top: 1vh;
+}
 
+#sampleContainerMicrobialWaterAnalysis input {
+    flex: 1 1 200px; /* Set default width for inputs */
+    margin-top: 0;
+}
 
+.client-container {
+    display: flex;
+    align-items: center;
+    margin-top: auto; /* Optional, based on your layout */
+}
 
+#clientSearch {;
+    margin-right: 10px; /* Adjust the spacing between input and button */
+}
+
+#addClientBtn{
+    width: 15vw;
+}

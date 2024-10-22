@@ -287,10 +287,10 @@
                     <h2>MICROBIAL TESTING METHODS</h2>
                     <p>This offers evaluating the efficacy of antimicrobial agents. It involves determining the minimum concentrations required to inhibit or kill microorganisms, helping to assess the effectiveness of antibiotics and other antimicrobial substances.</p>
                     <button id="proceedMicrobialTesting">PROCEED NOW!</button>
+                </div>
+                <img src="Images/services.jpg" alt="Lab Image" class="service-image">
+                </div>
             </div>
-            <img src="services.jpg" alt="Lab Image" class="service-image">
-        </div>
-    </div>
 
             <div id="microbialAnalysisSection" class="hidden">
                 <div class="service-type">
@@ -299,7 +299,7 @@
                 <p>This category offers techniques for examining and analysing microorganisms. This includes methods for counting microbial populations, identifying microbial species, and assessing their characteristics using various laboratory techniques.</p>
                 <button id="proceedMicrobialAnalysis">PROCEED NOW!</button>
             </div>
-            <img src="services.jpg" alt="Lab Image" class="service-image">
+            <img src="Images/services.jpg" alt="Lab Image" class="service-image">
         </div>
     </div>
 
@@ -310,7 +310,7 @@
                 <p>We also offer access to specialized laboratory facilities and equipment necessary for performing a range of scientific tests and analyses. This includes providing the tools and resources needed for microbiological assays and antimicrobial testing.</p>
                 <button id="proceedLabResearchProcesses">PROCEED NOW!</button>
             </div>
-            <img src="LabEquipment.jpg" alt="Lab Image" class="service-image">
+            <img src="Images/LabEquipment.jpg" alt="Lab Image" class="service-image">
         </div>
     </div>
     </div>
@@ -568,7 +568,7 @@
         </div>
         
         <div id="microbialWaterAnalysisForm" class="hidden">
-            <h2>Microbial Analysis of Water Form</h2>
+            <h2 style="margin-top: 5vh;">Microbial Analysis of Water Form</h2>
             <form id="microbialWaterAnalysisFormContent" data-request-type="microbialAnalysis" data-request-option="microbialWaterAnalysis">
                 <div id="sampleContainerMicrobialWaterAnalysis">
                     <div class="sampleEntry">
@@ -756,9 +756,13 @@
         </div>
 
         <div id="requestListContent">
-            <br><br><br><br><h1>Request List</h1>
-            <input type="text" id="searchInput" placeholder="Search requests..." />
-            <i class="fas fa-search search-icon"></i>
+            <div class="request-header-container">
+                <h1>Request List</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search requests..." />
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>            
             <table id="requestListTable">
                 <thead>
                     <tr>

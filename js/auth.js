@@ -1118,40 +1118,46 @@ function displayLaboratoryStaff() {
                 
                 const clientRowPromise = getClientRequestsCount(clientId).then(requestCount => {
                     const row = clientsTableBody.insertRow();
-    
+            
                     // Display name
                     const name = `${client.firstName || ''} ${client.middleName || ''} ${client.lastName || ''}`;
                     row.insertCell(0).textContent = name.trim() || "No name";
-    
+            
                     // Display email
                     row.insertCell(1).textContent = client.email || "No email";
-    
+            
                     // Display request count instead of role
                     row.insertCell(2).textContent = requestCount || 0;
-    
+            
                     // Display client type
                     row.insertCell(3).textContent = client.clientType || "No type";
-    
+            
                     // Display action buttons
                     const actionCell = row.insertCell(4);
-                    const viewDetailsBtn = document.createElement('button');
-                    viewDetailsBtn.textContent = 'View Details';
-                    viewDetailsBtn.classList.add('view-details-btn');
-                    viewDetailsBtn.dataset.id = clientId;
+            
+                    // Create the eye icon for 'View Details'
+                    const viewDetailsIcon = document.createElement('i');
+                    viewDetailsIcon.classList.add('fas', 'fa-eye', 'view-details-icon');
+                    viewDetailsIcon.dataset.id = clientId;
+                    
+                    // Create the Delete button
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
                     deleteBtn.classList.add('delete-btn');
                     deleteBtn.dataset.id = clientId;
-    
-                    actionCell.appendChild(viewDetailsBtn);
+            
+                    // Append the icon and delete button to the cell
+                    actionCell.appendChild(viewDetailsIcon);
                     actionCell.appendChild(deleteBtn);
-    
-                    viewDetailsBtn.addEventListener('click', () => showClientDetails(clientId));
+            
+                    // Add click event listeners
+                    viewDetailsIcon.addEventListener('click', () => showClientDetails(clientId));
                     deleteBtn.addEventListener('click', () => deleteClient(clientId));
                 });
-    
+            
                 clientPromises.push(clientRowPromise); // Push the promise to the array
             });
+            
     
             // Wait for all clients to be processed
             await Promise.all(clientPromises);
