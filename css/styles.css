@@ -1972,16 +1972,14 @@ h1 {
   
     background: none;
 }
-#logoutBtn.minimized {
-    margin-top: 12vh;
-}
+
 #logoutBtn {
     display: flex;           /* Use flexbox for alignment */
     align-items: center;    /* Center vertically */
     width: 100%;            /* Make the button take full width */
-    padding: 10px;          /* Add padding for better touch target */
     text-align: left;       /* Align text to the left */
 }
+
 
 #logoutBtn i {
     margin-right: 1vw;     /* Push the text to the right of the icon */
@@ -2026,6 +2024,12 @@ h1 {
     overflow: hidden;
 }
 
+
+
+#requestDetailsSection{
+    margin-top: 7vh;
+    margin-right: 2vw;
+}
 /* Styles for the request details table */
 .requestDetailsTable {
     width: 100%;
