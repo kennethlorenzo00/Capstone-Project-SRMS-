@@ -580,6 +580,15 @@ async function showRequestHistory() {
 
   // Call the function to populate request history data
   await populateRequestHistory(); // Wait for the request history data to be populated
+
+  document.getElementById('releasedRequests-table-container').style.display = 'none'; // Hide released requests by default
+  document.getElementById('rejectedRequests-table-container').style.display = 'block'; // Show rejected requests by default
+
+  // Show the default table based on data fetched (if any)
+  if (hasReleasedRequests && !hasRejectedRequests) {
+    document.getElementById('releasedRequests-table-container').style.display = 'block';
+    document.getElementById('rejectedRequests-table-container').style.display = 'none';
+  }
 }
 
 async function populateRequestHistory() {
@@ -652,8 +661,8 @@ async function populateRequestHistory() {
   lastVisibleRejected = rejectedSnapshot.docs.length > 0 ? rejectedSnapshot.docs[rejectedSnapshot.docs.length - 1] : null;
 
   // Show the appropriate request history tables and hide the original request tables
-  document.getElementById('releasedRequests-table-container').style.display = hasReleasedRequests ? 'block' : 'none';
-  document.getElementById('rejectedRequests-table-container').style.display = hasRejectedRequests ? 'block' : 'none';
+  document.getElementById('releasedRequests-table-container').style.display = hasReleasedRequests && !hasRejectedRequests ? 'block' : 'none';
+  document.getElementById('rejectedRequests-table-container').style.display = hasRejectedRequests || (!hasReleasedRequests && !hasRejectedRequests) ? 'block' : 'none';
 
   // Update pagination controls if necessary
   updateRequestHistoryPaginationControls();
@@ -673,8 +682,10 @@ async function getClientName(userId) {
   return `${clientData.firstName || ''} ${clientData.middleName || ''} ${clientData.lastName || ''}`.trim() || "--";
 }
 
-
 const clientRefs = {}; 
+
+let hasReleasedRequests = false;
+let hasRejectedRequests = false;
 
 async function populateRequestTables(sortOrder = 'asc') {
     const requestsRef = collection(firestore, 'requests');
@@ -1281,14 +1292,55 @@ async function showRequestDetails(requestId) {
     requestList.classList.add('hidden');
   }
 }
+
 const backButton = document.getElementById('backButton');
 backButton.addEventListener('click', backToRequestList);
+
+const backButtonRH = document.getElementById('backRequestHistoryButton');
+
+// Attach event listener to the back button
+backButtonRH.addEventListener('click', showRequestList);
+
+// Function to handle showing the request list and hiding the request history
+function showRequestList() {
+    const requestHistoryContainer = document.getElementById('requestHistoryContainer');
+    const requestListContainer = document.getElementById('requestList');
+
+    if (requestHistoryContainer) {
+        requestHistoryContainer.style.display = 'none'; // Hide request history
+    }
+
+    if (requestListContainer) {
+        requestListContainer.style.display = 'block'; // Show the request list container
+    }
+
+    // Call the function to go back to the request list
+    backToRequestList();
+}
+
+// Function to clear details and show the request list container
 function backToRequestList() {
-    adminRequestDetailsSection.classList.add('hidden');
-    adminRequestDetailsContent.innerHTML = ""; // Clear the details content
-    requestList.classList.remove('hidden');
-    requestListContainer.classList.remove('hidden');
-  }
+    const adminRequestDetailsSection = document.getElementById('adminRequestDetailsSection');
+    const adminRequestDetailsContent = document.getElementById('adminRequestDetailsContent');
+    const requestList = document.getElementById('requestList');
+    const requestListContainer = document.getElementById('requestListContainer');
+
+    if (adminRequestDetailsSection) {
+        adminRequestDetailsSection.classList.add('hidden'); // Hide the request details section
+    }
+
+    if (adminRequestDetailsContent) {
+        adminRequestDetailsContent.innerHTML = ""; // Clear the details content
+    }
+
+    if (requestList) {
+        requestList.classList.remove('hidden'); // Show the request list
+    }
+
+    if (requestListContainer) {
+        requestListContainer.classList.remove('hidden'); // Ensure request list container is visible
+    }
+}
 
 
 // Function to append a row to a specific table

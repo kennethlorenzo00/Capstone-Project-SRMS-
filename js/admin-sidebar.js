@@ -23,9 +23,36 @@ toggleSidebarBtn.addEventListener("click", function() {
     }
 });
 
+// Define the sections that should disable the sidebar
+const sections = [
+    document.getElementById("requestHistoryContainer"),
+    document.getElementById("forecastSection"),
+    document.getElementById("adminRequestDetailsSection"),
+    document.getElementById("eventDetailsModal"),
+    document.getElementById("addEventForm")
+];
+
+// Function to check if any section is visible
+function isAnySectionVisible() {
+    return sections.some(section => section.style.display !== "none" && !section.classList.contains("hidden"));
+}
+
+// Function to toggle sidebar disabled state
+function toggleSidebarDisabled() {
+    if (isAnySectionVisible()) {
+        sidebar.classList.add("disabled-sidebar"); // Add the disabled class
+    } else {
+        sidebar.classList.remove("disabled-sidebar"); // Remove the disabled class
+    }
+}
 
 // Tab functionality
 function openTab(evt, tabName) {
+    // Check if any of the specified sections are visible
+    if (isAnySectionVisible()) {
+        return; // Do nothing if any section is visible
+    }
+
     const tabcontents = document.querySelectorAll(".tabcontent");
     const tableContainers = document.querySelectorAll("#table-container > div");
     const adminSettingsSection = document.getElementById('adminSettingsSection'); // Add this line
@@ -74,7 +101,7 @@ function openTab(evt, tabName) {
         document.getElementById('allRequests-table-container').style.display = "block";
 
         // Add event listeners to buttons for switching tables
-        document.getElementById('allRequestsBtn').onclick = function() {
+        document.getElementById ('allRequestsBtn').onclick = function() {
             tableContainers.forEach(container => container.style.display = "none");
             document.getElementById('allRequests-table-container').style.display = "block";
         };
@@ -89,9 +116,19 @@ function openTab(evt, tabName) {
             document.getElementById('followUpRequests-table-container').style.display = "block";
         };
     }
+
+    // Toggle sidebar disabled state immediately after opening a tab
+    toggleSidebarDisabled();
 }
 
 // Show the home tab by default on page load
 document.addEventListener("DOMContentLoaded", function() {
     openTab(event, 'home'); // Show home tab initially
+});
+
+// Add event listeners to sections that should disable the sidebar
+sections.forEach(section => {
+    section.addEventListener("DOMSubtreeModified", function() {
+        toggleSidebarDisabled();
+    });
 });
