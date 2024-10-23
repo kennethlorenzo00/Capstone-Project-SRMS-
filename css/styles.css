@@ -2815,90 +2815,76 @@ font-family: Arial, sans-serif;
   .appointment-button:hover {
     background-color: #0056b3;
   }
-  
-  /* Released Requests Table Styling */
-  #releasedRequestsTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+
+#requestHistoryContainer {
+    margin-top: 3vh;
+    margin-right: 2vw;
+}
+/* Released Requests Header */
+  .released-requests-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Ensure vertical alignment */
+    margin-bottom: 20px;  /* Adjust spacing as needed */
 }
 
-#releasedRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
+.released-requests-header input {
+    max-width: 300px;  /* Set a max-width for the search input */
+    padding: 8px;      /* Adjust padding for the input */
 }
 
-#releasedRequestsTable th, #releasedRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#releasedRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#releasedRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#releasedRequestsTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#releasedRequestsTable td {
-    color: #333;
-}
-
-#releasedRequestsTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#releasedRequestsTable button:hover {
-    background-color: #45a049;
-}
-
+/* Released Requests Table Styling */
 #releasedRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 0;
 }
 
+/* Table header styles */
 #releasedRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#releasedRequestsTable th, #releasedRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#releasedRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#releasedRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #releasedRequestsTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#releasedRequestsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#releasedRequestsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#releasedRequestsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#releasedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #releasedRequestsTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
 }
+
+/* Hover effect for rows */
+#releasedRequestsTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
 
 #releasedRequestsTable button {
     background-color: #A90000; 
@@ -2906,58 +2892,70 @@ font-family: Arial, sans-serif;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
-    border-radius: 5px;
-    
-    margin-left: 100px;
+    border-radius: 10px;
 }
 
-#releasedRequestsTable button:hover {
-    background-color: #4CAF50;
-}
+#releasedRequestsTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
 
-#releasedRequestsTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
 
-#releasedRequestsTable th:last-child {
-    border-radius: 0 15px 15px 0; 
-}
 
 /* Rejected Requests Table Styling */
+
 #rejectedRequestsTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
+    margin-top: 0;
 }
 
+/* Table header styles */
 #rejectedRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#rejectedRequestsTable th, #rejectedRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#rejectedRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#rejectedRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
 #rejectedRequestsTable th {
-    background-color: #A90000;
-    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#rejectedRequestsTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#rejectedRequestsTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#rejectedRequestsTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#rejectedRequestsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
 #rejectedRequestsTable td {
-    color: #333;
+    padding: 12px 15px;
+    border: none    ;
 }
+
+/* Hover effect for rows */
+#rejectedRequestsTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
 
 #rejectedRequestsTable button {
     background-color: #A90000; 
@@ -2965,70 +2963,16 @@ font-family: Arial, sans-serif;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
-#rejectedRequestsTable button:hover {
-    background-color: #45a049;
-}
+#rejectedRequestsTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
 
-#rejectedRequestsTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
-}
 
-#rejectedRequestsTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#rejectedRequestsTable th, #rejectedRequestsTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#rejectedRequestsTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#rejectedRequestsTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#rejectedRequestsTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#rejectedRequestsTable td {
-    color: #333;
-}
-
-#rejectedRequestsTable button {
-    background-color: #A90000; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    
-    margin-left: 100px;
-}
-
-#rejectedRequestsTable button:hover {
-    background-color: #4CAF50;
-}
-
-#rejectedRequestsTable th:first-child {
-    border-radius: 15px 0 0 15px; 
-}
-
-#rejectedRequestsTable th:last-child {
-    border-radius: 0 15px 15px 0; 
-}
 
 .event-item {
     display: inline-block;
@@ -5956,4 +5900,3 @@ h1.settingslabel {
     width: 100%;
     border-bottom: 2px solid;
 }
-
