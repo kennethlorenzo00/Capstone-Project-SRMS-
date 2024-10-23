@@ -4600,14 +4600,26 @@ label {
     display: flex; /* Use flexbox for layout */
     justify-content: space-between; /* Space between the two containers */
     gap: 20px; /* Gap between the containers */
+    margin-right: 3vw;
+    margin-bottom: 3vh;
 }
 
-.photo-container,
+.photo-container {
+    border: 1px solid #ddd; /* Optional: Add borders to the containers */
+    padding: 40px; /* Add padding inside the containers */
+    border-radius: 5px; /* Optional: Round the corners */
+    width: 30%;
+}
+
 .event-details-container {
     flex: 1; /* Each container takes equal space */
     border: 1px solid #ddd; /* Optional: Add borders to the containers */
-    padding: 15px; /* Add padding inside the containers */
+    padding: 40px; /* Add padding inside the containers */
     border-radius: 5px; /* Optional: Round the corners */
+}
+
+input#eventTitle {
+    width: 95%;
 }
 
 #imagePreview {
@@ -4635,10 +4647,12 @@ label {
 }
 
 #eventDescription{
-    width: 70%; /* Optional: Adjust width */
-    height: 300px; /* Optional: Adjust height */
+    width: 92%;
+    height: 35vh;
     padding: 20px; /* Inside space */
     font-size: 16px; /* Optional: Adjust text size */
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 #plantSpeciesFormContent {
@@ -5245,6 +5259,11 @@ canvas {
 }
 
 /* Admin Events Section Styling */
+
+input#eventImage, input#eventStartDate, input#eventEndDate {
+    width: auto;
+}
+
 .admin-events-section {
     margin-top: 20px;
 }

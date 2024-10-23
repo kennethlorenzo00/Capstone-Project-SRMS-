@@ -597,25 +597,33 @@
                     <div class="form-container">
                         <!-- Container for the image upload section -->
                         <div class="photo-container">
-                            <label for="eventImage">Upload Image:</label>
-                            <div id="imagePreview" style="border: 1px solid #ccc; width: 200px; height: 200px;"></div>
-                            <input type="file" id="eventImage"><br>
                             
-                            <label for="eventStartDate">Start Date:</label>
-                            <input type="date" id="eventStartDate"><br>
+                            <label for="eventImage" style="width: 200px;margin-bottom: 15px;">Upload Image:</label>
+                            <div style="display: flex;align-items: center;flex-direction: column;">
+                                <div id="imagePreview" style="border: 1px solid #ccc; width: 15vw; height: 30vh;"></div>
+                                <input type="file" id="eventImage"><br>
+                            </div>
                             
-                            <label for="eventEndDate">End Date:</label>
-                            <input type="date" id="eventEndDate">
+                            <div style="display: flex;align-items: center;justify-content: space-around;">
+                                <label for="eventStartDate">Start Date:</label>
+                                <input type="date" id="eventStartDate">
+                            </div>
+                            <div style="display: flex;align-items: center;justify-content: space-around;">
+                                <label for="eventEndDate">End Date:</label>
+                                <input type="date" id="eventEndDate">
+                            </div>
                         </div>
                         
                         <!-- Container for the event title and description -->
                         <div class="event-details-container">
-                            <label for="eventTitle">Title:</label>
-                            <input type="text" id="eventTitle" placeholder="Event Title"><br>
-                            
+                            <div style="display: flex;align-items: flex-start;justify-content: space-between;flex-direction: column;">
+                                <label for="eventTitle">Title:</label>
+                                <input type="text" id="eventTitle" placeholder="Event Title">
+                            </div>
+                            <div style="display: flex;align-items: flex-start;justify-content: space-between;flex-direction: column;">
                             <label for="eventDescription">Description:</label>
                             <textarea id="eventDescription" placeholder="Event Description"></textarea>
-                            <br><br>
+                            </div>
                             <button id="uploadEventBtn">Upload Event</button>
                             <button id="closeAddEventForm" style="float: right;">Close</button>
                         </div>
