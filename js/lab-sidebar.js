@@ -25,7 +25,37 @@ toggleSidebarBtn.addEventListener("click", function() {
         // Adjust task count layout
         taskCountContainer.style.justifyContent = 'flex-start'; // Align boxes to the left
     }
+
+    toggleSidebarDisabled();
 });
+
+const sectionsToCheck = [
+    "sampleDurationSection",
+    "colonyCountSection",
+    "reportFormContainer",
+    "reportContainer",
+    "taskDetailsSection"
+];
+
+function isAnySectionVisible() {
+    return sectionsToCheck.some(sectionId => {
+        const section = document.getElementById(sectionId);
+        return section && 
+               section.style.display !== "none" && 
+               !section.classList.contains("hidden");
+    });
+}
+
+// Function to toggle sidebar disabled state
+function toggleSidebarDisabled() {
+    if (isAnySectionVisible()) {
+        sidebar.style.pointerEvents = 'none'; // Disable sidebar interactions
+        sidebar.classList.add("disabled-sidebar");
+    } else {
+        sidebar.style.pointerEvents = 'auto'; // Enable sidebar interactions
+        sidebar.classList.remove("disabled-sidebar");
+    }
+}
 
 function openTab(evt, tabName) {
     const tabcontents = document.querySelectorAll(".tabcontent");
@@ -49,6 +79,8 @@ function openTab(evt, tabName) {
     } else {
         taskListContainer.style.display = 'none';
     }
+
+    toggleSidebarDisabled();
 }
 
 // Show tasks based on the selected type
@@ -77,6 +109,22 @@ function showTasks(taskType) {
             break;
         default:
             taskListContainer.innerHTML = '<p>No tasks to display.</p>';
+    }
+}
+
+function showSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = "block";
+        toggleSidebarDisabled();  // Ensure sidebar is disabled as soon as the section is shown
+    }
+}
+
+function hideSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = "none";
+        toggleSidebarDisabled();  // Ensure sidebar is enabled/disabled based on current visibility
     }
 }
 
@@ -120,5 +168,20 @@ document.getElementById('rejectedTasksBtn').addEventListener('click', function()
 
 // Show the home tab by default on page load
 document.addEventListener("DOMContentLoaded", function() {
-    openTab(event, 'home'); // Show home tab initially
+    openTab(event, 'home');
+    
+    // Check if any section that disables the sidebar is visible on load
+    toggleSidebarDisabled();  // Ensure the correct sidebar state on page load
+});
+
+sectionsToCheck.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        // Add an observer to monitor visibility changes in the section
+        const observer = new MutationObserver(() => {
+            toggleSidebarDisabled();  // Update the sidebar state when the section is modified
+        });
+
+        observer.observe(section, { attributes: true, childList: true, subtree: true });
+    }
 });
