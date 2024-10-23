@@ -75,13 +75,15 @@ document.addEventListener("DOMContentLoaded", function() {
             sampleEntry.classList.add('sampleEntry');
     
             sampleEntry.innerHTML = `
-                <h3 class="sampleLabel">Sample no.${sampleCount}</h3>
+                 <h3 class="sampleLabel">Sample no.${sampleCount}</h3>
                 <label for="${sampleType}Id">Sample ID:</label>
                 <input type="text" class="${sampleType}Id" name="${sampleType}Id[]"><br><br>
-                <label for="${sampleType}Name">Sample Name:</label>
-                <input type="text" class="${sampleType}Name" name="${sampleType}Name[]"><br><br>
-                <label for="${sampleType}Type">Sample Type:</label>
-                <input type="text" class="${sampleType}Type" name="${sampleType}Type[]"><br><br>
+                <label for="${sampleType}Specimen">Plant Specimen:</label>
+                <input type="text" class="${sampleType}Specimen" name="${sampleType}Specimen[]"><br><br>
+                <label for="${sampleType}AccessionNumber">Accession Number:</label>
+                <input type="text" class="${sampleType}AccessionNumber" name="${sampleType}AccessionNumber[]"><br><br>
+                <label for="${sampleType}Condition">Sample Condition:</label>
+                <input type="text" class="${sampleType}Condition" name="${sampleType}Condition[]"><br><br>
                 <button type="button" class="deleteSampleButton">Delete Sample</button>
             `;
         }
