@@ -651,6 +651,7 @@ body {
 
 .request-type-btn.clicked {
     background-color: #4abb4a;
+    color: white;
 }
 
 .tabs {
@@ -674,7 +675,7 @@ body {
     border-right: 2px solid #b8b5b5;
     width:fit-content;
     display: inline-flex;
-    padding: 18px 39px;
+    padding: 18px 13.5px;
 }
 
 .request-type-btn:last-of-type {
@@ -887,9 +888,6 @@ button .fa-angle-right {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.createRequestContent {
-    
-}
 
 button#backToCreateRequestMicrobialTesting, 
 button#backToCreateRequestMicrobialAnalysis, 
@@ -2496,9 +2494,6 @@ font-family: Arial, sans-serif;
     margin-top: auto;
 }
 
-#staffSearch {
-    /* Add custom styles for the input if needed */
-}
 
 #addStaffBtn {
     /* Add custom styles for the button if needed */
@@ -5773,7 +5768,4 @@ canvas {
 #backButton {
     height: 6vh;
     width: 4vw;
-}
-
-.request-details {
 }

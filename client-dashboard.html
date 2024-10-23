@@ -282,6 +282,19 @@
             <button id="microbialTestingBtn" class="request-type-btn" active>MICROBIAL TESTING METHODS</button>
             <button id="microbialAnalysisBtn" class="request-type-btn">MICROBIAL ANALYSIS & CHARACTERIZATION</button>
             <button id="labResearchProcessesBtn" class="request-type-btn">LABORATORY & RESEARCH PROCESSES</button>
+
+            <script>
+                        const buttons = document.querySelectorAll('.request-type-btn');
+                            buttons.forEach(button => {
+                            button.addEventListener('click', function() {
+                                // Remove the active class from all buttons
+                                buttons.forEach(btn => btn.classList.remove('active'));
+                                
+                                // Add the active class to the clicked button
+                                this.classList.add('active');
+                            });
+                        });
+            </script>
          
             <!-- Request Sections -->
             <div id="microbialTestingSection" >
