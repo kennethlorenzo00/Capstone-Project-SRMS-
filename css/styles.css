@@ -1733,6 +1733,7 @@ h1 {
         
         .lab-sidebar a:hover {
             background-color: #960505;
+            transform: scale(1.1);       /* Slight scale effect on icon hover */
         }
         
 
@@ -1747,7 +1748,7 @@ h1 {
         
 
         .lab-sidebar.minimized {
-            width: 7vw; /* Adjust as needed */
+            width: 6vw; /* Adjust as needed */
         }
         
         .lab-sidebar a {
@@ -1807,6 +1808,7 @@ h1 {
             margin-top: 12vh;
             padding-top:15px;
             
+            
         }
 
         .client-sidebar.minimized .lab-side {
@@ -1824,6 +1826,7 @@ h1 {
         
         .client-sidebar a:hover {
             background-color: #960505;
+            transform: scale(1.1);       /* Slight scale effect on icon hover */
         }
         
 
@@ -2040,23 +2043,60 @@ h1 {
     border: 2px solid white; /* Fixes the border styling */
 }
 
-#logoutBtn {
-  
-    background: none;
-}
+
 
 #logoutBtn {
-    width: 100%;            /* Make the button take full width */
-    text-align: left;       /* Align text to the left */
+    width: 92%;              /* Full width, just like the sidebar links */
+      /* Align text to the left */
+    background-color: #550000; /* Same background color as sidebar */
+    color: white;              /* Text color to white */
+    padding: 8px 12px;        /* Padding similar to sidebar links */
+    border: none;              /* Remove border */
+    cursor: pointer;           /* Show pointer on hover */
+    display: flex;             /* Flexbox for aligning icon and text */
+    align-items: center;       /* Vertically center */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 0%;
+    margin-right: 10px;
+    text-align: left;
 }
-
 
 #logoutBtn i {
-    margin-right: 1vw;     /* Push the text to the right of the icon */
+    font-size: 25px;            /* Icon size to match sidebar icons */
+    padding-right: 15px;          /* Padding for space between icon and text */
+    padding-left: -70%;           /* Padding to align the icon nicely */
+    transition: transform 0.3s ease;  /* Add transition for icon hover */
+    margin: 0px;
+}
+
+#logoutBtn:hover {
+    background-color: #960505;   /* Background color change on hover */
+    color: white;                /* Keep the text white on hover */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+    padding: 12px 15px;
+}
+
+
+
+#logoutBtn:hover i {
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
 }
 
 #logoutBtn span {
-    padding-left: 1vw;     /* Space between icon and text */
+    font-size: 16px;              /* Text size similar to sidebar links */
+    margin-right: 10px;          /* Space between icon and text */
+    transition: .3s;             /* Smooth transition */
+    margin-top: .5vh;             /* Align with the icon */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+.lab-sidebar.minimized #logoutBtn {
+    width: 5vw;                  /* Adjust button width when sidebar is minimized */
+}
+
+.lab-sidebar.minimized #logoutBtn i {
+    margin-left: 0px;
+    width: 100%;
 }
 
 
@@ -2136,6 +2176,74 @@ h1 {
 .requestDetailsTable td {
     color: #333;
 }
+
+
+
+
+/* Upcoming Events Section Styling */
+#upcomingEvents {
+    background-color: #fbeff1;    /* Light background color similar to the image */
+    padding: 15px;
+    border-radius: 10px;          /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 300px;             /* Limit the width */
+    margin: 0 auto;               /* Center the card */
+    position: absolute;
+    top: 238px;
+    right: -10px;
+    z-index: 25px;
+}
+
+#upcomingEvents h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    color: #333;                  /* Text color for the heading */
+    margin-bottom: 10px;
+}
+
+/* Individual Event Styling */
+.upcomingEvents {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd; /* Separate events with a thin line */
+    padding: 8px 0;
+}
+
+.upcomingEvents:last-child {
+    border-bottom: none;          /* Remove line for the last event */
+}
+
+/* Date Styling */
+.event-date {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Event Title Styling */
+.event-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #555;
+    flex-grow: 1;
+    text-align: left;
+    font-weight: bold ;
+    margin-left: 50px;            /* Space between date and title */
+}
+
+/* Days Left Styling */
+.event-days-left {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+}
+
+
+
+
 
 /* Progress Bar Styles */
 .progress-bar {
@@ -3520,6 +3628,7 @@ button:hover {
     border-radius: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
+    width: 103%;
 }
 
 /* Heading styling */
@@ -3618,87 +3727,6 @@ button:hover {
 
     .deadline-card {
         width: 100%; /* Full width on small screens */
-    }
-}
-
-/* Upcoming Events */
-#upcomingEvents {
-    position: absolute; /* Position it absolutely */
-    top: 240px; /* Distance from the top */
-    right: 2px; /* Distance from the right */
-    background-color: #fdf1f1; /* Light pink background */
-    border-radius: 15px;
-    padding: 5px; /* Padding for the container */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
-    width: 50%; /* Set to 50% of the container width */
-    max-width: 300px; /* Optional: Max width to keep it reasonable */
-    display: flex; /* Enable flexbox for the container */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center items horizontally */
-}
-
-/* Heading styling */
-#upcomingEvents h3 {
-    font-size: 1rem; /* Reduced size for the heading */
-    margin-bottom: 2spx; /* Reduced margin */
-    color: #333;
-    font-weight: bold;
-    text-align: center; /* Center the heading text */
-}
-
-/* Upcoming events list */
-.upcoming-events-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0; /* Remove space between events */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margin */
-}
-
-/* Each event item */
-.event-item {
-    display: flex;
-    justify-content: space-between; /* Space between items */
-    align-items: center; /* Center vertically */
-    padding: 4px 0; /* Padding for each event item */
-    height: 30px; /* Set a fixed height for event items to keep text on the same line */
-    border-bottom: 1px solid #e0e0e0; /* Light border between items */
-    width: 100%; /* Make items full width of the container */
-}
-
-/* Date styling */
-.event-date {
-    color: #800000; /* Dark red color */
-    font-weight: bold;
-    font-size: 12px; /* Reduced font size */
-    margin-right: 5px; /* Space between date and title */
-}
-
-/* Title styling */
-.event-title {
-    flex-grow: 1; /* Allow title to take up available space */
-    text-align: center; /* Center text */
-    font-size: 12px; /* Reduced font size */
-    color: #333;
-    font-weight: 600; /* Semi-bold for emphasis */
-}
-
-/* Days left styling */
-.event-days-left {
-    color: #777; /* Light gray for days left */
-    font-size: 12px; /* Reduced font size */
-    margin-left: 5px; /* Space between title and days left */
-}
-
-/* Last event should not have a border */
-.event-item:last-child {
-    border-bottom: none;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    #upcomingEvents {
-        max-width: 100%; /* Full width on smaller screens */
     }
 }
 
@@ -4049,8 +4077,8 @@ div#eventsSection{
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 5px 5px 5px rgba(106, 106, 106, 0.2);
-    background-color: white;
+    box-shadow: 5px 5px 5px rgba(177, 177, 177, 0.2);
+    background-color: rgb(255, 255, 255);
     height: 35vh;
     display: flex;
     flex-direction: column;
@@ -4168,7 +4196,7 @@ div#eventsSection{
 #approachingDeadlines {
     margin: 20px;
     margin-left: -20px;
-    margin-top:  120px;
+    margin-top: 10px;
 }
 
 #approachingDeadlines h3 {
@@ -4205,6 +4233,7 @@ div#eventsSection{
 
 #upcomingEvents {
     margin: 20px;
+    padding-bottom: 40px;
 }
 
 #upcomingEvents h3 {
@@ -4304,11 +4333,11 @@ div#eventsSection{
     border-radius: 15px; /* Rounded corners */
     padding: 5px; /* Padding for spacing inside the box */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 100%; /* Full width */
+    width: 80%; /* Full width */
     max-width: 300px; /* Set max width to match the example */
     position: absolute; /* Absolute positioning */
-    top: 600px; /* Distance from the top */
-    right: 20px; /* Distance from the right */
+    top: 532px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
     margin: 0; /* Reset margin */
     text-align: center; /* Center the text */
 }
@@ -5547,6 +5576,11 @@ canvas {
 .disabled-sidebar {
     pointer-events: none; /* Prevents all click events */
     opacity: 0.5; /* Optional: makes it look disabled */
+}
+
+.disabled-settings-btn {
+    opacity: 0.5;  /* Visually indicate settings button is disabled */
+    cursor: not-allowed;  /* Change cursor to indicate non-clickable state */
 }
 
 /*Client Request List Table css*/
