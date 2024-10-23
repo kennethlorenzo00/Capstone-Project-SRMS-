@@ -3197,87 +3197,281 @@ font-family: Arial, sans-serif;
     color: #999; /* Grey text */
     font-style: italic;
 }
+
+#taskList {
+    margin-right: 3vw;
+}
 /* Counter */
-#taskTable,
-#ongoingTaskTable {
-    width: 70%; /* Set the width to 70% for a more compact look */
-    border-collapse: collapse; /* Remove space between cells */
-    margin: 20px auto; /* Center the table and add margin */
-    font-size: 0.8rem; /* Set the base font size smaller */
+#taskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
 }
 
-/* Table Header Styles */
+/* Table header styles */
 #taskTable thead {
-    background-color: #007BFF; /* Color for assigned tasks header */
-    color: #ffffff; /* White text color for the header */
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
-#ongoingTaskTable thead {
-    background-color: #28A745; /* Different color for ongoing tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#taskTable th,
-#ongoingTaskTable th,
-#processedTaskTable th,
-#rejectedTaskTable th {
-    padding: 8px 10px; /* Reduced padding for headers */
-    text-align: left; /* Keep left-aligned header text */
+#taskTable th {
+    padding: 12px 15px;
+    text-align: left;
     border-top: 2px solid;
 }
 
-#taskTable th:first-child,
-#ongoingTaskTable th:first-child,
-#processedTaskTable th:first-child,
-#rejectedTaskTable th:first-child {
+#taskTable th:first-child{
     border-radius: 15px 0 0 0; 
     border-left: 2px solid;
     border-top: 2px solid;
 }
 
-#taskTable th:last-child,
-#ongoingTaskTable th:last-child,
-#processedTaskTable th:last-child,
-#rejectedTaskTable th:last-child {
+#taskTable th:last-child{
     border-radius: 0 10px 0 0;
     border-right: 2px solid;
     border-top: 2px solid;
 }
 
-/* Table Body Styles */
-#taskTable tbody,
-#ongoingTaskTable tbody {
-    background-color: #f9f9f9; /* Light background for the body */
+/* Table body styles */
+#taskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
 }
 
-#taskTable td,
-#ongoingTaskTable td {
-    padding: 6px; /* Reduced padding for table cells */
-    border-bottom: 1px solid #ddd; /* Light gray border at the bottom */
-    font-size: 0.8rem; /* Match table cell font size with header */
+#taskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
-/* Hover Effect for Table Rows */
-#taskTable tbody tr:hover,
-#ongoingTaskTable tbody tr:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
+#taskTable td {
+    padding: 12px 15px;
+    border: none    ;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    #taskTable,
+/* Hover effect for rows */
+#taskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#taskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#taskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
+
+
     #ongoingTaskTable {
-        font-size: 0.7rem; /* Smaller font on smaller screens */
-        width: 90%; /* Make it slightly wider on smaller screens */
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1vh;
     }
-
-    #taskTable th, 
-    #taskTable td,
-    #ongoingTaskTable th,
+    
+    /* Table header styles */
+    #ongoingTaskTable thead {
+        background-color: #A90000; /* Green background */
+        color: white; /* White text */
+    }
+    
+    #ongoingTaskTable th {
+        padding: 12px 15px;
+        text-align: left;
+        border-top: 2px solid;
+    }
+    
+    #ongoingTaskTable th:first-child{
+        border-radius: 15px 0 0 0; 
+        border-left: 2px solid;
+        border-top: 2px solid;
+    }
+    
+    #ongoingTaskTable th:last-child{
+        border-radius: 0 10px 0 0;
+        border-right: 2px solid;
+        border-top: 2px solid;
+    }
+    
+    /* Table body styles */
+    #ongoingTaskTable tbody tr {
+        background-color: #f9f9f9; /* Light background */
+        border-bottom: 1px solid;
+        border-bottom-color: rgb(197, 197, 197);
+    }
+    
+    #ongoingTaskTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Alternate row color */
+    }
+    
     #ongoingTaskTable td {
-        padding: 4px; /* Further reduce padding on smaller screens */
+        padding: 12px 15px;
+        border: none    ;
     }
+    
+    /* Hover effect for rows */
+    #ongoingTaskTable tbody tr:hover {
+        background-color: #d8f0e5; /* Light green on hover */
+    }
+    
+    
+    #ongoingTaskTable button {
+        background-color: #A90000; 
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+    
+    #ongoingTaskTable td:last-child {
+            display: flex;
+            justify-content: center; /* Horizontally center the button */
+            align-items: center; /* Vertically center the button (optional) */
+        }
+    
+
+#processedTaskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1vh;
 }
+
+/* Table header styles */
+#processedTaskTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#processedTaskTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#processedTaskTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#processedTaskTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#processedTaskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#processedTaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#processedTaskTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#processedTaskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#processedTaskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#processedTaskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+}
+
+
+#rejectedTaskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1vh;
+}
+
+/* Table header styles */
+#rejectedTaskTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#rejectedTaskTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#rejectedTaskTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#rejectedTaskTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#rejectedTaskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#rejectedTaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#rejectedTaskTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#rejectedTaskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#rejectedTaskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#rejectedTaskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
 
 .task-overview {
     background-color: #ffffff; /* White background for the entire section */
@@ -3520,64 +3714,6 @@ font-family: Arial, sans-serif;
 }
 
 
-/* General Table Styles */
-#processedTaskTable,
-#rejectedTaskTable {
-    width: 100%;
-    border-collapse: collapse; /* Remove space between cells */
-    margin: 20px 0; /* Add some margin above and below the table */
-    font-size: 1rem; /* Set the base font size */
-}
-
-/* Table Header Styles */
-#processedTaskTable thead {    
-    background-color: #6f00ff; /* Color for processed tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#rejectedTaskTable thead {
-    background-color: #A90000; /* Color for processed tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#processedTaskTable th,
-#rejectedTaskTable th {
-    padding: 12px; /* Padding for header cells */
-    text-align: left; /* Align text to the left */
-}
-
-/* Table Body Styles */
-#processedTaskTable tbody,
-#rejectedTaskTable tbody {
-    background-color: #f9f9f9; /* Light background for the body */
-}
-
-#processedTaskTable td,
-#rejectedTaskTable td {
-    padding: 10px; /* Padding for table cells */
-    border-bottom: 1px solid #ddd; /* Light gray border at the bottom */
-}
-
-/* Hover Effect for Table Rows */
-#processedTaskTable tbody tr:hover,
-#rejectedTaskTable tbody tr:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #processedTaskTable,
-    #rejectedTaskTable {
-        font-size: 0.9rem; /* Slightly smaller font on smaller screens */
-    }
-
-    #processedTaskTable th, 
-    #processedTaskTable td,
-    #rejectedTaskTable th,
-    #rejectedTaskTable td {
-        padding: 8px; /* Reduce padding on smaller screens */
-    }
-}
 
 /* Button Styles */
 .task-buttons button {
