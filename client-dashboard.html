@@ -17,51 +17,54 @@
 
 </head>
 <body>
-    <!-- Header -->
-    <header class="client-header">
-        <div class="header-content">
-            <button id="openSidebar" class="sidebar-openbtn">&#9776;</button>
-            <div class="admin-logo">
-                <img src="images/logo.webp" alt="CNSRR Logo">
-                <div class="admin-logo-text">
-                    <h3>Center for Natural Sciences and</h3>
-                    <h4>Resources Research</h4>
-                    <p class="sub-name">Research Institute of Science and Technology</p>
-                </div>
+<!-- Header -->
+<header class="client-header">
+    <div class="header-content">
+        <button id="openSidebar" class="sidebar-openbtn">&#9776;</button>
+        <div class="admin-logo">
+            <img src="images/logo.webp" alt="CNSRR Logo">
+            <div class="admin-logo-text">
+                <h3>Center for Natural Sciences and</h3>
+                <h4>Resources Research</h4>
+                <p class="sub-name">Research Institute of Science and Technology</p>
             </div>
         </div>
-        
-        <div class="header-icons">
-            <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
-            <button id="notificationsBtn" class="notifications-btn">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <span id="notificationCount" class="notification-count">0</span>
-            </button>
-            <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
-        </div>
-    </header>
-
-    <!-- Sidebar -->
-    <div id="mySidebar" class="client-sidebar hidden">
-        <button id="closeSidebar" class="closebtn">&times;</button>
-        <a href="#" id="homeLink" >
-            <i class="fa-solid fa-home"></i> 
-            <span class="lab-side">Dashboard </span>
-        </a>
-        <a href="#" id="createRequestLink">
-            <i class="fa-solid fa-file"></i> 
-            <span class="lab-side">Create Request</span>
-        </a>
-        <a href="#" id="requestListLink">
-            <i class="fa-solid fa-clipboard-list"></i>
-            <span class="lab-side">Request List</span>
-        </a>
-        <a href="#" id="myAccountLink">
-            <i class="fa-solid fa-user"></i> 
-            <span class="lab-side"> Account </span>
-        </a>
-        <button id="logoutBtn" class="sidebar-btn">Logout</button>
     </div>
+    
+    <div class="header-icons">
+        <button id="helpBtn"><i class="fa-solid fa-question-circle"></i></button>
+        <button id="notificationsBtn" class="notifications-btn">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="notificationCount" class="notification-count">0</span>
+        </button>
+        <button id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+    </div>
+</header>
+
+<!-- Sidebar -->
+<div id="mySidebar" class="admin-sidebar minimized">
+    <a href="#" id="homeLink">
+        <i class="fa-solid fa-home"></i>
+        <span class="lab-side">Dashboard</span>
+    </a>
+    <a href="#" id="createRequestLink">
+        <i class="fa-solid fa-file"></i>
+        <span class="lab-side">Create Request</span>
+    </a>
+    <a href="#" id="requestListLink">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span class="lab-side">Request List</span>
+    </a>
+    <a href="#" id="myAccountLink">
+        <i class="fa-solid fa-user"></i>
+        <span class="lab-side">Account</span>
+    </a>
+    <button id="logoutBtn" class="sidebar-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="lab-side">Logout</span>
+    </button>
+</div>
+
 
     <!-- Main Content -->
     <div id="main">

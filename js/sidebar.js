@@ -1,18 +1,29 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Sidebar Toggle
-    const sidebar = document.getElementById("mySidebar");
-    const openSidebarBtn = document.getElementById("openSidebar");
-    const closeSidebarBtn = document.getElementById("closeSidebar");
+// Sidebar Toggle
+const sidebar = document.getElementById("mySidebar");
+const toggleSidebarBtn = document.getElementById("openSidebar"); // Reuse the burger button
+const mainContent = document.getElementById("main"); // Reference to the main content div
+const logoutBtn = document.getElementById("logoutBtn"); // Reference to the logout button
 
-    if (openSidebarBtn && closeSidebarBtn && sidebar) {
-        openSidebarBtn.addEventListener("click", function() {
-            sidebar.classList.remove("hidden");
-        });
+// Initialize the sidebar as closed by default
+sidebar.classList.add("minimized"); // This indicates the sidebar is initially closed
+mainContent.style.marginLeft = "60px"; // Set margin for minimized state
 
-        closeSidebarBtn.addEventListener("click", function() {
-            sidebar.classList.add("hidden");
-        });
+toggleSidebarBtn.addEventListener("click", function() {
+    if (sidebar.classList.contains("minimized")) {
+        // Open Sidebar
+        sidebar.classList.remove("minimized");  // Show the sidebar
+        mainContent.style.marginLeft = "250px"; // Set to sidebar's width
+        logoutBtn.classList.remove("minimized"); // Ensure logout button margin is reset
+    } else {
+        // Close Sidebar
+        sidebar.classList.add("minimized");  // Collapse the sidebar
+        mainContent.style.marginLeft = "60px"; // Adjust margin for minimized sidebar
+        logoutBtn.classList.add("minimized"); // Apply minimized class to logout button
     }
+});
+
+
 
     const forms = [
         document.getElementById("plateCountForm"),
