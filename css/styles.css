@@ -1,4 +1,5 @@
 /* General Styles */
+/*testinglang*/
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -1979,8 +1980,6 @@ h1 {
     text-align: left;       /* Align text to the left */
 }
 
-<<<<<<< HEAD
-=======
 
 #logoutBtn i {
     margin-right: 1vw;     /* Push the text to the right of the icon */
@@ -1989,7 +1988,7 @@ h1 {
 #logoutBtn span {
     padding-left: 1vw;     /* Space between icon and text */
 }
->>>>>>> bc1489eebdbd975f24d3bd44b77ad8fa51129f57
+
 
 
 
