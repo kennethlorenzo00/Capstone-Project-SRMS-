@@ -62,10 +62,10 @@ function hideAllSections() {
 }
 
 // Password reset functionality
-const labSettingsPasswordResetForm = document.getElementById('passwordResetForm'); // Ensure this element exists
+const labSettingsPasswordResetForm = document.getElementById('settingsPasswordResetForm'); // Ensure this element exists
 labSettingsPasswordResetForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const email = document.getElementById('labResetEmail').value; // Ensure this element exists
+    const email = document.getElementById('resetEmail').value; // Ensure this element exists
 
     sendPasswordResetEmail(getAuth(), email)
         .then(() => {

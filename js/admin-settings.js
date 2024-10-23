@@ -64,7 +64,7 @@ function hideAllSections() {
 }
 
 // Password reset functionality
-const settingsPasswordResetForm = document.getElementById('passwordResetForm'); // Assuming this is defined elsewhere
+const settingsPasswordResetForm = document.getElementById('settingsPasswordResetForm'); // Assuming this is defined elsewhere
 settingsPasswordResetForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const email = document.getElementById('resetEmail').value;
