@@ -481,17 +481,6 @@ body {
 
 }
 
-#mySidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #8a1c1c;
-    padding-top: 20px;
-    transition: 0.5s;
-}
-
 .client-sidebar a {
     padding: 10px 15px;
     text-decoration: none;
@@ -503,6 +492,61 @@ body {
 
 .client-sidebar a:hover {
     background-color: #b23030;
+}
+
+#mySidebar {
+    width: 250px; /* Initial sidebar width */
+    height: 92vh; /* Adjusted height */
+    transition: width .5s ease; /* Smooth transition */
+    background-color: #8a1c1c;
+    margin-top: 12vh;
+    padding-top: 15px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+#mySidebar.minimized {
+    width: 7vw; /* Adjust as needed for minimized state */
+}
+
+#mySidebar a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 5px; /* Font size for links */
+    margin-right: 10px;
+    transition: .3s;
+    margin-top: 1vh;
+}
+
+#mySidebar i {
+    font-size: 25px;
+    padding-right: 5%;
+    padding-left: 7%;
+}
+
+#mySidebar.minimized a i {
+    margin-right: 0;
+    text-align: center;
+    width: 100%;
+}
+
+#mySidebar.minimized .lab-side {
+    display: none; /* Hide text in minimized state */
+}
+
+#main {
+    transition: margin-left 0.3s;
+    margin-left: 60px; /* Initial margin for minimized state */
+    margin-top: 10vh; /* Margin for top */
+    padding-left: 100px; /* Padding for content */
+}
+
+#main.minimized {
+    margin-left: 10vw; /* Match sidebar width when minimized */
 }
 
 
@@ -866,27 +910,28 @@ h1 {
 }
 
 .search-container {
-    position: relative;
-    display: inline-block;
+    position: relative;           /* Allow positioning of the icon */
+    display: inline-block;        /* Keep it as an inline block */
 }
 
 #searchInput {
-    width: 300px;
-    padding: 10px 15px;
-    padding-right: 35px;
-    border: 1px solid #fcfcfc;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 300px;                /* Width of the input */
+    padding: 10px 15px;          /* Padding for the input */
+    padding-right: 35px;         /* Space for the icon */
+    border: 1px solid #fcfcfc;   /* Border style */
+    border-radius: 5px;          /* Rounded corners */
+    font-size: 16px;             /* Font size */
+    box-sizing: border-box;       /* Include padding in width */
 }
 
 .search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: #333;
-    cursor: pointer;
+    position: absolute;           /* Position the icon absolutely */
+    right: 15px;                 /* Adjust right position to create space */
+    top: 50%;                    /* Align top at the center */
+    transform: translateY(-50%); /* Center vertically */
+    font-size: 20px;             /* Font size for the icon */
+    color: #333;                 /* Icon color */
+    cursor: pointer;             /* Pointer cursor */
 }
 
 
@@ -1924,11 +1969,28 @@ h1 {
 }
 
 #logoutBtn {
-    margin-top: 3vh; /* Use margin-top to push the icon down */
+    margin-top: 10vh; /* Use margin-top to push the icon down */
+    background: none;
 }
 #logoutBtn.minimized {
-    margin-top: 10vh;
+    margin-top: 12vh;
 }
+#logoutBtn {
+    display: flex;           /* Use flexbox for alignment */
+    align-items: center;    /* Center vertically */
+    width: 100%;            /* Make the button take full width */
+    padding: 10px;          /* Add padding for better touch target */
+    text-align: left;       /* Align text to the left */
+}
+
+#logoutBtn i {
+    margin-right: 1vw;     /* Push the text to the right of the icon */
+}
+
+#logoutBtn span {
+    padding-left: 1vw;     /* Space between icon and text */
+}
+
 
 
 
@@ -1962,63 +2024,6 @@ h1 {
     display: flex;
     height: 100vh;
     overflow: hidden;
-}
-
-
-
-
-
-
-
-
-
-/* Styles for the request list table */
-#requestListTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: Arial, sans-serif;
-}
-
-#requestListTable thead {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-#requestListTable th, #requestListTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#requestListTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#requestListTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#requestListTable th {
-    background-color: #A90000;
-    color: white;
-}
-
-#requestListTable td {
-    color: #333;
-}
-
-#requestListTable button {
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#requestListTable button:hover {
-    background-color: #45a049;
 }
 
 /* Styles for the request details table */
@@ -5454,3 +5459,72 @@ canvas {
     pointer-events: none; /* Prevents all click events */
     opacity: 0.5; /* Optional: makes it look disabled */
 }
+
+/*Client Request List Table css*/
+#requestListTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+}
+
+/* Table header styles */
+#requestListTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#requestListTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#requestListTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#requestListTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#requestListTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#requestListTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#requestListTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#requestListTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#requestListTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#requestListTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
+
