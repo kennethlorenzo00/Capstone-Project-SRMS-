@@ -533,7 +533,7 @@ input {
 
 .client-main {
     padding: 10px;
-    padding-top: calc(15px + 75px); /* Increased space for the header */
+    padding-top: 75px;
     transition: margin-left 0.5s;
 }
 
@@ -982,7 +982,6 @@ h1 {
 
 .request-header-container h1 {
     margin: 0; /* Remove default margin to better align with the input */
-    font-size: 24px; /* Adjust size if needed */
 }
 
 .search-container {
@@ -1560,7 +1559,23 @@ h1 {
             padding-left: 20px;
             padding-right: 20px;
             width: 30vw;
+            height: 110vh;
+        }
+
+        .register-body-admin {
+            background: rgb(255, 255, 255);
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 30vw;
             height: 100vh;
+        }
+
+        .register-body-external {
+            background: rgb(255, 255, 255);
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 30vw;
+            height: 120vh;
         }
 
         .wrapper {
@@ -1576,11 +1591,15 @@ h1 {
         }
 
         .register-form {
-            padding-top: 5vh;
+            padding-top: 2vh;
         }
 
         .lower-reg-form {
             text-align: center;
+        }
+
+        h1.register-h1 {
+            margin: 10px;
         }
 
         .fullname {
@@ -1608,6 +1627,13 @@ h1 {
             width: 350px;
             margin: 0 auto;
         }
+
+        input#firstName, input#middleName, input#lastName, input#email, input#username, input#password, input#address, input#contactNumber, input#school, input#department {
+            width: auto;
+            padding: 10px;
+            height: 2vh;
+            margin-top: 1vh;
+        } 
         
         .input-wrapper {
             position: relative; /* Positioning context for the icon */
@@ -2064,6 +2090,14 @@ h1 {
     border-radius: 0%;
     margin-right: 10px;
     text-align: left;
+}
+
+button#logoutBtn.sidebar-btn.minimized{
+    width: 12vh;
+}
+
+a#logoutBtn.sidebar-btn.minimized {
+    width: 11vh;
 }
 
 #logoutBtn i {
@@ -3899,8 +3933,10 @@ input#editAddress, input#editContactNumber,input#editUsername {
 /*account profile for client*/
 
 div#myAccountContent {
-
-    margin-top: 6vh;
+    margin-top: 3vh;
+    margin-right: 5vw;
+    margin-left: 3vw;
+    margin-bottom: 6vh;
 }
 
 span#clientfullNameDetail, span#clientaddress, span#clientcontactNumber, span#clientusername {
@@ -4035,7 +4071,7 @@ button#saveClientChangesBtn {
     text-align: center;
     border-radius: 10px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    height: 15vh;
+    height: 20vh;
     margin: 20px;
 }
 
@@ -4124,7 +4160,7 @@ div#eventsSection{
 .scroll-container {
     display: flex;
     overflow-x: auto;
-    height: 42vh;
+    height: 50vh;
     margin-left: 20px;
 }
 
@@ -4137,13 +4173,14 @@ div#eventsSection{
     text-align: center;
     box-shadow: 5px 5px 5px rgba(177, 177, 177, 0.2);
     background-color: rgb(255, 255, 255);
-    height: 35vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 .event-item img {
-    width: 25vh;
+    width: 30vh;
     height: 15vh;
     object-fit: cover;
 }
@@ -4863,9 +4900,6 @@ body {
 .labaccount{
     padding: 20px;
     padding-top: 0;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 button#saveChangesBtn {
