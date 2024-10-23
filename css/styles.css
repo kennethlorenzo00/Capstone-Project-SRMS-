@@ -5919,6 +5919,7 @@ canvas {
     max-width: 600px;
     height: 300px !important;
 }
+
 /*settings*/
 div#clientSettingsSection, div#labSettingsSection, div#adminSettingsSection{
     margin-top: 7vh;
