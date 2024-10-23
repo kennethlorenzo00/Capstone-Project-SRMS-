@@ -674,7 +674,7 @@ body {
     border-right: 2px solid #b8b5b5;
     width:fit-content;
     display: inline-flex;
-    padding: 18px 28.8px;
+    padding: 18px 39px;
 }
 
 .request-type-btn:last-of-type {
@@ -707,7 +707,7 @@ body {
 .service-image {
     width: 350px; 
     height: 80%vh;
-    margin-left: 20px; 
+    margin-left: 80px; 
     object-fit: cover;
     padding-right: 30px;
 }
@@ -1615,8 +1615,8 @@ h1 {
             left: 10px; /* Space from the left edge of the input */
             top: 50%; /* Center vertically */
             transform: translateY(-50%); /* Adjust to perfectly center */
-            width: 22px; /* Icon size */
-            height: 22px; /* Icon size */
+            width: 50px; /* Icon size */
+            height: 50px; /* Icon size */
             background-size: contain; /* Ensure the icon fits the space */
             background-repeat: no-repeat; /* Prevent repetition */
         }
@@ -2101,7 +2101,60 @@ h1 {
 
 
 
+/*Client Logout*/
+#clientLogoutbtn{
+    width: 85%;              /* Full width, just like the sidebar links */
+      /* Align text to the left */
+    background-color:#8a1c1c; /* Same background color as sidebar */
+    color: white;              /* Text color to white */
+    padding: 8px 12px;        /* Padding similar to sidebar links */
+    border: none;              /* Remove border */
+    cursor: pointer;           /* Show pointer on hover */
+    display: flex;             /* Flexbox for aligning icon and text */
+    align-items: center;       /* Vertically center */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 0%;
+    margin-right: 10px;
+    text-align: left;
+}
 
+#clientLogoutbtn i {
+    font-size: 25px;            /* Icon size to match sidebar icons */
+    padding-right: 15px;          /* Padding for space between icon and text */
+    padding-left: -70%;           /* Padding to align the icon nicely */
+    transition: transform 0.3s ease;  /* Add transition for icon hover */
+    margin: 0px;
+}
+
+#clientLogoutbtn:hover {
+    background-color: #cc0202;   /* Background color change on hover */
+    color: white;                /* Keep the text white on hover */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+    padding: 12px 15px;
+}
+
+
+
+#clientLogoutbtn:hover i {
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+#clientLogoutbtn span {
+    font-size: 16px;              /* Text size similar to sidebar links */
+    margin-right: 10px;          /* Space between icon and text */
+    transition: .3s;             /* Smooth transition */
+    margin-top: .5vh;             /* Align with the icon */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+.lab-sidebar.minimized #clientLogoutbtn {
+    width: 5vw;                  /* Adjust button width when sidebar is minimized */
+}
+
+.lab-sidebar.minimized #clientLogoutbtn i {
+    margin-left: 0px;
+    width: 100%;
+}
 
 
 
