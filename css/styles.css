@@ -534,7 +534,7 @@ input {
     padding: 10px;
     transition: margin-left 0.5s;
     margin-top: 5vh; 
-    margin-right: 3vw;
+    margin-right: 1vw;
 }
 
 
@@ -4145,7 +4145,7 @@ button#saveClientChangesBtn {
     text-align: center;
     border-radius: 10px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    height: 20vh;
+    height: 21vh;
     margin: 20px;
 }
 
