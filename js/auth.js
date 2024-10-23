@@ -998,7 +998,7 @@ function displayLaboratoryStaff() {
         snapshot.forEach((childSnapshot) => {
             const staff = childSnapshot.val();
             const staffId = childSnapshot.key;
-
+        
             // Create a new promise for counting appointments for this staff member
             const staffFullName = `${staff.firstName || ''} ${staff.middleName || ''} ${staff.lastName || ''}`.trim();
             const countAppointmentsPromise = (async () => {
@@ -1007,35 +1007,40 @@ function displayLaboratoryStaff() {
                 return { staffId, assignedTaskCount: appointmentsSnapshot.size }; // Return staffId and count
             })();
             staffCountPromises.push(countAppointmentsPromise);
-
+        
             const row = staffTableBody.insertRow();
-
+        
             // Display name
             row.insertCell(0).textContent = staffFullName || "No name";
-
+        
             // Display email
             row.insertCell(1).textContent = staff.email || "No email";
-
+        
             // Placeholder for assigned tasks count
             row.insertCell(2).textContent = "Counting..."; // Temporarily show "Counting..."
-
-            // Display action buttons
+        
+            // Display action icons
             const actionCell = row.insertCell(3);
-            const viewDetailsBtn = document.createElement('button');
-            viewDetailsBtn.textContent = 'View Details';
-            viewDetailsBtn.classList.add('view-details-btn');
-            viewDetailsBtn.dataset.id = staffId;
+        
+            // Create clickable eye icon for view details
+            const viewDetailsIcon = document.createElement('i');
+            viewDetailsIcon.classList.add('fas', 'fa-eye', 'view-details-icon'); // Use Font Awesome eye icon classes
+            viewDetailsIcon.style.cursor = 'pointer'; // Make it look clickable
+            viewDetailsIcon.dataset.id = staffId;
+        
             const deactivateBtn = document.createElement('button');
             deactivateBtn.textContent = 'Deactivate';
             deactivateBtn.classList.add('deactivate-btn');
             deactivateBtn.dataset.id = staffId;
-
-            actionCell.appendChild(viewDetailsBtn);
+        
+            actionCell.appendChild(viewDetailsIcon);
             actionCell.appendChild(deactivateBtn);
-
-            viewDetailsBtn.addEventListener('click', () => showStaffDetails(staffId));
+        
+            // Add click event to the eye icon
+            viewDetailsIcon.addEventListener('click', () => showStaffDetails(staffId));
             deactivateBtn.addEventListener('click', () => deactivateStaff(staffId));
         });
+        
 
         // Wait for all appointment counts to resolve and update the table
         const staffCounts = await Promise.all(staffCountPromises);

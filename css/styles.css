@@ -2195,6 +2195,32 @@ font-family: Arial, sans-serif;
     color: #007bff; /* Change color on hover */
 }
 
+.staff-search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust spacing between input and button */
+    margin-top: auto;
+}
+
+#staffSearch {
+    /* Add custom styles for the input if needed */
+}
+
+#addStaffBtn {
+    /* Add custom styles for the button if needed */
+    width: 15vw;
+}
+
+.view-details-icon {
+    padding-left: 1vw; /* Add left padding to the eye icon */
+}
+
+.deactivate-btn {
+    padding-left: 1vw; /* Add left padding to the deactivate button */
+}
+
+
+
 /* Specific Styles for Each Table */
 
 
