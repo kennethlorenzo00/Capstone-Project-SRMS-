@@ -977,7 +977,6 @@ h1 {
 
 .request-header-container h1 {
     margin: 0; /* Remove default margin to better align with the input */
-    font-size: 24px; /* Adjust size if needed */
 }
 
 .search-container {
@@ -3929,8 +3928,10 @@ input#editAddress, input#editContactNumber,input#editUsername {
 /*account profile for client*/
 
 div#myAccountContent {
-
-    margin-top: 6vh;
+    margin-top: 3vh;
+    margin-right: 5vw;
+    margin-left: 3vw;
+    margin-bottom: 6vh;
 }
 
 span#clientfullNameDetail, span#clientaddress, span#clientcontactNumber, span#clientusername {
@@ -4170,6 +4171,7 @@ div#eventsSection{
     height: 40vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 .event-item img {
@@ -4893,9 +4895,6 @@ body {
 .labaccount{
     padding: 20px;
     padding-top: 0;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 button#saveChangesBtn {
