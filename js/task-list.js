@@ -437,6 +437,12 @@ async function addDayToSample(sampleId) {
     }
 }
 
+function formatDateString(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString); // Convert string to Date object
+    return date.toLocaleDateString('en-US', options); // Format to 'Month Day, Year'
+}
+
 async function showTaskDetails(requestId) {
     try {
         // Fetch appointment details using requestId
@@ -452,6 +458,13 @@ async function showTaskDetails(requestId) {
             alert('No details found for this request ID.');
             return;
         }
+
+        const formattedStartDate = appointmentData.startDate ? formatDateString(appointmentData.startDate) : 'N/A';
+        const formattedEndDate = appointmentData.endDate ? formatDateString(appointmentData.endDate) : 'N/A';
+
+        // Update the HTML to display the estimated start and end dates
+        document.getElementById('startDate').innerText = formattedStartDate;
+        document.getElementById('endDate').innerText = formattedEndDate;
 
         // Hide the ongoing tasks and show the task details section
         taskList.style.display = 'none';
@@ -545,12 +558,16 @@ async function loadSamplesByRequestId(sampleId) {
         return;
     }
 
+    document.getElementById('sampleDurationSection').style.display = 'block';
+
     // Clear the container first
     const durationContainer = document.querySelector('.duration-container');
     durationContainer.innerHTML = '';
 
     let totalColonyCount = 0;
     let totalDays = 0;
+    let sampleColonyCounts = []; // Store counts specific to this sample
+    let sampleDays = [];
 
     samplesSnapshot.forEach(sampleDoc => {
         const sampleData = sampleDoc.data();
@@ -568,8 +585,12 @@ async function loadSamplesByRequestId(sampleId) {
             document.querySelector('.duration-container').appendChild(dayBox);
 
             if (day.colonyCount) {
+                console.log('Colony Count for Day', day.dayNumber, ':', day.colonyCount);       
+                sampleDays.push(`Day ${day.dayNumber}`);
+                sampleColonyCounts.push(day.colonyCount); // Store counts specific to this day
                 totalColonyCount += day.colonyCount;
                 totalDays++;
+
             }
 
             // Add a click event listener to the day-box
@@ -631,10 +652,19 @@ async function loadSamplesByRequestId(sampleId) {
                 }
             });
         });
+
+        colonyCounts.push(...sampleColonyCounts); // Append specific sample counts to the global array
+        daysArray.push(...sampleDays); 
     });
 
     const averageColonyCount = totalDays > 0 ? (totalColonyCount / totalDays).toFixed(2) : 'N/A';
     document.getElementById('averageColonyCount').innerText = averageColonyCount;
+
+    // Log the arrays before passing them to the graph
+    console.log('Days Array:', daysArray);
+    console.log('Colony Counts:', colonyCounts);
+
+    displayColonyCountLineGraph(daysArray, colonyCounts);
 
     // Create and append the "Add Day" button
     const addDayButton = document.createElement('button');
@@ -649,6 +679,51 @@ async function loadSamplesByRequestId(sampleId) {
         await loadSamplesByRequestId(sampleId);
     });
 
+}
+
+function displayColonyCountLineGraph(daysArray, colonyCounts) {
+    const ctx = document.getElementById('colonyCountGraph').getContext('2d'); // Ensure the element is now available
+
+    // Remove the old chart if it exists
+    if (window.colonyCountChart) {
+        window.colonyCountChart.destroy();
+    }
+
+    // Create the line chart
+    window.colonyCountChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: daysArray, // Labels for X-axis (Days)
+            datasets: [{
+                label: 'Colony Count',
+                data: colonyCounts, // Data for Y-axis (Colony Counts)
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+                tension: 0.1 // Smooth line
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Days'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Colony Count'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 // Function to load colony data for the selected day (optional)
