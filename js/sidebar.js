@@ -122,6 +122,7 @@ toggleSidebarBtn.addEventListener("click", function() {
         helpSection.classList.add('hidden');
         const settingsSection = document.getElementById('clientSettingsSection');
         settingsSection.classList.add('hidden');
+        microbialTestingSection.classList.remove("hidden");
     });
 
     requestListLink.addEventListener("click", function() {
