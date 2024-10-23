@@ -3,7 +3,6 @@ const sidebar = document.getElementById("sidebar");
 const toggleSidebarBtn = document.getElementById("openSidebar"); // Reuse the burger button
 const mainContent = document.getElementById("main"); // Reference to the main content div
 const taskCountContainer = document.querySelector('.task-count'); // Reference to the task count container
-const settingsBtn = document.getElementById('settingsBtn');
 
 // Initialize the sidebar as closed by default
 sidebar.classList.add("minimized"); // This indicates the sidebar is initially closed

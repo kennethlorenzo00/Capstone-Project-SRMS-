@@ -41,8 +41,10 @@ function isAnySectionVisible() {
 function toggleSidebarDisabled() {
     if (isAnySectionVisible()) {
         sidebar.classList.add("disabled-sidebar"); // Add the disabled class
+        settingsBtn.disabled = true;
     } else {
         sidebar.classList.remove("disabled-sidebar"); // Remove the disabled class
+        settingsBtn.disabled = false; 
     }
 }
 

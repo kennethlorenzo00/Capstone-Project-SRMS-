@@ -8,11 +8,13 @@ const forecastBtn = document.getElementById('forecastBtn');
 const forecastSection = document.getElementById('forecastSection');
 const requestList = document.getElementById('requestList');
 const backBtn = document.getElementById('backForecastBtn');
+const settingsBtn = document.getElementById('settingsBtn');
 
 // Show forecast section, hide the request list
 forecastBtn.addEventListener('click', () => {
     requestList.style.display = 'none'; // Hide the request list
     forecastSection.style.display = 'block'; // Show the forecast section
+    settingsBtn.disabled = true;
     generateForecastChart(); // Generate the forecast chart
     generateTopRequestsChart(); // Generate the top requests chart
 });
@@ -21,6 +23,7 @@ forecastBtn.addEventListener('click', () => {
 backBtn.addEventListener('click', () => {
     forecastSection.style.display = 'none'; // Hide the forecast section
     requestList.style.display = 'block'; // Show the request list again
+    settingsBtn.disabled = false;
 });
 
 // Function to train the machine learning model

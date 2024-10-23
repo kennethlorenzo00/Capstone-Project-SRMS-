@@ -15,12 +15,14 @@ const eventContainer = document.getElementById('eventContainer');
 const eventDetailsModal = document.getElementById('eventDetailsModal');
 const editEventModal = document.getElementById('editEventModal');
 const eventSearchInput = document.getElementById('eventSearch'); // Search input element
+const settingsBtn = document.getElementById('settingsBtn');
 
 // Show the add event form when 'Add Event' button is clicked
 addEventBtn.addEventListener('click', () => {
     addEventForm.style.display = 'block';
     eventContainer.style.display = 'none';
     eventDetailsModal.style.display = 'none';
+    settingsBtn.disabled = false;	
     editEventModal.style.display = 'none';
 });
 
@@ -42,6 +44,7 @@ const closeAddEventFormBtn = document.getElementById('closeAddEventForm');
 // Add an event listener to the close button
 closeAddEventFormBtn.addEventListener('click', () => {
     addEventForm.style.display = 'none';
+    settingsBtn.disabled = false;	
     eventContainer.style.display = 'block';
 });
 
@@ -80,6 +83,7 @@ uploadEventBtn.addEventListener('click', async () => {
 
         alert('Event uploaded successfully!');
         addEventForm.style.display = 'none';
+        settingsBtn.disabled = false;	
         eventContainer.style.display = 'block';
 
         // Reset the form after successful upload
@@ -137,6 +141,7 @@ function showEventDetailsModal(event) {
     eventDetailsModal.dataset.eventId = event.id;
 
     eventDetailsModal.style.display = 'block';
+    settingsBtn.disabled = true;	
     // Hide other event items
     const eventItems = document.querySelectorAll('.event-item');
     eventItems.forEach((item) => {
@@ -199,6 +204,7 @@ document.getElementById('deleteEventBtn').addEventListener('click', () => {
             alert('Event deleted successfully!'); // Feedback for the user
             renderEventList(); // Refresh the event list
             eventDetailsModal.style.display = 'none'; // Close the event details modal
+            settingsBtn.disabled = false;	
         }).catch((error) => {
             console.error('Error deleting event:', error);
             alert('Error deleting event. Please try again.'); // Feedback for error
@@ -210,6 +216,7 @@ document.getElementById('deleteEventBtn').addEventListener('click', () => {
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('close')) {
         eventDetailsModal.style.display = 'none';
+        settingsBtn.disabled = false;	
         editEventModal.style.display = 'none';
         // Show all event items again
         const eventItems = document.querySelectorAll('.event-item');

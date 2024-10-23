@@ -9,6 +9,8 @@ const requestDetailsContent = document.getElementById('requestDetailsContent');
 const requestDetailsHeader = document.getElementById('requestDetailsHeader');
 const requestListGroup = document.getElementById('requestListContent');
 const requestDetailsSection = document.getElementById('requestDetailsSection'); 
+const settingsBtn = document.getElementById('settingsBtn');
+const helpBtn = document.getElementById('helpBtn');
 
 const sampleFieldMapping = {
     microbialTesting: {
@@ -410,6 +412,8 @@ async function showRequestDetails(requestId) {
 
                     // Show the request list section and hide request details
                     requestDetailsSection.classList.add('hidden');
+                    settingsBtn.disabled = false;	
+                    helpBtnBtn.disabled = false;	
                     requestListGroup.classList.remove('hidden');
                 } else {
                     alert('Please select a file to upload.');
@@ -475,6 +479,8 @@ async function showRequestDetails(requestId) {
                 await updateDoc(requestDocRef, { request_status: 'validating' });
                 alert('Samples Sent');
                 requestDetailsSection.classList.add('hidden');
+                settingsBtn.disabled = false;	
+                helpBtn.disabled = false;	
                     requestListGroup.classList.remove('hidden');
             });
           }
@@ -535,6 +541,8 @@ async function showRequestDetails(requestId) {
 
         // Show the request details content and hide the request list group
         requestDetailsSection.classList.remove('hidden');
+        settingsBtn.disabled = true;
+        helpBtn.disabled = true;	
         requestListGroup.classList.add('hidden');
     }
 }
@@ -542,6 +550,8 @@ async function showRequestDetails(requestId) {
 const backButton = document.getElementById('backButton');
 backButton.addEventListener('click', () => {
     requestDetailsSection.classList.add('hidden');
+    settingsBtn.disabled = false;
+    helpBtn.disabled = false;	
     requestListGroup.classList.remove('hidden');
 });
 

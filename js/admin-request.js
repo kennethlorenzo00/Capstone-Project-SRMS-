@@ -4,6 +4,7 @@ import { ref, get, } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-d
 import { collection, getDocs, query, where, startAfter, limit, orderBy,updateDoc, addDoc, serverTimestamp, doc, getDoc} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 const buttons = document.querySelectorAll('.manageuserbutton button');
+const settingsBtn = document.getElementById('settingsBtn');
 
 buttons.forEach(button => {
     button.addEventListener('click', function() {
@@ -149,6 +150,7 @@ function attachViewButtonListeners() {
             const requestId = event.target.dataset.requestId;
             await showRequestDetails(requestId);
             adminRequestDetailsSection.classList.remove('hidden');
+            settingsBtn.disabled = true;
             requestListContainer.classList.add('hidden'); // Add this line
             requestList.classList.add('hidden');
         });
@@ -352,6 +354,7 @@ async function showAppointmentPage(requestId) {
   // Show the appointment page and hide others
   appointmentPage.classList.remove('hidden');
   adminRequestDetailsSection.classList.add('hidden');
+  settingsBtn.disabled = false;
   requestList.classList.add('hidden');
 
 // Add an event listener to the form for submission
@@ -577,6 +580,7 @@ async function logRejectedReportStaff(requestId, staffName) {
 async function showRequestHistory() {
   document.getElementById('requestList').style.display = 'none'; // Hide the request list
   document.getElementById('requestHistoryContainer').style.display = 'block'; // Show the request history
+  settingsBtn.disabled = true;
 
   // Call the function to populate request history data
   await populateRequestHistory(); // Wait for the request history data to be populated
@@ -1283,12 +1287,14 @@ async function showRequestDetails(requestId) {
 
     // Show the details section and hide the request list
     adminRequestDetailsSection.classList.remove('hidden');
+    settingsBtn.disabled = true;
     requestList.classList.add('hidden');
     requestListContainer.classList.add('hidden');
   } else {
     // If no matching request is found
     adminRequestDetailsContent.innerHTML = '<p>No request details found for this request ID.</p>';
     adminRequestDetailsSection.classList.remove('hidden');
+    settingsBtn.disabled = true;
     requestList.classList.add('hidden');
   }
 }
@@ -1308,6 +1314,7 @@ function showRequestList() {
 
     if (requestHistoryContainer) {
         requestHistoryContainer.style.display = 'none'; // Hide request history
+        settingsBtn.disabled = false;
     }
 
     if (requestListContainer) {
@@ -1340,6 +1347,8 @@ function backToRequestList() {
     if (requestListContainer) {
         requestListContainer.classList.remove('hidden'); // Ensure request list container is visible
     }
+
+    settingsBtn.disabled = false;
 }
 
 

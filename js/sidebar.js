@@ -4,6 +4,8 @@ const sidebar = document.getElementById("mySidebar");
 const toggleSidebarBtn = document.getElementById("openSidebar"); // Reuse the burger button
 const mainContent = document.getElementById("main"); // Reference to the main content div
 const logoutBtn = document.getElementById("logoutBtn"); // Reference to the logout button
+const settingsBtn = document.getElementById('settingsBtn');
+const helpBtn = document.getElementById('helpBtn');
 
 // Initialize the sidebar as closed by default
 sidebar.classList.add("minimized"); // This indicates the sidebar is initially closed
@@ -48,8 +50,12 @@ toggleSidebarBtn.addEventListener("click", function() {
     function toggleSidebarDisabled() {
         if (isAnyFormVisible()) {
             sidebar.classList.add("disabled-sidebar");
+            settingsBtn.disabled = true;
+            helpBtn.disabled = true;
         } else {
             sidebar.classList.remove("disabled-sidebar");
+            settingsBtn.disabled = false;
+            helpBtn.disabled = false;
         }
     }
 
@@ -193,61 +199,73 @@ toggleSidebarBtn.addEventListener("click", function() {
     document.getElementById("plateCountMethodBtn").addEventListener("click", function() {
         microbialTestingOptions.classList.add("hidden");
         document.getElementById("plateCountForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("agarDiscDiffusionMethodBtn").addEventListener("click", function() {
         microbialTestingOptions.classList.add("hidden");
         document.getElementById("agarDiscForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("agarWellDiffusionMethodBtn").addEventListener("click", function() {
         microbialTestingOptions.classList.add("hidden");
         document.getElementById("agarWellForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("micTestingBtn").addEventListener("click", function() {
         microbialTestingOptions.classList.add("hidden");
         document.getElementById("micTestingForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("mbcTestingBtn").addEventListener("click", function() {
         microbialTestingOptions.classList.add("hidden");
         document.getElementById("mbcTestingForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("microbialWaterAnalysisBtn").addEventListener("click", function() {
         microbialAnalysisOptions.classList.add("hidden");
         document.getElementById("microbialWaterAnalysisForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("microbialCharBtn").addEventListener("click", function() {
         microbialAnalysisOptions.classList.add("hidden");
         document.getElementById("microbialCharForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("microbialCultureCollectionsBtn").addEventListener("click", function() {
         microbialAnalysisOptions.classList.add("hidden");
         document.getElementById("microbialCultureCollectionsForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("microscopyBtn").addEventListener("click", function() {
         microbialAnalysisOptions.classList.add("hidden");
         document.getElementById("microscopyForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("plantSpeciesIdentificationBtn").addEventListener("click", function() {
         labResearchProcessesOptions.classList.add("hidden");
         document.getElementById("plantSpeciesIdentificationForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("labUseAndEquipmentAccessBtn").addEventListener("click", function() {
         labResearchProcessesOptions.classList.add("hidden");
         document.getElementById("labUseAndEquipmentAccessForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("researchCollaborationProcessBtn").addEventListener("click", function() {
         labResearchProcessesOptions.classList.add("hidden");
         document.getElementById("researchCollaborationForm").classList.remove("hidden");
+        toggleSidebarDisabled();
     });
 
     document.getElementById("backPlateCountForm").addEventListener("click", function() {
