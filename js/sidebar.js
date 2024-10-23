@@ -14,6 +14,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    const forms = [
+        document.getElementById("plateCountForm"),
+        document.getElementById("agarDiscForm"),
+        document.getElementById("agarWellForm"),
+        document.getElementById("micTestingForm"),
+        document.getElementById("mbcTestingForm"),
+        document.getElementById("microbialWaterAnalysisForm"),
+        document.getElementById("microbialCharForm"),
+        document.getElementById("microbialCultureCollectionsForm"),
+        document.getElementById("microscopyForm"),
+        document.getElementById("plantSpeciesIdentificationForm"),
+        document.getElementById("labUseAndEquipmentAccessForm"),
+        document.getElementById("researchCollaborationForm"),
+        document.getElementById("requestDetailsSection")
+    ];
+
+    function isAnyFormVisible() {
+        return forms.some(form => !form.classList.contains("hidden"));
+    }
+
+    function toggleSidebarDisabled() {
+        if (isAnyFormVisible()) {
+            sidebar.classList.add("disabled-sidebar");
+        } else {
+            sidebar.classList.remove("disabled-sidebar");
+        }
+    }
+
     // Links and content sections
     const homeLink = document.getElementById("homeLink");
     const createRequestLink = document.getElementById("createRequestLink");
@@ -52,12 +80,14 @@ document.addEventListener("DOMContentLoaded", function() {
         microbialTestingOptions.classList.add("hidden");
         microbialAnalysisOptions.classList.add("hidden");
         labResearchProcessesOptions.classList.add("hidden");
+        forms.forEach(form => form.classList.add("hidden"));
     }
 
     // Function to show a specific section
     function showSection(section) {
         hideAllSections();
         section.classList.remove("hidden");
+        toggleSidebarDisabled();
     }
 
     // Event listeners for sidebar links
@@ -207,6 +237,66 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("researchCollaborationProcessBtn").addEventListener("click", function() {
         labResearchProcessesOptions.classList.add("hidden");
         document.getElementById("researchCollaborationForm").classList.remove("hidden");
+    });
+
+    document.getElementById("backPlateCountForm").addEventListener("click", function() {
+        document.getElementById("plateCountForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backAgarDiscForm").addEventListener("click", function() {
+        document.getElementById("agarDiscForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backAgarWellForm").addEventListener("click", function() {
+        document.getElementById("agarWellForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMicTestingForm").addEventListener("click", function() {
+        document.getElementById("micTestingForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMbcTestingForm").addEventListener("click", function() {
+        document.getElementById("mbcTestingForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMicrobialWaterAnalysisForm").addEventListener("click", function() {
+        document.getElementById("microbialWaterAnalysisForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMicrobialCharForm").addEventListener("click", function() {
+        document.getElementById("microbialCharForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMicrobialCultureCollectionsForm").addEventListener("click", function() {
+        document.getElementById("microbialCultureCollectionsForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backMicroscopyForm").addEventListener("click", function() {
+        document.getElementById("microscopyForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backPlantSpeciesIdentificationForm").addEventListener("click", function() {
+        document.getElementById("plantSpeciesIdentificationForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backLabUseAndEquipmentAccessForm").addEventListener("click", function() {
+        document.getElementById("labUseAndEquipmentAccessForm").classList.add("hidden");
+        toggleSidebarDisabled();
+    });
+
+    document.getElementById("backResearchCollaborationForm").addEventListener("click", function() {
+        document.getElementById("researchCollaborationForm").classList.add("hidden");
+        toggleSidebarDisabled();
     });
 
     // By default, show the dashboard content

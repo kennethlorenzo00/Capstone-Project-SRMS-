@@ -5415,10 +5415,16 @@ canvas {
     margin-top: auto; /* Optional, based on your layout */
 }
 
-#clientSearch {;
+#clientSearch {
     margin-right: 10px; /* Adjust the spacing between input and button */
 }
 
 #addClientBtn{
     width: 15vw;
+}
+
+/* Add this to your CSS file */
+.disabled-sidebar {
+    pointer-events: none; /* Prevents all click events */
+    opacity: 0.5; /* Optional: makes it look disabled */
 }
