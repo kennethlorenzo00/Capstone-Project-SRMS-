@@ -528,6 +528,8 @@ input {
 
 .client-sidebar a:hover {
     background-color: #7D1B1B;
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+    padding: 12px 12.5px;
 }
 
 .client-main {
@@ -563,6 +565,8 @@ body {
 
 .client-sidebar a:hover {
     background-color: #b23030;
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+   
 }
 
 #mySidebar {
@@ -576,6 +580,7 @@ body {
     left: 0;
     top: 0;
     height: 100%;
+    
 }
 
 #mySidebar.minimized {
@@ -1856,6 +1861,7 @@ h1 {
         .client-sidebar a:hover {
             background-color: #960505;
             transform: scale(1.1);       /* Slight scale effect on icon hover */
+            padding: 12px 12.5px;
         }
         
 
@@ -2057,6 +2063,7 @@ h1 {
 
 .admin-sidebar a:hover {
     background-color: #cc0202;
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
 }
 
 .fa-solid.fa-right-from-bracket {
@@ -2073,73 +2080,8 @@ h1 {
 }
 
 
-
-#logoutBtn {
-    width: 92%;              /* Full width, just like the sidebar links */
-      /* Align text to the left */
-    background-color: #550000; /* Same background color as sidebar */
-    color: white;              /* Text color to white */
-    padding: 8px 12px;        /* Padding similar to sidebar links */
-    border: none;              /* Remove border */
-    cursor: pointer;           /* Show pointer on hover */
-    display: flex;             /* Flexbox for aligning icon and text */
-    align-items: center;       /* Vertically center */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-    border-radius: 0%;
-    margin-right: 10px;
-    text-align: left;
-}
-
-button#logoutBtn.sidebar-btn.minimized{
-    width: 12vh;
-}
-
-a#logoutBtn.sidebar-btn.minimized {
-    width: 11vh;
-}
-
-#logoutBtn i {
-    font-size: 25px;            /* Icon size to match sidebar icons */
-    padding-right: 15px;          /* Padding for space between icon and text */
-    padding-left: -70%;           /* Padding to align the icon nicely */
-    transition: transform 0.3s ease;  /* Add transition for icon hover */
-    margin: 0px;
-}
-
-#logoutBtn:hover {
-    background-color: #960505;   /* Background color change on hover */
-    color: white;                /* Keep the text white on hover */
-    transform: scale(1.1);       /* Slight scale effect on icon hover */
-    padding: 12px 15px;
-}
-
-
-
-#logoutBtn:hover i {
-    transform: scale(1.1);       /* Slight scale effect on icon hover */
-}
-
-#logoutBtn span {
-    font-size: 16px;              /* Text size similar to sidebar links */
-    margin-right: 10px;          /* Space between icon and text */
-    transition: .3s;             /* Smooth transition */
-    margin-top: .5vh;             /* Align with the icon */
-    transform: scale(1.1);       /* Slight scale effect on icon hover */
-}
-
-.lab-sidebar.minimized #logoutBtn {
-    width: 5vw;                  /* Adjust button width when sidebar is minimized */
-}
-
-.lab-sidebar.minimized #logoutBtn i {
-    margin-left: 0px;
-    width: 100%;
-}
-
-
-
-/*Client Logout*/
-#clientLogoutbtn{
+/*Lab Logout*/
+#labLogoutbtn{
     width: 85%;              /* Full width, just like the sidebar links */
       /* Align text to the left */
     background-color:#8a1c1c; /* Same background color as sidebar */
@@ -2155,7 +2097,7 @@ a#logoutBtn.sidebar-btn.minimized {
     text-align: left;
 }
 
-#clientLogoutbtn i {
+#labLogoutbtn i {
     font-size: 25px;            /* Icon size to match sidebar icons */
     padding-right: 15px;          /* Padding for space between icon and text */
     padding-left: -70%;           /* Padding to align the icon nicely */
@@ -2163,7 +2105,111 @@ a#logoutBtn.sidebar-btn.minimized {
     margin: 0px;
 }
 
+#labLogoutbtn:hover {
+    background-color: #cc0202;   /* Background color change on hover */
+    color: white;                /* Keep the text white on hover */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+    padding: 12px 10px;
+}
+
+
+
+#labLogoutbtn:hover i {
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+#labLogoutbtn span {
+    font-size: 16px;              /* Text size similar to sidebar links */
+    margin-right: 10px;          /* Space between icon and text */
+    transition: .3s;             /* Smooth transition */
+    margin-top: .5vh;             /* Align with the icon */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+.lab-sidebar.minimized #labLogoutbtn {
+    width: 7vw;                  /* Adjust button width when sidebar is minimized */
+}
+
+.lab-sidebar.minimized #labLogoutbtn i {
+    margin-left: 0px;
+    width: 100%;
+}
+
+
+#clientLogoutbtn {
+    width: 85%;              
+    background-color: #8a1c1c;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 0%;
+}
+
+#clientLogoutbtn i {
+    font-size: 25px;
+    padding-right: 15px; /* Space between icon and text */
+    margin: 0;           /* Reset any default margin */
+    /* Removed the padding-left property */
+}
+
 #clientLogoutbtn:hover {
+    background-color: #cc0202;
+    color: white;
+    padding: 12px 10px;
+}
+
+#clientLogoutbtn:hover i {
+    transform: scale(1.1);
+}
+
+#clientLogoutbtn span {
+    font-size: 16px;
+    margin-right: 10px;
+    transition: .3s;
+    margin-top: .5vh;
+    transform: scale(1.1);
+}
+
+.lab-sidebar.minimized #clientLogoutbtn {
+    width: 7vw; /* Adjust button width when sidebar is minimized */
+}
+
+.lab-sidebar.minimized #clientLogoutbtn i {
+    margin-left: 0;
+    width: 100%;
+}
+
+
+/*Admin Logout*/
+#adminLogoutbtn{
+    width: 85%;              /* Full width, just like the sidebar links */
+      /* Align text to the left */
+    background-color:#8a1c1c; /* Same background color as sidebar */
+    color: white;              /* Text color to white */
+    padding: 8px 12px;        /* Padding similar to sidebar links */
+    border: none;              /* Remove border */
+    cursor: pointer;           /* Show pointer on hover */
+    display: flex;             /* Flexbox for aligning icon and text */
+    align-items: center;       /* Vertically center */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 0%;
+    margin-right: 10px;
+    text-align: left;
+}
+
+#adminLogoutbtn i {
+    font-size: 25px;            /* Icon size to match sidebar icons */
+    padding-right: 15px;          /* Padding for space between icon and text */
+    padding-left: -70%;           /* Padding to align the icon nicely */
+    transition: transform 0.3s ease;  /* Add transition for icon hover */
+    margin: 0px;
+}
+
+#adminLogoutbtn:hover {
     background-color: #cc0202;   /* Background color change on hover */
     color: white;                /* Keep the text white on hover */
     transform: scale(1.1);       /* Slight scale effect on icon hover */
@@ -2172,11 +2218,11 @@ a#logoutBtn.sidebar-btn.minimized {
 
 
 
-#clientLogoutbtn:hover i {
+#adminLogoutbtn:hover i {
     transform: scale(1.1);       /* Slight scale effect on icon hover */
 }
 
-#clientLogoutbtn span {
+#adminLogoutbtn span {
     font-size: 16px;              /* Text size similar to sidebar links */
     margin-right: 10px;          /* Space between icon and text */
     transition: .3s;             /* Smooth transition */
@@ -2184,11 +2230,11 @@ a#logoutBtn.sidebar-btn.minimized {
     transform: scale(1.1);       /* Slight scale effect on icon hover */
 }
 
-.lab-sidebar.minimized #clientLogoutbtn {
-    width: 5vw;                  /* Adjust button width when sidebar is minimized */
+.lab-sidebar.minimized #adminLogoutbtn {
+    width: 57vw;                  /* Adjust button width when sidebar is minimized */
 }
 
-.lab-sidebar.minimized #clientLogoutbtn i {
+.lab-sidebar.minimized #adminLogoutbtn i {
     margin-left: 0px;
     width: 100%;
 }
