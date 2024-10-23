@@ -219,7 +219,7 @@ async function fetchUpcomingEvents() {
 
         // Create event item
         const eventItem = `
-            <div class="event-item">
+            <div class="upcomingEvents">
                 <span class="event-date">${day} ${month.toUpperCase()}</span>
                 <span class="event-title">${eventData.title || 'N/A'}</span>
                 <span class="event-days-left">${daysLeft} days left</span>
