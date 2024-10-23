@@ -533,7 +533,7 @@ input {
 
 .client-main {
     padding: 10px;
-    padding-top: calc(15px + 75px); /* Increased space for the header */
+    padding-top: 75px;
     transition: margin-left 0.5s;
 }
 
@@ -674,7 +674,7 @@ body {
     border-right: 2px solid #b8b5b5;
     width:fit-content;
     display: inline-flex;
-    padding: 18px 28.8px;
+    padding: 18px 39px;
 }
 
 .request-type-btn:last-of-type {
@@ -707,7 +707,7 @@ body {
 .service-image {
     width: 350px; 
     height: 80%vh;
-    margin-left: 20px; 
+    margin-left: 80px; 
     object-fit: cover;
     padding-right: 30px;
 }
@@ -838,15 +838,19 @@ body {
 }
 
 .left-content img.icon {
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
     margin-right: 15px;
+    object-fit: cover;
+    padding-right: 30px;
+
 }
 
 
 .button-text {
     font-size: 16px;
     color: #1d1d1d;
+    margin-left: 65px;
 }
 
 button .fa-angle-right {
@@ -864,6 +868,7 @@ button .fa-angle-right {
     color: #3a3a3a;
     margin-top: 3px;
     font-family: 'Montserrat';
+    margin-left: 65px;
 }
 .title-page {
     color: black;
@@ -977,7 +982,6 @@ h1 {
 
 .request-header-container h1 {
     margin: 0; /* Remove default margin to better align with the input */
-    font-size: 24px; /* Adjust size if needed */
 }
 
 .search-container {
@@ -1555,7 +1559,23 @@ h1 {
             padding-left: 20px;
             padding-right: 20px;
             width: 30vw;
+            height: 110vh;
+        }
+
+        .register-body-admin {
+            background: rgb(255, 255, 255);
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 30vw;
             height: 100vh;
+        }
+
+        .register-body-external {
+            background: rgb(255, 255, 255);
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 30vw;
+            height: 120vh;
         }
 
         .wrapper {
@@ -1571,11 +1591,15 @@ h1 {
         }
 
         .register-form {
-            padding-top: 5vh;
+            padding-top: 2vh;
         }
 
         .lower-reg-form {
             text-align: center;
+        }
+
+        h1.register-h1 {
+            margin: 10px;
         }
 
         .fullname {
@@ -1603,6 +1627,13 @@ h1 {
             width: 350px;
             margin: 0 auto;
         }
+
+        input#firstName, input#middleName, input#lastName, input#email, input#username, input#password, input#address, input#contactNumber, input#school, input#department {
+            width: auto;
+            padding: 10px;
+            height: 2vh;
+            margin-top: 1vh;
+        } 
         
         .input-wrapper {
             position: relative; /* Positioning context for the icon */
@@ -1615,8 +1646,8 @@ h1 {
             left: 10px; /* Space from the left edge of the input */
             top: 50%; /* Center vertically */
             transform: translateY(-50%); /* Adjust to perfectly center */
-            width: 22px; /* Icon size */
-            height: 22px; /* Icon size */
+            width: 500px; /* Icon size */
+            height: 500px; /* Icon size */
             background-size: contain; /* Ensure the icon fits the space */
             background-repeat: no-repeat; /* Prevent repetition */
         }
@@ -2061,6 +2092,14 @@ h1 {
     text-align: left;
 }
 
+button#logoutBtn.sidebar-btn.minimized{
+    width: 12vh;
+}
+
+a#logoutBtn.sidebar-btn.minimized {
+    width: 11vh;
+}
+
 #logoutBtn i {
     font-size: 25px;            /* Icon size to match sidebar icons */
     padding-right: 15px;          /* Padding for space between icon and text */
@@ -2101,7 +2140,60 @@ h1 {
 
 
 
+/*Client Logout*/
+#clientLogoutbtn{
+    width: 85%;              /* Full width, just like the sidebar links */
+      /* Align text to the left */
+    background-color:#8a1c1c; /* Same background color as sidebar */
+    color: white;              /* Text color to white */
+    padding: 8px 12px;        /* Padding similar to sidebar links */
+    border: none;              /* Remove border */
+    cursor: pointer;           /* Show pointer on hover */
+    display: flex;             /* Flexbox for aligning icon and text */
+    align-items: center;       /* Vertically center */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 0%;
+    margin-right: 10px;
+    text-align: left;
+}
 
+#clientLogoutbtn i {
+    font-size: 25px;            /* Icon size to match sidebar icons */
+    padding-right: 15px;          /* Padding for space between icon and text */
+    padding-left: -70%;           /* Padding to align the icon nicely */
+    transition: transform 0.3s ease;  /* Add transition for icon hover */
+    margin: 0px;
+}
+
+#clientLogoutbtn:hover {
+    background-color: #cc0202;   /* Background color change on hover */
+    color: white;                /* Keep the text white on hover */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+    padding: 12px 15px;
+}
+
+
+
+#clientLogoutbtn:hover i {
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+#clientLogoutbtn span {
+    font-size: 16px;              /* Text size similar to sidebar links */
+    margin-right: 10px;          /* Space between icon and text */
+    transition: .3s;             /* Smooth transition */
+    margin-top: .5vh;             /* Align with the icon */
+    transform: scale(1.1);       /* Slight scale effect on icon hover */
+}
+
+.lab-sidebar.minimized #clientLogoutbtn {
+    width: 5vw;                  /* Adjust button width when sidebar is minimized */
+}
+
+.lab-sidebar.minimized #clientLogoutbtn i {
+    margin-left: 0px;
+    width: 100%;
+}
 
 
 
@@ -3105,87 +3197,281 @@ font-family: Arial, sans-serif;
     color: #999; /* Grey text */
     font-style: italic;
 }
+
+#taskList {
+    margin-right: 3vw;
+}
 /* Counter */
-#taskTable,
-#ongoingTaskTable {
-    width: 70%; /* Set the width to 70% for a more compact look */
-    border-collapse: collapse; /* Remove space between cells */
-    margin: 20px auto; /* Center the table and add margin */
-    font-size: 0.8rem; /* Set the base font size smaller */
+#taskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
 }
 
-/* Table Header Styles */
+/* Table header styles */
 #taskTable thead {
-    background-color: #007BFF; /* Color for assigned tasks header */
-    color: #ffffff; /* White text color for the header */
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
 }
 
-#ongoingTaskTable thead {
-    background-color: #28A745; /* Different color for ongoing tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#taskTable th,
-#ongoingTaskTable th,
-#processedTaskTable th,
-#rejectedTaskTable th {
-    padding: 8px 10px; /* Reduced padding for headers */
-    text-align: left; /* Keep left-aligned header text */
+#taskTable th {
+    padding: 12px 15px;
+    text-align: left;
     border-top: 2px solid;
 }
 
-#taskTable th:first-child,
-#ongoingTaskTable th:first-child,
-#processedTaskTable th:first-child,
-#rejectedTaskTable th:first-child {
+#taskTable th:first-child{
     border-radius: 15px 0 0 0; 
     border-left: 2px solid;
     border-top: 2px solid;
 }
 
-#taskTable th:last-child,
-#ongoingTaskTable th:last-child,
-#processedTaskTable th:last-child,
-#rejectedTaskTable th:last-child {
+#taskTable th:last-child{
     border-radius: 0 10px 0 0;
     border-right: 2px solid;
     border-top: 2px solid;
 }
 
-/* Table Body Styles */
-#taskTable tbody,
-#ongoingTaskTable tbody {
-    background-color: #f9f9f9; /* Light background for the body */
+/* Table body styles */
+#taskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
 }
 
-#taskTable td,
-#ongoingTaskTable td {
-    padding: 6px; /* Reduced padding for table cells */
-    border-bottom: 1px solid #ddd; /* Light gray border at the bottom */
-    font-size: 0.8rem; /* Match table cell font size with header */
+#taskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
 }
 
-/* Hover Effect for Table Rows */
-#taskTable tbody tr:hover,
-#ongoingTaskTable tbody tr:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
+#taskTable td {
+    padding: 12px 15px;
+    border: none    ;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    #taskTable,
+/* Hover effect for rows */
+#taskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#taskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#taskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
+
+
     #ongoingTaskTable {
-        font-size: 0.7rem; /* Smaller font on smaller screens */
-        width: 90%; /* Make it slightly wider on smaller screens */
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1vh;
     }
-
-    #taskTable th, 
-    #taskTable td,
-    #ongoingTaskTable th,
+    
+    /* Table header styles */
+    #ongoingTaskTable thead {
+        background-color: #A90000; /* Green background */
+        color: white; /* White text */
+    }
+    
+    #ongoingTaskTable th {
+        padding: 12px 15px;
+        text-align: left;
+        border-top: 2px solid;
+    }
+    
+    #ongoingTaskTable th:first-child{
+        border-radius: 15px 0 0 0; 
+        border-left: 2px solid;
+        border-top: 2px solid;
+    }
+    
+    #ongoingTaskTable th:last-child{
+        border-radius: 0 10px 0 0;
+        border-right: 2px solid;
+        border-top: 2px solid;
+    }
+    
+    /* Table body styles */
+    #ongoingTaskTable tbody tr {
+        background-color: #f9f9f9; /* Light background */
+        border-bottom: 1px solid;
+        border-bottom-color: rgb(197, 197, 197);
+    }
+    
+    #ongoingTaskTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Alternate row color */
+    }
+    
     #ongoingTaskTable td {
-        padding: 4px; /* Further reduce padding on smaller screens */
+        padding: 12px 15px;
+        border: none    ;
     }
+    
+    /* Hover effect for rows */
+    #ongoingTaskTable tbody tr:hover {
+        background-color: #d8f0e5; /* Light green on hover */
+    }
+    
+    
+    #ongoingTaskTable button {
+        background-color: #A90000; 
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+    
+    #ongoingTaskTable td:last-child {
+            display: flex;
+            justify-content: center; /* Horizontally center the button */
+            align-items: center; /* Vertically center the button (optional) */
+        }
+    
+
+#processedTaskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1vh;
 }
+
+/* Table header styles */
+#processedTaskTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#processedTaskTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#processedTaskTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#processedTaskTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#processedTaskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#processedTaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#processedTaskTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#processedTaskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#processedTaskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#processedTaskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+}
+
+
+#rejectedTaskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1vh;
+}
+
+/* Table header styles */
+#rejectedTaskTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#rejectedTaskTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#rejectedTaskTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#rejectedTaskTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#rejectedTaskTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#rejectedTaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#rejectedTaskTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#rejectedTaskTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#rejectedTaskTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#rejectedTaskTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
 
 .task-overview {
     background-color: #ffffff; /* White background for the entire section */
@@ -3428,64 +3714,6 @@ font-family: Arial, sans-serif;
 }
 
 
-/* General Table Styles */
-#processedTaskTable,
-#rejectedTaskTable {
-    width: 100%;
-    border-collapse: collapse; /* Remove space between cells */
-    margin: 20px 0; /* Add some margin above and below the table */
-    font-size: 1rem; /* Set the base font size */
-}
-
-/* Table Header Styles */
-#processedTaskTable thead {    
-    background-color: #6f00ff; /* Color for processed tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#rejectedTaskTable thead {
-    background-color: #A90000; /* Color for processed tasks header */
-    color: #ffffff; /* White text color for the header */
-}
-
-#processedTaskTable th,
-#rejectedTaskTable th {
-    padding: 12px; /* Padding for header cells */
-    text-align: left; /* Align text to the left */
-}
-
-/* Table Body Styles */
-#processedTaskTable tbody,
-#rejectedTaskTable tbody {
-    background-color: #f9f9f9; /* Light background for the body */
-}
-
-#processedTaskTable td,
-#rejectedTaskTable td {
-    padding: 10px; /* Padding for table cells */
-    border-bottom: 1px solid #ddd; /* Light gray border at the bottom */
-}
-
-/* Hover Effect for Table Rows */
-#processedTaskTable tbody tr:hover,
-#rejectedTaskTable tbody tr:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #processedTaskTable,
-    #rejectedTaskTable {
-        font-size: 0.9rem; /* Slightly smaller font on smaller screens */
-    }
-
-    #processedTaskTable th, 
-    #processedTaskTable td,
-    #rejectedTaskTable th,
-    #rejectedTaskTable td {
-        padding: 8px; /* Reduce padding on smaller screens */
-    }
-}
 
 /* Button Styles */
 .task-buttons button {
@@ -3841,8 +4069,10 @@ input#editAddress, input#editContactNumber,input#editUsername {
 /*account profile for client*/
 
 div#myAccountContent {
-
-    margin-top: 6vh;
+    margin-top: 3vh;
+    margin-right: 5vw;
+    margin-left: 3vw;
+    margin-bottom: 6vh;
 }
 
 span#clientfullNameDetail, span#clientaddress, span#clientcontactNumber, span#clientusername {
@@ -3977,7 +4207,7 @@ button#saveClientChangesBtn {
     text-align: center;
     border-radius: 10px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    height: 15vh;
+    height: 20vh;
     margin: 20px;
 }
 
@@ -4066,7 +4296,7 @@ div#eventsSection{
 .scroll-container {
     display: flex;
     overflow-x: auto;
-    height: 42vh;
+    height: 50vh;
     margin-left: 20px;
 }
 
@@ -4079,13 +4309,14 @@ div#eventsSection{
     text-align: center;
     box-shadow: 5px 5px 5px rgba(177, 177, 177, 0.2);
     background-color: rgb(255, 255, 255);
-    height: 35vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 .event-item img {
-    width: 25vh;
+    width: 30vh;
     height: 15vh;
     object-fit: cover;
 }
@@ -4805,9 +5036,6 @@ body {
 .labaccount{
     padding: 20px;
     padding-top: 0;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 button#saveChangesBtn {
