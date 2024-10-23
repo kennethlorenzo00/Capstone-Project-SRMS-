@@ -2189,7 +2189,7 @@ h1 {
     max-width: 300px;             /* Limit the width */
     margin: 0 auto;               /* Center the card */
     position: absolute;
-    top: 240px;
+    top: 238px;
     right: -10px;
     z-index: 25px;
 }
@@ -3625,6 +3625,7 @@ button:hover {
     border-radius: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
+    width: 103%;
 }
 
 /* Heading styling */
@@ -4192,7 +4193,7 @@ div#eventsSection{
 #approachingDeadlines {
     margin: 20px;
     margin-left: -20px;
-    margin-top:  120px;
+    margin-top: 10px;
 }
 
 #approachingDeadlines h3 {
@@ -4229,7 +4230,7 @@ div#eventsSection{
 
 #upcomingEvents {
     margin: 20px;
-    padding-bottom: 100px ;
+    padding-bottom: 40px;
 }
 
 #upcomingEvents h3 {
@@ -4329,11 +4330,11 @@ div#eventsSection{
     border-radius: 15px; /* Rounded corners */
     padding: 5px; /* Padding for spacing inside the box */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 100%; /* Full width */
+    width: 80%; /* Full width */
     max-width: 300px; /* Set max width to match the example */
     position: absolute; /* Absolute positioning */
-    top: 600px; /* Distance from the top */
-    right: 20px; /* Distance from the right */
+    top: 532px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
     margin: 0; /* Reset margin */
     text-align: center; /* Center the text */
 }
