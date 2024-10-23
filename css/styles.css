@@ -5575,6 +5575,11 @@ canvas {
     opacity: 0.5; /* Optional: makes it look disabled */
 }
 
+.disabled-settings-btn {
+    opacity: 0.5;  /* Visually indicate settings button is disabled */
+    cursor: not-allowed;  /* Change cursor to indicate non-clickable state */
+}
+
 /*Client Request List Table css*/
 #requestListTable {
     width: 100%;
