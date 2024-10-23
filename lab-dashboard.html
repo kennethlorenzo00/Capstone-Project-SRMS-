@@ -24,6 +24,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/async/3.2.0/async.min.js"></script>
 
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    
 </head>
 <body>
@@ -381,11 +383,14 @@
 
             <div id="sampleDurationSection" style="display: none;">
                 <h2>Sample's Duration</h2>
+                <h3>Estimated Start Date: <span id="startDate">N/A</span></h3>
+                <h3>Estimated End Date: <span id="endDate">N/A</span></h3>
                 <div class="duration-container">
                     <!-- Plus Button to Add Days -->
                     <button id="addDayButton">+ Add Day</button>
                 </div>
                 <h3>Average Colony Count: <span id="averageColonyCount">N/A</span></h3>
+                <canvas id="colonyCountGraph" width="400" height="200"></canvas>
                 <button id="backSampleDuration">Back</button>
             </div>
 

@@ -5685,3 +5685,9 @@ canvas {
 
 .request-details {
 }
+
+#colonyCountGraph {
+    margin: 20px auto;
+    max-width: 600px;
+    height: 300px !important;
+}
