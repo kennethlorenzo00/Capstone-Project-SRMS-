@@ -5919,3 +5919,44 @@ canvas {
     max-width: 600px;
     height: 300px !important;
 }
+/*settings*/
+div#clientSettingsSection, div#labSettingsSection, div#adminSettingsSection{
+    margin-top: 7vh;
+    margin-right: 4vw;
+    margin-left: 3vw;
+    margin-bottom: 6vh
+}
+
+label#enter {
+    width: 20vw;
+    text-align: left;
+    margin: 10px;
+}
+
+form#settingsPasswordResetForm {
+    width: 60vw;
+}
+
+button#reset-btn {
+    margin: auto;
+    margin-top: 10px;
+    transform: none;
+}
+
+input#resetEmail {
+    margin: 10px;
+    width: auto;
+    padding: 10px;
+}
+
+form#settingsPasswordResetForm {
+    width: auto;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1.settingslabel {
+    width: 100%;
+    border-bottom: 2px solid;
+}
