@@ -838,15 +838,19 @@ body {
 }
 
 .left-content img.icon {
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
     margin-right: 15px;
+    object-fit: cover;
+    padding-right: 30px;
+
 }
 
 
 .button-text {
     font-size: 16px;
     color: #1d1d1d;
+    margin-left: 65px;
 }
 
 button .fa-angle-right {
@@ -864,6 +868,7 @@ button .fa-angle-right {
     color: #3a3a3a;
     margin-top: 3px;
     font-family: 'Montserrat';
+    margin-left: 65px;
 }
 .title-page {
     color: black;
@@ -1615,8 +1620,8 @@ h1 {
             left: 10px; /* Space from the left edge of the input */
             top: 50%; /* Center vertically */
             transform: translateY(-50%); /* Adjust to perfectly center */
-            width: 50px; /* Icon size */
-            height: 50px; /* Icon size */
+            width: 500px; /* Icon size */
+            height: 500px; /* Icon size */
             background-size: contain; /* Ensure the icon fits the space */
             background-repeat: no-repeat; /* Prevent repetition */
         }
