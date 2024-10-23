@@ -209,6 +209,76 @@ padding-left: 8px;
     padding: 15px;
 }
 
+/* Staff Table Styles*/
+#staffTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+}
+
+/* Table header styles */
+#staffTable thead {
+    background-color: #A90000; /* Green background */
+    color: white; /* White text */
+}
+
+#staffTable th {
+    padding: 12px 15px;
+    text-align: left;
+    border-top: 2px solid;
+}
+
+#staffTable th:first-child{
+    border-radius: 15px 0 0 0; 
+    border-left: 2px solid;
+    border-top: 2px solid;
+}
+
+#staffTable th:last-child{
+    border-radius: 0 10px 0 0;
+    border-right: 2px solid;
+    border-top: 2px solid;
+}
+
+/* Table body styles */
+#staffTable tbody tr {
+    background-color: #f9f9f9; /* Light background */
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(197, 197, 197);
+}
+
+#staffTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+#staffTable td {
+    padding: 12px 15px;
+    border: none    ;
+}
+
+/* Hover effect for rows */
+#staffTable tbody tr:hover {
+    background-color: #d8f0e5; /* Light green on hover */
+}
+
+
+#staffTable button {
+    background-color: #A90000; 
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#staffTable td:last-child {
+        display: flex;
+        justify-content: center; /* Horizontally center the button */
+        align-items: center; /* Vertically center the button (optional) */
+    }
+
+
+
 /* Buttons */
 button {
     padding: 10px 20px;
@@ -2259,12 +2329,6 @@ h1 {
     border-bottom: 1px solid #ddd;
 }
 
-#newRequestsTable th, #newRequestsTable td, #staffTable th, #staffTable td, #clientsTable th, #clientsTable td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    border: none;
-}
 
 #clientsTable th:first-child, #newRequestsTable th:first-child, #staffTable th:first-child {
     border-radius: 15px 0 0 0;
@@ -2286,6 +2350,10 @@ h1 {
     text-align: center; /* Center text horizontally */
     vertical-align: middle;
 }
+#clientsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
 
 #clientsTable td:last-child, #clientsTable td:nth-child(3){
     text-align: center; /* Center text horizontally */
@@ -2306,12 +2374,25 @@ font-family: Arial, sans-serif;
     font-size: 18px; /* Adjust icon size */
     margin-right: 10px; /* Space between icon and delete button */
     cursor: pointer; /* Make the icon clickable */
-    margin-top: 20px;
+    margin-top: 1px;
 }
 
 .view-details-icon:hover {
     color: #007bff; /* Change color on hover */
 }
+
+.viewDetailsIcon {
+    font-size: 18px; /* Adjust icon size */
+    margin-right: 10px; /* Space between icon and delete button */
+    cursor: pointer; /* Make the icon clickable */
+    margin-top: 1px;
+}
+
+.viewDetailsIcon:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+
 
 .staff-search-container {
     display: flex;
