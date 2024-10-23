@@ -1626,7 +1626,7 @@ h1 {
             margin: 0 auto;
         }
 
-        input#firstName, input#middleName, input#lastName, input#email, input#username, input#password, input#address, input#contactNumber, input#school, input#department {
+        input#firstName, input#middleName, input#lastName, input.email, input#username, input.password, input#address, input#contactNumber, input#school, input#department {
             width: auto;
             padding: 10px;
             height: 2vh;
@@ -1644,8 +1644,8 @@ h1 {
             left: 10px; /* Space from the left edge of the input */
             top: 50%; /* Center vertically */
             transform: translateY(-50%); /* Adjust to perfectly center */
-            width: 500px; /* Icon size */
-            height: 500px; /* Icon size */
+            width: 20px; /* Icon size */
+            height: 20px; /* Icon size */
             background-size: contain; /* Ensure the icon fits the space */
             background-repeat: no-repeat; /* Prevent repetition */
         }
@@ -1657,6 +1657,9 @@ h1 {
         .key-icon {
             background-image: url("https://images.vexels.com/content/131184/preview/key-flat-icon-e94865.png");
         }
+        
+        /* Media Query for smaller screens (e.g., tablets) */
+        
         
         input {
             padding: 10px 10px 10px 40px; /* Padding for left to make space for icon */
