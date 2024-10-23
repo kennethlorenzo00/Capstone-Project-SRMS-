@@ -57,8 +57,7 @@ h2{
 
 #account {
     margin-top: 3vh; 
-    margin-right: 4vw;
-    margin-left: 3vw;
+    margin-right: 3vw;
     margin-bottom: 6vh;
 }
 
@@ -533,8 +532,9 @@ input {
 
 .client-main {
     padding: 10px;
-    padding-top: 75px;
     transition: margin-left 0.5s;
+    margin-top: 5vh; 
+    margin-right: 3vw;
 }
 
 
@@ -4065,8 +4065,7 @@ input#editAddress, input#editContactNumber,input#editUsername {
 
 div#myAccountContent {
     margin-top: 3vh;
-    margin-right: 5vw;
-    margin-left: 3vw;
+    margin-right: 3vw;
     margin-bottom: 6vh;
 }
 
@@ -5029,8 +5028,9 @@ body {
 }
 
 .labaccount{
-    padding: 20px;
-    padding-top: 0;
+    margin-top: 3vh; 
+    margin-right: 3vw;
+    margin-bottom: 6vh;
 }
 
 button#saveChangesBtn {
