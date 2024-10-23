@@ -1969,7 +1969,7 @@ h1 {
 }
 
 #logoutBtn {
-    margin-top: 10vh; /* Use margin-top to push the icon down */
+  
     background: none;
 }
 #logoutBtn.minimized {
