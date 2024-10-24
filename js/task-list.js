@@ -558,16 +558,13 @@ async function loadSamplesByRequestId(sampleId) {
         return;
     }
 
-    document.getElementById('sampleDurationSection').style.display = 'block';
-
     // Clear the container first
     const durationContainer = document.querySelector('.duration-container');
     durationContainer.innerHTML = '';
 
     let totalColonyCount = 0;
     let totalDays = 0;
-    let sampleColonyCounts = []; // Store counts specific to this sample
-    let sampleDays = [];
+    const daysData = []; 
 
     samplesSnapshot.forEach(sampleDoc => {
         const sampleData = sampleDoc.data();
@@ -585,12 +582,10 @@ async function loadSamplesByRequestId(sampleId) {
             document.querySelector('.duration-container').appendChild(dayBox);
 
             if (day.colonyCount) {
-                console.log('Colony Count for Day', day.dayNumber, ':', day.colonyCount);       
-                sampleDays.push(`Day ${day.dayNumber}`);
-                sampleColonyCounts.push(day.colonyCount); // Store counts specific to this day
                 totalColonyCount += day.colonyCount;
                 totalDays++;
 
+                daysData.push({ dayNumber: day.dayNumber, colonyCount: day.colonyCount }); 
             }
 
             // Add a click event listener to the day-box
@@ -652,19 +647,12 @@ async function loadSamplesByRequestId(sampleId) {
                 }
             });
         });
-
-        colonyCounts.push(...sampleColonyCounts); // Append specific sample counts to the global array
-        daysArray.push(...sampleDays); 
     });
 
     const averageColonyCount = totalDays > 0 ? (totalColonyCount / totalDays).toFixed(2) : 'N/A';
     document.getElementById('averageColonyCount').innerText = averageColonyCount;
 
-    // Log the arrays before passing them to the graph
-    console.log('Days Array:', daysArray);
-    console.log('Colony Counts:', colonyCounts);
-
-    displayColonyCountLineGraph(daysArray, colonyCounts);
+    renderColonyCountGraph(daysData);
 
     // Create and append the "Add Day" button
     const addDayButton = document.createElement('button');
@@ -681,45 +669,41 @@ async function loadSamplesByRequestId(sampleId) {
 
 }
 
-function displayColonyCountLineGraph(daysArray, colonyCounts) {
-    const ctx = document.getElementById('colonyCountGraph').getContext('2d'); // Ensure the element is now available
+function renderColonyCountGraph(daysData) {
+    const ctx = document.getElementById('colonyCountGraph').getContext('2d');
 
-    // Remove the old chart if it exists
-    if (window.colonyCountChart) {
-        window.colonyCountChart.destroy();
-    }
+    // Prepare data for the graph
+    const labels = daysData.map(day => `Day ${day.dayNumber}`);
+    const data = daysData.map(day => day.colonyCount);
 
-    // Create the line chart
-    window.colonyCountChart = new Chart(ctx, {
+    // Create the chart
+    new Chart(ctx, {
         type: 'line',
         data: {
-            labels: daysArray, // Labels for X-axis (Days)
+            labels: labels,
             datasets: [{
-                label: 'Colony Count',
-                data: colonyCounts, // Data for Y-axis (Colony Counts)
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                label: 'Colony Count per Day',
+                data: data,
                 borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: false,
-                tension: 0.1 // Smooth line
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
             scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Colony Count'
+                    }
+                },
                 x: {
                     title: {
                         display: true,
                         text: 'Days'
                     }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Colony Count'
-                    },
-                    beginAtZero: true
                 }
             }
         }

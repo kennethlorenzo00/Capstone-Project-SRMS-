@@ -1,6 +1,6 @@
 import { auth, database, firestore, storage } from './firebase.js';
 import { ref as dbRef, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js"; // For Realtime Database
-import { collection, query, where, onSnapshot, getDocs, limit, startAfter, doc, updateDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, query, where, onSnapshot, getDocs, limit, startAfter, doc, updateDoc, Timestamp, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 import { ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"; // For Storage
 
 // Get the request list table body and details section
@@ -39,6 +39,17 @@ function formatTimestamp(timestamp) {
     }
     return 'Invalid Date';
 }
+
+async function logNotificationToFirestore(notificationData) {
+    try {
+      console.log("Attempting to log notification:", notificationData); // Debugging log
+      const notificationsRef = collection(firestore, 'notifications');
+      await addDoc(notificationsRef, notificationData);
+      console.log("Notification logged to Firestore.");
+    } catch (error) {
+      console.error("Error logging notification:", error.message);
+    }
+  }
 
 const searchInput = document.getElementById('searchInput');
 // Get the pagination controls
@@ -426,8 +437,48 @@ async function showRequestDetails(requestId) {
             validatingMessageDiv.classList.add('validating-message');
             validatingMessageDiv.innerHTML = `
               <p><strong>Note:</strong> Your request is under validation.</p>
+              <button class="followup-button">Send a follow-up</button>
             `;
             requestDetailsContent.appendChild(validatingMessageDiv);
+            const followUpButton = requestDetailsContent.querySelector('.followup-button');
+
+            followUpButton.addEventListener('click', async () => {
+                const userMessage = prompt("Enter a follow-up message:"); // Prompt user to enter a message
+                
+                if (userMessage) { // Proceed if user enters a message
+                    try {
+                        const requestsRef = collection(firestore, 'requests');
+                        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+                        const requestSnapshot = await getDocs(requestQuery);
+                        const requestDocRef = requestSnapshot.docs[0].ref;
+                        
+                        // Update the request type to follow-up
+                        await updateDoc(requestDocRef, { typeOfRequest: 'followUpRequest' });
+                        alert('Follow Up Sent');
+                        
+                        // Log notification to Firestore
+                        const notificationData = {
+                            userId: currentUser.uid, 
+                            requestId: requestId,
+                            message: userMessage, // Use the message entered by the user
+                            timestamp: new Date().toISOString()
+                        };
+                        
+                        // Log the notification
+                        await logNotificationToFirestore(notificationData);
+                        alert('Notification logged successfully.');
+            
+                        // Hide request details and show request list
+                        requestDetailsSection.classList.add('hidden');
+                        requestListGroup.classList.remove('hidden');
+                    } catch (error) {
+                        console.error("Error sending follow-up or logging notification:", error.message);
+                        alert("An error occurred while sending the follow-up or logging the notification.");
+                    }
+                } else {
+                    alert('Follow-up message is required.');
+                }
+            });
           }
 
           if (requestDoc.request_status === "pending") {
@@ -451,9 +502,48 @@ async function showRequestDetails(requestId) {
             pendingMessageDiv.innerHTML = `
                 <p><strong>Note:</strong> You may now view and download your request from here.</p>
                 <button onclick="window.open('${pdfUrl}', '_blank')">View Your Request</button>
+                <button class="followup-button">Send a follow-up</button>
             `;
             
             requestDetailsContent.appendChild(pendingMessageDiv);
+            const followUpButton = requestDetailsContent.querySelector('.followup-button');
+
+            followUpButton.addEventListener('click', async () => {
+                const userMessage = prompt("Enter a follow-up message:"); // Prompt user to enter a message
+                
+                if (userMessage) { // Proceed if user enters a message
+                    try {
+                        const requestsRef = collection(firestore, 'requests');
+                        const requestQuery = query(requestsRef, where('requestId', '==', requestId));
+                        const requestSnapshot = await getDocs(requestQuery);
+                        const requestDocRef = requestSnapshot.docs[0].ref;
+                        
+                        // Update the request type to follow-up
+                        await updateDoc(requestDocRef, { typeOfRequest: 'followUpRequest' });
+                        alert('Follow Up Sent');
+                        
+                        // Log notification to Firestore
+                        const notificationData = {
+                            requestId: requestId,
+                            message: userMessage, // Use the message entered by the user
+                            timestamp: new Date().toISOString()
+                        };
+                        
+                        // Log the notification
+                        await logNotificationToFirestore(notificationData);
+                        alert('Notification logged successfully.');
+            
+                        // Hide request details and show request list
+                        requestDetailsSection.classList.add('hidden');
+                        requestListGroup.classList.remove('hidden');
+                    } catch (error) {
+                        console.error("Error sending follow-up or logging notification:", error.message);
+                        alert("An error occurred while sending the follow-up or logging the notification.");
+                    }
+                } else {
+                    alert('Follow-up message is required.');
+                }
+            });
         }        
 
         if (requestDoc.request_status === "sending") {
